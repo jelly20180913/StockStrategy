@@ -25,8 +25,7 @@ namespace HtsApiDemo
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnSellingShort_Click(object sender, EventArgs e)
-        {
-            string _BuySell1 = "S";
+        { 
             string _BuySell = "S";
             string _CashMarginShort = "S";
             string _Units = "0";

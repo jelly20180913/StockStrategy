@@ -30,19 +30,9 @@
         {
             this.txtStockAccount = new System.Windows.Forms.TextBox();
             this.lbStockAccount = new System.Windows.Forms.Label();
-            this.txtStockId = new System.Windows.Forms.TextBox();
-            this.btnSellingShort = new System.Windows.Forms.Button();
-            this.btnMarginTrading = new System.Windows.Forms.Button();
-            this.btnOverSell = new System.Windows.Forms.Button();
-            this.btnBuy = new System.Windows.Forms.Button();
-            this.btnSell = new System.Windows.Forms.Button();
-            this.nupQty = new System.Windows.Forms.NumericUpDown();
-            this.txtPrice = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnMinus = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtMa10 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -59,6 +49,16 @@
             this.btnDeal = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.txtStockId = new System.Windows.Forms.TextBox();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnSellingShort = new System.Windows.Forms.Button();
+            this.btnMinus = new System.Windows.Forms.Button();
+            this.btnMarginTrading = new System.Windows.Forms.Button();
+            this.txtPrice = new System.Windows.Forms.TextBox();
+            this.btnOverSell = new System.Windows.Forms.Button();
+            this.nupQty = new System.Windows.Forms.NumericUpDown();
+            this.btnBuy = new System.Windows.Forms.Button();
+            this.btnSell = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.richTxtInfo = new System.Windows.Forms.RichTextBox();
@@ -85,15 +85,14 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.nupQty)).BeginInit();
+            this.btnReset = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupQty)).BeginInit();
             this.gbBullStop.SuspendLayout();
             this.gbBearStop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.panel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtStockAccount
@@ -115,103 +114,6 @@
             this.lbStockAccount.TabIndex = 41;
             this.lbStockAccount.Text = "證券帳號:";
             // 
-            // txtStockId
-            // 
-            this.txtStockId.Location = new System.Drawing.Point(61, 8);
-            this.txtStockId.Margin = new System.Windows.Forms.Padding(4);
-            this.txtStockId.Name = "txtStockId";
-            this.txtStockId.Size = new System.Drawing.Size(73, 25);
-            this.txtStockId.TabIndex = 1;
-            this.txtStockId.TextChanged += new System.EventHandler(this.txtStockId_TextChanged);
-            // 
-            // btnSellingShort
-            // 
-            this.btnSellingShort.BackColor = System.Drawing.Color.DarkGreen;
-            this.btnSellingShort.Location = new System.Drawing.Point(748, 8);
-            this.btnSellingShort.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSellingShort.Name = "btnSellingShort";
-            this.btnSellingShort.Size = new System.Drawing.Size(52, 29);
-            this.btnSellingShort.TabIndex = 2;
-            this.btnSellingShort.Tag = "";
-            this.btnSellingShort.Text = "券賣";
-            this.btnSellingShort.UseVisualStyleBackColor = false;
-            this.btnSellingShort.Click += new System.EventHandler(this.btnSellingShort_Click);
-            // 
-            // btnMarginTrading
-            // 
-            this.btnMarginTrading.BackColor = System.Drawing.Color.IndianRed;
-            this.btnMarginTrading.Location = new System.Drawing.Point(803, 8);
-            this.btnMarginTrading.Margin = new System.Windows.Forms.Padding(4);
-            this.btnMarginTrading.Name = "btnMarginTrading";
-            this.btnMarginTrading.Size = new System.Drawing.Size(52, 29);
-            this.btnMarginTrading.TabIndex = 3;
-            this.btnMarginTrading.Tag = "";
-            this.btnMarginTrading.Text = "資買";
-            this.btnMarginTrading.UseVisualStyleBackColor = false;
-            this.btnMarginTrading.Click += new System.EventHandler(this.btnMarginTrading_Click);
-            // 
-            // btnOverSell
-            // 
-            this.btnOverSell.BackColor = System.Drawing.Color.PeachPuff;
-            this.btnOverSell.Location = new System.Drawing.Point(911, 8);
-            this.btnOverSell.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOverSell.Name = "btnOverSell";
-            this.btnOverSell.Size = new System.Drawing.Size(52, 29);
-            this.btnOverSell.TabIndex = 4;
-            this.btnOverSell.Tag = "";
-            this.btnOverSell.Text = "沖賣";
-            this.btnOverSell.UseVisualStyleBackColor = false;
-            this.btnOverSell.Click += new System.EventHandler(this.btnOverSell_Click);
-            // 
-            // btnBuy
-            // 
-            this.btnBuy.BackColor = System.Drawing.Color.Red;
-            this.btnBuy.Location = new System.Drawing.Point(964, 8);
-            this.btnBuy.Margin = new System.Windows.Forms.Padding(4);
-            this.btnBuy.Name = "btnBuy";
-            this.btnBuy.Size = new System.Drawing.Size(52, 29);
-            this.btnBuy.TabIndex = 5;
-            this.btnBuy.Tag = "";
-            this.btnBuy.Text = "現買";
-            this.btnBuy.UseVisualStyleBackColor = false;
-            this.btnBuy.Click += new System.EventHandler(this.btnBuy_Click);
-            // 
-            // btnSell
-            // 
-            this.btnSell.BackColor = System.Drawing.Color.LightGreen;
-            this.btnSell.Location = new System.Drawing.Point(1017, 8);
-            this.btnSell.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSell.Name = "btnSell";
-            this.btnSell.Size = new System.Drawing.Size(52, 29);
-            this.btnSell.TabIndex = 6;
-            this.btnSell.Tag = "";
-            this.btnSell.Text = "現賣";
-            this.btnSell.UseVisualStyleBackColor = false;
-            this.btnSell.Click += new System.EventHandler(this.btnSell_Click);
-            // 
-            // nupQty
-            // 
-            this.nupQty.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.nupQty.Location = new System.Drawing.Point(141, 8);
-            this.nupQty.Margin = new System.Windows.Forms.Padding(4);
-            this.nupQty.Name = "nupQty";
-            this.nupQty.Size = new System.Drawing.Size(48, 25);
-            this.nupQty.TabIndex = 8;
-            this.nupQty.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(277, 8);
-            this.txtPrice.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(55, 25);
-            this.txtPrice.TabIndex = 9;
-            this.txtPrice.Tag = "1";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -225,7 +127,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(249, 165);
+            this.label2.Location = new System.Drawing.Point(221, 165);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 15);
@@ -235,42 +137,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(305, 165);
+            this.label3.Location = new System.Drawing.Point(284, 165);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 15);
             this.label3.TabIndex = 46;
             this.label3.Text = "價格";
             // 
-            // btnMinus
-            // 
-            this.btnMinus.Font = new System.Drawing.Font("新細明體", 12F);
-            this.btnMinus.Location = new System.Drawing.Point(341, 6);
-            this.btnMinus.Margin = new System.Windows.Forms.Padding(4);
-            this.btnMinus.Name = "btnMinus";
-            this.btnMinus.Size = new System.Drawing.Size(29, 29);
-            this.btnMinus.TabIndex = 10;
-            this.btnMinus.Tag = "";
-            this.btnMinus.Text = "-";
-            this.btnMinus.UseVisualStyleBackColor = true;
-            this.btnMinus.Click += new System.EventHandler(this.btnMinus_Click);
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Font = new System.Drawing.Font("新細明體", 12F);
-            this.btnAdd.Location = new System.Drawing.Point(379, 6);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(29, 30);
-            this.btnAdd.TabIndex = 11;
-            this.btnAdd.Tag = "";
-            this.btnAdd.Text = "+";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.panel1.Controls.Add(this.btnReset);
             this.panel1.Controls.Add(this.txtMa10);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.txtMa60);
@@ -296,10 +173,10 @@
             this.panel1.Controls.Add(this.nupQty);
             this.panel1.Controls.Add(this.btnBuy);
             this.panel1.Controls.Add(this.btnSell);
-            this.panel1.Location = new System.Drawing.Point(4, 4);
+            this.panel1.Location = new System.Drawing.Point(23, 103);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1523, 42);
+            this.panel1.Size = new System.Drawing.Size(1725, 44);
             this.panel1.TabIndex = 12;
             // 
             // txtMa10
@@ -391,6 +268,7 @@
             this.cbPriceType.Name = "cbPriceType";
             this.cbPriceType.Size = new System.Drawing.Size(77, 23);
             this.cbPriceType.TabIndex = 0;
+            this.cbPriceType.SelectedIndexChanged += new System.EventHandler(this.cbPriceType_SelectedIndexChanged);
             // 
             // btnChangePrice
             // 
@@ -431,7 +309,6 @@
             // btnDeal
             // 
             this.btnDeal.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnDeal.Enabled = false;
             this.btnDeal.Location = new System.Drawing.Point(1125, 9);
             this.btnDeal.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeal.Name = "btnDeal";
@@ -461,18 +338,141 @@
             this.label6.TabIndex = 13;
             this.label6.Text = "光群雷";
             // 
+            // txtStockId
+            // 
+            this.txtStockId.Location = new System.Drawing.Point(61, 8);
+            this.txtStockId.Margin = new System.Windows.Forms.Padding(4);
+            this.txtStockId.Name = "txtStockId";
+            this.txtStockId.Size = new System.Drawing.Size(73, 25);
+            this.txtStockId.TabIndex = 1;
+            this.txtStockId.TextChanged += new System.EventHandler(this.txtStockId_TextChanged);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Font = new System.Drawing.Font("新細明體", 12F);
+            this.btnAdd.Location = new System.Drawing.Point(379, 6);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(29, 30);
+            this.btnAdd.TabIndex = 11;
+            this.btnAdd.Tag = "";
+            this.btnAdd.Text = "+";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnSellingShort
+            // 
+            this.btnSellingShort.BackColor = System.Drawing.Color.DarkGreen;
+            this.btnSellingShort.Location = new System.Drawing.Point(748, 8);
+            this.btnSellingShort.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSellingShort.Name = "btnSellingShort";
+            this.btnSellingShort.Size = new System.Drawing.Size(52, 29);
+            this.btnSellingShort.TabIndex = 2;
+            this.btnSellingShort.Tag = "";
+            this.btnSellingShort.Text = "券賣";
+            this.btnSellingShort.UseVisualStyleBackColor = false;
+            this.btnSellingShort.Click += new System.EventHandler(this.btnSellingShort_Click);
+            // 
+            // btnMinus
+            // 
+            this.btnMinus.Font = new System.Drawing.Font("新細明體", 12F);
+            this.btnMinus.Location = new System.Drawing.Point(341, 6);
+            this.btnMinus.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMinus.Name = "btnMinus";
+            this.btnMinus.Size = new System.Drawing.Size(29, 29);
+            this.btnMinus.TabIndex = 10;
+            this.btnMinus.Tag = "";
+            this.btnMinus.Text = "-";
+            this.btnMinus.UseVisualStyleBackColor = true;
+            this.btnMinus.Click += new System.EventHandler(this.btnMinus_Click);
+            // 
+            // btnMarginTrading
+            // 
+            this.btnMarginTrading.BackColor = System.Drawing.Color.IndianRed;
+            this.btnMarginTrading.Location = new System.Drawing.Point(803, 8);
+            this.btnMarginTrading.Margin = new System.Windows.Forms.Padding(4);
+            this.btnMarginTrading.Name = "btnMarginTrading";
+            this.btnMarginTrading.Size = new System.Drawing.Size(52, 29);
+            this.btnMarginTrading.TabIndex = 3;
+            this.btnMarginTrading.Tag = "";
+            this.btnMarginTrading.Text = "資買";
+            this.btnMarginTrading.UseVisualStyleBackColor = false;
+            this.btnMarginTrading.Click += new System.EventHandler(this.btnMarginTrading_Click);
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(277, 8);
+            this.txtPrice.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(55, 25);
+            this.txtPrice.TabIndex = 9;
+            this.txtPrice.Tag = "1";
+            // 
+            // btnOverSell
+            // 
+            this.btnOverSell.BackColor = System.Drawing.Color.Salmon;
+            this.btnOverSell.Location = new System.Drawing.Point(911, 8);
+            this.btnOverSell.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOverSell.Name = "btnOverSell";
+            this.btnOverSell.Size = new System.Drawing.Size(52, 29);
+            this.btnOverSell.TabIndex = 4;
+            this.btnOverSell.Tag = "";
+            this.btnOverSell.Text = "沖賣";
+            this.btnOverSell.UseVisualStyleBackColor = false;
+            this.btnOverSell.Click += new System.EventHandler(this.btnOverSell_Click);
+            // 
+            // nupQty
+            // 
+            this.nupQty.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.nupQty.Location = new System.Drawing.Point(141, 8);
+            this.nupQty.Margin = new System.Windows.Forms.Padding(4);
+            this.nupQty.Name = "nupQty";
+            this.nupQty.Size = new System.Drawing.Size(48, 25);
+            this.nupQty.TabIndex = 8;
+            this.nupQty.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // btnBuy
+            // 
+            this.btnBuy.BackColor = System.Drawing.Color.Red;
+            this.btnBuy.Location = new System.Drawing.Point(964, 8);
+            this.btnBuy.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBuy.Name = "btnBuy";
+            this.btnBuy.Size = new System.Drawing.Size(52, 29);
+            this.btnBuy.TabIndex = 5;
+            this.btnBuy.Tag = "";
+            this.btnBuy.Text = "現買";
+            this.btnBuy.UseVisualStyleBackColor = false;
+            this.btnBuy.Click += new System.EventHandler(this.btnBuy_Click);
+            // 
+            // btnSell
+            // 
+            this.btnSell.BackColor = System.Drawing.Color.LightGreen;
+            this.btnSell.Location = new System.Drawing.Point(1017, 8);
+            this.btnSell.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSell.Name = "btnSell";
+            this.btnSell.Size = new System.Drawing.Size(52, 29);
+            this.btnSell.TabIndex = 6;
+            this.btnSell.Tag = "";
+            this.btnSell.Text = "現賣";
+            this.btnSell.UseVisualStyleBackColor = false;
+            this.btnSell.Click += new System.EventHandler(this.btnSell_Click);
+            // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(20, 271);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(20, 183);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1524, 253);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1730, 341);
             this.flowLayoutPanel1.TabIndex = 13;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(437, 164);
+            this.label5.Location = new System.Drawing.Point(985, 164);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(37, 15);
@@ -486,7 +486,7 @@
             this.richTxtInfo.Name = "richTxtInfo";
             this.richTxtInfo.ReadOnly = true;
             this.richTxtInfo.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTxtInfo.Size = new System.Drawing.Size(1523, 203);
+            this.richTxtInfo.Size = new System.Drawing.Size(1728, 203);
             this.richTxtInfo.TabIndex = 13;
             this.richTxtInfo.Text = "";
             // 
@@ -495,7 +495,7 @@
             this.txtOberserver.Location = new System.Drawing.Point(343, 5);
             this.txtOberserver.Margin = new System.Windows.Forms.Padding(4);
             this.txtOberserver.Name = "txtOberserver";
-            this.txtOberserver.Size = new System.Drawing.Size(1043, 25);
+            this.txtOberserver.Size = new System.Drawing.Size(1249, 25);
             this.txtOberserver.TabIndex = 48;
             // 
             // label7
@@ -510,7 +510,7 @@
             // 
             // btnClick
             // 
-            this.btnClick.Location = new System.Drawing.Point(1395, 4);
+            this.btnClick.Location = new System.Drawing.Point(1600, 4);
             this.btnClick.Margin = new System.Windows.Forms.Padding(4);
             this.btnClick.Name = "btnClick";
             this.btnClick.Size = new System.Drawing.Size(63, 29);
@@ -522,7 +522,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(872, 164);
+            this.label8.Location = new System.Drawing.Point(1535, 164);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(37, 15);
@@ -534,12 +534,12 @@
             this.flowLayoutPanelStock.Location = new System.Drawing.Point(4, 18);
             this.flowLayoutPanelStock.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanelStock.Name = "flowLayoutPanelStock";
-            this.flowLayoutPanelStock.Size = new System.Drawing.Size(1512, 238);
+            this.flowLayoutPanelStock.Size = new System.Drawing.Size(1726, 238);
             this.flowLayoutPanelStock.TabIndex = 53;
             // 
             // btnReflash
             // 
-            this.btnReflash.Location = new System.Drawing.Point(1463, 4);
+            this.btnReflash.Location = new System.Drawing.Point(1668, 4);
             this.btnReflash.Margin = new System.Windows.Forms.Padding(4);
             this.btnReflash.Name = "btnReflash";
             this.btnReflash.Size = new System.Drawing.Size(81, 29);
@@ -727,7 +727,7 @@
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.panel2.Controls.Add(this.txtPassword);
             this.panel2.Controls.Add(this.btnAllStopLoss);
-            this.panel2.Location = new System.Drawing.Point(1331, 51);
+            this.panel2.Location = new System.Drawing.Point(1535, 51);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(213, 41);
@@ -750,25 +750,29 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1524, 260);
+            this.groupBox1.Size = new System.Drawing.Size(1739, 260);
             this.groupBox1.TabIndex = 65;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "庫存";
             // 
-            // flowLayoutPanel2
+            // btnReset
             // 
-            this.flowLayoutPanel2.Controls.Add(this.panel1);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(23, 98);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(1520, 55);
-            this.flowLayoutPanel2.TabIndex = 66;
+            this.btnReset.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnReset.Location = new System.Drawing.Point(1241, 8);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(4);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(52, 29);
+            this.btnReset.TabIndex = 60;
+            this.btnReset.Text = "重置";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1557, 1018);
-            this.Controls.Add(this.flowLayoutPanel2);
+            this.ClientSize = new System.Drawing.Size(1763, 1018);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel2);
@@ -793,9 +797,9 @@
             this.Name = "FormMain";
             this.Text = "下單機";
             this.Load += new System.EventHandler(this.FormMain_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.nupQty)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupQty)).EndInit();
             this.gbBullStop.ResumeLayout(false);
             this.gbBullStop.PerformLayout();
             this.gbBearStop.ResumeLayout(false);
@@ -804,7 +808,6 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.flowLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -814,33 +817,17 @@
 
         private System.Windows.Forms.TextBox txtStockAccount;
         private System.Windows.Forms.Label lbStockAccount;
-        private System.Windows.Forms.TextBox txtStockId;
-        private System.Windows.Forms.Button btnMarginTrading;
-        private System.Windows.Forms.Button btnSellingShort;
-        private System.Windows.Forms.Button btnSell;
-        private System.Windows.Forms.Button btnBuy;
-        private System.Windows.Forms.Button btnOverSell;
-        private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.NumericUpDown nupQty;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnMinus;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox richTxtInfo;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtOberserver;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btnClick;
-        private System.Windows.Forms.Button btnDeal;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button btnMarginTradingSell;
-        private System.Windows.Forms.Button btnLending;
-        private System.Windows.Forms.Button btnChangePrice;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelStock;
         private System.Windows.Forms.Button btnReflash;
         private System.Windows.Forms.RadioButton rbBullMa5;
@@ -860,15 +847,31 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox cbPriceType;
+        private System.Windows.Forms.TextBox txtMa10;
+        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtMa60;
         private System.Windows.Forms.TextBox txtMa20;
         private System.Windows.Forms.TextBox txtMa5;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtMa10;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.ComboBox cbPriceType;
+        private System.Windows.Forms.Button btnChangePrice;
+        private System.Windows.Forms.Button btnLending;
+        private System.Windows.Forms.Button btnMarginTradingSell;
+        private System.Windows.Forms.Button btnDeal;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtStockId;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnSellingShort;
+        private System.Windows.Forms.Button btnMinus;
+        private System.Windows.Forms.Button btnMarginTrading;
+        private System.Windows.Forms.TextBox txtPrice;
+        private System.Windows.Forms.Button btnOverSell;
+        private System.Windows.Forms.NumericUpDown nupQty;
+        private System.Windows.Forms.Button btnBuy;
+        private System.Windows.Forms.Button btnSell;
+        private System.Windows.Forms.Button btnReset;
     }
 }

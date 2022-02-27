@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HtsApiDemo
+namespace StockStrategy
 {
     static class Program
     {
@@ -16,8 +16,8 @@ namespace HtsApiDemo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new fmCallApiDemo());
-            Application.Run(new FormMain());
+          //  Application.Run(new Form1());
+           Application.Run(new FormMain());
         }
     }
 }

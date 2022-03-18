@@ -35,6 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkHighStopLost = new System.Windows.Forms.CheckBox();
+            this.chkABSStopLost = new System.Windows.Forms.CheckBox();
             this.chkCloseStopLost = new System.Windows.Forms.CheckBox();
             this.chkAll = new System.Windows.Forms.CheckBox();
             this.lbStock = new System.Windows.Forms.Label();
@@ -54,7 +56,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.cbPriceType = new System.Windows.Forms.ComboBox();
-            this.btnChangePrice = new System.Windows.Forms.Button();
             this.btnLending = new System.Windows.Forms.Button();
             this.btnMarginTradingSell = new System.Windows.Forms.Button();
             this.btnDeal = new System.Windows.Forms.Button();
@@ -103,6 +104,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.lbExposure = new System.Windows.Forms.Label();
+            this.lbAssets = new System.Windows.Forms.Label();
             this.chkCloseAllStopLost = new System.Windows.Forms.CheckBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -121,14 +124,14 @@
             this.lbSetting = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.label20 = new System.Windows.Forms.Label();
             this.lbTarget = new System.Windows.Forms.Label();
             this.lbStopLost = new System.Windows.Forms.Label();
             this.timerRealPrice = new System.Windows.Forms.Timer(this.components);
             this.timerAvgStopLost = new System.Windows.Forms.Timer(this.components);
             this.timerDefenseStopLost = new System.Windows.Forms.Timer(this.components);
-            this.lbAssets = new System.Windows.Forms.Label();
-            this.lbExposure = new System.Windows.Forms.Label();
             this.timerAbsStopLost = new System.Windows.Forms.Timer(this.components);
+            this.timerHighStopList = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupQty)).BeginInit();
             this.gbBullStop.SuspendLayout();
@@ -207,6 +210,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel1.Controls.Add(this.chkHighStopLost);
+            this.panel1.Controls.Add(this.chkABSStopLost);
             this.panel1.Controls.Add(this.chkCloseStopLost);
             this.panel1.Controls.Add(this.chkAll);
             this.panel1.Controls.Add(this.lbStock);
@@ -226,7 +231,6 @@
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.cbPriceType);
-            this.panel1.Controls.Add(this.btnChangePrice);
             this.panel1.Controls.Add(this.btnLending);
             this.panel1.Controls.Add(this.btnMarginTradingSell);
             this.panel1.Controls.Add(this.btnDeal);
@@ -249,6 +253,26 @@
             this.panel1.Size = new System.Drawing.Size(1918, 44);
             this.panel1.TabIndex = 12;
             // 
+            // chkHighStopLost
+            // 
+            this.chkHighStopLost.AutoSize = true;
+            this.chkHighStopLost.Location = new System.Drawing.Point(2158, 12);
+            this.chkHighStopLost.Name = "chkHighStopLost";
+            this.chkHighStopLost.Size = new System.Drawing.Size(64, 19);
+            this.chkHighStopLost.TabIndex = 82;
+            this.chkHighStopLost.Text = "HIGH";
+            this.chkHighStopLost.UseVisualStyleBackColor = true;
+            // 
+            // chkABSStopLost
+            // 
+            this.chkABSStopLost.AutoSize = true;
+            this.chkABSStopLost.Location = new System.Drawing.Point(2095, 12);
+            this.chkABSStopLost.Name = "chkABSStopLost";
+            this.chkABSStopLost.Size = new System.Drawing.Size(56, 19);
+            this.chkABSStopLost.TabIndex = 81;
+            this.chkABSStopLost.Text = "ABS";
+            this.chkABSStopLost.UseVisualStyleBackColor = true;
+            // 
             // chkCloseStopLost
             // 
             this.chkCloseStopLost.AutoSize = true;
@@ -256,7 +280,7 @@
             this.chkCloseStopLost.Name = "chkCloseStopLost";
             this.chkCloseStopLost.Size = new System.Drawing.Size(59, 19);
             this.chkCloseStopLost.TabIndex = 80;
-            this.chkCloseStopLost.Text = "關閉";
+            this.chkCloseStopLost.Text = "AVG";
             this.chkCloseStopLost.UseVisualStyleBackColor = true;
             // 
             // chkAll
@@ -347,7 +371,7 @@
             // 
             // txtMa10
             // 
-            this.txtMa10.Location = new System.Drawing.Point(708, 9);
+            this.txtMa10.Location = new System.Drawing.Point(759, 9);
             this.txtMa10.Margin = new System.Windows.Forms.Padding(4);
             this.txtMa10.Name = "txtMa10";
             this.txtMa10.ReadOnly = true;
@@ -357,7 +381,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(648, 12);
+            this.label13.Location = new System.Drawing.Point(699, 12);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(36, 15);
@@ -366,7 +390,7 @@
             // 
             // txtMa60
             // 
-            this.txtMa60.Location = new System.Drawing.Point(891, 8);
+            this.txtMa60.Location = new System.Drawing.Point(942, 8);
             this.txtMa60.Margin = new System.Windows.Forms.Padding(4);
             this.txtMa60.Name = "txtMa60";
             this.txtMa60.ReadOnly = true;
@@ -375,7 +399,7 @@
             // 
             // txtMa20
             // 
-            this.txtMa20.Location = new System.Drawing.Point(797, 9);
+            this.txtMa20.Location = new System.Drawing.Point(848, 9);
             this.txtMa20.Margin = new System.Windows.Forms.Padding(4);
             this.txtMa20.Name = "txtMa20";
             this.txtMa20.ReadOnly = true;
@@ -384,7 +408,7 @@
             // 
             // txtMa5
             // 
-            this.txtMa5.Location = new System.Drawing.Point(585, 8);
+            this.txtMa5.Location = new System.Drawing.Point(636, 8);
             this.txtMa5.Margin = new System.Windows.Forms.Padding(4);
             this.txtMa5.Name = "txtMa5";
             this.txtMa5.ReadOnly = true;
@@ -394,7 +418,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(857, 12);
+            this.label12.Location = new System.Drawing.Point(908, 12);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(22, 15);
@@ -404,7 +428,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(767, 12);
+            this.label11.Location = new System.Drawing.Point(818, 12);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(22, 15);
@@ -414,7 +438,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(555, 12);
+            this.label10.Location = new System.Drawing.Point(606, 12);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(22, 15);
@@ -436,22 +460,10 @@
             this.cbPriceType.TabIndex = 0;
             this.cbPriceType.SelectedIndexChanged += new System.EventHandler(this.cbPriceType_SelectedIndexChanged);
             // 
-            // btnChangePrice
-            // 
-            this.btnChangePrice.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnChangePrice.Location = new System.Drawing.Point(1585, 6);
-            this.btnChangePrice.Margin = new System.Windows.Forms.Padding(4);
-            this.btnChangePrice.Name = "btnChangePrice";
-            this.btnChangePrice.Size = new System.Drawing.Size(69, 32);
-            this.btnChangePrice.TabIndex = 51;
-            this.btnChangePrice.Text = "改價";
-            this.btnChangePrice.UseVisualStyleBackColor = true;
-            this.btnChangePrice.Click += new System.EventHandler(this.btnChangePrice_Click);
-            // 
             // btnLending
             // 
             this.btnLending.BackColor = System.Drawing.Color.DeepPink;
-            this.btnLending.Location = new System.Drawing.Point(1439, 4);
+            this.btnLending.Location = new System.Drawing.Point(1490, 4);
             this.btnLending.Margin = new System.Windows.Forms.Padding(4);
             this.btnLending.Name = "btnLending";
             this.btnLending.Size = new System.Drawing.Size(69, 34);
@@ -464,7 +476,7 @@
             // 
             this.btnMarginTradingSell.BackColor = System.Drawing.Color.Aquamarine;
             this.btnMarginTradingSell.Enabled = false;
-            this.btnMarginTradingSell.Location = new System.Drawing.Point(1147, 4);
+            this.btnMarginTradingSell.Location = new System.Drawing.Point(1198, 4);
             this.btnMarginTradingSell.Margin = new System.Windows.Forms.Padding(4);
             this.btnMarginTradingSell.Name = "btnMarginTradingSell";
             this.btnMarginTradingSell.Size = new System.Drawing.Size(69, 32);
@@ -476,7 +488,7 @@
             // btnDeal
             // 
             this.btnDeal.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnDeal.Location = new System.Drawing.Point(1511, 5);
+            this.btnDeal.Location = new System.Drawing.Point(1562, 5);
             this.btnDeal.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeal.Name = "btnDeal";
             this.btnDeal.Size = new System.Drawing.Size(69, 31);
@@ -488,7 +500,7 @@
             // lbCoupon
             // 
             this.lbCoupon.AutoSize = true;
-            this.lbCoupon.Location = new System.Drawing.Point(979, 12);
+            this.lbCoupon.Location = new System.Drawing.Point(1030, 12);
             this.lbCoupon.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbCoupon.Name = "lbCoupon";
             this.lbCoupon.Size = new System.Drawing.Size(14, 15);
@@ -530,7 +542,7 @@
             // btnSellingShort
             // 
             this.btnSellingShort.BackColor = System.Drawing.Color.DarkGreen;
-            this.btnSellingShort.Location = new System.Drawing.Point(1000, 4);
+            this.btnSellingShort.Location = new System.Drawing.Point(1051, 4);
             this.btnSellingShort.Margin = new System.Windows.Forms.Padding(4);
             this.btnSellingShort.Name = "btnSellingShort";
             this.btnSellingShort.Size = new System.Drawing.Size(69, 32);
@@ -556,7 +568,7 @@
             // btnMarginTrading
             // 
             this.btnMarginTrading.BackColor = System.Drawing.Color.IndianRed;
-            this.btnMarginTrading.Location = new System.Drawing.Point(1072, 4);
+            this.btnMarginTrading.Location = new System.Drawing.Point(1123, 4);
             this.btnMarginTrading.Margin = new System.Windows.Forms.Padding(4);
             this.btnMarginTrading.Name = "btnMarginTrading";
             this.btnMarginTrading.Size = new System.Drawing.Size(69, 32);
@@ -578,7 +590,7 @@
             // btnOverSell
             // 
             this.btnOverSell.BackColor = System.Drawing.Color.Salmon;
-            this.btnOverSell.Location = new System.Drawing.Point(1220, 4);
+            this.btnOverSell.Location = new System.Drawing.Point(1271, 4);
             this.btnOverSell.Margin = new System.Windows.Forms.Padding(4);
             this.btnOverSell.Name = "btnOverSell";
             this.btnOverSell.Size = new System.Drawing.Size(69, 34);
@@ -610,7 +622,7 @@
             // btnBuy
             // 
             this.btnBuy.BackColor = System.Drawing.Color.Red;
-            this.btnBuy.Location = new System.Drawing.Point(1293, 4);
+            this.btnBuy.Location = new System.Drawing.Point(1344, 4);
             this.btnBuy.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuy.Name = "btnBuy";
             this.btnBuy.Size = new System.Drawing.Size(69, 34);
@@ -624,7 +636,7 @@
             // 
             this.btnSell.BackColor = System.Drawing.Color.LightGreen;
             this.btnSell.Enabled = false;
-            this.btnSell.Location = new System.Drawing.Point(1365, 6);
+            this.btnSell.Location = new System.Drawing.Point(1416, 6);
             this.btnSell.Margin = new System.Windows.Forms.Padding(4);
             this.btnSell.Name = "btnSell";
             this.btnSell.Size = new System.Drawing.Size(69, 30);
@@ -647,7 +659,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(975, 9);
+            this.label5.Location = new System.Drawing.Point(1024, 9);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(37, 15);
@@ -662,7 +674,7 @@
             this.richTxtInfo.Name = "richTxtInfo";
             this.richTxtInfo.ReadOnly = true;
             this.richTxtInfo.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.richTxtInfo.Size = new System.Drawing.Size(498, 97);
+            this.richTxtInfo.Size = new System.Drawing.Size(499, 97);
             this.richTxtInfo.TabIndex = 13;
             this.richTxtInfo.Text = "";
             // 
@@ -698,7 +710,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1525, 9);
+            this.label8.Location = new System.Drawing.Point(1578, 9);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(37, 15);
@@ -1011,7 +1023,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.richTxtInfo);
             this.splitContainer2.Size = new System.Drawing.Size(1918, 97);
-            this.splitContainer2.SplitterDistance = 1416;
+            this.splitContainer2.SplitterDistance = 1415;
             this.splitContainer2.TabIndex = 66;
             // 
             // panel7
@@ -1044,7 +1056,7 @@
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1416, 97);
+            this.panel7.Size = new System.Drawing.Size(1415, 97);
             this.panel7.TabIndex = 65;
             // 
             // panel9
@@ -1052,10 +1064,28 @@
             this.panel9.Controls.Add(this.lbExposure);
             this.panel9.Controls.Add(this.lbAssets);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel9.Location = new System.Drawing.Point(1035, 0);
+            this.panel9.Location = new System.Drawing.Point(1034, 0);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(152, 97);
             this.panel9.TabIndex = 80;
+            // 
+            // lbExposure
+            // 
+            this.lbExposure.AutoSize = true;
+            this.lbExposure.Location = new System.Drawing.Point(11, 29);
+            this.lbExposure.Name = "lbExposure";
+            this.lbExposure.Size = new System.Drawing.Size(48, 15);
+            this.lbExposure.TabIndex = 1;
+            this.lbExposure.Text = "label20";
+            // 
+            // lbAssets
+            // 
+            this.lbAssets.AutoSize = true;
+            this.lbAssets.Location = new System.Drawing.Point(11, 8);
+            this.lbAssets.Name = "lbAssets";
+            this.lbAssets.Size = new System.Drawing.Size(98, 15);
+            this.lbAssets.TabIndex = 0;
+            this.lbAssets.Text = "資金:1,300,000";
             // 
             // chkCloseAllStopLost
             // 
@@ -1105,7 +1135,7 @@
             this.panel8.Controls.Add(this.label15);
             this.panel8.Controls.Add(this.label16);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel8.Location = new System.Drawing.Point(1187, 0);
+            this.panel8.Location = new System.Drawing.Point(1186, 0);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(229, 97);
             this.panel8.TabIndex = 76;
@@ -1230,6 +1260,7 @@
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.label20);
             this.panel5.Controls.Add(this.lbTarget);
             this.panel5.Controls.Add(this.lbStopLost);
             this.panel5.Controls.Add(this.label1);
@@ -1243,6 +1274,16 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1918, 37);
             this.panel5.TabIndex = 69;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(2032, 9);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(87, 15);
+            this.label20.TabIndex = 54;
+            this.label20.Text = "停損策略(X)";
             // 
             // lbTarget
             // 
@@ -1273,7 +1314,7 @@
             // timerAvgStopLost
             // 
             this.timerAvgStopLost.Enabled = true;
-            this.timerAvgStopLost.Interval = 5000;
+            this.timerAvgStopLost.Interval = 2000;
             this.timerAvgStopLost.Tick += new System.EventHandler(this.timerAvgStopLost_Tick);
             // 
             // timerDefenseStopLost
@@ -1282,29 +1323,17 @@
             this.timerDefenseStopLost.Interval = 5000;
             this.timerDefenseStopLost.Tick += new System.EventHandler(this.timerDefenseStopLost_Tick);
             // 
-            // lbAssets
-            // 
-            this.lbAssets.AutoSize = true;
-            this.lbAssets.Location = new System.Drawing.Point(11, 8);
-            this.lbAssets.Name = "lbAssets";
-            this.lbAssets.Size = new System.Drawing.Size(98, 15);
-            this.lbAssets.TabIndex = 0;
-            this.lbAssets.Text = "資金:1,300,000";
-            // 
-            // lbExposure
-            // 
-            this.lbExposure.AutoSize = true;
-            this.lbExposure.Location = new System.Drawing.Point(11, 29);
-            this.lbExposure.Name = "lbExposure";
-            this.lbExposure.Size = new System.Drawing.Size(48, 15);
-            this.lbExposure.TabIndex = 1;
-            this.lbExposure.Text = "label20";
-            // 
             // timerAbsStopLost
             // 
             this.timerAbsStopLost.Enabled = true;
             this.timerAbsStopLost.Interval = 5000;
             this.timerAbsStopLost.Tick += new System.EventHandler(this.timerAbsStopLost_Tick);
+            // 
+            // timerHighStopList
+            // 
+            this.timerHighStopList.Enabled = true;
+            this.timerHighStopList.Interval = 5000;
+            this.timerHighStopList.Tick += new System.EventHandler(this.timerHighStopList_Tick);
             // 
             // FormMain
             // 
@@ -1393,7 +1422,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox cbPriceType;
-        private System.Windows.Forms.Button btnChangePrice;
         private System.Windows.Forms.Button btnLending;
         private System.Windows.Forms.Button btnMarginTradingSell;
         private System.Windows.Forms.Button btnDeal;
@@ -1452,5 +1480,9 @@
         private System.Windows.Forms.Label lbExposure;
         private System.Windows.Forms.Label lbAssets;
         private System.Windows.Forms.Timer timerAbsStopLost;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.CheckBox chkHighStopLost;
+        private System.Windows.Forms.CheckBox chkABSStopLost;
+        private System.Windows.Forms.Timer timerHighStopList;
     }
 }

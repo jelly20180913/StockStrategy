@@ -25,6 +25,7 @@ namespace StockStrategy.Model
             public string StockId { get; set; }
             public string StockName { get; set; }
             public string Price { get; set; }
+            public string HighPrice { get; set; }
         }
         /// <summary>
         /// [每日收盤行情]參數

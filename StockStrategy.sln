@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1778
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockStrategy", "StockStrategy\StockStrategy.csproj", "{125FFFDD-4332-40BD-98DD-3C810C34D2FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetTWSEprice", "GetTWSEprice\GetTWSEprice.csproj", "{988E5B2D-AAC9-4A22-AE08-6252DD940E45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{125FFFDD-4332-40BD-98DD-3C810C34D2FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{125FFFDD-4332-40BD-98DD-3C810C34D2FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{125FFFDD-4332-40BD-98DD-3C810C34D2FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{988E5B2D-AAC9-4A22-AE08-6252DD940E45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{988E5B2D-AAC9-4A22-AE08-6252DD940E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{988E5B2D-AAC9-4A22-AE08-6252DD940E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{988E5B2D-AAC9-4A22-AE08-6252DD940E45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

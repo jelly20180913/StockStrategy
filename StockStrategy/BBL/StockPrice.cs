@@ -75,6 +75,7 @@ namespace StockStrategy.BBL
                         _Price.Price = arrPrice.Length>0? Math.Round(Convert.ToDecimal(arrPrice[0]), 2).ToString():"0";
                     }
                     _Price.StockName = jsonPrice.msgArray[i].n;
+                    _Price.HighPrice = jsonPrice.msgArray[i].h;
                     _PriceList.Add(_Price);
                     // a = 最低委賣價
                     //string ask = "";

@@ -76,6 +76,8 @@ namespace StockStrategy.BBL
                     }
                     _Price.StockName = jsonPrice.msgArray[i].n;
                     _Price.HighPrice = jsonPrice.msgArray[i].h;
+                    _Price.DealQty = jsonPrice.msgArray[i].tv;
+                    _Price.TotalDealQty = jsonPrice.msgArray[i].v;
                     _PriceList.Add(_Price);
                     // a = 最低委賣價
                     //string ask = "";

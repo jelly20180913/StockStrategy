@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
-namespace StockStrategy.Model
+﻿using System.Net;
+namespace DataModel
 {
-   public class ApiResultEntity
+    public class ApiResultEntity
     {
         private HttpStatusCode statusCode { get; set; }
 
@@ -52,6 +47,5 @@ namespace StockStrategy.Model
         private string status;
         private string errorMessage;
         public object Data { get; set; }
-
     }
 }

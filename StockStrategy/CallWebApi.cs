@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Net;
 using Newtonsoft.Json;
 using StockStrategy.Model;
+using DataModel;
+using System.Net.Http;
 namespace StockStrategy
 {
     public class CallWebApi
@@ -25,10 +27,10 @@ namespace StockStrategy
                 // 執行 post 動作
                 result = webClient.UploadString(uri, jsonData);
                 ApiResultEntity _ApiResult = JsonConvert.DeserializeObject<ApiResultEntity>(result);
-             //   ReturnToken _ReturnToken = JsonConvert.DeserializeObject<ReturnToken>(_ApiResult.Data.ToString());
-               // _Token = _ReturnToken.token;
+                 ReturnToken _ReturnToken = JsonConvert.DeserializeObject<ReturnToken>(_ApiResult.Data.ToString());
+                _Token = _ReturnToken.token;
             }
-            return "";
+            return _Token;
         }
 
         /// <summary>
@@ -53,6 +55,20 @@ namespace StockStrategy
             }
             ApiResultEntity _ApiResult = JsonConvert.DeserializeObject<ApiResultEntity>(result);
             return _ApiResult;
+        }
+        public static async Task<HttpResponseMessage> CallLineNotifyApi(string token, string message)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://notify-api.line.me/api/notify");
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+                var form = new FormUrlEncodedContent(new[]
+                {
+                   new KeyValuePair<string, string>("message", message)
+               });
+                return await client.PostAsync("", form);
+            }
         }
         public static ApiResultEntity Put(string jsonData, string uri)
         {

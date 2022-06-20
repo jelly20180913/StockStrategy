@@ -28,6 +28,7 @@ namespace StockStrategy.Model
             public string HighPrice { get; set; }
             public string DealQty { get; set; }
             public string TotalDealQty { get; set; }
+            public string OpenPrice  { get; set; }
         }
         /// <summary>
         /// [每日收盤行情]參數
@@ -100,7 +101,19 @@ namespace StockStrategy.Model
             public int sessionLatestTime { get; set; }
             public string sysTime { get; set; }
         }
-
+        public class StockDayAll
+        {
+            public string Code { get; set; }
+            public string Name { get; set; }
+            public string TradeVolume { get; set; }
+            public string TradeValue { get; set; }
+            public string OpeningPrice { get; set; }
+            public string HighestPrice { get; set; }
+            public string  LowestPrice { get; set; }
+            public string ClosingPrice { get; set; }
+            public string Change { get; set; }
+            public string Transaction { get; set; }
+        }
         public class MsgArray
         {
             public string n { get; set; }
@@ -136,6 +149,18 @@ namespace StockStrategy.Model
             public string h { get; set; }
             public string ex { get; set; }
         }
-
+        public class JuridicaPerson
+        {
+            public string queryType { get; set; }
+            public string goDay { get; set; }
+            public string doQuery { get; set; }
+            public string dateaddcnt { get; set; }
+            public string queryDate { get; set; } 
+        }
+        public class LineMsg
+        {
+            public string message { get; set; }
+            
+        }
     }
 }

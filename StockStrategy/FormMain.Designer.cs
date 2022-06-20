@@ -53,6 +53,7 @@
             this.txtMa20 = new System.Windows.Forms.TextBox();
             this.txtMa5 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.btnReflash = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.cbPriceType = new System.Windows.Forms.ComboBox();
@@ -79,7 +80,6 @@
             this.btnClick = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.flowLayoutPanelStock = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnReflash = new System.Windows.Forms.Button();
             this.rbBullMa5 = new System.Windows.Forms.RadioButton();
             this.gbBullStop = new System.Windows.Forms.GroupBox();
             this.rbBullMa20 = new System.Windows.Forms.RadioButton();
@@ -98,6 +98,7 @@
             this.btnSetting = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.gbFutures = new System.Windows.Forms.GroupBox();
             this.flowLayoutFutures = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -105,6 +106,7 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.btnLine = new System.Windows.Forms.Button();
             this.btnCloseSound = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
             this.label17 = new System.Windows.Forms.Label();
@@ -118,6 +120,8 @@
             this.txtFutureAccount = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.label30 = new System.Windows.Forms.Label();
+            this.lbTimes = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.lbExposureFuture = new System.Windows.Forms.Label();
@@ -140,9 +144,9 @@
             this.lbStopLost = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.cbDateMM = new System.Windows.Forms.ComboBox();
             this.btnFutureRefrash = new System.Windows.Forms.Button();
             this.lbFuturePrice = new System.Windows.Forms.Label();
-            this.btnGetFutures = new System.Windows.Forms.Button();
             this.cbFutureName = new System.Windows.Forms.ComboBox();
             this.btnFutureDeal = new System.Windows.Forms.Button();
             this.txtFutureMa10 = new System.Windows.Forms.TextBox();
@@ -167,6 +171,10 @@
             this.timerAbsStopLost = new System.Windows.Forms.Timer(this.components);
             this.timerHighStopList = new System.Windows.Forms.Timer(this.components);
             this.timerGetFuture = new System.Windows.Forms.Timer(this.components);
+            this.timerFutureStopLost = new System.Windows.Forms.Timer(this.components);
+            this.timerGetLackOffPrice = new System.Windows.Forms.Timer(this.components);
+            this.timerPtStopLost = new System.Windows.Forms.Timer(this.components);
+            this.timerLineNotify = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupQty)).BeginInit();
             this.gbBullStop.SuspendLayout();
@@ -178,6 +186,10 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
             this.gbFutures.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -263,6 +275,7 @@
             this.panel1.Controls.Add(this.txtMa20);
             this.panel1.Controls.Add(this.txtMa5);
             this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.btnReflash);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.cbPriceType);
@@ -397,7 +410,7 @@
             // btnReset
             // 
             this.btnReset.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnReset.Location = new System.Drawing.Point(1244, 5);
+            this.btnReset.Location = new System.Drawing.Point(1226, 4);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(52, 26);
             this.btnReset.TabIndex = 60;
@@ -454,6 +467,16 @@
             this.label12.Size = new System.Drawing.Size(17, 12);
             this.label12.TabIndex = 54;
             this.label12.Text = "季";
+            // 
+            // btnReflash
+            // 
+            this.btnReflash.Location = new System.Drawing.Point(1279, 6);
+            this.btnReflash.Name = "btnReflash";
+            this.btnReflash.Size = new System.Drawing.Size(44, 23);
+            this.btnReflash.TabIndex = 54;
+            this.btnReflash.Text = "刷新";
+            this.btnReflash.UseVisualStyleBackColor = true;
+            this.btnReflash.Click += new System.EventHandler(this.btnReflash_Click);
             // 
             // label11
             // 
@@ -728,18 +751,8 @@
             this.flowLayoutPanelStock.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelStock.Location = new System.Drawing.Point(3, 18);
             this.flowLayoutPanelStock.Name = "flowLayoutPanelStock";
-            this.flowLayoutPanelStock.Size = new System.Drawing.Size(1803, 249);
+            this.flowLayoutPanelStock.Size = new System.Drawing.Size(1803, 173);
             this.flowLayoutPanelStock.TabIndex = 53;
-            // 
-            // btnReflash
-            // 
-            this.btnReflash.Location = new System.Drawing.Point(604, 2);
-            this.btnReflash.Name = "btnReflash";
-            this.btnReflash.Size = new System.Drawing.Size(44, 23);
-            this.btnReflash.TabIndex = 54;
-            this.btnReflash.Text = "刷新";
-            this.btnReflash.UseVisualStyleBackColor = true;
-            this.btnReflash.Click += new System.EventHandler(this.btnReflash_Click);
             // 
             // rbBullMa5
             // 
@@ -905,7 +918,7 @@
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.panel2.Controls.Add(this.txtPassword);
             this.panel2.Controls.Add(this.btnAllStopLoss);
-            this.panel2.Location = new System.Drawing.Point(479, 34);
+            this.panel2.Location = new System.Drawing.Point(479, 53);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(160, 33);
             this.panel2.TabIndex = 63;
@@ -923,10 +936,10 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.flowLayoutPanelStock);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1809, 270);
+            this.groupBox1.Size = new System.Drawing.Size(1809, 194);
             this.groupBox1.TabIndex = 65;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "庫存";
@@ -945,22 +958,39 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.gbFutures);
-            this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
             this.splitContainer1.Size = new System.Drawing.Size(1809, 825);
             this.splitContainer1.SplitterDistance = 433;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 66;
             // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.groupBox1);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.gbFutures);
+            this.splitContainer3.Size = new System.Drawing.Size(1809, 389);
+            this.splitContainer3.SplitterDistance = 194;
+            this.splitContainer3.TabIndex = 67;
+            // 
             // gbFutures
             // 
             this.gbFutures.Controls.Add(this.flowLayoutFutures);
-            this.gbFutures.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbFutures.Location = new System.Drawing.Point(0, 270);
+            this.gbFutures.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbFutures.Location = new System.Drawing.Point(0, 0);
             this.gbFutures.Margin = new System.Windows.Forms.Padding(2);
             this.gbFutures.Name = "gbFutures";
             this.gbFutures.Padding = new System.Windows.Forms.Padding(2);
-            this.gbFutures.Size = new System.Drawing.Size(1809, 80);
+            this.gbFutures.Size = new System.Drawing.Size(1809, 191);
             this.gbFutures.TabIndex = 66;
             this.gbFutures.TabStop = false;
             this.gbFutures.Text = "期貨";
@@ -968,9 +998,10 @@
             // flowLayoutFutures
             // 
             this.flowLayoutFutures.AutoScroll = true;
-            this.flowLayoutFutures.Location = new System.Drawing.Point(2, 14);
+            this.flowLayoutFutures.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutFutures.Location = new System.Drawing.Point(2, 17);
             this.flowLayoutFutures.Name = "flowLayoutFutures";
-            this.flowLayoutFutures.Size = new System.Drawing.Size(2002, 63);
+            this.flowLayoutFutures.Size = new System.Drawing.Size(1805, 172);
             this.flowLayoutFutures.TabIndex = 54;
             // 
             // tableLayoutPanel1
@@ -1034,6 +1065,7 @@
             // 
             // panel7
             // 
+            this.panel7.Controls.Add(this.btnLine);
             this.panel7.Controls.Add(this.btnCloseSound);
             this.panel7.Controls.Add(this.panel11);
             this.panel7.Controls.Add(this.txtFutureAccount);
@@ -1052,7 +1084,6 @@
             this.panel7.Controls.Add(this.nupPercentStop);
             this.panel7.Controls.Add(this.btnSetting);
             this.panel7.Controls.Add(this.label9);
-            this.panel7.Controls.Add(this.btnReflash);
             this.panel7.Controls.Add(this.txtOberserver);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 0);
@@ -1060,6 +1091,16 @@
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1139, 92);
             this.panel7.TabIndex = 65;
+            // 
+            // btnLine
+            // 
+            this.btnLine.Location = new System.Drawing.Point(607, 2);
+            this.btnLine.Name = "btnLine";
+            this.btnLine.Size = new System.Drawing.Size(38, 23);
+            this.btnLine.TabIndex = 85;
+            this.btnLine.Text = "Line";
+            this.btnLine.UseVisualStyleBackColor = true;
+            this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
             // 
             // btnCloseSound
             // 
@@ -1195,6 +1236,8 @@
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.label30);
+            this.panel9.Controls.Add(this.lbTimes);
             this.panel9.Controls.Add(this.label29);
             this.panel9.Controls.Add(this.label28);
             this.panel9.Controls.Add(this.lbExposureFuture);
@@ -1207,6 +1250,28 @@
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(95, 92);
             this.panel9.TabIndex = 80;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label30.Location = new System.Drawing.Point(67, 76);
+            this.label30.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(17, 12);
+            this.label30.TabIndex = 85;
+            this.label30.Text = "次";
+            // 
+            // lbTimes
+            // 
+            this.lbTimes.AutoSize = true;
+            this.lbTimes.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.lbTimes.Location = new System.Drawing.Point(11, 76);
+            this.lbTimes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbTimes.Name = "lbTimes";
+            this.lbTimes.Size = new System.Drawing.Size(11, 12);
+            this.lbTimes.TabIndex = 80;
+            this.lbTimes.Text = "1";
             // 
             // label29
             // 
@@ -1243,9 +1308,8 @@
             this.lbFutureAssets.Location = new System.Drawing.Point(36, 43);
             this.lbFutureAssets.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbFutureAssets.Name = "lbFutureAssets";
-            this.lbFutureAssets.Size = new System.Drawing.Size(41, 12);
+            this.lbFutureAssets.Size = new System.Drawing.Size(0, 12);
             this.lbFutureAssets.TabIndex = 2;
-            this.lbFutureAssets.Text = "450000";
             // 
             // lbExposure
             // 
@@ -1262,9 +1326,8 @@
             this.lbAssets.Location = new System.Drawing.Point(36, 7);
             this.lbAssets.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbAssets.Name = "lbAssets";
-            this.lbAssets.Size = new System.Drawing.Size(41, 12);
+            this.lbAssets.Size = new System.Drawing.Size(0, 12);
             this.lbAssets.TabIndex = 0;
-            this.lbAssets.Text = "800000";
             // 
             // chkCloseAllStopLost
             // 
@@ -1350,7 +1413,7 @@
             // 
             this.lbSetting.AutoSize = true;
             this.lbSetting.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.lbSetting.Location = new System.Drawing.Point(476, 50);
+            this.lbSetting.Location = new System.Drawing.Point(483, 37);
             this.lbSetting.Name = "lbSetting";
             this.lbSetting.Size = new System.Drawing.Size(0, 12);
             this.lbSetting.TabIndex = 65;
@@ -1431,9 +1494,9 @@
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.Color.PapayaWhip;
+            this.panel10.Controls.Add(this.cbDateMM);
             this.panel10.Controls.Add(this.btnFutureRefrash);
             this.panel10.Controls.Add(this.lbFuturePrice);
-            this.panel10.Controls.Add(this.btnGetFutures);
             this.panel10.Controls.Add(this.cbFutureName);
             this.panel10.Controls.Add(this.btnFutureDeal);
             this.panel10.Controls.Add(this.txtFutureMa10);
@@ -1459,6 +1522,14 @@
             this.panel10.Size = new System.Drawing.Size(1800, 39);
             this.panel10.TabIndex = 13;
             // 
+            // cbDateMM
+            // 
+            this.cbDateMM.FormattingEnabled = true;
+            this.cbDateMM.Location = new System.Drawing.Point(253, 10);
+            this.cbDateMM.Name = "cbDateMM";
+            this.cbDateMM.Size = new System.Drawing.Size(36, 20);
+            this.cbDateMM.TabIndex = 94;
+            // 
             // btnFutureRefrash
             // 
             this.btnFutureRefrash.Location = new System.Drawing.Point(958, 7);
@@ -1477,23 +1548,15 @@
             this.lbFuturePrice.Size = new System.Drawing.Size(0, 12);
             this.lbFuturePrice.TabIndex = 93;
             // 
-            // btnGetFutures
-            // 
-            this.btnGetFutures.BackColor = System.Drawing.Color.ForestGreen;
-            this.btnGetFutures.Location = new System.Drawing.Point(900, 7);
-            this.btnGetFutures.Name = "btnGetFutures";
-            this.btnGetFutures.Size = new System.Drawing.Size(52, 25);
-            this.btnGetFutures.TabIndex = 92;
-            this.btnGetFutures.Text = "取得";
-            this.btnGetFutures.UseVisualStyleBackColor = true;
-            this.btnGetFutures.Click += new System.EventHandler(this.btnGetFutures_Click);
-            // 
             // cbFutureName
             // 
             this.cbFutureName.FormattingEnabled = true;
             this.cbFutureName.Items.AddRange(new object[] {
             "小台期",
-            "台指期"});
+            "台指期",
+            "道瓊期",
+            "NAS期",
+            "金融期"});
             this.cbFutureName.Location = new System.Drawing.Point(60, 10);
             this.cbFutureName.Name = "cbFutureName";
             this.cbFutureName.Size = new System.Drawing.Size(59, 20);
@@ -1547,7 +1610,7 @@
             "範圍市價"});
             this.cbOrderType.Location = new System.Drawing.Point(205, 10);
             this.cbOrderType.Name = "cbOrderType";
-            this.cbOrderType.Size = new System.Drawing.Size(59, 20);
+            this.cbOrderType.Size = new System.Drawing.Size(45, 20);
             this.cbOrderType.TabIndex = 84;
             // 
             // txtFutureMa60
@@ -1610,9 +1673,9 @@
             // txtFuturePrice
             // 
             this.txtFuturePrice.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.txtFuturePrice.Location = new System.Drawing.Point(281, 10);
+            this.txtFuturePrice.Location = new System.Drawing.Point(292, 10);
             this.txtFuturePrice.Name = "txtFuturePrice";
-            this.txtFuturePrice.Size = new System.Drawing.Size(58, 22);
+            this.txtFuturePrice.Size = new System.Drawing.Size(47, 22);
             this.txtFuturePrice.TabIndex = 83;
             // 
             // label24
@@ -1711,6 +1774,27 @@
             this.timerGetFuture.Interval = 5000;
             this.timerGetFuture.Tick += new System.EventHandler(this.timerGetFuture_Tick);
             // 
+            // timerFutureStopLost
+            // 
+            this.timerFutureStopLost.Tick += new System.EventHandler(this.timerFutureStopLost_Tick);
+            // 
+            // timerGetLackOffPrice
+            // 
+            this.timerGetLackOffPrice.Interval = 30000;
+            this.timerGetLackOffPrice.Tick += new System.EventHandler(this.timerGetLackOffPrice_Tick);
+            // 
+            // timerPtStopLost
+            // 
+            this.timerPtStopLost.Enabled = true;
+            this.timerPtStopLost.Interval = 5000;
+            this.timerPtStopLost.Tick += new System.EventHandler(this.timerPtStopLost_Tick);
+            // 
+            // timerLineNotify
+            // 
+            this.timerLineNotify.Enabled = true;
+            this.timerLineNotify.Interval = 5000;
+            this.timerLineNotify.Tick += new System.EventHandler(this.timerLineNotify_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1718,6 +1802,7 @@
             this.ClientSize = new System.Drawing.Size(1852, 1061);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormMain";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -1734,6 +1819,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
             this.gbFutures.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
@@ -1889,7 +1978,6 @@
         private System.Windows.Forms.Button btnFutureDeal;
         private System.Windows.Forms.ComboBox cbFutureName;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Button btnGetFutures;
         private System.Windows.Forms.Button btnCloseSound;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label26;
@@ -1900,5 +1988,14 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button btnFutureRefrash;
+        private System.Windows.Forms.ComboBox cbDateMM;
+        private System.Windows.Forms.Timer timerFutureStopLost;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.Timer timerGetLackOffPrice;
+        private System.Windows.Forms.Label lbTimes;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Timer timerPtStopLost;
+        private System.Windows.Forms.Button btnLine;
+        private System.Windows.Forms.Timer timerLineNotify;
     }
 }

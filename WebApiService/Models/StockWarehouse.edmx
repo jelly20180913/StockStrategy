@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StockWarehouseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'StockWarehouse.dbo.Login' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="TradeVolume" Type="varchar" MaxLength="20" />
+          <Property Name="TradeValue" Type="varchar" MaxLength="20" />
+          <Property Name="OpeningPrice" Type="varchar" MaxLength="10" />
+          <Property Name="HighestPrice" Type="varchar" MaxLength="10" />
+          <Property Name="LowestPrice" Type="varchar" MaxLength="10" />
+          <Property Name="ClosingPrice" Type="varchar" MaxLength="10" />
+          <Property Name="Change" Type="varchar" MaxLength="10" />
+          <Property Name="TransactionValue" Type="varchar" MaxLength="20" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
+          <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="StockGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
+          <Property Name="Class" Type="nvarchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="10" />
+          <Property Name="UpdateTime" Type="nvarchar" MaxLength="20" />
+          <Property Name="StockType" Type="bit" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="StockIndex">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DayOfWeek" Type="nchar" MaxLength="2" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
+          <Property Name="DJI" Type="varchar" MaxLength="20" />
+          <Property Name="DJI_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="DJI_QuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="NASDAQ" Type="varchar" MaxLength="20" />
+          <Property Name="NASDAQ_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="NASDAQ_QuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="PHLX" Type="varchar" MaxLength="20" />
+          <Property Name="PHLX_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="PHLX_QuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="MTX" Type="varchar" MaxLength="20" />
+          <Property Name="MTX_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="MTX_QuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="MTX_Open" Type="varchar" MaxLength="10" />
+          <Property Name="MTX_High" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MTX_Volume" Type="varchar" MaxLength="10" />
+          <Property Name="TX" Type="varchar" MaxLength="20" />
+          <Property Name="TX_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="TX_QuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="TX_Open" Type="varchar" MaxLength="10" />
+          <Property Name="TX_Volume" Type="varchar" MaxLength="10" />
+          <Property Name="TX_High" Type="varchar" MaxLength="10" />
+          <Property Name="TAIEX" Type="varchar" MaxLength="20" />
+          <Property Name="TAIEX_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="TAIEX_QuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="TAIEX_Open" Type="varchar" MaxLength="10" />
+          <Property Name="TAIEX_High" Type="varchar" MaxLength="10" />
+          <Property Name="ContinueName" Type="nchar" MaxLength="10" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="255" />
+          <Property Name="Trend" Type="nchar" MaxLength="10" />
+          <Property Name="Financing" Type="varchar" MaxLength="10" />
+          <Property Name="Volume" Type="varchar" MaxLength="10" />
+          <Property Name="TPEx" Type="varchar" MaxLength="10" />
+          <Property Name="TPEx_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="TPEx_QuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="JuridicaPerson" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="StockInventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CloseStopLost" Type="bit" />
+          <Property Name="CloseHighStopLost" Type="bit" />
+          <Property Name="CloseABSStopLost" Type="bit" />
+          <Property Name="Type" Type="bit" />
+          <Property Name="Cost" Type="varchar" MaxLength="10" />
+          <Property Name="Defence" Type="varchar" MaxLength="10" />
+          <Property Name="Target" Type="varchar" MaxLength="10" />
+          <Property Name="SellAll" Type="bit" />
+          <Property Name="ClosePtLost" Type="bit" />
+          <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityContainer Name="StockWarehouseModelStoreContainer">
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockGroup" EntityType="Self.StockGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockIndex" EntityType="Self.StockIndex" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockInventory" EntityType="Self.StockInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Login].[Id] AS [Id], 
+    [Login].[Account] AS [Account], 
+    [Login].[Password] AS [Password]
+    FROM [dbo].[Login] AS [Login]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StockWarehouseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TradeVolume" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TradeValue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HighestPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LowestPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ClosingPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Change" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionValue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="StockGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StockType" Type="Boolean" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="StockIndex">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DayOfWeek" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DJI" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DJI_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NASDAQ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="NASDAQ_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PHLX" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PHLX_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MTX" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MTX_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MTX_Open" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MTX_High" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TX" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TX_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TX_Open" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TX_High" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TAIEX" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TAIEX_Open" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TAIEX_High" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ContinueName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Trend" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DJI_QuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NASDAQ_QuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PHLX_QuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MTX_QuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TX_QuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TAIEX_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TAIEX_QuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Financing" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Volume" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TPEx" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TPEx_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TPEx_QuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MTX_Volume" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TX_Volume" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="JuridicaPerson" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="StockInventory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CloseStopLost" Type="Boolean" />
+          <Property Name="CloseHighStopLost" Type="Boolean" />
+          <Property Name="CloseABSStopLost" Type="Boolean" />
+          <Property Name="Type" Type="Boolean" />
+          <Property Name="Cost" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Defence" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Target" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SellAll" Type="Boolean" />
+          <Property Name="ClosePtLost" Type="Boolean" />
+          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="StockWarehouseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Login" EntityType="Self.Login" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" />
+          <EntitySet Name="StockGroup" EntityType="Self.StockGroup" />
+          <EntitySet Name="StockIndex" EntityType="Self.StockIndex" />
+          <EntitySet Name="StockInventory" EntityType="Self.StockInventory" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StockWarehouseModelStoreContainer" CdmEntityContainer="StockWarehouseEntities">
+          <EntitySetMapping Name="Login">
+            <EntityTypeMapping TypeName="StockWarehouseModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stock">
+            <EntityTypeMapping TypeName="StockWarehouseModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TradeVolume" ColumnName="TradeVolume" />
+                <ScalarProperty Name="TradeValue" ColumnName="TradeValue" />
+                <ScalarProperty Name="OpeningPrice" ColumnName="OpeningPrice" />
+                <ScalarProperty Name="HighestPrice" ColumnName="HighestPrice" />
+                <ScalarProperty Name="LowestPrice" ColumnName="LowestPrice" />
+                <ScalarProperty Name="ClosingPrice" ColumnName="ClosingPrice" />
+                <ScalarProperty Name="Change" ColumnName="Change" />
+                <ScalarProperty Name="TransactionValue" ColumnName="TransactionValue" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockGroup">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockGroup">
+              <MappingFragment StoreEntitySet="StockGroup">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="StockType" ColumnName="StockType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockIndex">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockIndex">
+              <MappingFragment StoreEntitySet="StockIndex">
+                <ScalarProperty Name="JuridicaPerson" ColumnName="JuridicaPerson" />
+                <ScalarProperty Name="TX_Volume" ColumnName="TX_Volume" />
+                <ScalarProperty Name="MTX_Volume" ColumnName="MTX_Volume" />
+                <ScalarProperty Name="TPEx_QuotePercent" ColumnName="TPEx_QuotePercent" />
+                <ScalarProperty Name="TPEx_QuoteChange" ColumnName="TPEx_QuoteChange" />
+                <ScalarProperty Name="TPEx" ColumnName="TPEx" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+                <ScalarProperty Name="Financing" ColumnName="Financing" />
+                <ScalarProperty Name="TAIEX_QuotePercent" ColumnName="TAIEX_QuotePercent" />
+                <ScalarProperty Name="TAIEX_QuoteChange" ColumnName="TAIEX_QuoteChange" />
+                <ScalarProperty Name="TX_QuotePercent" ColumnName="TX_QuotePercent" />
+                <ScalarProperty Name="MTX_QuotePercent" ColumnName="MTX_QuotePercent" />
+                <ScalarProperty Name="PHLX_QuotePercent" ColumnName="PHLX_QuotePercent" />
+                <ScalarProperty Name="NASDAQ_QuotePercent" ColumnName="NASDAQ_QuotePercent" />
+                <ScalarProperty Name="DJI_QuotePercent" ColumnName="DJI_QuotePercent" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DJI" ColumnName="DJI" />
+                <ScalarProperty Name="DJI_QuoteChange" ColumnName="DJI_QuoteChange" />
+                <ScalarProperty Name="NASDAQ" ColumnName="NASDAQ" />
+                <ScalarProperty Name="NASDAQ_QuoteChange" ColumnName="NASDAQ_QuoteChange" />
+                <ScalarProperty Name="PHLX" ColumnName="PHLX" />
+                <ScalarProperty Name="PHLX_QuoteChange" ColumnName="PHLX_QuoteChange" />
+                <ScalarProperty Name="MTX" ColumnName="MTX" />
+                <ScalarProperty Name="MTX_QuoteChange" ColumnName="MTX_QuoteChange" />
+                <ScalarProperty Name="MTX_Open" ColumnName="MTX_Open" />
+                <ScalarProperty Name="MTX_High" ColumnName="MTX_High" />
+                <ScalarProperty Name="TX" ColumnName="TX" />
+                <ScalarProperty Name="TX_QuoteChange" ColumnName="TX_QuoteChange" />
+                <ScalarProperty Name="TX_Open" ColumnName="TX_Open" />
+                <ScalarProperty Name="TX_High" ColumnName="TX_High" />
+                <ScalarProperty Name="TAIEX" ColumnName="TAIEX" />
+                <ScalarProperty Name="TAIEX_Open" ColumnName="TAIEX_Open" />
+                <ScalarProperty Name="TAIEX_High" ColumnName="TAIEX_High" />
+                <ScalarProperty Name="ContinueName" ColumnName="ContinueName" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Trend" ColumnName="Trend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInventory">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockInventory">
+              <MappingFragment StoreEntitySet="StockInventory">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="ClosePtLost" ColumnName="ClosePtLost" />
+                <ScalarProperty Name="SellAll" ColumnName="SellAll" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="Defence" ColumnName="Defence" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CloseStopLost" ColumnName="CloseStopLost" />
+                <ScalarProperty Name="CloseHighStopLost" ColumnName="CloseHighStopLost" />
+                <ScalarProperty Name="CloseABSStopLost" ColumnName="CloseABSStopLost" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

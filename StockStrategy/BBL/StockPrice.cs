@@ -78,6 +78,7 @@ namespace StockStrategy.BBL
                     _Price.HighPrice = jsonPrice.msgArray[i].h;
                     _Price.DealQty = jsonPrice.msgArray[i].tv;
                     _Price.TotalDealQty = jsonPrice.msgArray[i].v;
+                    _Price.OpenPrice = jsonPrice.msgArray[i].o;
                     _PriceList.Add(_Price);
                     // a = 最低委賣價
                     //string ask = "";
@@ -98,6 +99,34 @@ namespace StockStrategy.BBL
             catch (Exception ex)
             {
                 _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetMonthPrice:" + "\r\n" + ex.Message;
+                logger.Error(_Log);
+            }
+            return _PriceList;
+        }
+        public static List<Stock.StockDayAll> GetStockDayAll( )
+        {
+            string _Log = "";
+            List<Stock.StockDayAll> _PriceList = new List<Stock.StockDayAll>();
+            try
+            { 
+                // 呼叫網址
+                string url = "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"; 
+
+                string downloadedData = "";
+                using (WebClient wClient = new WebClient())
+                { 
+                    wClient.Encoding = Encoding.UTF8;
+                    downloadedData = wClient.DownloadString(url);
+                } 
+                if (downloadedData.Trim().Length > 0)
+                {
+                    _PriceList = JsonConvert.DeserializeObject<List<Stock.StockDayAll>>(downloadedData);
+                   
+                } 
+            }
+            catch (Exception ex)
+            {
+                _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetStockDayAll:" + "\r\n" + ex.Message;
                 logger.Error(_Log);
             }
             return _PriceList;

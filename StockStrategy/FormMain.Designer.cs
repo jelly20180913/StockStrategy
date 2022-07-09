@@ -175,6 +175,9 @@
             this.timerGetLackOffPrice = new System.Windows.Forms.Timer(this.components);
             this.timerPtStopLost = new System.Windows.Forms.Timer(this.components);
             this.timerLineNotify = new System.Windows.Forms.Timer(this.components);
+            this.txtFutureName = new System.Windows.Forms.TextBox();
+            this.lbFutureStock = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupQty)).BeginInit();
             this.gbBullStop.SuspendLayout();
@@ -561,6 +564,7 @@
             this.lbStockName.Name = "lbStockName";
             this.lbStockName.Size = new System.Drawing.Size(0, 12);
             this.lbStockName.TabIndex = 13;
+            this.lbStockName.Click += new System.EventHandler(this.lbStockName_Click);
             // 
             // txtStockId
             // 
@@ -1114,9 +1118,12 @@
             // 
             // panel11
             // 
+            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel11.Controls.Add(this.label31);
             this.panel11.Controls.Add(this.label17);
             this.panel11.Controls.Add(this.lbTaiwanStock);
             this.panel11.Controls.Add(this.lbTAIEXMA60);
+            this.panel11.Controls.Add(this.lbFuturePrice);
             this.panel11.Controls.Add(this.lbTAIEXMA20);
             this.panel11.Controls.Add(this.lbTAIEXMA5);
             this.panel11.Controls.Add(this.label19);
@@ -1193,7 +1200,7 @@
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(20, 12);
             this.label19.TabIndex = 77;
-            this.label19.Text = "季;";
+            this.label19.Text = "季:";
             // 
             // lbGain
             // 
@@ -1236,6 +1243,7 @@
             // 
             // panel9
             // 
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel9.Controls.Add(this.label30);
             this.panel9.Controls.Add(this.lbTimes);
             this.panel9.Controls.Add(this.label29);
@@ -1266,7 +1274,7 @@
             // 
             this.lbTimes.AutoSize = true;
             this.lbTimes.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lbTimes.Location = new System.Drawing.Point(11, 76);
+            this.lbTimes.Location = new System.Drawing.Point(39, 75);
             this.lbTimes.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbTimes.Name = "lbTimes";
             this.lbTimes.Size = new System.Drawing.Size(11, 12);
@@ -1342,6 +1350,7 @@
             // 
             // panel8
             // 
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel8.Controls.Add(this.label14);
             this.panel8.Controls.Add(this.label4);
             this.panel8.Controls.Add(this.label6);
@@ -1494,9 +1503,10 @@
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.Color.PapayaWhip;
+            this.panel10.Controls.Add(this.lbFutureStock);
+            this.panel10.Controls.Add(this.txtFutureName);
             this.panel10.Controls.Add(this.cbDateMM);
             this.panel10.Controls.Add(this.btnFutureRefrash);
-            this.panel10.Controls.Add(this.lbFuturePrice);
             this.panel10.Controls.Add(this.cbFutureName);
             this.panel10.Controls.Add(this.btnFutureDeal);
             this.panel10.Controls.Add(this.txtFutureMa10);
@@ -1543,7 +1553,7 @@
             // lbFuturePrice
             // 
             this.lbFuturePrice.AutoSize = true;
-            this.lbFuturePrice.Location = new System.Drawing.Point(412, 15);
+            this.lbFuturePrice.Location = new System.Drawing.Point(35, 74);
             this.lbFuturePrice.Name = "lbFuturePrice";
             this.lbFuturePrice.Size = new System.Drawing.Size(0, 12);
             this.lbFuturePrice.TabIndex = 93;
@@ -1771,7 +1781,7 @@
             // timerGetFuture
             // 
             this.timerGetFuture.Enabled = true;
-            this.timerGetFuture.Interval = 5000;
+            this.timerGetFuture.Interval = 1000;
             this.timerGetFuture.Tick += new System.EventHandler(this.timerGetFuture_Tick);
             // 
             // timerFutureStopLost
@@ -1794,6 +1804,33 @@
             this.timerLineNotify.Enabled = true;
             this.timerLineNotify.Interval = 5000;
             this.timerLineNotify.Tick += new System.EventHandler(this.timerLineNotify_Tick);
+            // 
+            // txtFutureName
+            // 
+            this.txtFutureName.Location = new System.Drawing.Point(11, 8);
+            this.txtFutureName.Name = "txtFutureName";
+            this.txtFutureName.Size = new System.Drawing.Size(43, 22);
+            this.txtFutureName.TabIndex = 83;
+            this.txtFutureName.TextChanged += new System.EventHandler(this.txtFutureName_TextChanged);
+            // 
+            // lbFutureStock
+            // 
+            this.lbFutureStock.AutoSize = true;
+            this.lbFutureStock.Location = new System.Drawing.Point(414, 15);
+            this.lbFutureStock.Name = "lbFutureStock";
+            this.lbFutureStock.Size = new System.Drawing.Size(0, 12);
+            this.lbFutureStock.TabIndex = 95;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.ForeColor = System.Drawing.Color.Black;
+            this.label31.Location = new System.Drawing.Point(5, 74);
+            this.label31.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(26, 12);
+            this.label31.TabIndex = 80;
+            this.label31.Text = "MX:";
             // 
             // FormMain
             // 
@@ -1997,5 +2034,8 @@
         private System.Windows.Forms.Timer timerPtStopLost;
         private System.Windows.Forms.Button btnLine;
         private System.Windows.Forms.Timer timerLineNotify;
+        private System.Windows.Forms.TextBox txtFutureName;
+        private System.Windows.Forms.Label lbFutureStock;
+        private System.Windows.Forms.Label label31;
     }
 }

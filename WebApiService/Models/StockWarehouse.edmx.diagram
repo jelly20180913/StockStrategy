@@ -10,6 +10,8 @@
         <EntityTypeShape EntityType="StockWarehouseModel.StockGroup" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockIndex" Width="2.625" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockInventory" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockLineNotify" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockFutureCode" Width="1.5" PointX="8.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

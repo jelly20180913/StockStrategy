@@ -32,7 +32,7 @@ namespace StockStrategy.Common
                 }
                 else
                 {
-                    HtmlAgilityPack.HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes("//span[@id='rtVal1']");
+                    HtmlAgilityPack.HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes("//span[@id='clr-gr']");
                     foreach (HtmlAgilityPack.HtmlNode n in nodes)
                     {
                         _FuturePrice = n.InnerText;

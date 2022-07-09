@@ -88,6 +88,37 @@ namespace StockStrategy.BBL
             _ListStock = JsonConvert.DeserializeObject<List<Stock>>(_ApiResult.Data.ToString());
             return _ListStock;
         }
+        public List<Stock> getStockYestodayList(string date)
+        {
+            List<Stock> _ListStock = new List<Stock>();
+            string _Action = "StockYestoday?date=" + date;
+            string _Uri = ConnectionString + _Action;
+            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+            _ListStock = JsonConvert.DeserializeObject<List<Stock>>(_ApiResult.Data.ToString());
+            return _ListStock;
+        }
+        public List<Stock> getStockAllList( )
+        {
+            List<Stock> _ListStock = new List<Stock>();
+            string _Action = "StockAll";
+            string _Uri = ConnectionString + _Action;
+            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+            _ListStock = JsonConvert.DeserializeObject<List<Stock>>(_ApiResult.Data.ToString());
+            return _ListStock;
+        }
+        /// <summary>
+        /// 取得個股期貨代號
+        /// </summary>
+        /// <returns></returns>
+        public List<StockFutureCode> getStockFutureCodeList( )
+        {
+            List<StockFutureCode> _ListStock = new List<StockFutureCode>();
+            string _Action = "StockFutureCode";
+            string _Uri = ConnectionString + _Action;
+            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+            _ListStock = JsonConvert.DeserializeObject<List<StockFutureCode>>(_ApiResult.Data.ToString());
+            return _ListStock;
+        }
         /// <summary>
         /// 寫入加權指數
         /// </summary>
@@ -169,6 +200,42 @@ namespace StockStrategy.BBL
         public async Task postLineMsg(string  msg, string token)
         { 
             var result = await CallWebApi.CallLineNotifyApi(token,msg); 
+        }
+        /// <summary>
+        /// 取得Line通知清單
+        /// </summary>
+        /// <returns></returns>
+        public List<StockLineNotify> getStockLineNotifyList( )
+        {
+            List<StockLineNotify> _ListStockLineNotify = new List<StockLineNotify>();
+            string _Action = "StockLineNotify";
+            string _Uri = ConnectionString + _Action;
+            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+            _ListStockLineNotify = JsonConvert.DeserializeObject<List<StockLineNotify>>(_ApiResult.Data.ToString());
+            return _ListStockLineNotify;
+        }
+        /// <summary>
+        /// 更新Line通知參數
+        /// </summary>
+        /// <param name="stockLineNotify"></param>
+        /// <returns></returns>
+        public string UpdateStockLineNotify(StockLineNotify stockLineNotify)
+        {
+            string json = JsonConvert.SerializeObject(stockLineNotify);
+            string _Action = "StockLineNotify";
+            string _Uri = ConnectionString + _Action;
+            ApiResultEntity _ApiResult = CallWebApi.Put(json, _Uri);
+            string _Return = _ApiResult.Data.ToString();
+            return _Return;
+        }
+        public string UpdateStock(Stock stock)
+        {
+            string json = JsonConvert.SerializeObject(stock);
+            string _Action = "Stock";
+            string _Uri = ConnectionString + _Action;
+            ApiResultEntity _ApiResult = CallWebApi.Put(json, _Uri);
+            string _Return = _ApiResult.Data.ToString();
+            return _Return;
         }
     }
 }

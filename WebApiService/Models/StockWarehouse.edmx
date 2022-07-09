@@ -32,6 +32,18 @@
           <Property Name="TransactionValue" Type="varchar" MaxLength="20" />
           <Property Name="Date" Type="varchar" MaxLength="10" />
           <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
+          <Property Name="Gain" Type="varchar" MaxLength="10" />
+          <Property Name="Shock" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="StockFutureCode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EnCode" Type="varchar" MaxLength="10" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -108,11 +120,25 @@
           <Property Name="ClosePtLost" Type="bit" />
           <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
         </EntityType>
+        <EntityType Name="StockLineNotify">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Enable" Type="bit" />
+          <Property Name="Point" Type="int" />
+          <Property Name="PointBear" Type="int" />
+          <Property Name="Token" Type="varchar" MaxLength="100" />
+          <Property Name="NotifyClass" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityContainer Name="StockWarehouseModelStoreContainer">
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockFutureCode" EntityType="Self.StockFutureCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockGroup" EntityType="Self.StockGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockIndex" EntityType="Self.StockIndex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInventory" EntityType="Self.StockInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockLineNotify" EntityType="Self.StockLineNotify" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login" EntityType="Self.Login" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Login].[Id] AS [Id], 
@@ -150,6 +176,8 @@
           <Property Name="TransactionValue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Gain" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Shock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -232,7 +260,31 @@
           <EntitySet Name="StockGroup" EntityType="Self.StockGroup" />
           <EntitySet Name="StockIndex" EntityType="Self.StockIndex" />
           <EntitySet Name="StockInventory" EntityType="Self.StockInventory" />
+          <EntitySet Name="StockLineNotify" EntityType="StockWarehouseModel.StockLineNotify" />
+          <EntitySet Name="StockFutureCode" EntityType="StockWarehouseModel.StockFutureCode" />
         </EntityContainer>
+        <EntityType Name="StockLineNotify">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Enable" Type="Boolean" />
+          <Property Name="Point" Type="Int32" />
+          <Property Name="PointBear" Type="Int32" />
+          <Property Name="Token" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NotifyClass" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="StockFutureCode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EnCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -251,6 +303,8 @@
           <EntitySetMapping Name="Stock">
             <EntityTypeMapping TypeName="StockWarehouseModel.Stock">
               <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="Shock" ColumnName="Shock" />
+                <ScalarProperty Name="Gain" ColumnName="Gain" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -342,6 +396,30 @@
                 <ScalarProperty Name="CloseHighStopLost" ColumnName="CloseHighStopLost" />
                 <ScalarProperty Name="CloseABSStopLost" ColumnName="CloseABSStopLost" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockLineNotify">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockLineNotify">
+              <MappingFragment StoreEntitySet="StockLineNotify">
+                <ScalarProperty Name="NotifyClass" ColumnName="NotifyClass" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="PointBear" ColumnName="PointBear" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockFutureCode">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockFutureCode">
+              <MappingFragment StoreEntitySet="StockFutureCode">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="EnCode" ColumnName="EnCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

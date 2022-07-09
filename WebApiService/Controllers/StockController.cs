@@ -27,5 +27,10 @@ namespace WebApiService.Controllers
             this._StockService.MiltiCreate(s);
             return true;
         }
+        public bool Put(Stock s)
+        {
+            this._StockService.Update(s);
+            return true;
+        }
     }
 }

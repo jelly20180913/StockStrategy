@@ -87,7 +87,11 @@ new Dictionary<string, string>();
         int PtBear = -30;
         int PtTom = 30;
         int PtBearTom = -30;
+        bool LineNotify = false;
+        double TotalExposure = 0.0;
         List<string> _StockLackOffList = new List<string>();
+        List<WebApiService.Models.StockFutureCode> _StockFutureCodeList = new List<WebApiService.Models.StockFutureCode>();
+        List<WebApiService.Models.StockGroup> _StockGroupList = new List<WebApiService.Models.StockGroup>();
         public FormMain()
         {
             InitializeComponent();
@@ -196,7 +200,7 @@ new Dictionary<string, string>();
                 if (Result == DialogResult.OK)
                 {
                     HTSOrder(sb);
-                    MessageBox.Show(_Parameter);
+                    //  MessageBox.Show(_Parameter);
                     string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + _StockId + "共" + _Units + "張," + _PriceType + _Price + "元" + _Profit;
                     richTxtInfo.SelectionColor = foreColor;
                     richTxtInfo.AppendText(_Msg + Environment.NewLine);
@@ -210,7 +214,7 @@ new Dictionary<string, string>();
                     //    _Btn = (Button)flowLayoutPanelStock.Controls.Find("btnDeal" + _StockId, true)[0];
                     //    showButton(_Btn, true);
                     //}
-                    insertUpdateStockInventory(_StockId, "", status, _Units, _Price, false);
+                    insertUpdateStockInventory(_StockId, "", status, _Units, _Price, false, true);
 
                     btnReflash.PerformClick();
                 }
@@ -220,7 +224,17 @@ new Dictionary<string, string>();
                 MessageBox.Show("請輸入價格");
             }
         }
-        private void insertUpdateStockInventory(string stockId, string name, string status, string units, string price, bool type)
+        /// <summary>
+        /// 庫存
+        /// </summary>
+        /// <param name="stockId">代碼</param>
+        /// <param name="name">名稱</param>
+        /// <param name="status">狀態</param>
+        /// <param name="units">口數</param>
+        /// <param name="price">價格</param>
+        /// <param name="type">1:期貨 0:股票</param>
+        /// <param name="chkPt">1:關閉 0:打開</param>
+        private void insertUpdateStockInventory(string stockId, string name, string status, string units, string price, bool type, bool chkPt)
         {
             WebApiService.Models.StockInventory s = new WebApiService.Models.StockInventory();
             s = getStockInventory(stockId);
@@ -257,7 +271,7 @@ new Dictionary<string, string>();
                 s.Defence = "";
                 s.CloseABSStopLost = false;
                 s.CloseHighStopLost = false;
-                s.ClosePtLost = false;
+                s.ClosePtLost = chkPt;
                 s.CloseStopLost = true;
                 s.Code = stockId;
                 s.Cost = price;
@@ -276,21 +290,40 @@ new Dictionary<string, string>();
         /// <param name="foreColor"></param>
         private void sendFuturesParameter(object sender, bool mode, string buySell, string status, Color foreColor)
         {
-
+            int n = 0;
+            bool IsNum = Int32.TryParse(this.txtFutureName.Text, out n);
             string _BuySell = buySell;
             string _Units = "0";
             string _Price = "0";
             string _PriceParameter = "0";
             string _FutureOrderType = dicFutureOrderType[this.cbOrderType.SelectedItem.ToString()];
-            string _FokIocRod = _FutureOrderType == "市價" ? "F" : "R";
+            string _FokIocRod = _FutureOrderType == "M" ? "F" : "R";
             string _PriceType = this.cbOrderType.SelectedItem.ToString();
             string _OpenCloseAuto = dicOpenCloseAuto[this.cbOpenCloseAuto.SelectedItem.ToString()];
             Button _Btn = sender as Button;
             string _Profit = "";
             string _StockStatus = "";
-            string _FutureName = dicFutures[this.cbFutureName.SelectedItem.ToString()];
+            string _FutureName = this.txtFutureName.Text != "" ? this.txtFutureName.Text : dicFutures[this.cbFutureName.SelectedItem.ToString()];
+            string _Name = this.txtFutureName.Text != "" ? this.txtFutureName.Text : this.cbFutureName.SelectedItem.ToString() + this.cbDateMM.SelectedItem;
+            if (IsNum)
+            {
+                if (this._StockFutureCodeList.Where(x => x.Code == this.txtFutureName.Text).ToList().Count > 0)
+                {
+                    _FutureName = this._StockFutureCodeList.Where(x => x.Code == this.txtFutureName.Text).First().EnCode;
+                    _Name = this._StockFutureCodeList.Where(x => x.Code == this.txtFutureName.Text).First().Name + "期" + this.cbDateMM.SelectedItem;
+                }
+            }
+            else
+            {
+                if (this._StockFutureCodeList.Where(x => x.Name == this.txtFutureName.Text).ToList().Count > 0)
+                {
+                    _FutureName = this._StockFutureCodeList.Where(x => x.Name == this.txtFutureName.Text).First().EnCode;
+                    _Name = this._StockFutureCodeList.Where(x => x.Name == this.txtFutureName.Text).First().Name + "期" + this.cbDateMM.SelectedItem;
+                }
+            }
             string _StockId = _FutureName;
-            string _Name = this.cbFutureName.SelectedItem.ToString() + this.cbDateMM.SelectedItem;
+
+
             //int _Day = DateTime.Now.Day;
             DateTime _DtContractDate = DateTime.Now;
             //if (_Day > 10)
@@ -300,7 +333,7 @@ new Dictionary<string, string>();
             if (Convert.ToString(_Btn.Tag) == "")
             {
                 _Units = Convert.ToString(nupLots.Value);
-                _Price = this.txtFuturePrice.Text != "" ? this.txtFuturePrice.Text : this.lbFuturePrice.Text;
+                _Price = this.txtFuturePrice.Text != "" ? this.txtFuturePrice.Text : this.lbFutureStock.Text;
                 btnDeal.Text = status;
             }
             else
@@ -357,13 +390,14 @@ new Dictionary<string, string>();
                 {
                     HTSOrder(sb);
                     // MessageBox.Show(_Parameter);
-                    string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + this.cbFutureName.SelectedItem.ToString() + "共" + _Units + "口," + _PriceType + _Price + "元" + _Profit;
+                    string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + _Name + "共" + _Units + "口," + _PriceType + _Price + "元" + _Profit;
                     richTxtInfo.SelectionColor = foreColor;
                     richTxtInfo.AppendText(_Msg + Environment.NewLine);
                     richTxtInfo.SelectionStart = richTxtInfo.TextLength;
                     richTxtInfo.ScrollToCaret();
                     string _Code = _FutureName + _ContractDate;
-                    insertUpdateStockInventory(_Code, this.cbFutureName.SelectedItem.ToString() + this.cbDateMM.SelectedItem, status, _Units, _Price, true);
+                    bool _ChkPt = _FutureName == "MXF" ? false : true;
+                    insertUpdateStockInventory(_Code, _Name, status, _Units, _Price, true, _ChkPt);
                     this.lbTimes.Text = Convert.ToString(Convert.ToInt32(this.lbTimes.Text) + 1);
 
                     this.btnFutureRefrash.PerformClick();
@@ -803,16 +837,19 @@ new Dictionary<string, string>();
             sendParameter(sender, true, "S", "C", "現賣", Color.Green);
         }
         private void FormMain_Load(object sender, EventArgs e)
-        {
+        { 
+            DataAccess _DataAccess = new DataAccess();
             getAVG();
+            _StockFutureCodeList = _DataAccess.getStockFutureCodeList();
+            _StockGroupList = _DataAccess.getStockGroupList();
             this.txtOberserver.Text = ConfigurationManager.AppSettings["Observer"];
             // this.lbTAIEXMA5.Text = ConfigurationManager.AppSettings["TAIEXMA5"];
-            this.lbTAIEXMA20.Text = ConfigurationManager.AppSettings["TAIEXMA20"];
-            this.lbTAIEXMA60.Text = ConfigurationManager.AppSettings["TAIEXMA60"];
+            //this.lbTAIEXMA20.Text = ConfigurationManager.AppSettings["TAIEXMA20"];
+            //this.lbTAIEXMA60.Text = ConfigurationManager.AppSettings["TAIEXMA60"];
             // this.txtFutureMa5.Text = ConfigurationManager.AppSettings["MXFMA5"];
             //this.txtFutureMa10.Text = ConfigurationManager.AppSettings["MXFMA10"];
-            this.txtFutureMa20.Text = ConfigurationManager.AppSettings["MXFMA20"];
-            this.txtFutureMa60.Text = ConfigurationManager.AppSettings["MXFMA60"];
+            //this.txtFutureMa20.Text = ConfigurationManager.AppSettings["MXFMA20"];
+            //this.txtFutureMa60.Text = ConfigurationManager.AppSettings["MXFMA60"];
             ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
             this.Text = "股票策略下單機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
             this.cbPriceType.SelectedIndex = 0;
@@ -839,7 +876,7 @@ new Dictionary<string, string>();
             this.btnGetPrice.Focus();
             initialRadioButton();
             this.btnReflash.PerformClick();
-            this.txtStockAccount.Text = ConfigurationManager.AppSettings["Account"];
+            this.txtStockAccount.Text = ConfigurationManager.AppSettings["StockAccount"];
             // this.cbPriceType.SelectedIndex = 1;
             this.cbOpenCloseAuto.SelectedIndex = 0;
             this.cbOrderType.SelectedIndex = 1;
@@ -856,6 +893,7 @@ new Dictionary<string, string>();
             //this.btnLogin.PerformClick();
             this.btnFutureRefrash.PerformClick();
             // _DataAccess.loginWebApi();
+
         }
         #region method
         /// <summary>
@@ -1087,6 +1125,8 @@ new Dictionary<string, string>();
             lbStockName.Size = new System.Drawing.Size(50, 15);
             lbStockName.TabIndex = 13;
             lbStockName.Text = stockInventory.Code;
+            lbStockName.Tag = stockInventory.Code;
+            lbStockName.Click += lbStockName_Click;
 
             // 
             // lbStock
@@ -1544,7 +1584,7 @@ new Dictionary<string, string>();
         /// <summary>
         /// 動態產生期貨庫存
         /// 庫存容器:
-        /// 1. 計算出MA5/MA10/MA20/MA60均價-待資料庫建置
+        /// 1. 計算出MA5/MA10/MA20/MA60均價
         /// 2. 背景色:粉紅色
         /// 3. 顯示期貨成本
         /// 4.  
@@ -1556,8 +1596,24 @@ new Dictionary<string, string>();
         /// <param name="status">狀態</param> 
         /// <param name="IsNew">新建倉</param> 
         ///  <param name="s">期貨名</param> 
-        private Panel dynamicFutures(string s, decimal piece, string value, string status, string name)
+        private Panel dynamicFutures(string s, decimal piece, string value, string status, string name, bool chkPt)
         {
+
+            double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0, _Ma60 = 0;
+            DataAccess _DataAccess = new DataAccess();
+            string _EnCode = s.Substring(0, 2);
+            string _Code = "";
+            if (this._StockFutureCodeList.Where(x => x.EnCode == _EnCode).ToList().Count > 0)
+            {
+                _Code = this._StockFutureCodeList.Where(x => x.EnCode == _EnCode).First().Code;
+
+                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(_Code);
+                if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
+                if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
+                if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
+                if (_StockList.Count > 60) _Ma60 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(60).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 60, 2);
+            }
+            //}
             // string s = "t00";
             // 
             // btnSell
@@ -1722,7 +1778,6 @@ new Dictionary<string, string>();
             cbOrderType.Name = "cbOrderType" + s;
             cbOrderType.Size = new System.Drawing.Size(34, 23);
             cbOrderType.TabIndex = 0;
-            //cbPriceType.SelectedIndex = 0;
             cbOrderType.Tag = s;
             cbOrderType.SelectedIndex = 1;
             // 
@@ -1770,7 +1825,7 @@ new Dictionary<string, string>();
             //txtMa5.ReadOnly = true;
             txtMa5.Size = new System.Drawing.Size(45, 25);
             txtMa5.TabIndex = 55;
-            txtMa5.Text = Convert.ToString(this.txtFutureMa5.Text);
+            txtMa5.Text = Convert.ToString(_Ma5) != "0" ? Convert.ToString(_Ma5) : this.txtFutureMa5.Text;
             // 
             // txtMa20
             // 
@@ -1781,7 +1836,7 @@ new Dictionary<string, string>();
             //txtMa20.ReadOnly = true;
             txtMa20.Size = new System.Drawing.Size(45, 25);
             txtMa20.TabIndex = 57;
-            txtMa20.Text = Convert.ToString(this.txtFutureMa20.Text);
+            txtMa20.Text = Convert.ToString(_Ma20) != "0" ? Convert.ToString(_Ma20) : this.txtFutureMa20.Text;
             // 
             // txtMa60
             // 
@@ -1792,7 +1847,7 @@ new Dictionary<string, string>();
             //txtMa60.ReadOnly = true;
             txtMa60.Size = new System.Drawing.Size(45, 25);
             txtMa60.TabIndex = 56;
-            txtMa60.Text = Convert.ToString(this.txtFutureMa60.Text);
+            txtMa60.Text = Convert.ToString(_Ma60) != "0" ? Convert.ToString(_Ma60) : this.txtFutureMa60.Text;
             // 
             // lbMa10
             // 
@@ -1814,7 +1869,7 @@ new Dictionary<string, string>();
             //txtMa10.ReadOnly = true;
             txtMa10.Size = new System.Drawing.Size(45, 25);
             txtMa10.TabIndex = 59;
-            txtMa10.Text = Convert.ToString(this.txtFutureMa10.Text);
+            txtMa10.Text = Convert.ToString(_Ma10) != "0" ? Convert.ToString(_Ma10) : this.txtFutureMa10.Text;
 
 
             // 
@@ -1891,7 +1946,7 @@ new Dictionary<string, string>();
             // 
             CheckBox chkCloseStopLost = new CheckBox();
             chkCloseStopLost.AutoSize = true;
-            chkCloseStopLost.Location = new System.Drawing.Point(1483, 12);
+            chkCloseStopLost.Location = new System.Drawing.Point(1583, 12);
             chkCloseStopLost.Name = "chkCloseStopLost" + s;
             chkCloseStopLost.Size = new System.Drawing.Size(59, 19);
             chkCloseStopLost.TabIndex = 80;
@@ -1909,28 +1964,17 @@ new Dictionary<string, string>();
             chkCloseABSStopLost.TabIndex = 80;
             chkCloseABSStopLost.Text = "ABS";
             chkCloseABSStopLost.UseVisualStyleBackColor = true;
-            chkCloseABSStopLost.Checked = true;
-            // 
-            // chkCloseHighStopLost
-            // 
-            CheckBox chkCloseHighStopLost = new CheckBox();
-            chkCloseHighStopLost.AutoSize = true;
-            chkCloseHighStopLost.Location = new System.Drawing.Point(1583, 12);
-            chkCloseHighStopLost.Name = "chkCloseHighStopLost" + s;
-            chkCloseHighStopLost.Size = new System.Drawing.Size(59, 19);
-            chkCloseHighStopLost.TabIndex = 80;
-            chkCloseHighStopLost.Text = "HIGH";
-            chkCloseHighStopLost.UseVisualStyleBackColor = true;
+            //  chkCloseABSStopLost.Checked = true;
 
             CheckBox chkClosePtStopLost = new CheckBox();
             chkClosePtStopLost.AutoSize = true;
-            chkClosePtStopLost.Location = new System.Drawing.Point(1643, 12);
+            chkClosePtStopLost.Location = new System.Drawing.Point(1483, 12);
             chkClosePtStopLost.Name = "chkClosePtStopLost" + s;
             chkClosePtStopLost.Size = new System.Drawing.Size(59, 19);
             chkClosePtStopLost.TabIndex = 80;
             chkClosePtStopLost.Text = "Pt";
             chkClosePtStopLost.UseVisualStyleBackColor = true;
-            chkClosePtStopLost.Checked = true;
+            chkClosePtStopLost.Checked = chkPt;
             Label lbDealQty = new Label();
             lbDealQty.Location = new System.Drawing.Point(1653, 12);
             lbDealQty.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -1966,9 +2010,10 @@ new Dictionary<string, string>();
             panel1.Controls.Add(txtStopLost);
             panel1.Controls.Add(txtTarget);
             panel1.Controls.Add(chkAll);
-            panel1.Controls.Add(chkCloseStopLost);
+            //個股期開啟均價停損
+            if (_EnCode != "MX") panel1.Controls.Add(chkCloseStopLost);
             panel1.Controls.Add(chkCloseABSStopLost);
-            panel1.Controls.Add(chkCloseHighStopLost);
+            //  panel1.Controls.Add(chkCloseHighStopLost);
             panel1.Controls.Add(chkClosePtStopLost);
 
             panel1.Controls.Add(txtMa10);
@@ -2014,7 +2059,7 @@ new Dictionary<string, string>();
         private void txtStockId_TextChanged(object sender, EventArgs e)
         {
             nupQty.Value = 1;
-            if (txtStockId.Text.Length == 4)
+            if (txtStockId.Text.Length >= 4)
             {
                 btnGetPrice.PerformClick();
             }
@@ -2436,6 +2481,8 @@ new Dictionary<string, string>();
         private void btnGetPrice_Click(object sender, EventArgs e)
         {
             string _Log = "";
+            string _Id = "Price1_lbTPrice";
+            string _StockFuture_URL = ConfigurationManager.AppSettings["HiStock_URL"];
             try
             {
                 Button _Btn = sender as Button;
@@ -2445,7 +2492,14 @@ new Dictionary<string, string>();
                 if (_PriceList.Count() == 1)
                 {
                     this.lbPrice.Text = _PriceList.First().Price;
-                    this.lbStockName.Text = _PriceList.First().StockName;
+                    this.lbStockName.Text = _PriceList.First().StockName.Length > 4 ? _PriceList.First().StockName.Substring(0, 5) : _PriceList.First().StockName;
+                }
+                else
+                {
+                    this.lbPrice.Text = Common.Job.GetTaiwanFutures(_StockFuture_URL + this.txtStockId.Text, _Id, true);
+                    if (_StockGroupList.Where(x => x.Code == this.txtStockId.Text).ToList().Count > 0)
+                        this.lbStockName.Text = _StockGroupList.Where(x => x.Code == this.txtStockId.Text).First().Name;
+
                 }
                 //Stock.GetMonthPriceOut _GetMonthPriceOutList = getQuaterMonthPriceOutList(txtStockId.Text);
                 //double _Ma5 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(5).Sum(x => Convert.ToDouble(x.close)) / 5, 2);
@@ -2453,6 +2507,11 @@ new Dictionary<string, string>();
                 //double _Ma20 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(20).Sum(x => Convert.ToDouble(x.close)) / 20, 2);
                 //double _Ma60 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(60).Sum(x => Convert.ToDouble(x.close)) / 60, 2);
                 double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0, _Ma60 = 0;
+                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(txtStockId.Text);
+                if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
+                if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
+                if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
+                if (_StockList.Count > 60) _Ma60 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(60).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 60, 2);
                 this.txtMa5.Text = _Ma5.ToString();
                 this.txtMa10.Text = _Ma10.ToString();
                 this.txtMa20.Text = _Ma20.ToString();
@@ -2465,6 +2524,40 @@ new Dictionary<string, string>();
                 logger.Error(_Log);
             }
         }
+        private void getFuturePrice()
+        {
+            string _Log = "";
+            try
+            {
+                Stock.GetRealtimePriceIn _RealtimePriceIn = new Stock.GetRealtimePriceIn();
+                _RealtimePriceIn.Sample1_Symbol = this.txtFutureName.Text;
+                List<Stock.GetRealtimeStockPrice> _PriceList = StockPrice.GetRealtimePrice(_RealtimePriceIn);
+                if (_PriceList.Count() == 1)
+                {
+                    //this.lbFuturePrice.Visible = false;
+                    this.lbFutureStock.Text = _PriceList.First().Price;
+                }
+
+                double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0, _Ma60 = 0;
+                DataAccess _DataAccess = new DataAccess();
+                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(this.txtFutureName.Text);
+                if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
+                if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
+                if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
+                if (_StockList.Count > 60) _Ma60 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(60).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 60, 2);
+                this.txtFutureMa5.Text = _Ma5.ToString();
+                this.txtFutureMa10.Text = _Ma10.ToString();
+                this.txtFutureMa20.Text = _Ma20.ToString();
+                this.txtFutureMa60.Text = _Ma60.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetFuturePrice:" + "\r\n" + ex.Message;
+                logger.Error(_Log);
+            }
+        }
+
         /// <summary>
         /// 每5秒更新股價
         /// 太頻繁跟證交所呼叫API會被封鎖IP
@@ -2517,7 +2610,9 @@ new Dictionary<string, string>();
                     _RealtimePriceIn.Sample1_Symbol = _RealtimePriceIn.Sample1_Symbol.Remove(_RealtimePriceIn.Sample1_Symbol.Length - 1);
                     _PriceList = StockPrice.GetRealtimePrice(_RealtimePriceIn);
                 }
-
+                List<string> _CodeList = new List<string>();
+                List<string> _CodeObserverList = new List<string>();
+                _CodeObserverList = _RealtimePriceIn.Sample1_Symbol.Split(';').ToList();
                 foreach (Stock.GetRealtimeStockPrice s in _PriceList)
                 {
                     if (s.StockId == "t00")
@@ -2549,9 +2644,30 @@ new Dictionary<string, string>();
                         _LbTotalDealQty = (Label)flowLayoutPanel1.Controls.Find("lbTotalDealQty" + s.StockId, true)[0];
                         _LbTotalDealQty.Text = s.TotalDealQty;
                     }
+                    _CodeList.Add(s.StockId);
                 }
-
-
+                string _Id = "Price1_lbTPrice";
+                string _Volume = "Price1_lbTVolume";
+                string _StockFuture_URL = ConfigurationManager.AppSettings["HiStock_URL"];
+                var _LackOffList = _CodeObserverList.Except(_CodeList);
+                foreach (string s in _LackOffList)
+                {
+                    Label _LbPrice = new Label();
+                    Label _LbStockName = new Label();
+                    Label _LbDealQty = new Label();
+                    Label _LbTotalDealQty = new Label();
+                    if (flowLayoutPanel1.Controls.Find("lbPrice" + s, true).Count() > 0)
+                    {
+                        _StockLackOffList.Add(s);
+                        //_LbPrice = (Label)flowLayoutPanel1.Controls.Find("lbPrice" + s, true)[0];
+                        //_LbPrice.Text = Common.Job.GetTaiwanFutures(_StockFuture_URL + s, _Id, true); 
+                        _LbStockName = (Label)flowLayoutPanel1.Controls.Find("lbStockName" + s, true)[0];
+                        if (_StockGroupList.Where(x => x.Code == s).ToList().Count > 0)
+                            _LbStockName.Text = _StockGroupList.Where(x => x.Code == s).First().Name;
+                        //_LbTotalDealQty = (Label)flowLayoutPanel1.Controls.Find("lbTotalDealQty" + s, true)[0];
+                        //_LbTotalDealQty.Text = Common.Job.GetTaiwanFutures(_StockFuture_URL + s, _Volume, true);
+                    }
+                }
                 foreach (string sl in _StockList)
                 //foreach (Stock.GetRealtimeStockPrice s in _PriceList)
                 {
@@ -2614,9 +2730,9 @@ new Dictionary<string, string>();
                 logger.Error(_Log);
             }
         }
-        private void realTimeFuture(string s, string futurePrice)
+        private double realTimeFuture(string s, string futurePrice)
         {
-            double _UnitProfit = 50.0;
+
             double _Fee = Convert.ToDouble(ConfigurationManager.AppSettings["Fee"]);
             double _Exposure = 0.0;
             double _SubTotal = 0.0;
@@ -2630,50 +2746,50 @@ new Dictionary<string, string>();
             Button _BtnDeal = new Button();
             Label _LbDealQty = new Label();
             Label _LbTotalDealQty = new Label();
+            string _EnCode = s.Substring(0, 2);
+            double _UnitProfit = _EnCode == "MX" ? 50.0 : 2000.0;
+
+            if (flowLayoutFutures.Controls.Find("lbPrice" + s, true).Count() > 0)
             {
-                if (flowLayoutFutures.Controls.Find("lbPrice" + s, true).Count() > 0)
+                _LbPrice = (Label)flowLayoutFutures.Controls.Find("lbPrice" + s, true)[0];
+                _LbCost = (Label)flowLayoutFutures.Controls.Find("lbCost" + s, true)[0];
+                _LbPersent = (Label)flowLayoutFutures.Controls.Find("lbPersent" + s, true)[0];
+                _LbProfit = (Label)flowLayoutFutures.Controls.Find("lbProfit" + s, true)[0];
+                _LbStock = (Label)flowLayoutFutures.Controls.Find("lbStock" + s, true)[0];
+                _BtnDeal = (Button)flowLayoutFutures.Controls.Find("btnDeal" + s, true)[0];
+                if (Convert.ToDecimal(futurePrice) > Convert.ToDecimal(_LbCost.Text)) _LbPrice.ForeColor = Color.Red;
+                else if (Convert.ToDecimal(futurePrice) < Convert.ToDecimal(_LbCost.Text)) _LbPrice.ForeColor = Color.Green;
+                double _Persent = 0;
+                bool _BuySell = false;
+                if (_BtnDeal.Text == "現買" || _BtnDeal.Text == "資買") _BuySell = true;
+
+                _LbPrice.Text = futurePrice;
+                double _Profit = 0.0;
+                if (_BuySell)
                 {
-                    _LbPrice = (Label)flowLayoutFutures.Controls.Find("lbPrice" + s, true)[0];
-                    _LbCost = (Label)flowLayoutFutures.Controls.Find("lbCost" + s, true)[0];
-                    _LbPersent = (Label)flowLayoutFutures.Controls.Find("lbPersent" + s, true)[0];
-                    _LbProfit = (Label)flowLayoutFutures.Controls.Find("lbProfit" + s, true)[0];
-                    _LbStock = (Label)flowLayoutFutures.Controls.Find("lbStock" + s, true)[0];
-                    //_LbHigh = (Label)flowLayoutFutures.Controls.Find("lbHigh" + s, true)[0];
-                    _BtnDeal = (Button)flowLayoutFutures.Controls.Find("btnDeal" + s, true)[0];
-                    if (Convert.ToDecimal(futurePrice) > Convert.ToDecimal(_LbCost.Text)) _LbPrice.ForeColor = Color.Red;
-                    else if (Convert.ToDecimal(futurePrice) < Convert.ToDecimal(_LbCost.Text)) _LbPrice.ForeColor = Color.Green;
-                    double _Persent = 0;
-                    bool _BuySell = false;
-                    if (_BtnDeal.Text == "現買" || _BtnDeal.Text == "資買") _BuySell = true;
-
-                    _LbPrice.Text = futurePrice;
-                    double _Profit = 0.0;
-                    if (_BuySell)
-                        _Profit = (Convert.ToDouble(_LbPrice.Text) - Convert.ToDouble(_LbCost.Text)) * _UnitProfit * Convert.ToDouble(_LbStock.Text) - _Fee;
-                    else
-                        _Profit = (Convert.ToDouble(_LbCost.Text) - Convert.ToDouble(_LbPrice.Text)) * _UnitProfit * Convert.ToDouble(_LbStock.Text) - _Fee;
-                    _SubTotal = Convert.ToDouble(Margin.MTX) * Convert.ToDouble(_LbStock.Text);
-                    _Exposure = _Exposure + _SubTotal;
-
-                    _Persent = Math.Round(_Profit / _Exposure, 2);
-
-                    _LbPersent.Text = Convert.ToString(_Persent * 100) + "%";
-                    _LbPersent.ForeColor = _Persent > 0 ? Color.Red : Color.Green;
-
-                    _LbProfit.Text = Convert.ToString(Math.Round(_Profit, 2));
-                    _LbProfit.ForeColor = _Profit > 0 ? Color.Red : Color.Green;
-
-
-                    this.lbExposureFuture.Text = "水位:" + _Exposure.ToString("#,#", CultureInfo.InvariantCulture);
-
-                    //   _LbHigh.Text = s.HighPrice != "" ? Math.Round(Convert.ToDouble(s.HighPrice), 2).ToString() : s.HighPrice;
-
-                    //_LbDealQty = (Label)flowLayoutPanelStock.Controls.Find("lbDealQty" + s, true)[0];
-                    //_LbDealQty.Text = s.DealQty;
-                    //_LbTotalDealQty = (Label)flowLayoutPanelStock.Controls.Find("lbTotalDealQty" + s, true)[0];
-                    //_LbTotalDealQty.Text = s.TotalDealQty;
+                    _Profit = (Convert.ToDouble(_LbPrice.Text) - Convert.ToDouble(_LbCost.Text)) * _UnitProfit * Convert.ToDouble(_LbStock.Text) - _Fee;
                 }
+                else
+                {
+                    _Profit = (Convert.ToDouble(_LbCost.Text) - Convert.ToDouble(_LbPrice.Text)) * _UnitProfit * Convert.ToDouble(_LbStock.Text) - _Fee;
+                }
+                if (_EnCode == "MX")
+                    _SubTotal = Convert.ToDouble(Margin.MTX) * Convert.ToDouble(_LbStock.Text);
+                else
+                    _SubTotal = Convert.ToDouble(futurePrice) * 270 * Convert.ToDouble(_LbStock.Text);
+                _Exposure = _Exposure + _SubTotal;
+
+                _Persent = Math.Round(_Profit / _Exposure, 2);
+                _LbPersent.Text = Convert.ToString(_Persent * 100) + "%";
+                _LbPersent.ForeColor = _Persent > 0 ? Color.Red : Color.Green;
+
+                _LbProfit.Text = Convert.ToString(Math.Round(_Profit, 2));
+                _LbProfit.ForeColor = _Profit > 0 ? Color.Red : Color.Green;
+
+
+
             }
+            return _Exposure;
         }
         /// <summary>
         /// 手續:0.001425
@@ -2771,87 +2887,91 @@ new Dictionary<string, string>();
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="buySell"></param>
+        /// <param name="buySell">B/S</param>
         /// <param name="futureId"></param>
         /// <param name="stopLostPrice"></param>
-        /// <param name="ladderPiece"></param>
-        /// <param name="ma"></param>
+        /// <param name="ladderPiece">分批</param> 
+        /// <param name="ma">Pt/AVG/ABS/HIGH</param>
         private void stopLostFuture(string buySell, string status, string futureId, string stopLostPrice, string ladderPiece, string ma)
         {
             string _BuySell = buySell;
-            string _Units = "0";
             string _Price = "0";
             string _PriceParameter = "0";
-            string _FutureOrderType = dicFutureOrderType[this.cbOrderType.SelectedItem.ToString()];
-            string _FokIocRod = _FutureOrderType == "市價" ? "F" : "R";
+            string _FutureOrderType = "M";//停損市價賣出
+            string _FokIocRod = _FutureOrderType == "M" ? "F" : "R";
             string _PriceType = this.cbOrderType.SelectedItem.ToString();
-            string _OpenCloseAuto = dicOpenCloseAuto[this.cbOpenCloseAuto.SelectedItem.ToString()];
+            string _OpenCloseAuto = "A";//自動平倉
             string _Profit = "";
             string _StockStatus = "";
-
+            string _Log = "";
 
             DateTime _DtContractDate = DateTime.Now;
-            string _ContractYear = _DtContractDate.ToString("yyyy");
-            string _ContractDate = _ContractYear + this.cbDateMM.SelectedItem;
-            string _FutureName = futureId.Substring(0, 3);
-            string _StockId = _FutureName;
-            string _Name = this.cbFutureName.SelectedItem.ToString() + this.cbDateMM.SelectedItem;
+            string _ContractDate = futureId.Length > 8 ? futureId.Substring(3, 6) : futureId.Substring(2, 6);
+            string _FutureName = futureId.Length > 8 ? futureId.Substring(0, 3) : futureId.Substring(0, 2); ;
+            string _Name = _FutureName;
+            if (this._StockFutureCodeList.Where(x => x.EnCode == _FutureName).ToList().Count > 0)
+                _Name = this._StockFutureCodeList.Where(x => x.EnCode == _FutureName).First().Name + "期" + _ContractDate.Substring(4, 2);
             ComboBox _CbOrderType = new ComboBox();
             NumericUpDown _NupLots = new NumericUpDown();
             Button _BtnFutureDeal = new Button();
             TextBox _TxtFuturePrice = new TextBox();
-            TextBox _TxtFutureName = new TextBox();
             Label _LbPrice = new Label();
             Label _LbProfit = new Label();
             _CbOrderType = (ComboBox)flowLayoutFutures.Controls.Find("cbOrderType" + futureId, true)[0];
             _NupLots = (NumericUpDown)flowLayoutFutures.Controls.Find("nupLots" + futureId, true)[0];
             _BtnFutureDeal = (Button)flowLayoutFutures.Controls.Find("btnDeal" + futureId, true)[0];
             _TxtFuturePrice = (TextBox)flowLayoutFutures.Controls.Find("txtPrice" + futureId, true)[0];
-            _TxtFutureName = (TextBox)flowLayoutFutures.Controls.Find("txtFutureName" + futureId, true)[0];
             _LbPrice = (Label)flowLayoutFutures.Controls.Find("lbPrice" + futureId, true)[0];
             _LbProfit = (Label)flowLayoutFutures.Controls.Find("lbProfit" + futureId, true)[0];
 
-            _Units = Convert.ToString(_NupLots.Value);
             _Price = _TxtFuturePrice.Text != "" ? _TxtFuturePrice.Text : _LbPrice.Text;
 
             _FutureOrderType = dicFutureOrderType[_CbOrderType.SelectedItem.ToString()];
             _StockStatus = _BtnFutureDeal.Text;
             _BtnFutureDeal.Text = status;
-            _Profit = _LbProfit.Text;
-            if (_Profit != "")
+            try
             {
-                if (Convert.ToDouble(_Profit) > 0)
+                _Profit = Convert.ToString(Math.Round(Convert.ToDouble(_LbProfit.Text) / Convert.ToDouble(ladderPiece), 2));
+                if (_Profit != "")
                 {
-                    _Profit = ",賺" + _Profit + "元";
+                    if (Convert.ToDouble(_Profit) > 0)
+                    {
+                        _Profit = ",賺" + _Profit + "元";
+                    }
+                    else
+                    {
+                        _Profit = ",賠" + _Profit + "元";
+                    }
                 }
-                else
+
+
+                _PriceParameter = _FutureOrderType == "M" ? "" : _Price;
+                string _Parameter = "Market=F,Account=" + txtFutureAccount.Text + ",ContractName=" + _FutureName + ",ContractDate=" + _ContractDate + ",OpenCloseAuto=" + _OpenCloseAuto + ",BuySell=" + _BuySell + ",Lots=" + ladderPiece + ",OrderType=" + _FutureOrderType + ",Price=" + _PriceParameter + ",FokIocRod=" + _FokIocRod + ",DayTrade=N";
+                StringBuilder sb = new StringBuilder(_Parameter);
+
+                if ((_Price != "" && _FutureOrderType == "L") || _FutureOrderType == "M")
                 {
-                    _Profit = ",賠" + _Profit + "元";
+                    HTSOrder(sb);
+                    // MessageBox.Show(_Parameter);
+                    string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + _Name + "共" + ladderPiece + "口," + _PriceType + _Price + "元" + _Profit + ",停損條件:" + ma + ",價格:" + stopLostPrice;
+                    richTxtInfo.SelectionColor = status == "現買" ? Color.Red : Color.Green;
+                    richTxtInfo.AppendText(_Msg + Environment.NewLine);
+                    richTxtInfo.SelectionStart = richTxtInfo.TextLength;
+                    richTxtInfo.ScrollToCaret();
+
+                    string _Code = _FutureName + _ContractDate;
+                    bool _ChkPt = _FutureName == "MXF" ? false : true;
+                    insertUpdateStockInventory(_Code, _Name, status, ladderPiece, _Price, true, _ChkPt);
+                    this.lbTimes.Text = Convert.ToString(Convert.ToInt32(this.lbTimes.Text) + 1);
+                    this.btnFutureRefrash.PerformClick();
+
                 }
             }
-
-
-            _PriceParameter = _FutureOrderType == "M" ? "" : _Price;
-            string _Parameter = "Market=F,Account=" + txtFutureAccount.Text + ",ContractName=" + _FutureName + ",ContractDate=" + _ContractDate + ",OpenCloseAuto=" + _OpenCloseAuto + ",BuySell=" + _BuySell + ",Lots=" + _Units + ",OrderType=" + _FutureOrderType + ",Price=" + _PriceParameter + ",FokIocRod=" + _FokIocRod + ",DayTrade=N";
-            StringBuilder sb = new StringBuilder(_Parameter);
-
-            if ((_Price != "" && _FutureOrderType == "L") || _FutureOrderType == "M")
+            catch (Exception ex)
             {
-                HTSOrder(sb);
-                // MessageBox.Show(_Parameter);
-                string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + this.cbFutureName.SelectedItem.ToString() + "共" + _Units + "口," + _PriceType + _Price + "元" + _Profit;
-                richTxtInfo.SelectionColor = status == "現買" ? Color.Red : Color.Green;
-                richTxtInfo.AppendText(_Msg + Environment.NewLine);
-                richTxtInfo.SelectionStart = richTxtInfo.TextLength;
-                richTxtInfo.ScrollToCaret();
-
-                string _Code = _FutureName + _ContractDate;
-                insertUpdateStockInventory(_Code, this.cbFutureName.SelectedItem.ToString() + this.cbDateMM.SelectedItem, status, _Units, _Price, true);
-                this.lbTimes.Text = Convert.ToString(Convert.ToInt32(this.lbTimes.Text) + 1);
-                this.btnFutureRefrash.PerformClick();
-
+                _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " stopLostFuture:" + "\r\n" + ex.Message;
+                logger.Error(_Log);
             }
-
         }
         /// <summary>
         /// 將均線停損儲存在設定檔
@@ -3153,12 +3273,12 @@ new Dictionary<string, string>();
 
                                                     if ((Convert.ToDouble(_TxtMa5.Text) > Convert.ToDouble(_LbPrice.Text)) && _LbMa10.ForeColor != Color.Red)
                                                     {
-                                                        sndPlayer.PlayLooping();
+                                                        if (btnCloseSound.BackColor != Color.Yellow) sndPlayer.PlayLooping();
                                                         _LbMa5.ForeColor = Color.Red;
                                                     }
                                                     if ((Convert.ToDouble(_TxtMa10.Text) > Convert.ToDouble(_LbPrice.Text)) && _LbMa10.ForeColor != Color.Red)
                                                     {
-                                                        sndPlayer.PlayLooping();
+                                                        if (btnCloseSound.BackColor != Color.Yellow) sndPlayer.PlayLooping();
                                                         _LbMa10.ForeColor = Color.Red;
                                                     }
                                                 }
@@ -3312,9 +3432,9 @@ new Dictionary<string, string>();
                                 _ChkAll = (CheckBox)flowLayoutFutures.Controls.Find("chkAll" + contr.Tag, true)[0];
                                 _TxtStopLost = (TextBox)flowLayoutFutures.Controls.Find("txtStopLost" + contr.Tag, true)[0];
                                 _TxtTarget = (TextBox)flowLayoutFutures.Controls.Find("txtTarget" + contr.Tag, true)[0];
-                                _ChkCloseStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseStopLost" + contr.Tag, true)[0];
+                                // _ChkCloseStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseStopLost" + contr.Tag, true)[0];
                                 _ChkCloseABSStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseABSStopLost" + contr.Tag, true)[0];
-                                _ChkCloseHighStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseHighStopLost" + contr.Tag, true)[0];
+                                // _ChkCloseHighStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseHighStopLost" + contr.Tag, true)[0];
                                 _ChkClosePtStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkClosePtStopLost" + contr.Tag, true)[0];
                                 _LbProfit = (Label)flowLayoutFutures.Controls.Find("lbProfit" + contr.Tag, true)[0];
                                 _LbCost = (Label)flowLayoutFutures.Controls.Find("lbCost" + contr.Tag, true)[0];
@@ -3329,8 +3449,9 @@ new Dictionary<string, string>();
                                 string _Status = _BtnDeal.Text;
                                 double _SubTotal = Convert.ToDouble(Margin.MTX) * Convert.ToDouble(_LbStock.Text);
                                 double _Exposure = _SubTotal;
-
-
+                                string _EnCode = Convert.ToString(contr.Tag).Substring(0, 2);
+                                int _Length = _EnCode == "MX" ? 5 : 2;
+                                string _Point = ConfigurationManager.AppSettings["Point"];
                                 if (Convert.ToDouble(_LbStock.Text) > 0)
                                 {
                                     switch (mode)
@@ -3341,76 +3462,113 @@ new Dictionary<string, string>();
                                             _Piece = Convert.ToDouble(_LbStock.Text) > _LadderPiece ? _LadderPiece : Convert.ToDouble(_LbStock.Text);
                                             //放空
                                             //現價大於防守價位
-                                            if (_TxtStopLost.Text != "" && _BtnDeal.Text != "現買")
+                                            double _Ladder = 0.0;
+                                            if (_TxtStopLost.Text != "" && _BtnDeal.Text != "現買" && _TxtStopLost.Text.Length >= _Length)
                                             {
                                                 if (Convert.ToDecimal(_LbFuturePrice.Text) > Convert.ToDecimal(_TxtStopLost.Text))
                                                 {
-                                                    stopLostFuture("B", "現買", contr.Tag.ToString(), _Price.ToString(), Convert.ToString(_Piece), "防守");
-                                                    if (_TxtStopLost.Text != "")
-                                                    {
-                                                        double _Ladder = Convert.ToDouble(_TxtStopLost.Text) - Convert.ToDouble(_TxtStopLost.Text) * 0.02;
-                                                        _Ladder = Math.Round(_Ladder, 2);
-                                                        _BtnDeal.Text = "現買";
-                                                        _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
-                                                        _TxtStopLost.Text = _LbStock.Text != "0" ? Convert.ToString(_Ladder) : "";
-                                                    }
+                                                    stopLostFuture("B", "現買", contr.Tag.ToString(), _TxtStopLost.Text, Convert.ToString(_Piece), mode);
+                                                    if (_EnCode == "MX")
+                                                        _Ladder = Convert.ToDouble(_TxtStopLost.Text) + Convert.ToDouble(_Point);
+                                                    else
+                                                        _Ladder = Convert.ToDouble(_TxtStopLost.Text) + Convert.ToDouble(_TxtStopLost.Text) * 0.02;
+                                                    _Ladder = Math.Round(_Ladder, 2);
+                                                    _BtnDeal.Text = "現買";
+                                                    _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
+                                                    _TxtStopLost.Text = _LbStock.Text != "0" ? Convert.ToString(_Ladder) : "";
+
+
+
+                                                }
+
+                                            }
+                                            if (_TxtTarget.Text != "" && _BtnDeal.Text != "現買" && _TxtTarget.Text.Length >= _Length)
+                                            {
+                                                if (Convert.ToDecimal(_LbFuturePrice.Text) < Convert.ToDecimal(_TxtTarget.Text))
+                                                {
+                                                    stopLostFuture("B", "現買", contr.Tag.ToString(), _TxtTarget.Text, Convert.ToString(_Piece), mode);
+                                                    if (_EnCode == "MX")
+                                                        _Ladder = Convert.ToDouble(_TxtTarget.Text) - Convert.ToDouble(_Point);
+                                                    else
+                                                        _Ladder = Convert.ToDouble(_TxtTarget.Text) - Convert.ToDouble(_TxtTarget.Text) * 0.02;
+                                                    _Ladder = Math.Round(_Ladder, 2);
+                                                    _BtnDeal.Text = "現買";
+                                                    _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
+                                                    _TxtTarget.Text = _LbStock.Text != "0" ? Convert.ToString(_Ladder) : "";
                                                 }
                                             }
-                                            //現價大於目標價
-                                            //if (_TxtTarget.Text != "" && _TxtTarget.Text.Length >= 2 && _BtnDeal.Text != "現賣")
-                                            //{
-                                            //    if (Convert.ToDecimal(_LbPrice.Text) > Convert.ToDecimal(_TxtTarget.Text))
-                                            //    {
-                                            //        stopLostOrder(contr.Tag.ToString(), _Price.ToString(), Convert.ToString(_Piece), "目標");
-                                            //        if (_TxtTarget.Text != "")
-                                            //        {
-                                            //            double _Ladder = Convert.ToDouble(_TxtTarget.Text) + Convert.ToDouble(_TxtTarget.Text) * 0.02;
-                                            //            _Ladder = Math.Round(_Ladder, 2);
-                                            //            _BtnDeal.Text = "現買";
-                                            //            _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
-                                            //            _TxtTarget.Text = _LbStock.Text != "0" ? Convert.ToString(_Ladder) : "";
-                                            //        }
-                                            //    }
-                                            //}
-                                            break;
-                                        //case "ABS":
-                                        //    if (!_ChkCloseABSStopLost.Checked)
-                                        //    {
-                                        //        _Piece = Convert.ToDouble(_LbStock.Text) > _LadderPiece ? _LadderPiece : Convert.ToDouble(_LbStock.Text);
-                                        //        if (_Status == "現買" || _Status == "資買")
-                                        //        {
-                                        //            if (_Exposure < 1500000)
-                                        //            {
-                                        //                if (Convert.ToDouble(_LbProfit.Text) < -20000)
-                                        //                {
-                                        //                    if (Convert.ToDouble(_LbStock.Text) > 0)
-                                        //                    {
-                                        //                        stopLostOrder(contr.Tag.ToString(), _Price.ToString(), Convert.ToString(_Piece), "絕對金額");
-                                        //                    }
-                                        //                    _BtnDeal.Text = _Status;
-                                        //                    _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
-                                        //                    _NupQty.Value = _LbStock.Text != "" ? Convert.ToInt32(_LbStock.Text) : 0;
-                                        //                }
-                                        //            }
+                                            if (_TxtStopLost.Text != "" && _BtnDeal.Text != "現賣" && _TxtStopLost.Text.Length >= _Length)
+                                            {
+                                                if (Convert.ToDecimal(_LbFuturePrice.Text) < Convert.ToDecimal(_TxtStopLost.Text))
+                                                {
+                                                    stopLostFuture("S", "現賣", contr.Tag.ToString(), _TxtStopLost.Text, Convert.ToString(_Piece), mode);
+                                                    if (_EnCode == "MX")
+                                                        _Ladder = Convert.ToDouble(_TxtStopLost.Text) - Convert.ToDouble(_Point);
+                                                    else
+                                                        _Ladder = Convert.ToDouble(_TxtStopLost.Text) - Convert.ToDouble(_TxtStopLost.Text) * 0.02;
+                                                    _Ladder = Math.Round(_Ladder, 2);
+                                                    _BtnDeal.Text = "現賣";
+                                                    _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
+                                                    _TxtStopLost.Text = _LbStock.Text != "0" ? Convert.ToString(_Ladder) : "";
+                                                }
 
-                                        //        }
-                                        //    }
-                                        //    break;
+                                            }
+                                            if (_TxtTarget.Text != "" && _BtnDeal.Text != "現賣" && _TxtTarget.Text.Length >= _Length)
+                                            {
+                                                if (Convert.ToDecimal(_LbFuturePrice.Text) > Convert.ToDecimal(_TxtTarget.Text))
+                                                {
+                                                    stopLostFuture("S", "現賣", contr.Tag.ToString(), _TxtTarget.Text, Convert.ToString(_Piece), mode);
+                                                    if (_EnCode == "MX")
+                                                        _Ladder = Convert.ToDouble(_TxtTarget.Text) + Convert.ToDouble(_Point);
+                                                    else
+                                                        _Ladder = Convert.ToDouble(_TxtTarget.Text) + Convert.ToDouble(_TxtTarget.Text) * 0.02;
+                                                    _Ladder = Math.Round(_Ladder, 2);
+                                                    _BtnDeal.Text = "現賣";
+                                                    _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
+                                                    _TxtTarget.Text = _LbStock.Text != "0" ? Convert.ToString(_Ladder) : "";
+                                                }
+                                            }
+
+                                            break;
+                                        case "ABS":
+                                            if (!_ChkCloseABSStopLost.Checked)
+                                            {
+                                                _Piece = Convert.ToDouble(_LbStock.Text) > _LadderPiece ? _LadderPiece : Convert.ToDouble(_LbStock.Text);
+                                                string _BuySell = _Status == "現買" ? "S" : "B";
+                                                string status = _Status == "現買" ? "現賣" : "現買";
+                                                if (Convert.ToDouble(_LbProfit.Text) < -20000)
+                                                {
+                                                    if (Convert.ToDouble(_LbStock.Text) > 0)
+                                                    {
+                                                        stopLostFuture(_BuySell, status, contr.Tag.ToString(), _TxtTarget.Text, Convert.ToString(_Piece), mode);
+                                                    }
+                                                    _BtnDeal.Text = status;
+                                                    _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
+                                                }
+                                            }
+                                            break;
 
                                         case "Pt":
                                             if (!_ChkClosePtStopLost.Checked)
                                             {
-                                                string _Point = ConfigurationManager.AppSettings["Point"];
+                                                _Piece = Convert.ToDouble(_LbStock.Text) > _LadderPiece ? _LadderPiece : Convert.ToDouble(_LbStock.Text);
                                                 if (_Status == "現買")
                                                 {
-                                                    _Piece = Convert.ToDouble(_LbStock.Text) > _LadderPiece ? _LadderPiece : Convert.ToDouble(_LbStock.Text);
-                                                    if ((Convert.ToDouble(_LbCost.Text) - (Convert.ToDouble(_LbFuturePrice.Text)) > 50))
+                                                    if ((Convert.ToDouble(_LbCost.Text) - (Convert.ToDouble(_LbFuturePrice.Text)) > Convert.ToInt32(_Point)))
                                                     {
-                                                        string _FutureName = contr.Tag.ToString().Substring(0, 3);
-                                                        stopLostFuture("S", "現賣", contr.Tag.ToString(), "", Convert.ToString(_Piece), "");
+                                                        stopLostFuture("S", "現賣", contr.Tag.ToString(), "", Convert.ToString(_Piece), mode);
                                                         _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
                                                     }
                                                 }
+                                                else if (_Status == "現賣")
+                                                {
+                                                    if ((Convert.ToDouble(_LbCost.Text) - (Convert.ToDouble(_LbFuturePrice.Text)) < -Convert.ToInt32(_Point)))
+                                                    {
+                                                        stopLostFuture("B", "現買", contr.Tag.ToString(), "", Convert.ToString(_Piece), mode);
+                                                        _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
+                                                    }
+                                                }
+
                                             }
 
                                             break;
@@ -3425,6 +3583,7 @@ new Dictionary<string, string>();
         private void timerDefenseStopLost_Tick(object sender, EventArgs e)
         {
             stopLostStrategy(3, "DEF", true);
+            stopFutureLostStrategy(2, "DEF", true);
         }
         /// <summary>
         /// 帳戶輸入存於config檔
@@ -3436,7 +3595,7 @@ new Dictionary<string, string>();
             if (this.txtStockAccount.Text.Length > 10)
             {
                 Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
-                config.AppSettings.Settings["Account"].Value = this.txtStockAccount.Text;
+                config.AppSettings.Settings["StockAccount"].Value = this.txtStockAccount.Text;
                 config.Save(ConfigurationSaveMode.Modified);
             }
         }
@@ -3539,6 +3698,7 @@ new Dictionary<string, string>();
         private void timerAbsStopLost_Tick(object sender, EventArgs e)
         {
             stopLostStrategy(2, "ABS", true);
+            stopFutureLostStrategy(2, "ABS", true);
         }
 
         private void timerHighStopList_Tick(object sender, EventArgs e)
@@ -3589,7 +3749,7 @@ new Dictionary<string, string>();
             sendFuturesParameter(sender, true, "S", "現賣", Color.Green);
         }
         /// <summary>
-        /// 
+        /// 取得台指
         /// </summary>
         /// <returns></returns>
         private string getTaiwanFutures()
@@ -3628,6 +3788,7 @@ new Dictionary<string, string>();
         {
             System.Media.SoundPlayer sndPlayer = new System.Media.SoundPlayer(Application.StartupPath + @"/Media/WindowsDing.wav");
             sndPlayer.Stop();
+            btnCloseSound.BackColor = Color.Yellow;
         }
         /// <summary>
         /// 取得最新台指價格
@@ -3640,7 +3801,9 @@ new Dictionary<string, string>();
             int i = 0;
             try
             {
+                string _Id = "Price1_lbTPrice2";
                 string _Spread = ConfigurationManager.AppSettings["Spread"];
+                string _StockFuture_URL = ConfigurationManager.AppSettings["StockFuture_URL"];
                 // string[] _Future = ConfigurationManager.AppSettings["Future"].Split(';');
                 List<WebApiService.Models.StockInventory> _StockInventoryList = getStockInventoryList();
                 string _FuturePrice = getTaiwanFutures();
@@ -3648,17 +3811,28 @@ new Dictionary<string, string>();
                 if (this.cbDateMM.SelectedIndex == 1) this.lbFuturePrice.Text = Convert.ToString(Convert.ToInt32(this.lbFuturePrice.Text) - Convert.ToInt32(_Spread));
                 Button _Btn = new Button();
                 string _MM = DateTime.Now.AddMonths(1).Month.ToString().PadLeft(2, '0');
+                double _Exposure = 0.0;
                 //庫存
                 foreach (WebApiService.Models.StockInventory s in _StockInventoryList.Where(x => x.Type == true))
                 {
                     if (s.Qty != 0)
                     {
+                        string _EnCode = s.Code.Substring(0, 2);
+                        string _Code = "";
                         string _Price = _FuturePrice;
+                        if (this._StockFutureCodeList.Where(x => x.EnCode == _EnCode).ToList().Count > 0)
+                        {
+                            _Code = this._StockFutureCodeList.Where(x => x.EnCode == _EnCode).First().Code;
+                            _Price = Common.Job.GetTaiwanFutures(_StockFuture_URL + _Code, _Id, true);
+                        }
+
                         if (s.Name == "小台期" + _MM) _Price = Convert.ToString(Convert.ToInt32(_FuturePrice) - Convert.ToInt32(_Spread));
-                        realTimeFuture(s.Code, _Price);
+                        double _SubTotal = realTimeFuture(s.Code, _Price);
+                        _Exposure += _SubTotal;
                         i++;
                     }
                 }
+                this.lbExposureFuture.Text = "水位:" + _Exposure.ToString("#,#", CultureInfo.InvariantCulture);
 
             }
             catch (Exception ex)
@@ -3686,7 +3860,9 @@ new Dictionary<string, string>();
             }
         }
 
-
+        /// <summary>
+        /// 指數均價計算
+        /// </summary>
         private void getAVG()
         {
             string _Log = "";
@@ -3704,6 +3880,8 @@ new Dictionary<string, string>();
                 double _MA60 = _StockIndexList.Where(x => Convert.ToDouble(x.TX) != 0).OrderByDescending(x => x.Date).Take(60).Sum(x => Convert.ToDouble(x.TAIEX)) / 60;
                 this.txtFutureMa5.Text = Math.Ceiling(_MTX_MA5).ToString();
                 this.txtFutureMa10.Text = Math.Ceiling(_MTX_MA10).ToString();
+                this.txtFutureMa20.Text = Math.Ceiling(_MTX_MA20).ToString();
+                this.txtFutureMa60.Text = Math.Ceiling(_MTX_MA60).ToString();
                 if (DateTime.Now.DayOfWeek.ToString() == "Monday")
                     _Yestoday = -3;
                 else if (DateTime.Now.DayOfWeek.ToString() == "Sunday")
@@ -3711,7 +3889,11 @@ new Dictionary<string, string>();
                 TAIEX = getTopIndex(_Yestoday);
                 this.txtMa5.Text = Math.Ceiling(_MA5).ToString();
                 this.txtMa10.Text = Math.Ceiling(_MA10).ToString();
+                this.txtMa20.Text = Math.Ceiling(_MA20).ToString();
+                this.txtMa60.Text = Math.Ceiling(_MA60).ToString();
                 this.lbTAIEXMA5.Text = this.txtMa5.Text;
+                this.lbTAIEXMA20.Text = this.txtMa20.Text;
+                this.lbTAIEXMA60.Text = this.txtMa60.Text;
             }
             catch (Exception ex)
             {
@@ -3721,7 +3903,11 @@ new Dictionary<string, string>();
             }
 
         }
-
+        /// <summary>
+        /// 證交所取不到的資料則轉由HiStock取得
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timerGetLackOffPrice_Tick(object sender, EventArgs e)
         {
             string _HiStock_URL = ConfigurationManager.AppSettings["HiStock_URL"];
@@ -3749,24 +3935,40 @@ new Dictionary<string, string>();
         {
             if (!chkCloseAllStopLost.Checked)
             {
-                // stopFutureLostStrategy(2, "Pt", false);
+                stopFutureLostStrategy(2, "Pt", false);
             }
         }
 
         private void btnLine_Click(object sender, EventArgs e)
         {
-            CallLineNotifyApi(ConfigurationManager.AppSettings["LineToken"], "", "");
+            //CallLineNotifyApi(ConfigurationManager.AppSettings["LineToken"], "", "");
+            btnLine.BackColor = Color.LightGreen;
+            LineNotify = true;
+            //WebApiService.Models.StockLineNotify s = new WebApiService.Models.StockLineNotify();
+            //CallLineNotifyApiIndex("", "330", "-30" , s);
         }
-        public async void CallLineNotifyApi(string token, string ptName, string ptBearName)
+        /// <summary>
+        /// 指數LINE通知功能
+        /// </summary>
+        /// <param name="token">噴起來俱樂部/台指交流群</param>
+        /// <param name="ptName">累計上漲/點數</param>
+        /// <param name="ptBearName">累計下跌點數</param>
+        public async void CallLineNotifyApi(string token, string ptName, string ptBearName, WebApiService.Models.StockLineNotify stockLineNotify)
         {
 
             string _Log = "";
             try
             {
-                int _Pt = Convert.ToInt32(ConfigurationManager.AppSettings[ptName]);
-                int _PtBear = Convert.ToInt32(ConfigurationManager.AppSettings[ptBearName]);
+                //int _Pt = Convert.ToInt32(ConfigurationManager.AppSettings[ptName]);
+                //int _PtBear = Convert.ToInt32(ConfigurationManager.AppSettings[ptBearName]);
+                int _Pt = Convert.ToInt32(ptName);
+                int _PtBear = Convert.ToInt32(ptBearName);
                 bool _Open = false;
                 int _Yestoday = 0;
+                //if (DateTime.Now.DayOfWeek.ToString() == "Monday")
+                //    _Yestoday = -3;
+                //else if (DateTime.Now.DayOfWeek.ToString() == "Sunday")
+                //    _Yestoday = -2;
                 string _Msg = "";
                 bool _Mode = DateTime.Now.Hour < 8 || DateTime.Now.Hour > 13 ? true : false;
                 string _LineToken = token;
@@ -3779,22 +3981,25 @@ new Dictionary<string, string>();
                     {
                         _Msg = "已上漲超過" + _Pt + "點,空方請確實停損";
                         _Pt = _Pt + 30;
+                        _PtBear = -30;
                         _Open = true;
                     }
                     if (_Minus < _PtBear)
                     {
                         _Msg = "已下跌超過" + _PtBear + "點,多方請確實停損";
                         _PtBear = _PtBear - 30;
+                        _Pt= 30;
                         _Open = true;
                     }
                     string _LineMsg = "台指:" + this.lbFuturePrice.Text + "," + _Msg;
                     if (_Open)
                     {
                         await _DataAccess.postLineMsg(_LineMsg, _LineToken);
-                        if (_Pt > 0)
-                        { StockStrategy.Common.Tool.AddOrUpdateAppSettings(ptName, _Pt.ToString()); }
-                        if (_PtBear < 0)
-                        { StockStrategy.Common.Tool.AddOrUpdateAppSettings(ptBearName, _PtBear.ToString()); }
+                        stockLineNotify.Point = _Pt;
+                        //StockStrategy.Common.Tool.AddOrUpdateAppSettings(ptName, _Pt.ToString()); 
+                        stockLineNotify.PointBear = _PtBear;
+                        _DataAccesss.UpdateStockLineNotify(stockLineNotify);
+                        //StockStrategy.Common.Tool.AddOrUpdateAppSettings(ptBearName, _PtBear.ToString()); 
                     }
                 }
             }
@@ -3804,7 +4009,72 @@ new Dictionary<string, string>();
                 logger.Error(_Log);
             }
         }
+        public async void CallLineNotifyApiIndex(string token, string ptName, string ptBearName, WebApiService.Models.StockLineNotify stockLineNotify)
+        {
 
+            string _Log = "";
+            try
+            {
+                int _Pt = Convert.ToInt32(ptName);
+                int _PtBear = Convert.ToInt32(ptBearName);
+                bool _Open = false;
+                int _Yestoday = 0;
+                if (DateTime.Now.DayOfWeek.ToString() == "Monday")
+                    _Yestoday = -3;
+                else if (DateTime.Now.DayOfWeek.ToString() == "Sunday")
+                    _Yestoday = -2;
+                string _Msg = "";
+                bool _Mode = DateTime.Now.Hour > 8 && DateTime.Now.Hour < 14 ? true : false;
+                string _LineToken = token;
+                DataAccess _DataAccesss = new DataAccess();
+                string _Tx = getTopIndex(_Yestoday);
+                if (this.lbTaiwanStock.Text != "")
+                {
+                    double _Minus = Convert.ToDouble(this.lbTaiwanStock.Text) - Convert.ToDouble(_Tx);
+                    if (_Minus > _Pt)
+                    {
+                        _Msg = "已上漲超過" + _Pt + "點" + getAlertMsg(_Pt);
+                        _Pt = _Pt + 30;
+                        _PtBear = -30;
+                        _Open = true;
+                    }
+                    if (_Minus < _PtBear)
+                    {
+                        _Msg = "已下跌超過" + _PtBear + "點" + getAlertMsg(_PtBear);
+                        _PtBear = _PtBear - 30;
+                        _Pt =  30 ;
+                        _Open = true;
+                    }
+                    string _LineMsg = "加權:" + this.lbTaiwanStock.Text + "," + _Msg;
+                    if (_Open)
+                    {
+                        await _DataAccess.postLineMsg(_LineMsg, _LineToken);
+                        stockLineNotify.Point = _Pt;
+                        stockLineNotify.PointBear = _PtBear;
+                        _DataAccesss.UpdateStockLineNotify(stockLineNotify);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " CallLineNotifyApiIndex:" + "\r\n" + ex.Message;
+                logger.Error(_Log);
+            }
+        }
+        private string getAlertMsg(int point)
+        {
+            string _Msg = "";
+            if (point <= -50 && point > -100) _Msg = ",抖";
+            else if (point <= -100 && point > -150) _Msg = ",怕爆";
+            else if (point <= -150 && point > -200) _Msg = ",救命啊";
+            else if (point <= -200 && point > -250) _Msg = ",塊陶啊";
+            else if (point <= -250) _Msg = ",殺起乃";
+            else if (point >= 100 && point < 150) _Msg = ",噴起乃";
+            else if (point >= 150 && point < 200) _Msg = ",殺爆空軍";
+            else if (point >= 200) _Msg = ",我好興奮啊!我好興奮阿!";
+            return _Msg;
+
+        }
         /// <summary>
         /// 取得前一日加權指數,取到為止
         /// </summary>
@@ -3822,16 +4092,74 @@ new Dictionary<string, string>();
 
         private void timerLineNotify_Tick(object sender, EventArgs e)
         {
-           // CallLineNotifyApi(ConfigurationManager.AppSettings["LineToken"], "Pt", "PtBear");
-            CallLineNotifyApi(ConfigurationManager.AppSettings["LineTokenTom"], "PtTom", "PtBearTom");
+            string _DayOfWeek = DateTime.Now.DayOfWeek.ToString();
+            DataAccess _DataAccess = new DataAccess();
+            List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
+            if (LineNotify)
+            {
+                foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.Enable == true).ToList())
+                {
+                    if (_DayOfWeek != "Sunday" && _DayOfWeek != "Saturday")
+                    {
+                        if (s.NotifyClass == "TX")
+                        {
+                            CallLineNotifyApi(s.Token, s.Point.ToString(), s.PointBear.ToString(), s);
+                        }
+                        if (DateTime.Now.Hour > 8 && DateTime.Now.Hour < 14)
+                        {
+                            if (s.NotifyClass == "Index")
+                            {
+                                CallLineNotifyApiIndex(s.Token, s.Point.ToString(), s.PointBear.ToString(), s);
+                            }
+                        }
+                    }
+                    //CallLineNotifyApi(ConfigurationManager.AppSettings["LineToken"], "Pt", "PtBear");
+                    //CallLineNotifyApi(ConfigurationManager.AppSettings["LineTokenTom"], "PtTom", "PtBearTom");
+                    //CallLineNotifyApi(ConfigurationManager.AppSettings["LineTokenRush"], "PtRush", "PtBearRush");
+                }
+            }
         }
-
+        /// <summary>
+        /// 關閉時重置點數
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
-            StockStrategy.Common.Tool.AddOrUpdateAppSettings("Pt", "30");
-            StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtBear", "-30");
-            StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtTom", "30");
-            StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtBearTom", "-30");
+            //StockStrategy.Common.Tool.AddOrUpdateAppSettings("Pt", "30");
+            //StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtBear", "-30");
+            //StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtTom", "30");
+            //StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtBearTom", "-30");
+        }
+
+        private void txtFutureName_TextChanged(object sender, EventArgs e)
+        {
+            nupQty.Value = 1;
+            if (txtFutureName.Text.Length == 4)
+            {
+                getFuturePrice();
+            }
+            if (txtFutureName.Text == "")
+            {
+                this.lbFutureStock.Text = this.lbFuturePrice.Text;
+                getAVG();
+            }
+
+
+        }
+
+        private void lbStockName_Click(object sender, EventArgs e)
+        {
+            string _Id = "Price1_lbTPrice";
+            string _Volume = "Price1_lbTVolume";
+            Label _Lb = sender as Label;
+            string _StockFuture_URL = ConfigurationManager.AppSettings["HiStock_URL"];
+            Label _LbPrice = new Label(); 
+            Label _LbTotalDealQty = new Label();
+            _LbPrice = (Label)flowLayoutPanel1.Controls.Find("lbPrice" + _Lb.Tag, true)[0];
+            _LbPrice.Text = Common.Job.GetTaiwanFutures(_StockFuture_URL + _Lb.Tag, _Id, true);
+            _LbTotalDealQty = (Label)flowLayoutPanel1.Controls.Find("lbTotalDealQty" + _Lb.Tag, true)[0];
+            _LbTotalDealQty.Text = Common.Job.GetTaiwanFutures(_StockFuture_URL + _Lb.Tag, _Volume, true); 
         }
 
         /// <summary>
@@ -3884,7 +4212,7 @@ new Dictionary<string, string>();
                 {
                     if (s.Qty != 0)
                     {
-                        Panel p = dynamicFutures(s.Code, Convert.ToDecimal(s.Qty), s.Cost, s.Status, s.Name);
+                        Panel p = dynamicFutures(s.Code, Convert.ToDecimal(s.Qty), s.Cost, s.Status, s.Name, Convert.ToBoolean(s.ClosePtLost));
                         flowLayoutFutures.Controls.Add(p);
                         _Btn = (Button)flowLayoutFutures.Controls.Find("btnDeal" + s.Code, true)[0];
                         showButton(_Btn, null);

@@ -17,8 +17,8 @@ namespace StockStrategy
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //  Application.Run(new Form1());
-          Application.Run(new FormMain());
-          // Application.Run(new Properties.ScheduleJob());
+         //  Application.Run(new FormMain());
+          Application.Run(new Properties.ScheduleJob());
         }
     }
 }

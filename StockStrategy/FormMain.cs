@@ -837,7 +837,7 @@ new Dictionary<string, string>();
             sendParameter(sender, true, "S", "C", "現賣", Color.Green);
         }
         private void FormMain_Load(object sender, EventArgs e)
-        { 
+        {
             DataAccess _DataAccess = new DataAccess();
             getAVG();
             _StockFutureCodeList = _DataAccess.getStockFutureCodeList();
@@ -3988,7 +3988,7 @@ new Dictionary<string, string>();
                     {
                         _Msg = "已下跌超過" + _PtBear + "點,多方請確實停損";
                         _PtBear = _PtBear - 30;
-                        _Pt= 30;
+                        _Pt = 30;
                         _Open = true;
                     }
                     string _LineMsg = "台指:" + this.lbFuturePrice.Text + "," + _Msg;
@@ -4042,7 +4042,7 @@ new Dictionary<string, string>();
                     {
                         _Msg = "已下跌超過" + _PtBear + "點" + getAlertMsg(_PtBear);
                         _PtBear = _PtBear - 30;
-                        _Pt =  30 ;
+                        _Pt = 30;
                         _Open = true;
                     }
                     string _LineMsg = "加權:" + this.lbTaiwanStock.Text + "," + _Msg;
@@ -4112,6 +4112,11 @@ new Dictionary<string, string>();
                                 CallLineNotifyApiIndex(s.Token, s.Point.ToString(), s.PointBear.ToString(), s);
                             }
                         }
+                        if (DateTime.Now.Hour >= 5 && DateTime.Now.Hour < 6)
+                        {
+                            btnLine.BackColor = Color.Gray;
+                            LineNotify = false; 
+                        }
                     }
                     //CallLineNotifyApi(ConfigurationManager.AppSettings["LineToken"], "Pt", "PtBear");
                     //CallLineNotifyApi(ConfigurationManager.AppSettings["LineTokenTom"], "PtTom", "PtBearTom");
@@ -4154,12 +4159,12 @@ new Dictionary<string, string>();
             string _Volume = "Price1_lbTVolume";
             Label _Lb = sender as Label;
             string _StockFuture_URL = ConfigurationManager.AppSettings["HiStock_URL"];
-            Label _LbPrice = new Label(); 
+            Label _LbPrice = new Label();
             Label _LbTotalDealQty = new Label();
             _LbPrice = (Label)flowLayoutPanel1.Controls.Find("lbPrice" + _Lb.Tag, true)[0];
             _LbPrice.Text = Common.Job.GetTaiwanFutures(_StockFuture_URL + _Lb.Tag, _Id, true);
             _LbTotalDealQty = (Label)flowLayoutPanel1.Controls.Find("lbTotalDealQty" + _Lb.Tag, true)[0];
-            _LbTotalDealQty.Text = Common.Job.GetTaiwanFutures(_StockFuture_URL + _Lb.Tag, _Volume, true); 
+            _LbTotalDealQty.Text = Common.Job.GetTaiwanFutures(_StockFuture_URL + _Lb.Tag, _Volume, true);
         }
 
         /// <summary>

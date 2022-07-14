@@ -74,6 +74,8 @@
             this.lbPercent = new System.Windows.Forms.Label();
             this.lbBtnName = new System.Windows.Forms.Label();
             this.btnClear = new System.Windows.Forms.Button();
+            this.chkLess = new System.Windows.Forms.CheckBox();
+            this.chkNotHigherThan = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -275,6 +277,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.chkNotHigherThan);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.label9);
             this.panel2.Controls.Add(this.txtMoreGain);
@@ -328,6 +331,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chkLess);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.txtLessVolumn);
@@ -382,7 +386,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(216, 16);
+            this.label4.Location = new System.Drawing.Point(213, 22);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(29, 12);
             this.label4.TabIndex = 27;
@@ -390,15 +394,16 @@
             // 
             // txtMultiple
             // 
-            this.txtMultiple.Location = new System.Drawing.Point(175, 10);
+            this.txtMultiple.Location = new System.Drawing.Point(175, 16);
             this.txtMultiple.Name = "txtMultiple";
             this.txtMultiple.Size = new System.Drawing.Size(35, 22);
             this.txtMultiple.TabIndex = 26;
+            this.txtMultiple.Text = "5";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(156, 16);
+            this.label3.Location = new System.Drawing.Point(156, 22);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(17, 12);
             this.label3.TabIndex = 25;
@@ -406,15 +411,16 @@
             // 
             // txtVolumn
             // 
-            this.txtVolumn.Location = new System.Drawing.Point(115, 10);
+            this.txtVolumn.Location = new System.Drawing.Point(115, 16);
             this.txtVolumn.Name = "txtVolumn";
             this.txtVolumn.Size = new System.Drawing.Size(35, 22);
             this.txtVolumn.TabIndex = 22;
+            this.txtVolumn.Text = "700";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(98, 15);
+            this.label2.Location = new System.Drawing.Point(98, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(14, 12);
             this.label2.TabIndex = 24;
@@ -422,16 +428,21 @@
             // 
             // nupGain
             // 
-            this.nupGain.Location = new System.Drawing.Point(62, 10);
+            this.nupGain.Location = new System.Drawing.Point(62, 16);
             this.nupGain.Name = "nupGain";
             this.nupGain.Size = new System.Drawing.Size(31, 22);
             this.nupGain.TabIndex = 23;
+            this.nupGain.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.label1.Location = new System.Drawing.Point(8, 18);
+            this.label1.Location = new System.Drawing.Point(8, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 22;
@@ -493,6 +504,24 @@
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // chkLess
+            // 
+            this.chkLess.AutoSize = true;
+            this.chkLess.Location = new System.Drawing.Point(13, 9);
+            this.chkLess.Name = "chkLess";
+            this.chkLess.Size = new System.Drawing.Size(15, 14);
+            this.chkLess.TabIndex = 33;
+            this.chkLess.UseVisualStyleBackColor = true;
+            // 
+            // chkNotHigherThan
+            // 
+            this.chkNotHigherThan.AutoSize = true;
+            this.chkNotHigherThan.Location = new System.Drawing.Point(12, 10);
+            this.chkNotHigherThan.Name = "chkNotHigherThan";
+            this.chkNotHigherThan.Size = new System.Drawing.Size(15, 14);
+            this.chkNotHigherThan.TabIndex = 34;
+            this.chkNotHigherThan.UseVisualStyleBackColor = true;
             // 
             // ScheduleJob
             // 
@@ -582,5 +611,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lbBtnName;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.CheckBox chkNotHigherThan;
+        private System.Windows.Forms.CheckBox chkLess;
     }
 }

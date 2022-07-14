@@ -26,6 +26,7 @@ namespace StockStrategy.Properties
         string Change = "Price1_lbTChange";
         string Percent = "Price1_lbTPercent";
         string Volume = "Price1_lbTVolume";
+        string GoodStock = "";
         DataAccess _DataAccess = new DataAccess();
         public ScheduleJob()
         {
@@ -287,7 +288,7 @@ namespace StockStrategy.Properties
             string _Minute = DateTime.Now.Minute.ToString();
             string _DayOfWeek = DateTime.Now.DayOfWeek.ToString();
             string _Day = DateTime.Now.Day.ToString();
-            if (_Hour == "8" && _Minute == "0")
+            if (_Hour == "7" && _Minute == "0")
             {
                 stockIndex = false;
                 bUpdateStockIndex = false;
@@ -298,7 +299,7 @@ namespace StockStrategy.Properties
             }
             if (_DayOfWeek != "Sunday" && _DayOfWeek != "Saturday")
             {
-                if (_Hour == "7" && _Minute == "10" && !stockIndex)
+                if (_Hour == "8" && _Minute == "35" )
                 {
                     if (!bStockAll)
                     {
@@ -306,7 +307,7 @@ namespace StockStrategy.Properties
                         btnGetStockPrice.PerformClick();
                     }
                 }
-                if (_Hour == "8" && _Minute == "10" && !stockIndex)
+                if (_Hour == "8" && _Minute == "35" && !stockIndex)
                 {
                     btnGetIndexToInsert.PerformClick();
                 }
@@ -429,7 +430,7 @@ namespace StockStrategy.Properties
                     // }
                     _Stock.TransactionValue = s.Transaction;
                     _Stock.Date = DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd");
-                    _Stock.UpdateTime = DateTime.Now.ToString("yyyyMMdd hh:mm:ss");
+                    _Stock.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
                     _StockList.Add(_Stock);
                     //  _StockIdList.Add(s.Code);
                 }
@@ -460,18 +461,36 @@ namespace StockStrategy.Properties
             List<Stock> _YestodayStockDayAllList = _DataAccess.getStockYestodayList(_Dt.AddDays(_Yestoday).Date.ToString("yyyyMMdd"));
             List<Stock> _StockDayAllList = _DataAccess.getStockYestodayList(_WhereDate);
             List<Stock> _StockList = new List<Stock>();
+            decimal _Gain = this.nupGain.Value != 0 ? this.nupGain.Value : 3;
+            int _Volumn = this.txtVolumn.Text != "" ? Convert.ToInt32(this.txtVolumn.Text)*1000 : 700000;
+            int multiple = this.txtMultiple.Text != "" ? Convert.ToInt32(this.txtMultiple.Text) : 5;
+            int _PreDays = this.txtPreDays.Text != "" ? Convert.ToInt32(this.txtPreDays.Text) : 10;
+            int _LessVolumn = this.txtLessVolumn.Text != "" ? Convert.ToInt32(this.txtLessVolumn.Text) * 1000 : 1000000;
+            int _PreDays2 = this.txtPreDays2.Text != "" ? Convert.ToInt32(this.txtPreDays2.Text) : 10;
+            int _MoreGain = this.txtMoreGain.Text != "" ? Convert.ToInt32(this.txtMoreGain.Text) : 10;
             try
             {
-                List<Stock> _GoodStockList = _StockDayAllList.Where(x => Convert.ToDouble(x.Gain) > 3 && Convert.ToDouble(x.TradeVolume) > 700000).ToList();
+                List<Stock> _GoodStockList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) > _Gain && Convert.ToDouble(x.TradeVolume) > _Volumn).ToList();
                 foreach (Stock s in _GoodStockList)
                 {
                     if (_YestodayStockDayAllList.Where(x => x.Code == s.Code).ToList().Count > 0)
                     {
                         Stock _YestodayStock = _YestodayStockDayAllList.Where(x => x.Code == s.Code).First();
                         double _Multiple = Convert.ToDouble(s.TradeVolume) / Convert.ToDouble(_YestodayStock.TradeVolume);
-                        if (_Multiple > 5)
+                        if (_Multiple > multiple)
                         {
-                            _StockList.Add(s);
+                            bool _OK = true;
+                            List<Stock> _StockListByCode = _DataAccess.getStockByCodeList(s.Code).OrderByDescending(x => x.Date).ToList();
+                            if (chkLess.Checked)
+                            {
+                                _OK = _StockListByCode.Take(_PreDays + 1).Where(x => Convert.ToDouble(x.TradeVolume) < _LessVolumn).ToList().Count >= _PreDays;
+                            }
+                            if (chkNotHigherThan.Checked)
+                            {
+                                double _Price = Convert.ToDouble(s.ClosingPrice) + Convert.ToDouble(s.ClosingPrice) * _MoreGain / 100;
+                                _OK = _StockListByCode.Take(_PreDays2).Where(x => Convert.ToDouble(x.ClosingPrice) > _Price).ToList().Count == 0;
+                            }
+                            if (_OK) _StockList.Add(s);
                         }
                     }
 
@@ -509,19 +528,20 @@ namespace StockStrategy.Properties
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnInsertStockLackOff_Click(object sender, EventArgs e)
-        { 
+        {
             this.lbBtnName.Text = "Insert Stock Lack Off";
-            List<StockGroup> _StockGroupList = getStockGroupList(); 
+            List<StockGroup> _StockGroupList = getStockGroupList();
             this.progressBar1.Maximum = _StockGroupList.Count;
             this.progressBar1.Step = 1;
             //因為桌取網站資料會較久所以呼叫另一執行續處理
             var t = new Task(insertStockLackOffList);
             t.Start();
         }
-        private void insertStockLackOffList() {
+        private void insertStockLackOffList()
+        {
             string _Log = "";
             try
-            { 
+            {
                 List<Stock> _StockList = setStockLackOffList();
                 insertStock(_StockList);
 
@@ -530,7 +550,7 @@ namespace StockStrategy.Properties
             {
                 _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " insertStockLackOffList:" + ex.Message + "\r\n";
                 logger.Error(_Log);
-              //  this.txtErrMsg.Text += _Log;
+                //  this.txtErrMsg.Text += _Log;
             }
         }
 
@@ -599,24 +619,41 @@ namespace StockStrategy.Properties
 
         private void btnGetGoodStock_Click(object sender, EventArgs e)
         {
+            progressBar1.Style = ProgressBarStyle.Marquee;
+            progressBar1.MarqueeAnimationSpeed = 30;
+            progressBar1.Show();
+            var t = new Task(getGoodStock);
+            t.Start(); 
+        }
+        private void getGoodStock() {
+
             string _Log = "";
+            GoodStock = "";
             try
             {
+               
                 List<Stock> _StockList = getGoodStockList();
-                string _Stock = "";
+              
                 foreach (Stock s in _StockList)
                 {
-                    _Stock = _Stock + s.Code + ";";
+                    GoodStock = GoodStock + s.Code + ";";
                 }
-                this.txtGoodStock.Text = _Stock;
+                MethodInvoker mi = new MethodInvoker(this.UpdateUIGoodStock);
+                this.BeginInvoke(mi, null); 
+
             }
             catch (Exception ex)
             {
                 _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetGoodStock:" + ex.Message;
                 logger.Error(_Log);
-                this.txtErrMsg.Text += _Log;
+               // this.txtErrMsg.Text += _Log;
 
             }
+        }
+        private void UpdateUIGoodStock()
+        {
+            this.txtGoodStock.Text = GoodStock;
+            progressBar1.Style = ProgressBarStyle.Continuous;
         }
         /// <summary>
         /// 只會用到一次,補先前Stock資料的欄位
@@ -695,7 +732,7 @@ namespace StockStrategy.Properties
                 s.PointBear = -30;
                 _DataAccess.UpdateStockLineNotify(s);
             }
-            _Log = "\r\n" + DateTime.Now.ToString("yyyyMMdd hh:mm:ss") + " reset Line notify ok.";
+            _Log =  DateTime.Now.ToString("yyyyMMdd hh:mm:ss") + " reset Line notify ok."+ "\r\n" ;
             this.txtErrMsg.Text += _Log;
         }
 
@@ -744,7 +781,8 @@ namespace StockStrategy.Properties
             {
                 string _HiStock_URL = ConfigurationManager.AppSettings["HiStock_URL"];
                 List<StockGroup> _StockGroupList = getStockGroupList();
-                _StockLackOffList = setStockList();  
+                _StockLackOffList = setStockList();
+                string _UpdateTime= DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
                 foreach (StockGroup s in _StockGroupList)
                 {
                     if (_StockIdList.IndexOf(s.Code) < 0)
@@ -770,12 +808,12 @@ namespace StockStrategy.Properties
                         //    _Stock.Gain = Convert.ToString(Math.Round(((Convert.ToDouble(_Stock.Change)*100) / Convert.ToDouble(_YestodayPrice)), 2));
                         // _Stock.Date = DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd");
                         _Stock.Date = DateTime.Now.ToString("yyyyMMdd");
-                        _Stock.UpdateTime = DateTime.Now.ToString("yyyyMMdd hh:mm:ss");
+                        _Stock.UpdateTime = _UpdateTime;
                         _StockLackOffList.Add(_Stock);
                         _No++;
 
                         MethodInvoker mi = new MethodInvoker(this.UpdateUI);
-                        this.BeginInvoke(mi, null); 
+                        this.BeginInvoke(mi, null);
                     }
                 }
             }

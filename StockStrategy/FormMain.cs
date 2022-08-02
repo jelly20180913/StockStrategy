@@ -16,10 +16,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using DataModel;
-using DataModel.Login;
+using DataModel; 
 using Newtonsoft.Json;
-using System.Threading.Tasks;
+using StockStrategy.Common; 
 namespace StockStrategy
 {
     public partial class FormMain : Form
@@ -83,12 +82,8 @@ new Dictionary<string, string>();
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private static string ConnectionString = "", Token = "", TAIEX = "";
         DataAccess _DataAccess = new DataAccess();
-        int Pt = 30;
-        int PtBear = -30;
-        int PtTom = 30;
-        int PtBearTom = -30;
+      
         bool LineNotify = false;
-        double TotalExposure = 0.0;
         List<string> _StockLackOffList = new List<string>();
         List<WebApiService.Models.StockFutureCode> _StockFutureCodeList = new List<WebApiService.Models.StockFutureCode>();
         List<WebApiService.Models.StockGroup> _StockGroupList = new List<WebApiService.Models.StockGroup>();
@@ -200,20 +195,12 @@ new Dictionary<string, string>();
                 if (Result == DialogResult.OK)
                 {
                     HTSOrder(sb);
-                    //  MessageBox.Show(_Parameter);
+                      MessageBox.Show(_Parameter);
                     string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + _StockId + "共" + _Units + "張," + _PriceType + _Price + "元" + _Profit;
                     richTxtInfo.SelectionColor = foreColor;
                     richTxtInfo.AppendText(_Msg + Environment.NewLine);
                     richTxtInfo.SelectionStart = richTxtInfo.TextLength;
                     richTxtInfo.ScrollToCaret();
-                    //若倉庫已有的庫存需要合併
-                    //if (!combindStock(_StockId, _Units, _Price, status, _StockStatus))
-                    //{
-                    //    Panel p = dynamicOberserver(_StockId, Convert.ToDecimal(1), _Price, true, status, true, "", "", "1");
-                    //    flowLayoutPanelStock.Controls.Add(p);
-                    //    _Btn = (Button)flowLayoutPanelStock.Controls.Find("btnDeal" + _StockId, true)[0];
-                    //    showButton(_Btn, true);
-                    //}
                     insertUpdateStockInventory(_StockId, "", status, _Units, _Price, false, true);
 
                     btnReflash.PerformClick();
@@ -408,6 +395,10 @@ new Dictionary<string, string>();
                 MessageBox.Show("請輸入價格");
             }
         }
+        /// <summary>
+        /// 新增股票庫存
+        /// </summary>
+        /// <param name="stockInventory"></param>
         private void insertStockInventory(WebApiService.Models.StockInventory stockInventory)
         {
             string _Msg = "";
@@ -426,6 +417,10 @@ new Dictionary<string, string>();
                 richTxtInfo.AppendText(_Msg + Environment.NewLine);
             }
         }
+        /// <summary>
+        /// 更新股票庫存
+        /// </summary>
+        /// <param name="stockInventory"></param>
         private void updateStockInventory(WebApiService.Models.StockInventory stockInventory)
         {
             string _Msg = "";
@@ -517,8 +512,7 @@ new Dictionary<string, string>();
                             {
                                 _NupQty.Value = Convert.ToDecimal(_LbStock.Text) - Convert.ToDecimal(peice);
                                 _LbStock.Text = Convert.ToString(Convert.ToDecimal(_LbStock.Text) - Convert.ToDecimal(peice));
-                                _BtnDeal.Text = originalStatus;
-                                // _IsExist = true;
+                                _BtnDeal.Text = originalStatus; 
                             }
                             else if (originalStatus == status)
                             {
@@ -526,11 +520,8 @@ new Dictionary<string, string>();
                                 _LbCost.Text = Convert.ToString(Math.Round(_Cost, 2));
                                 _NupQty.Value = Convert.ToDecimal(_LbStock.Text) + Convert.ToDecimal(peice);
                                 _LbStock.Text = Convert.ToString(Convert.ToDecimal(_LbStock.Text) + Convert.ToDecimal(peice));
-                                //_IsExist = true;
-                            }
-                            //else {
-                            //    _IsExist =false;
-                            //}
+                                 
+                            } 
                             if (_LbStock.Text == "" || Convert.ToInt32(_LbStock.Text) == 0) p.Controls.Clear();
                         }
                     }
@@ -554,7 +545,7 @@ new Dictionary<string, string>();
                                 _NupQty.Value = Convert.ToDecimal(_LbStock.Text) - Convert.ToDecimal(peice);
                                 _LbStock.Text = Convert.ToString(Convert.ToDecimal(_LbStock.Text) - Convert.ToDecimal(peice));
                                 _BtnDeal.Text = originalStatus;
-                                // _IsExist = true;
+                                 
                             }
                             else if (originalStatus == status)
                             {
@@ -562,11 +553,8 @@ new Dictionary<string, string>();
                                 _LbCost.Text = Convert.ToString(Math.Round(_Cost, 2));
                                 _NupQty.Value = Convert.ToDecimal(_LbStock.Text) + Convert.ToDecimal(peice);
                                 _LbStock.Text = Convert.ToString(Convert.ToDecimal(_LbStock.Text) + Convert.ToDecimal(peice));
-                                //_IsExist = true;
-                            }
-                            //else {
-                            //    _IsExist =false;
-                            //}
+                                
+                            } 
                             if (_LbStock.Text == "" || Convert.ToInt32(_LbStock.Text) == 0) f.Controls.Clear();
                         }
                     }
@@ -842,14 +830,7 @@ new Dictionary<string, string>();
             getAVG();
             _StockFutureCodeList = _DataAccess.getStockFutureCodeList();
             _StockGroupList = _DataAccess.getStockGroupList();
-            this.txtOberserver.Text = ConfigurationManager.AppSettings["Observer"];
-            // this.lbTAIEXMA5.Text = ConfigurationManager.AppSettings["TAIEXMA5"];
-            //this.lbTAIEXMA20.Text = ConfigurationManager.AppSettings["TAIEXMA20"];
-            //this.lbTAIEXMA60.Text = ConfigurationManager.AppSettings["TAIEXMA60"];
-            // this.txtFutureMa5.Text = ConfigurationManager.AppSettings["MXFMA5"];
-            //this.txtFutureMa10.Text = ConfigurationManager.AppSettings["MXFMA10"];
-            //this.txtFutureMa20.Text = ConfigurationManager.AppSettings["MXFMA20"];
-            //this.txtFutureMa60.Text = ConfigurationManager.AppSettings["MXFMA60"];
+            this.txtOberserver.Text = ConfigurationManager.AppSettings["Observer"]; 
             ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
             this.Text = "股票策略下單機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
             this.cbPriceType.SelectedIndex = 0;
@@ -876,13 +857,13 @@ new Dictionary<string, string>();
             this.btnGetPrice.Focus();
             initialRadioButton();
             this.btnReflash.PerformClick();
-            this.txtStockAccount.Text = ConfigurationManager.AppSettings["StockAccount"];
-            // this.cbPriceType.SelectedIndex = 1;
+            //this.txtStockAccount.Text = ConfigurationManager.AppSettings["StockAccount"];
+            this.txtStockAccount.Text = Tool.Decrypt(ConfigurationManager.AppSettings["StockAccount"], "20220801", "B1050520");
+            this.txtFutureAccount.Text = Tool.Decrypt(ConfigurationManager.AppSettings["FutureAccount"], "20220801", "B1050520");
+            
             this.cbOpenCloseAuto.SelectedIndex = 0;
             this.cbOrderType.SelectedIndex = 1;
-            this.cbFutureName.SelectedIndex = 0;
-            //this.lbAssets.Text =Convert.ToDouble( this.lbAssets.Text).ToString("#,#", CultureInfo.InvariantCulture);
-            //this.lbFutureAssets.Text = Convert.ToDouble(this.lbFutureAssets.Text).ToString("#,#", CultureInfo.InvariantCulture);
+            this.cbFutureName.SelectedIndex = 0; 
 
             this.cbDateMM.Items.Add(DateTime.Now.ToString("MM"));
             this.cbDateMM.Items.Add(DateTime.Now.AddMonths(1).ToString("MM"));
@@ -960,7 +941,8 @@ new Dictionary<string, string>();
             //_Ma5 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(5).Sum(x => Convert.ToDouble(x.close)) / 5, 2);
             //_Ma10 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(10).Sum(x => Convert.ToDouble(x.close)) / 10, 2);
             //_Ma20 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(20).Sum(x => Convert.ToDouble(x.close)) / 20, 2);
-            List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(stockInventory.Code);
+            //  List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(stockInventory.Code);
+            List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockBySqlList(stockInventory.Code, "Code") ;
             if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
             if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
             if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
@@ -1205,19 +1187,7 @@ new Dictionary<string, string>();
             lbHigh.TabIndex = 47;
             lbHigh.Text = "0";
             lbHigh.Tag = stockInventory.Code;
-            // 
-            // btnChangePrice
-            // 
-            //Button btnChangePrice = new Button();
-            //btnChangePrice.BackColor = System.Drawing.Color.ForestGreen;
-            //btnChangePrice.Location = new System.Drawing.Point(1183, 9);
-            //btnChangePrice.Margin = new System.Windows.Forms.Padding(4);
-            //btnChangePrice.Name = "btnChangePrice" + s;
-            //btnChangePrice.Size = new System.Drawing.Size(52, 29);
-            //btnChangePrice.TabIndex = 51;
-            //btnChangePrice.Text = "改價";
-            //btnChangePrice.Tag = s;
-            //btnChangePrice.UseVisualStyleBackColor = true;
+          
 
             // 
             // cbPriceType
@@ -1512,19 +1482,7 @@ new Dictionary<string, string>();
                 {
                     if (Convert.ToDouble(stockInventory.Cost) < _Ma5 || Convert.ToDouble(stockInventory.Cost) < _Ma10 || Convert.ToDouble(stockInventory.Cost) < _Ma20 || Convert.ToDouble(stockInventory.Cost) < _Ma60)
                         chkCloseStopLost.Checked = true;
-                }
-                //if (closeStopLost != "")
-                //{
-                //    chkCloseStopLost.Checked = closeStopLost == "1" ? true : false;
-                //}
-                //if (closeABSStopLost != "")
-                //{
-                //    chkCloseABSStopLost.Checked = closeABSStopLost == "1" ? true : false;
-                //}
-                //if (closeHighStopLost != "")
-                //{
-                //    chkCloseHighStopLost.Checked = closeHighStopLost == "1" ? true : false;
-                //}
+                } 
                 panel1.Controls.Add(txtStopLost);
                 panel1.Controls.Add(txtTarget);
                 panel1.Controls.Add(chkAll);
@@ -1541,9 +1499,7 @@ new Dictionary<string, string>();
             panel1.Controls.Add(label12);
             panel1.Controls.Add(lbMa20);
             panel1.Controls.Add(lbMa5);
-            panel1.Controls.Add(cbPriceType);
-            //  panel1.Controls.Add(btnChangePrice);
-
+            panel1.Controls.Add(cbPriceType); 
             panel1.Controls.Add(btnLending);
             panel1.Controls.Add(btnMarginTradingSell);
             panel1.Controls.Add(btnDeal);
@@ -1571,12 +1527,8 @@ new Dictionary<string, string>();
             panel1.Location = new System.Drawing.Point(23, 103);
             panel1.Margin = new System.Windows.Forms.Padding(4);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(2000, 44);
-            //panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel1.TabIndex = 12;
-            // panel1.Dock= System.Windows.Forms.DockStyle.Fill;
-            // flowLayoutPanel1.Controls.Add(panel1);
-            // flowLayoutPanelStock.Controls.Add(panel1);
+            panel1.Size = new System.Drawing.Size(2000, 44); 
+            panel1.TabIndex = 12; 
             return panel1;
         }
         #endregion
@@ -1606,8 +1558,8 @@ new Dictionary<string, string>();
             if (this._StockFutureCodeList.Where(x => x.EnCode == _EnCode).ToList().Count > 0)
             {
                 _Code = this._StockFutureCodeList.Where(x => x.EnCode == _EnCode).First().Code;
-
-                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(_Code);
+                 
+                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockBySqlList(_Code, "Code");
                 if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
                 if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
                 if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
@@ -1655,11 +1607,7 @@ new Dictionary<string, string>();
             nupLots.TabIndex = 8;
             nupLots.Value = piece;
             nupLots.Maximum = 200;
-            //nupQty.Value = new decimal(new int[] {
-            //1,
-            //0,
-            //0,
-            //0});
+             
 
 
             // 
@@ -2458,14 +2406,11 @@ new Dictionary<string, string>();
                 _BtnMarginTradingSell = (Button)flowLayoutPanel1.Controls.Find("btnMarginTradingSell" + _Btn.Tag, true)[0];
                 _BtnLending = (Button)flowLayoutPanel1.Controls.Find("btnLending" + _Btn.Tag, true)[0];
                 _BtnDeal = (Button)flowLayoutPanel1.Controls.Find("btnDeal" + _Btn.Tag, true)[0];
-            }
-            //_BtnLending.Enabled = true;
-            _BtnBuy.Enabled = true;
-            // _BtnSell.Enabled = true;
+            } 
+            _BtnBuy.Enabled = true; 
             _BtnMarginTrading.Enabled = true;
             _BtnOverSell.Enabled = true;
-            _BtnSellingShort.Enabled = true;
-            // _BtnMarginTradingSell.Enabled = true;
+            _BtnSellingShort.Enabled = true; 
             _BtnDeal.Enabled = true;
             _BtnBuy.BackColor = Color.Red;
             _BtnSell.BackColor = Color.LightGreen;
@@ -2506,8 +2451,8 @@ new Dictionary<string, string>();
                 //double _Ma10 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(10).Sum(x => Convert.ToDouble(x.close)) / 10, 2);
                 //double _Ma20 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(20).Sum(x => Convert.ToDouble(x.close)) / 20, 2);
                 //double _Ma60 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(60).Sum(x => Convert.ToDouble(x.close)) / 60, 2);
-                double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0, _Ma60 = 0;
-                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(txtStockId.Text);
+                double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0, _Ma60 = 0; 
+                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockBySqlList(txtStockId.Text, "Code");
                 if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
                 if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
                 if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
@@ -2533,14 +2478,13 @@ new Dictionary<string, string>();
                 _RealtimePriceIn.Sample1_Symbol = this.txtFutureName.Text;
                 List<Stock.GetRealtimeStockPrice> _PriceList = StockPrice.GetRealtimePrice(_RealtimePriceIn);
                 if (_PriceList.Count() == 1)
-                {
-                    //this.lbFuturePrice.Visible = false;
+                { 
                     this.lbFutureStock.Text = _PriceList.First().Price;
                 }
 
                 double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0, _Ma60 = 0;
-                DataAccess _DataAccess = new DataAccess();
-                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(this.txtFutureName.Text);
+                DataAccess _DataAccess = new DataAccess(); 
+                List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockBySqlList(this.txtFutureName.Text, "Code");
                 if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
                 if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
                 if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
@@ -2566,8 +2510,7 @@ new Dictionary<string, string>();
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void timerRealPrice_Tick(object sender, EventArgs e)
-        {
-            // string _TAIEX = ConfigurationManager.AppSettings["TAIEX"];
+        { 
             string _Log = "";
             Stock.GetRealtimePriceIn _RealtimePriceIn = new Stock.GetRealtimePriceIn();
             _RealtimePriceIn.Sample1_Symbol = "t00;";
@@ -2781,13 +2724,9 @@ new Dictionary<string, string>();
 
                 _Persent = Math.Round(_Profit / _Exposure, 2);
                 _LbPersent.Text = Convert.ToString(_Persent * 100) + "%";
-                _LbPersent.ForeColor = _Persent > 0 ? Color.Red : Color.Green;
-
+                _LbPersent.ForeColor = _Persent > 0 ? Color.Red : Color.Green; 
                 _LbProfit.Text = Convert.ToString(Math.Round(_Profit, 2));
-                _LbProfit.ForeColor = _Profit > 0 ? Color.Red : Color.Green;
-
-
-
+                _LbProfit.ForeColor = _Profit > 0 ? Color.Red : Color.Green; 
             }
             return _Exposure;
         }
@@ -2868,21 +2807,16 @@ new Dictionary<string, string>();
             _OrderType = dicOrderType[_CbPriceType.SelectedItem.ToString()];
             _MarketLimit = _CbPriceType.SelectedItem.ToString() == "市價" ? ",MarketLimit=M" : "";
             _PriceType = _CbPriceType.SelectedItem.ToString();
-            _StockId = stockId;
-
-
+            _StockId = stockId; 
             string _Parameter = "Market=S,Account=" + txtStockAccount.Text + ",Symbol=" + _StockId + ",BuySell=" + _BuySell + ",Units=" + _Units + ",OrderType=" + _OrderType + ",Price=" + _Price + ",CashMarginShort=" + _CashMarginShort + _OverSell + _MarketLimit;
-            StringBuilder sb = new StringBuilder(_Parameter);
-
+            StringBuilder sb = new StringBuilder(_Parameter); 
             HTSOrder(sb);
             MessageBox.Show(_Parameter);
             string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + "現賣" + _StockId + "共" + _Units + "張," + _PriceType + _Price + "元," + ma + _Profit;
             richTxtInfo.SelectionColor = Color.Green;
             richTxtInfo.AppendText(_Msg + Environment.NewLine);
             richTxtInfo.SelectionStart = richTxtInfo.TextLength;
-            richTxtInfo.ScrollToCaret();
-
-
+            richTxtInfo.ScrollToCaret(); 
         }
         /// <summary>
         /// 
@@ -2922,10 +2856,8 @@ new Dictionary<string, string>();
             _BtnFutureDeal = (Button)flowLayoutFutures.Controls.Find("btnDeal" + futureId, true)[0];
             _TxtFuturePrice = (TextBox)flowLayoutFutures.Controls.Find("txtPrice" + futureId, true)[0];
             _LbPrice = (Label)flowLayoutFutures.Controls.Find("lbPrice" + futureId, true)[0];
-            _LbProfit = (Label)flowLayoutFutures.Controls.Find("lbProfit" + futureId, true)[0];
-
-            _Price = _TxtFuturePrice.Text != "" ? _TxtFuturePrice.Text : _LbPrice.Text;
-
+            _LbProfit = (Label)flowLayoutFutures.Controls.Find("lbProfit" + futureId, true)[0]; 
+            _Price = _TxtFuturePrice.Text != "" ? _TxtFuturePrice.Text : _LbPrice.Text; 
             _FutureOrderType = dicFutureOrderType[_CbOrderType.SelectedItem.ToString()];
             _StockStatus = _BtnFutureDeal.Text;
             _BtnFutureDeal.Text = status;
@@ -2957,14 +2889,12 @@ new Dictionary<string, string>();
                     richTxtInfo.SelectionColor = status == "現買" ? Color.Red : Color.Green;
                     richTxtInfo.AppendText(_Msg + Environment.NewLine);
                     richTxtInfo.SelectionStart = richTxtInfo.TextLength;
-                    richTxtInfo.ScrollToCaret();
-
+                    richTxtInfo.ScrollToCaret(); 
                     string _Code = _FutureName + _ContractDate;
                     bool _ChkPt = _FutureName == "MXF" ? false : true;
                     insertUpdateStockInventory(_Code, _Name, status, ladderPiece, _Price, true, _ChkPt);
                     this.lbTimes.Text = Convert.ToString(Convert.ToInt32(this.lbTimes.Text) + 1);
-                    this.btnFutureRefrash.PerformClick();
-
+                    this.btnFutureRefrash.PerformClick(); 
                 }
             }
             catch (Exception ex)
@@ -2981,7 +2911,11 @@ new Dictionary<string, string>();
         private void btnSetting_Click(object sender, EventArgs e)
         {
             setStopLostConfig();
-            updateStockStopLost();
+            updateStockStopLost(); 
+            Configuration config = ConfigurationManager.OpenExeConfiguration(Application.ExecutablePath);
+            config.AppSettings.Settings["StockAccount"].Value = Tool.Encrypt(this.txtStockAccount.Text, "20220801", "B1050520");  
+            config.AppSettings.Settings["FutureAccount"].Value = Tool.Encrypt(this.txtFutureAccount.Text, "20220801", "B1050520");  
+            config.Save(ConfigurationSaveMode.Modified);
             //儲存股票和期貨的停損設定
             this.lbSetting.Text = "設定完成";
         }
@@ -3091,18 +3025,11 @@ new Dictionary<string, string>();
             }
         }
         /// <summary>
-        /// 根據設定檔動態產生庫存名單-之後改成透過資料庫
+        /// 根據設定檔動態產生庫存名單 
         /// </summary>
 
         private void btnReflash_Click(object sender, EventArgs e)
-        {
-            //string[] _Stocks = ConfigurationManager.AppSettings["Stock"].Split(';');
-            //string[] _StockPieces = ConfigurationManager.AppSettings["StockPiece"].Split(';');
-            //string[] _StockValues = ConfigurationManager.AppSettings["StockValue"].Split(';');
-            //string[] _StockStatus = ConfigurationManager.AppSettings["StockStatus"].Split(';');
-            //string[] _CloseStopLost = ConfigurationManager.AppSettings["CloseStopLost"].Split(';');
-            //string[] _CloseABSStopLost = ConfigurationManager.AppSettings["CloseABSStopLost"].Split(';');
-            //string[] _CloseHIGHStopLost = ConfigurationManager.AppSettings["CloseHIGHStopLost"].Split(';');
+        { 
             List<WebApiService.Models.StockInventory> _StockInventoryList = getStockInventoryList();
             string _Log = "";
             int i = 0;
@@ -3125,9 +3052,7 @@ new Dictionary<string, string>();
             {
                 _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " btnReflash:" + "\r\n" + ex.Message;
                 logger.Error(_Log);
-            }
-
-
+            } 
         }
 
         private void timerAvgStopLost_Tick(object sender, EventArgs e)
@@ -3261,10 +3186,7 @@ new Dictionary<string, string>();
                                                     //        }
                                                     //        _BtnDeal.Text = _Status;
                                                     //        _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
-                                                    //    }
-
-
-
+                                                    //    } 
                                                     //}
                                                 }
                                                 if (_Status == "現買" || _Status == "資買")
@@ -3337,8 +3259,7 @@ new Dictionary<string, string>();
                                                                 _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
                                                                 _NupQty.Value = _LbStock.Text != "" ? Convert.ToInt32(_LbStock.Text) : 0;
                                                             }
-                                                        }
-
+                                                        } 
                                                     }
                                                 }
                                                 break;
@@ -3431,14 +3352,11 @@ new Dictionary<string, string>();
                                 _BtnDeal = (Button)flowLayoutFutures.Controls.Find("btnDeal" + contr.Tag, true)[0];
                                 _ChkAll = (CheckBox)flowLayoutFutures.Controls.Find("chkAll" + contr.Tag, true)[0];
                                 _TxtStopLost = (TextBox)flowLayoutFutures.Controls.Find("txtStopLost" + contr.Tag, true)[0];
-                                _TxtTarget = (TextBox)flowLayoutFutures.Controls.Find("txtTarget" + contr.Tag, true)[0];
-                                // _ChkCloseStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseStopLost" + contr.Tag, true)[0];
-                                _ChkCloseABSStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseABSStopLost" + contr.Tag, true)[0];
-                                // _ChkCloseHighStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseHighStopLost" + contr.Tag, true)[0];
+                                _TxtTarget = (TextBox)flowLayoutFutures.Controls.Find("txtTarget" + contr.Tag, true)[0]; 
+                                _ChkCloseABSStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkCloseABSStopLost" + contr.Tag, true)[0]; 
                                 _ChkClosePtStopLost = (CheckBox)flowLayoutFutures.Controls.Find("chkClosePtStopLost" + contr.Tag, true)[0];
                                 _LbProfit = (Label)flowLayoutFutures.Controls.Find("lbProfit" + contr.Tag, true)[0];
-                                _LbCost = (Label)flowLayoutFutures.Controls.Find("lbCost" + contr.Tag, true)[0];
-                                //_LbHigh = (Label)flowLayoutFutures.Controls.Find("lbHigh" + contr.Tag, true)[0];
+                                _LbCost = (Label)flowLayoutFutures.Controls.Find("lbCost" + contr.Tag, true)[0]; 
                                 double _Price = Convert.ToDouble(_LbFuturePrice.Text);
                                 double _Value = tick(Convert.ToDouble(_LbFuturePrice.Text));
                                 _Price = Math.Round(_Price - _Value, 2);
@@ -3475,12 +3393,8 @@ new Dictionary<string, string>();
                                                     _Ladder = Math.Round(_Ladder, 2);
                                                     _BtnDeal.Text = "現買";
                                                     _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
-                                                    _TxtStopLost.Text = _LbStock.Text != "0" ? Convert.ToString(_Ladder) : "";
-
-
-
-                                                }
-
+                                                    _TxtStopLost.Text = _LbStock.Text != "0" ? Convert.ToString(_Ladder) : ""; 
+                                                } 
                                             }
                                             if (_TxtTarget.Text != "" && _BtnDeal.Text != "現買" && _TxtTarget.Text.Length >= _Length)
                                             {
@@ -3567,10 +3481,8 @@ new Dictionary<string, string>();
                                                         stopLostFuture("B", "現買", contr.Tag.ToString(), "", Convert.ToString(_Piece), mode);
                                                         _LbStock.Text = Convert.ToDouble(_LbStock.Text) - _LadderPiece > 0 ? Convert.ToString(Convert.ToDouble(_LbStock.Text) - _LadderPiece) : "0";
                                                     }
-                                                }
-
-                                            }
-
+                                                } 
+                                            } 
                                             break;
                                     }
                                 }
@@ -3632,9 +3544,7 @@ new Dictionary<string, string>();
             {
                 CopyDataStruct CopyData = new CopyDataStruct();
 
-                CopyData = (CopyDataStruct)m.GetLParam(CopyData.GetType());
-                //  MessageBox.Show(CopyData.lpData);
-                //  this.richTxtInfo.Text=CopyData.lpData + Environment.NewLine;
+                CopyData = (CopyDataStruct)m.GetLParam(CopyData.GetType()); 
                 string[] _Coupon = CopyData.lpData.Split(';');
                 string[] _Peice = new string[2];
                 string[] _StockName = new string[2];
@@ -3642,15 +3552,13 @@ new Dictionary<string, string>();
                 {
                     if (s.IndexOf("融券可用張數") == 1)
                     {
-                        _Peice = s.Split(',');
-                        //  MessageBox.Show(_Peice[1]);
+                        _Peice = s.Split(','); 
                     }
                 }
                 foreach (string s in _Coupon)
                 {
                     if (s.IndexOf("股票名稱") == 1)
-                    {
-                        // MessageBox.Show(s);
+                    { 
                         _StockName = s.Split(',');
                         foreach (Panel p in flowLayoutPanel1.Controls.Cast<Panel>())
                         {
@@ -3662,24 +3570,19 @@ new Dictionary<string, string>();
                                     {
                                         _LbStockName = (Label)flowLayoutPanel1.Controls.Find("lbStockName" + contr.Tag, true)[0];
                                         _LbCoupon = (Label)flowLayoutPanel1.Controls.Find("lbCoupon" + contr.Tag, true)[0];
-                                        // MessageBox.Show(_StockName[1]);
+                                         
                                         if (_LbStockName.Text == _StockName[1])
-                                        {
-                                            //   MessageBox.Show(_Peice[1]);
+                                        { 
                                             _LbCoupon.Text = _Peice[1];
                                         }
                                     }
                                 }
                             }
-                        }
-                        //    MessageBox.Show( "股票名稱:"+ _StockName[1]);
+                        } 
                     }
 
                 }
-                int iCopyDataType = CopyData.dwData;
-
-
-                //   this.richTxtInfo.Text = iCopyDataType.ToString();
+                int iCopyDataType = CopyData.dwData; 
             }
 
             base.DefWndProc(ref m);
@@ -3732,14 +3635,11 @@ new Dictionary<string, string>();
         private void btnFutureAdd_Click(object sender, EventArgs e)
         {
             addMinusFuture(sender, false, true);
-        }
-
+        } 
         private void btnFutureMinus_Click(object sender, EventArgs e)
         {
             addMinusFuture(sender, false, false);
-        }
-
-
+        } 
         private void btnSellFuture_Click(object sender, EventArgs e)
         {
             sendFuturesParameter(sender, false, "S", "現賣", Color.Green);
@@ -3940,12 +3840,17 @@ new Dictionary<string, string>();
         }
 
         private void btnLine_Click(object sender, EventArgs e)
-        {
-            //CallLineNotifyApi(ConfigurationManager.AppSettings["LineToken"], "", "");
-            btnLine.BackColor = Color.LightGreen;
-            LineNotify = true;
-            //WebApiService.Models.StockLineNotify s = new WebApiService.Models.StockLineNotify();
-            //CallLineNotifyApiIndex("", "330", "-30" , s);
+        { 
+            if (LineNotify)
+            {
+                btnLine.BackColor = default(Color);
+                LineNotify = false;
+            }
+            else
+            {
+                btnLine.BackColor = Color.LightGreen;
+                LineNotify = true;
+            } 
         }
         /// <summary>
         /// 指數LINE通知功能
@@ -3958,17 +3863,11 @@ new Dictionary<string, string>();
 
             string _Log = "";
             try
-            {
-                //int _Pt = Convert.ToInt32(ConfigurationManager.AppSettings[ptName]);
-                //int _PtBear = Convert.ToInt32(ConfigurationManager.AppSettings[ptBearName]);
+            { 
                 int _Pt = Convert.ToInt32(ptName);
                 int _PtBear = Convert.ToInt32(ptBearName);
                 bool _Open = false;
-                int _Yestoday = 0;
-                //if (DateTime.Now.DayOfWeek.ToString() == "Monday")
-                //    _Yestoday = -3;
-                //else if (DateTime.Now.DayOfWeek.ToString() == "Sunday")
-                //    _Yestoday = -2;
+                int _Yestoday = 0; 
                 string _Msg = "";
                 bool _Mode = DateTime.Now.Hour < 8 || DateTime.Now.Hour > 13 ? true : false;
                 string _LineToken = token;
@@ -3995,11 +3894,9 @@ new Dictionary<string, string>();
                     if (_Open)
                     {
                         await _DataAccess.postLineMsg(_LineMsg, _LineToken);
-                        stockLineNotify.Point = _Pt;
-                        //StockStrategy.Common.Tool.AddOrUpdateAppSettings(ptName, _Pt.ToString()); 
+                        stockLineNotify.Point = _Pt;  
                         stockLineNotify.PointBear = _PtBear;
-                        _DataAccesss.UpdateStockLineNotify(stockLineNotify);
-                        //StockStrategy.Common.Tool.AddOrUpdateAppSettings(ptBearName, _PtBear.ToString()); 
+                        _DataAccesss.UpdateStockLineNotify(stockLineNotify); 
                     }
                 }
             }
@@ -4117,25 +4014,10 @@ new Dictionary<string, string>();
                             btnLine.BackColor = Color.Gray;
                             LineNotify = false; 
                         }
-                    }
-                    //CallLineNotifyApi(ConfigurationManager.AppSettings["LineToken"], "Pt", "PtBear");
-                    //CallLineNotifyApi(ConfigurationManager.AppSettings["LineTokenTom"], "PtTom", "PtBearTom");
-                    //CallLineNotifyApi(ConfigurationManager.AppSettings["LineTokenRush"], "PtRush", "PtBearRush");
+                    } 
                 }
             }
-        }
-        /// <summary>
-        /// 關閉時重置點數
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //StockStrategy.Common.Tool.AddOrUpdateAppSettings("Pt", "30");
-            //StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtBear", "-30");
-            //StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtTom", "30");
-            //StockStrategy.Common.Tool.AddOrUpdateAppSettings("PtBearTom", "-30");
-        }
+        } 
 
         private void txtFutureName_TextChanged(object sender, EventArgs e)
         {
@@ -4148,9 +4030,7 @@ new Dictionary<string, string>();
             {
                 this.lbFutureStock.Text = this.lbFuturePrice.Text;
                 getAVG();
-            }
-
-
+            } 
         }
 
         private void lbStockName_Click(object sender, EventArgs e)
@@ -4192,19 +4072,12 @@ new Dictionary<string, string>();
 
         }
         /// <summary>
-        /// 取得期貨當前庫存-改資料庫-ok
+        /// 取得期貨當前庫存-改資料庫 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnFutureRefrash_Click(object sender, EventArgs e)
-        {
-            //string[] _Future = ConfigurationManager.AppSettings["Future"].Split(';');
-            //string[] _FutureLots = ConfigurationManager.AppSettings["FutureLots"].Split(';');
-            //string[] _FutureValue = ConfigurationManager.AppSettings["FutureValue"].Split(';');
-            //string[] _FutureStatus = ConfigurationManager.AppSettings["FutureStatus"].Split(';');
-            //string[] _FutureCloseStopLost = ConfigurationManager.AppSettings["FutureCloseStopLost"].Split(';');
-            //string[] _FutureCloseABSStopLost = ConfigurationManager.AppSettings["FutureCloseABSStopLost"].Split(';');
-            //string[] _FutureCloseHIGHStopLost = ConfigurationManager.AppSettings["FutureCloseHIGHStopLost"].Split(';');
+        { 
             string _Log = "";
             int i = 0;
             List<WebApiService.Models.StockInventory> _StockInventoryList = getStockInventoryList();
@@ -4223,15 +4096,13 @@ new Dictionary<string, string>();
                         showButton(_Btn, null);
                         i++;
                     }
-                }
-
+                } 
             }
             catch (Exception ex)
             {
                 _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " btnReflash:" + "\r\n" + ex.Message;
                 logger.Error(_Log);
             }
-        }
-
+        } 
     }
 }

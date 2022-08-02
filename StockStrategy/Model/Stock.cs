@@ -76,7 +76,14 @@ namespace StockStrategy.Model
             public string close { get; set; }
             public string volume { get; set; }
         }
-
+        public class StockJuridical
+        {
+            public string Code { get; set; }
+            public string Date { get; set; }
+            public string ForeignInvestment { get; set; }
+            public string Investment { get; set; }
+            public string Dealer { get; set; } 
+        }
         public class TwsePriceSchema
         {
             public QueryTime queryTime { get; set; }

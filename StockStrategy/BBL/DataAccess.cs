@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic; 
 using System.Threading.Tasks;
 using System.Configuration; 
 using Newtonsoft.Json;
 using WebApiService.Models;
 using DataModel;
-using DataModel.Login; 
+using DataModel.Login;
+using StockStrategy.Common;
 namespace StockStrategy.BBL
 {
    public class DataAccess
@@ -22,8 +21,8 @@ namespace StockStrategy.BBL
         public string  loginWebApi()
         {
             //Login
-            string _Username = ConfigurationManager.AppSettings["Account"];
-            string _Password = ConfigurationManager.AppSettings["Password"];
+            string _Username = Tool.Decrypt(ConfigurationManager.AppSettings["Account"], "20220801", "B1050520");
+            string _Password = Tool.Decrypt(ConfigurationManager.AppSettings["Password"], "20220801", "B1050520");
             LoginData _LoginData = new LoginData();
             _LoginData.Username = _Username;
             _LoginData.Password = _Password;
@@ -88,6 +87,27 @@ namespace StockStrategy.BBL
             _ListStock = JsonConvert.DeserializeObject<List<Stock>>(_ApiResult.Data.ToString());
             return _ListStock;
         }
+        /// <summary>
+        /// 透過SQL語法取得股票資料-效能
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public List<Stock> getStockBySqlList(string parameter,string mode)
+        {
+          
+            List<Stock> _ListStock = new List<Stock>();
+            string _Action = "Stock?parameter=" + parameter+"&mode="+mode;
+            string _Uri = ConnectionString + _Action;
+            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+            _ListStock = JsonConvert.DeserializeObject<List<Stock>>(_ApiResult.Data.ToString());
+            return _ListStock;
+        }
+        /// <summary>
+        /// 透過日期取得股票資料
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public List<Stock> getStockYestodayList(string date)
         {
             List<Stock> _ListStock = new List<Stock>();
@@ -228,6 +248,11 @@ namespace StockStrategy.BBL
             string _Return = _ApiResult.Data.ToString();
             return _Return;
         }
+        /// <summary>
+        /// 更新股票資料
+        /// </summary>
+        /// <param name="stock"></param>
+        /// <returns></returns>
         public string UpdateStock(Stock stock)
         {
             string json = JsonConvert.SerializeObject(stock);

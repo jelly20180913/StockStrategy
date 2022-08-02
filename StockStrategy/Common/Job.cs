@@ -38,8 +38,7 @@ namespace StockStrategy.Common
                         _FuturePrice = n.InnerText;
                         // etc...
                     }
-                }
-                //this.txtFuturePrice.Text = htmlDoc.GetElementbyId("Price1_lbTPrice").InnerText; 
+                } 
             }
             catch (Exception e)
             {

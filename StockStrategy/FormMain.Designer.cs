@@ -109,9 +109,11 @@
             this.btnLine = new System.Windows.Forms.Button();
             this.btnCloseSound = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
+            this.label31 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.lbTaiwanStock = new System.Windows.Forms.Label();
             this.lbTAIEXMA60 = new System.Windows.Forms.Label();
+            this.lbFuturePrice = new System.Windows.Forms.Label();
             this.lbTAIEXMA20 = new System.Windows.Forms.Label();
             this.lbTAIEXMA5 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -144,9 +146,10 @@
             this.lbStopLost = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.lbFutureStock = new System.Windows.Forms.Label();
+            this.txtFutureName = new System.Windows.Forms.TextBox();
             this.cbDateMM = new System.Windows.Forms.ComboBox();
             this.btnFutureRefrash = new System.Windows.Forms.Button();
-            this.lbFuturePrice = new System.Windows.Forms.Label();
             this.cbFutureName = new System.Windows.Forms.ComboBox();
             this.btnFutureDeal = new System.Windows.Forms.Button();
             this.txtFutureMa10 = new System.Windows.Forms.TextBox();
@@ -175,9 +178,6 @@
             this.timerGetLackOffPrice = new System.Windows.Forms.Timer(this.components);
             this.timerPtStopLost = new System.Windows.Forms.Timer(this.components);
             this.timerLineNotify = new System.Windows.Forms.Timer(this.components);
-            this.txtFutureName = new System.Windows.Forms.TextBox();
-            this.lbFutureStock = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nupQty)).BeginInit();
             this.gbBullStop.SuspendLayout();
@@ -1136,6 +1136,17 @@
             this.panel11.Size = new System.Drawing.Size(135, 92);
             this.panel11.TabIndex = 83;
             // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.ForeColor = System.Drawing.Color.Black;
+            this.label31.Location = new System.Drawing.Point(5, 74);
+            this.label31.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(26, 12);
+            this.label31.TabIndex = 80;
+            this.label31.Text = "MX:";
+            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -1168,6 +1179,14 @@
             this.lbTAIEXMA60.Size = new System.Drawing.Size(17, 12);
             this.lbTAIEXMA60.TabIndex = 72;
             this.lbTAIEXMA60.Text = "季";
+            // 
+            // lbFuturePrice
+            // 
+            this.lbFuturePrice.AutoSize = true;
+            this.lbFuturePrice.Location = new System.Drawing.Point(35, 74);
+            this.lbFuturePrice.Name = "lbFuturePrice";
+            this.lbFuturePrice.Size = new System.Drawing.Size(0, 12);
+            this.lbFuturePrice.TabIndex = 93;
             // 
             // lbTAIEXMA20
             // 
@@ -1532,6 +1551,22 @@
             this.panel10.Size = new System.Drawing.Size(1800, 39);
             this.panel10.TabIndex = 13;
             // 
+            // lbFutureStock
+            // 
+            this.lbFutureStock.AutoSize = true;
+            this.lbFutureStock.Location = new System.Drawing.Point(414, 15);
+            this.lbFutureStock.Name = "lbFutureStock";
+            this.lbFutureStock.Size = new System.Drawing.Size(0, 12);
+            this.lbFutureStock.TabIndex = 95;
+            // 
+            // txtFutureName
+            // 
+            this.txtFutureName.Location = new System.Drawing.Point(11, 8);
+            this.txtFutureName.Name = "txtFutureName";
+            this.txtFutureName.Size = new System.Drawing.Size(43, 22);
+            this.txtFutureName.TabIndex = 83;
+            this.txtFutureName.TextChanged += new System.EventHandler(this.txtFutureName_TextChanged);
+            // 
             // cbDateMM
             // 
             this.cbDateMM.FormattingEnabled = true;
@@ -1549,14 +1584,6 @@
             this.btnFutureRefrash.Text = "刷新";
             this.btnFutureRefrash.UseVisualStyleBackColor = true;
             this.btnFutureRefrash.Click += new System.EventHandler(this.btnFutureRefrash_Click);
-            // 
-            // lbFuturePrice
-            // 
-            this.lbFuturePrice.AutoSize = true;
-            this.lbFuturePrice.Location = new System.Drawing.Point(35, 74);
-            this.lbFuturePrice.Name = "lbFuturePrice";
-            this.lbFuturePrice.Size = new System.Drawing.Size(0, 12);
-            this.lbFuturePrice.TabIndex = 93;
             // 
             // cbFutureName
             // 
@@ -1805,33 +1832,6 @@
             this.timerLineNotify.Interval = 5000;
             this.timerLineNotify.Tick += new System.EventHandler(this.timerLineNotify_Tick);
             // 
-            // txtFutureName
-            // 
-            this.txtFutureName.Location = new System.Drawing.Point(11, 8);
-            this.txtFutureName.Name = "txtFutureName";
-            this.txtFutureName.Size = new System.Drawing.Size(43, 22);
-            this.txtFutureName.TabIndex = 83;
-            this.txtFutureName.TextChanged += new System.EventHandler(this.txtFutureName_TextChanged);
-            // 
-            // lbFutureStock
-            // 
-            this.lbFutureStock.AutoSize = true;
-            this.lbFutureStock.Location = new System.Drawing.Point(414, 15);
-            this.lbFutureStock.Name = "lbFutureStock";
-            this.lbFutureStock.Size = new System.Drawing.Size(0, 12);
-            this.lbFutureStock.TabIndex = 95;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.ForeColor = System.Drawing.Color.Black;
-            this.label31.Location = new System.Drawing.Point(5, 74);
-            this.label31.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(26, 12);
-            this.label31.TabIndex = 80;
-            this.label31.Text = "MX:";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1839,7 +1839,6 @@
             this.ClientSize = new System.Drawing.Size(1852, 1061);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormMain";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

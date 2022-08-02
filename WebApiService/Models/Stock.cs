@@ -29,5 +29,8 @@ namespace WebApiService.Models
         public string UpdateTime { get; set; }
         public string Gain { get; set; }
         public string Shock { get; set; }
+        public string ForeignInvestment { get; set; }
+        public string Investment { get; set; }
+        public string Dealer { get; set; }
     }
 }

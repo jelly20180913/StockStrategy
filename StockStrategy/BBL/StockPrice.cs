@@ -79,22 +79,8 @@ namespace StockStrategy.BBL
                     _Price.DealQty = jsonPrice.msgArray[i].tv;
                     _Price.TotalDealQty = jsonPrice.msgArray[i].v;
                     _Price.OpenPrice = jsonPrice.msgArray[i].o;
-                    _PriceList.Add(_Price);
-                    // a = 最低委賣價
-                    //string ask = "";
-                    //if (jsonPrice.msgArray[i].a.IndexOf("_") > -1)
-                    //{
-                    //    ask = jsonPrice.msgArray[i].a.Split('_')[0];
-                    //}
-                    //// b = 最高委買價
-                    //string bid = "";
-                    //if (jsonPrice.msgArray[i].b.IndexOf("_") > -1)
-                    //{
-                    //    bid = jsonPrice.msgArray[i].b.Split('_')[0];
-                    //}
-                    //sbRealPrice.Append("代碼: " + code + " 收盤價: " + close + " 最低委賣價: " + ask + " 最高委買價: " + bid);
-                }
-                // outModel.realPrice = sbRealPrice.ToString();
+                    _PriceList.Add(_Price); 
+                } 
             }
             catch (Exception ex)
             {
@@ -131,6 +117,34 @@ namespace StockStrategy.BBL
             }
             return _PriceList;
         }
+        //public static List<object>  GetStockByDate(string date,string code)
+        //{
+        //    string _Log = "";
+        //List<object>  _PriceList  = new List<object>();
+        //    try
+        //    {
+        //        // 呼叫網址
+        //        string url = "https://www.twse.com.tw/exchangeReport/STOCK_DAY?date="+date+"&stockNo="+code;
+
+        //        string downloadedData = "";
+        //        using (WebClient wClient = new WebClient())
+        //        {
+        //            wClient.Encoding = Encoding.UTF8;
+        //            downloadedData = wClient.DownloadString(url);
+        //        }
+        //        if (downloadedData.Trim().Length > 0)
+        //        {
+        //            _PriceList = JsonConvert.DeserializeObject<List<object>>(downloadedData);
+
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetStockByDate:" + "\r\n" + ex.Message;
+        //        logger.Error(_Log);
+        //    }
+        //    return _PriceList;
+        //}
         /// <summary>
         /// 當月各日成交資訊
         /// </summary>
@@ -146,7 +160,7 @@ namespace StockStrategy.BBL
             {
 
                 // 呼叫網址
-                string download_url = "http://www.twse.com.tw/exchangeReport/STOCK_DAY?response=csv&date=" + inModel.Sample3_Date + "&stockNo=" + inModel.Sample3_Symbol;
+                 string download_url = "http://www.twse.com.tw/exchangeReport/STOCK_DAY?response=csv&date=" + inModel.Sample3_Date + "&stockNo=" + inModel.Sample3_Symbol; 
                 string downloadedData = "";
                 using (WebClient wClient = new WebClient())
                 {
@@ -202,6 +216,57 @@ namespace StockStrategy.BBL
             return outModel;
 
 
+        }
+        public static List<Stock.StockJuridical> GetJuridical(string date)
+        { 
+            string _Log = "";
+            List<Stock.StockJuridical> _ListStockJuridical = new List<Stock.StockJuridical>();
+            try
+            { 
+                // 呼叫網址 
+                string download_url = "https://www.twse.com.tw/fund/T86?response=csv&date="+ date + "&selectType=ALL";
+                string downloadedData = "";
+                using (WebClient wClient = new WebClient())
+                {
+                    // 網頁回傳
+                    downloadedData = wClient.DownloadString(download_url);
+                }
+                if (downloadedData.Trim().Length > 0)
+                { 
+                    string[] lineStrs = downloadedData.Split('\n');
+                    for (int i = 0; i < lineStrs.Length; i++)
+                    {
+                        string strline = lineStrs[i];
+                        if (i == 0 || i == 1 || strline.Trim().Length == 0)
+                        {
+                            continue;
+                        }
+                        // 排除非價格部份
+                        if (strline.IndexOf("說明") > -1 || strline.IndexOf("符號") > -1 || strline.IndexOf("統計") > -1 || strline.IndexOf("ETF") > -1)
+                        {
+                            continue;
+                        } 
+                        ArrayList resultLine = new ArrayList();
+                        // 解析資料
+                        ParseCSVData(resultLine, strline);
+                        string[] datas = (string[])resultLine.ToArray(typeof(string));
+                        if (datas.Length < 6) continue;
+                        Stock.StockJuridical _StockJuridical = new Stock.StockJuridical();
+                        _StockJuridical.Code = datas[0];
+                        _StockJuridical.Date = date;
+                        _StockJuridical.ForeignInvestment= datas[4];
+                        _StockJuridical.Investment = datas[10];
+                        _StockJuridical.Dealer = datas[11];
+                        _ListStockJuridical.Add(_StockJuridical);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetJuridical:" + "\r\n" + ex.Message;
+                logger.Error(_Log);
+            }
+            return _ListStockJuridical; 
         }
         private static void ParseCSVData(ArrayList result, string data)
         {

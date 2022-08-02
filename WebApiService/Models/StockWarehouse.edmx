@@ -34,6 +34,9 @@
           <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
           <Property Name="Gain" Type="varchar" MaxLength="10" />
           <Property Name="Shock" Type="varchar" MaxLength="10" />
+          <Property Name="ForeignInvestment" Type="varchar" MaxLength="20" />
+          <Property Name="Investment" Type="varchar" MaxLength="20" />
+          <Property Name="Dealer" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="StockFutureCode">
           <Key>
@@ -77,7 +80,7 @@
           <Property Name="MTX_QuoteChange" Type="varchar" MaxLength="10" />
           <Property Name="MTX_QuotePercent" Type="varchar" MaxLength="10" />
           <Property Name="MTX_Open" Type="varchar" MaxLength="10" />
-          <Property Name="MTX_High" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MTX_High" Type="varchar" MaxLength="10" />
           <Property Name="MTX_Volume" Type="varchar" MaxLength="10" />
           <Property Name="TX" Type="varchar" MaxLength="20" />
           <Property Name="TX_QuoteChange" Type="varchar" MaxLength="10" />
@@ -178,6 +181,9 @@
           <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Gain" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Shock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ForeignInvestment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Investment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Dealer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -207,7 +213,7 @@
           <Property Name="MTX" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MTX_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MTX_Open" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="MTX_High" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MTX_High" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TX" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="TX_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TX_Open" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -303,6 +309,9 @@
           <EntitySetMapping Name="Stock">
             <EntityTypeMapping TypeName="StockWarehouseModel.Stock">
               <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="Dealer" ColumnName="Dealer" />
+                <ScalarProperty Name="Investment" ColumnName="Investment" />
+                <ScalarProperty Name="ForeignInvestment" ColumnName="ForeignInvestment" />
                 <ScalarProperty Name="Shock" ColumnName="Shock" />
                 <ScalarProperty Name="Gain" ColumnName="Gain" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

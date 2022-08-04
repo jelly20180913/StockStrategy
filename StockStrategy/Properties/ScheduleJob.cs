@@ -23,7 +23,7 @@ namespace StockStrategy.Properties
         private static Logger logger = LogManager.GetCurrentClassLogger();
         string ConnectionString = "", Token = "";
         List<string> _StockIdList = new List<string>();
-        bool stockIndex = false, bUpdateStockIndex = false, bTAIEX = false, bStockAll = false, bStockAllLackOff = false, bUpdateStockLineNotify = false;
+        bool stockIndex = false,   bTAIEX = false, bStockAll = false, bStockAllLackOff = false, bUpdateStockLineNotify = false;
         string Id = "Price1_lbTPrice";
         string Change = "Price1_lbTChange";
         string Percent = "Price1_lbTPercent";
@@ -65,8 +65,14 @@ namespace StockStrategy.Properties
         /// <param name="e"></param>
         private void ScheduleJob_Load(object sender, EventArgs e)
         {
-            ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
+            ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
             this.Text = "股票策略選股排程機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
+            var _Ip = Tool.GetIpAddresses();
+            if (_Ip.Length > 0)
+            {
+                this.toolStripStatusLabelIP.Text = _Ip[_Ip.Length - 1].ToString();
+            }
+
             // loginWebApi();
         }
         /// <summary>
@@ -79,13 +85,12 @@ namespace StockStrategy.Properties
             string _Log = "";
             try
             {
-
+                DataAccess _DataAccess = new DataAccess();
                 this.btnLogin.PerformClick();
                 string _Id = "Price1_lbTPrice";
                 string _Change = "Price1_lbTChange";
                 string _Percent = "Price1_lbTPercent";
                 string _Volume = "Price1_lbTVolume";
-                //  string _Class = "rtVal1";
                 List<StockStrategy.Model.Stock.GetRealtimeStockPrice> _PriceList = new List<StockStrategy.Model.Stock.GetRealtimeStockPrice>();
                 StockStrategy.Model.Stock.GetRealtimePriceIn _RealtimePriceIn = new StockStrategy.Model.Stock.GetRealtimePriceIn();
                 _RealtimePriceIn.Sample1_Symbol = "t00";
@@ -109,7 +114,7 @@ namespace StockStrategy.Properties
 
                 int _Yestoday = DateTime.Now.DayOfWeek.ToString() == "Monday" ? -3 : -1;
                 // string _TopIndex = getTopIndex(DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd"));
-                List<StockIndex> _ListStockAll = getStockIndexList();
+                List<StockIndex> _ListStockAll =   _DataAccess.getStockIndexList();
                 string _TopIndex = _ListStockAll.Where(x => x.Date == DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd")).First().TAIEX;
                 string _TopIndexDJI = _ListStockAll.Where(x => x.Date == DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd")).First().DJI;
                 List<StockIndex> _ListStock = new List<StockIndex>();
@@ -157,7 +162,7 @@ namespace StockStrategy.Properties
                 }
 
                 _ListStock.Add(s);
-                insertStockIndex(_ListStock);
+                _DataAccess.InsertStockIndex(_ListStock);
                 stockIndex = true;
                 _Log = DateTime.Now.ToString("yyyyMMdd hh:mm:ss") + " insert stock index ok.\r\n";
                 this.txtErrMsg.Text += _Log;
@@ -174,11 +179,12 @@ namespace StockStrategy.Properties
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnGetTopIndex_Click(object sender, EventArgs e)
-        {
-            this.btnLogin.PerformClick();
-            List<StockIndex> _ListStock = getStockIndexList();
-        }
+        //private void btnGetTopIndex_Click(object sender, EventArgs e)
+        //{
+        //    this.btnLogin.PerformClick();
+        //    DataAccess _DataAccess = new DataAccess();
+        //    List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
+        //}
         /// <summary>
         /// 取得前一日的指數
         /// </summary>
@@ -186,96 +192,98 @@ namespace StockStrategy.Properties
         /// <returns></returns>
         private string getTopIndex(string yestoday)
         {
-            List<StockIndex> _ListStock = getStockIndexList();
+            DataAccess _DataAccess = new DataAccess();
+            List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
             return _ListStock.Where(x => x.Date == yestoday).First().TAIEX;
         }
         private string getDJITopIndex(string yestoday)
         {
-            List<StockIndex> _ListStock = getStockIndexList();
+            DataAccess _DataAccess = new DataAccess();
+            List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
             return _ListStock.Where(x => x.Date == yestoday).First().DJI;
         }
-        private List<StockIndex> getStockIndexList()
-        {
-            List<StockIndex> _ListStock = new List<StockIndex>();
-            string _Action = "StockIndex";
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
-            _ListStock = JsonConvert.DeserializeObject<List<StockIndex>>(_ApiResult.Data.ToString());
-            return _ListStock;
-        }
+        //private List<StockIndex> getStockIndexList()
+        //{
+        //    List<StockIndex> _ListStock = new List<StockIndex>();
+        //    string _Action = "StockIndex";
+        //    string _Uri = ConnectionString + _Action;
+        //    ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+        //    _ListStock = JsonConvert.DeserializeObject<List<StockIndex>>(_ApiResult.Data.ToString());
+        //    return _ListStock;
+        //}
         /// <summary>
         /// 取得股票清單
         /// </summary>
         /// <returns></returns>
-        private List<StockGroup> getStockGroupList()
-        {
-            List<StockGroup> _ListStockGroup = new List<StockGroup>();
-            string _Action = "StockGroup";
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
-            _ListStockGroup = JsonConvert.DeserializeObject<List<StockGroup>>(_ApiResult.Data.ToString());
-            return _ListStockGroup;
-        }
+        //private List<StockGroup> getStockGroupList()
+        //{
+        //    List<StockGroup> _ListStockGroup = new List<StockGroup>();
+        //    string _Action = "StockGroup";
+        //    string _Uri = ConnectionString + _Action;
+        //    ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+        //    _ListStockGroup = JsonConvert.DeserializeObject<List<StockGroup>>(_ApiResult.Data.ToString());
+        //    return _ListStockGroup;
+        //}
         /// <summary>
         /// 寫入加權指數
         /// </summary>
         /// <param name="listStockIndex"></param>
-        private void insertStockIndex(List<StockIndex> listStockIndex)
-        {
-            string json = JsonConvert.SerializeObject(listStockIndex);
-            string _Action = "StockIndex";
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
-            string _Return = _ApiResult.Data.ToString();
-        }
+        //private void insertStockIndex(List<StockIndex> listStockIndex)
+        //{
+        //    string json = JsonConvert.SerializeObject(listStockIndex);
+        //    string _Action = "StockIndex";
+        //    string _Uri = ConnectionString + _Action;
+        //    ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+        //    string _Return = _ApiResult.Data.ToString();
+        //}
         /// <summary>
         /// 寫入股票價格
         /// </summary>
         /// <param name="listStock"></param>
-        private void insertStock(List<Stock> listStock)
-        {
-            string json = JsonConvert.SerializeObject(listStock);
-            string _Action = "Stock";
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
-            string _Return = _ApiResult.Data.ToString();
-        }
+        //private void insertStock(List<Stock> listStock)
+        //{
+        //    string json = JsonConvert.SerializeObject(listStock);
+        //    string _Action = "Stock";
+        //    string _Uri = ConnectionString + _Action;
+        //    ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+        //    string _Return = _ApiResult.Data.ToString();
+        //}
         /// <summary>
         /// 寫入股票庫存
         /// </summary>
         /// <param name="stockInventory"></param>
-        private void insertStockInventory(StockInventory stockInventory)
-        {
-            string json = JsonConvert.SerializeObject(stockInventory);
-            string _Action = "StockInventory";
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
-            string _Return = _ApiResult.Data.ToString();
-        }
+        //private void insertStockInventory(StockInventory stockInventory)
+        //{
+        //    string json = JsonConvert.SerializeObject(stockInventory);
+        //    string _Action = "StockInventory";
+        //    string _Uri = ConnectionString + _Action;
+        //    ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+        //    string _Return = _ApiResult.Data.ToString();
+        //}
         /// <summary>
         /// 寫入股票清單
         /// </summary>
         /// <param name="stockGroup"></param>
-        private void insertStockGroup(List<StockGroup> stockGroup)
-        {
-            string json = JsonConvert.SerializeObject(stockGroup);
-            string _Action = "StockGroup";
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
-            string _Return = _ApiResult.Data.ToString();
-        }
+        //private void insertStockGroup(List<StockGroup> stockGroup)
+        //{
+        //    string json = JsonConvert.SerializeObject(stockGroup);
+        //    string _Action = "StockGroup";
+        //    string _Uri = ConnectionString + _Action;
+        //    ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+        //    string _Return = _ApiResult.Data.ToString();
+        //}
         /// <summary>
         /// 更新加權指數
         /// </summary>
         /// <param name="stockIndex"></param>
-        private void updateStockIndex(StockIndex stockIndex)
-        {
-            string json = JsonConvert.SerializeObject(stockIndex);
-            string _Action = "StockIndex";
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Put(json, _Uri);
-            string _Return = _ApiResult.Data.ToString();
-        }
+        //private void updateStockIndex(StockIndex stockIndex)
+        //{
+        //    string json = JsonConvert.SerializeObject(stockIndex);
+        //    string _Action = "StockIndex";
+        //    string _Uri = ConnectionString + _Action;
+        //    ApiResultEntity _ApiResult = CallWebApi.Put(json, _Uri);
+        //    string _Return = _ApiResult.Data.ToString();
+        //}
         /// <summary>
         /// 六日不執行
         /// 1. 08:10 寫入美股加權指數 道瓊 費半 那斯達克
@@ -293,8 +301,7 @@ namespace StockStrategy.Properties
             string _Day = DateTime.Now.Day.ToString();
             if (_Hour == "7" && _Minute == "0")
             {
-                stockIndex = false;
-                bUpdateStockIndex = false;
+                stockIndex = false; 
                 bTAIEX = false;
                 bStockAll = false;
                 bStockAllLackOff = false;
@@ -374,7 +381,7 @@ namespace StockStrategy.Properties
                         _StockAddList.Add(s);
                     }
                 }
-                insertStock(_StockAddList);
+                _DataAccess.insertStock(_StockAddList);
                 _Log = DateTime.Now.ToString("yyyyMMdd hh:mm:ss") + " insert stock  ok.\r\n";
                 this.txtErrMsg.Text += _Log;
             }
@@ -484,8 +491,8 @@ namespace StockStrategy.Properties
                         double _Multiple = Convert.ToDouble(s.TradeVolume) / Convert.ToDouble(_YestodayStock.TradeVolume);
                         if (_Multiple > multiple)
                         {
-                            bool   _Less = true, _NotHigherThan = true; 
-                            List<Stock> _StockListByCode = _DataAccess.getStockBySqlList(s.Code, "Code").OrderByDescending(x => x.Date).ToList();
+                            bool   _Less = true, _NotHigherThan = true;  
+                            List<Stock> _StockListByCode = _DataAccess.getStockBySqlList(s.Code, "Code").Where(x => Convert.ToInt32(x.Date) <= Convert.ToInt32(_WhereDate)).OrderByDescending(x => x.Date).ToList();
                             if (chkLess.Checked)
                             {
                                 _Less = _StockListByCode.Take(_PreDays + 1).Where(x => Convert.ToDouble(x.TradeVolume) < _LessVolumn).ToList().Count >= _PreDays;
@@ -673,7 +680,7 @@ namespace StockStrategy.Properties
         private void btnInsertStockLackOff_Click(object sender, EventArgs e)
         {
             this.lbBtnName.Text = "Insert Stock Lack Off";
-            List<StockGroup> _StockGroupList = getStockGroupList();
+            List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
             this.progressBar1.Maximum = _StockGroupList.Count;
             this.progressBar1.Step = 1;
             //因為捉取網站資料會較久所以呼叫另一執行緒處理
@@ -685,8 +692,9 @@ namespace StockStrategy.Properties
             string _Log = "";
             try
             {
+                DataAccess _DataAccess = new DataAccess();
                 List<Stock> _StockList = setStockLackOffList();
-                insertStock(_StockList);
+                _DataAccess.insertStock(_StockList);
 
             }
             catch (Exception ex)
@@ -706,13 +714,14 @@ namespace StockStrategy.Properties
             string _Log = "";
             try
             {
+                DataAccess _DataAccess = new DataAccess();
                 string _Juridica = "MII_1_4";
                 string _TX_URL = ConfigurationManager.AppSettings["TX_URL"];
                 StockIndex s = new StockIndex();
-                List<StockIndex> _ListStock = getStockIndexList();
+                List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
                 s = _ListStock.OrderByDescending(x => x.Date).First();
                 s.JuridicaPerson = Common.Job.GetTaiwanFutures(_TX_URL, _Juridica, true);
-                updateStockIndex(s);
+                _DataAccess.UpdateStockIndex(s);
                 _Log = "\r\n" + DateTime.Now.ToString("yyyyMMdd hh:mm:ss") + " update stock juridica ok.";
                 this.txtErrMsg.Text += _Log;
                 bTAIEX = true;
@@ -734,10 +743,10 @@ namespace StockStrategy.Properties
             string _Log = "";
             try
             {
-                StockIndex s = new StockIndex();
-                List<StockIndex> _ListStock = getStockIndexList();
-                s = _ListStock.OrderByDescending(x => x.Date).First();
                 DataAccess _DataAccess = new DataAccess();
+                StockIndex s = new StockIndex();
+                List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
+                s = _ListStock.OrderByDescending(x => x.Date).First(); 
                 StockStrategy.Model.Stock.JuridicaPerson _JuridicaPerson = new Model.Stock.JuridicaPerson();
                 _JuridicaPerson.queryType = "1";
                 _JuridicaPerson.goDay = "";
@@ -746,7 +755,7 @@ namespace StockStrategy.Properties
                 _JuridicaPerson.queryDate = "2022/06/20";
                 _DataAccess.getJuridicaPerson(_JuridicaPerson);
                 //  s.JuridicaPerson = Common.Job.GetTaiwanFutures(_TX_URL, _Juridica, true);
-                updateStockIndex(s);
+                _DataAccess.UpdateStockIndex(s);
                 _Log = DateTime.Now.ToString("yyyyMMdd hh:mm:ss") + " update stock juridica ok.\r\n";
                 this.txtErrMsg.Text += _Log;
                 bTAIEX = true;
@@ -955,8 +964,7 @@ namespace StockStrategy.Properties
             int _No = 0;
 
             string _HiStock_URL = ConfigurationManager.AppSettings["HiStock_URL"];
-            List<StockGroup> _StockGroupList = getStockGroupList();
-            _StockLackOffList = setStockList();
+            List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
             string _UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             foreach (StockGroup s in _StockGroupList)
             {
@@ -1026,7 +1034,7 @@ namespace StockStrategy.Properties
             int _Tuesday = _Dt.DayOfWeek.ToString() == "Tuesday" ? -4 : -2;
             int _Yestoday = _Dt.DayOfWeek.ToString() == "Monday" ? -3 : -1;
             List<Stock> _YestodayStockDayAllList = _DataAccess.getStockYestodayList(_Dt.AddDays(_Yestoday).Date.ToString("yyyyMMdd"));
-            List<StockGroup> _StockGroupList = getStockGroupList();
+            List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
             string _UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
             foreach (StockGroup s in _StockGroupList)
             {
@@ -1090,7 +1098,7 @@ namespace StockStrategy.Properties
         private void btnInsertStockByDate_Click(object sender, EventArgs e)
         {
             this.lbBtnName.Text = "Insert Stock By Date";
-            List<StockGroup> _StockGroupList = getStockGroupList();
+            List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
             this.progressBar1.Maximum = _StockGroupList.Count;
             this.progressBar1.Step = 1;
             //因為捉取網站資料會較久所以呼叫另一執行緒處理
@@ -1102,8 +1110,9 @@ namespace StockStrategy.Properties
             string _Log = "";
             try
             {
+                DataAccess _DataAccess = new DataAccess();
                 List<Stock> _StockList = setStockByDateList();
-                insertStock(_StockList); 
+                _DataAccess.insertStock(_StockList); 
             }
             catch (Exception ex)
             {
@@ -1239,7 +1248,7 @@ namespace StockStrategy.Properties
         private void UpdateUI()
         {
             this.progressBar1.PerformStep();
-            List<StockGroup> _StockGroupList = getStockGroupList();
+            List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
             double _Count = _StockGroupList.Count, _Prog = this.progressBar1.Value;
             this.lbPercent.Text = Math.Floor(((_Prog / _Count) * 100)).ToString() + "%";
             this.lbPercent.Refresh();
@@ -1255,6 +1264,7 @@ namespace StockStrategy.Properties
             openFileDialog1 = new OpenFileDialog();
             try
             {
+                DataAccess _DataAccess = new DataAccess();
                 Common.XSLXHelper _XSLXHelper = new Common.XSLXHelper();
                 DataTable dt = _XSLXHelper.Import(txtFile.Text, "Data");
                 List<StockGroup> _StockGroupList = new List<StockGroup>();
@@ -1271,7 +1281,7 @@ namespace StockStrategy.Properties
                     _StockGroupList.Add(_StockGroup);
                 }
                 btnLogin.PerformClick();
-                insertStockGroup(_StockGroupList);
+                _DataAccess.InsertStockGroup(_StockGroupList);
                 MessageBox.Show("ok");
             }
             catch (Exception ex)
@@ -1291,6 +1301,7 @@ namespace StockStrategy.Properties
             string _Log = "";
             try
             {
+                DataAccess _DataAccess = new DataAccess();
                 this.btnLogin.PerformClick();
                 List<StockStrategy.Model.Stock.GetRealtimeStockPrice> _PriceList = new List<StockStrategy.Model.Stock.GetRealtimeStockPrice>();
                 StockStrategy.Model.Stock.GetRealtimePriceIn _RealtimePriceIn = new StockStrategy.Model.Stock.GetRealtimePriceIn();
@@ -1308,7 +1319,7 @@ namespace StockStrategy.Properties
                 string _MTX_URL = ConfigurationManager.AppSettings["MTX_URL"];
                 string _TPEx_URL = ConfigurationManager.AppSettings["TPEx_URL"];
                 StockIndex s = new StockIndex();
-                List<StockIndex> _ListStock = getStockIndexList();
+                List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
                 s = _ListStock.OrderByDescending(x => x.Date).First();
                 //s.Id = _ListStock.OrderByDescending(x => x.Date).First().Id;
                 s.ContinueName = "";
@@ -1337,7 +1348,7 @@ namespace StockStrategy.Properties
                     s.TPEx = "0";
                     s.TX = "0";
                 }
-                updateStockIndex(s);
+                _DataAccess.UpdateStockIndex(s);
                 _Log = DateTime.Now.ToString("yyyyMMdd hh:mm:ss") + " update stock index ok.";
                 this.txtErrMsg.Text += _Log;
                 bTAIEX = true;
@@ -1348,19 +1359,6 @@ namespace StockStrategy.Properties
                 logger.Error(_Log);
                 this.txtErrMsg.Text += _Log;
             }
-        }
-        /// <summary>
-        /// 取得股票
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnGetStock_Click(object sender, EventArgs e)
-        {
-            List<Stock> _ListStock = new List<Stock>();
-            string _Action = "Stock";
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
-            _ListStock = JsonConvert.DeserializeObject<List<Stock>>(_ApiResult.Data.ToString());
-        }
+        } 
     }
 }

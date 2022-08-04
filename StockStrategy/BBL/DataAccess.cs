@@ -14,8 +14,15 @@ namespace StockStrategy.BBL
         string ConnectionString;
         string Token;
         public DataAccess()
-        { 
-         ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
+        {
+            var _Ip =Tool.GetIpAddresses(); 
+            if (_Ip.Length > 0)
+            {
+                if (_Ip[_Ip.Length - 1].ToString() == "114.32.117.3")
+                     ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
+                else
+                     ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
+            } 
             loginWebApi();
         }
         public string  loginWebApi()
@@ -143,7 +150,7 @@ namespace StockStrategy.BBL
         /// 寫入加權指數
         /// </summary>
         /// <param name="listStockIndex"></param>
-        public string  insertStockIndex(List<StockIndex> listStockIndex)
+        public string  InsertStockIndex(List<StockIndex> listStockIndex)
         {
             string json = JsonConvert.SerializeObject(listStockIndex);
             string _Action = "StockIndex";

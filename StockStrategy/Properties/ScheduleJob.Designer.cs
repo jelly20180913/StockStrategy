@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.btnLogin = new System.Windows.Forms.Button();
-            this.btnGetStock = new System.Windows.Forms.Button();
             this.txtErrMsg = new System.Windows.Forms.TextBox();
             this.btnGetIndexToInsert = new System.Windows.Forms.Button();
             this.btnGetTopIndex = new System.Windows.Forms.Button();
@@ -135,6 +134,7 @@
             this.lbStockAccount = new System.Windows.Forms.Label();
             this.btnAdminLogin = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabelIP = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -151,6 +151,7 @@
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDiff)).BeginInit();
             this.pnAdmin.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnLogin
@@ -162,16 +163,6 @@
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            // 
-            // btnGetStock
-            // 
-            this.btnGetStock.Location = new System.Drawing.Point(91, 2);
-            this.btnGetStock.Name = "btnGetStock";
-            this.btnGetStock.Size = new System.Drawing.Size(75, 23);
-            this.btnGetStock.TabIndex = 1;
-            this.btnGetStock.Text = "GetStock";
-            this.btnGetStock.UseVisualStyleBackColor = true;
-            this.btnGetStock.Click += new System.EventHandler(this.btnGetStock_Click);
             // 
             // txtErrMsg
             // 
@@ -200,7 +191,6 @@
             this.btnGetTopIndex.TabIndex = 5;
             this.btnGetTopIndex.Text = "getTopIndex";
             this.btnGetTopIndex.UseVisualStyleBackColor = true;
-            this.btnGetTopIndex.Click += new System.EventHandler(this.btnGetTopIndex_Click);
             // 
             // timerInsertStockIndex
             // 
@@ -247,6 +237,7 @@
             // 
             // btnImport
             // 
+            this.btnImport.Enabled = false;
             this.btnImport.Location = new System.Drawing.Point(472, 31);
             this.btnImport.Name = "btnImport";
             this.btnImport.Size = new System.Drawing.Size(75, 23);
@@ -1099,7 +1090,6 @@
             this.pnAdmin.Controls.Add(this.btnSetting);
             this.pnAdmin.Controls.Add(this.btnLogin);
             this.pnAdmin.Controls.Add(this.btnStockJurical);
-            this.pnAdmin.Controls.Add(this.btnGetStock);
             this.pnAdmin.Controls.Add(this.btnGetIndexToInsert);
             this.pnAdmin.Controls.Add(this.btnInsertStockByDate);
             this.pnAdmin.Controls.Add(this.btnGetTopIndex);
@@ -1125,6 +1115,7 @@
             // 
             // btnSetting
             // 
+            this.btnSetting.Enabled = false;
             this.btnSetting.Location = new System.Drawing.Point(603, 3);
             this.btnSetting.Name = "btnSetting";
             this.btnSetting.Size = new System.Drawing.Size(75, 23);
@@ -1179,11 +1170,19 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelIP});
             this.statusStrip1.Location = new System.Drawing.Point(0, 710);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1556, 22);
             this.statusStrip1.TabIndex = 90;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabelIP
+            // 
+            this.toolStripStatusLabelIP.Name = "toolStripStatusLabelIP";
+            this.toolStripStatusLabelIP.Size = new System.Drawing.Size(128, 17);
+            this.toolStripStatusLabelIP.Text = "toolStripStatusLabel1";
             // 
             // ScheduleJob
             // 
@@ -1232,6 +1231,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudDiff)).EndInit();
             this.pnAdmin.ResumeLayout(false);
             this.pnAdmin.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1240,7 +1241,6 @@
         #endregion
 
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.Button btnGetStock;
         private System.Windows.Forms.TextBox txtErrMsg;
         private System.Windows.Forms.Button btnGetIndexToInsert;
         private System.Windows.Forms.Button btnGetTopIndex;
@@ -1345,5 +1345,6 @@
         private System.Windows.Forms.Button btnSetting;
         private System.Windows.Forms.Button btnAdminLogin;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelIP;
     }
 }

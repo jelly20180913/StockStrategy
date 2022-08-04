@@ -3,6 +3,7 @@ using System.Configuration;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
 namespace StockStrategy.Common
 {
     public class Tool
@@ -98,6 +99,19 @@ namespace StockStrategy.Common
             {
                 throw new Exception(ae.Message, ae.InnerException);
             }
+        }
+        public static string GetServerName()
+        {
+            return Environment.MachineName; 
+        }
+        /// <summary>
+        /// Gets the ip addresses.
+        /// </summary>
+        /// <returns>ip addresses</returns>
+        public static string[] GetIpAddresses()
+        {
+            string hostName = GetServerName();
+            return System.Net.Dns.GetHostAddresses(hostName).Select(i => i.ToString()).ToArray();
         }
     }
 }

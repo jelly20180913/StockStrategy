@@ -150,6 +150,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Content Include="a9f93-tnjjv-001.ico" />
+    <Content Include="Image\a9f93-tnjjv-001.ico" />
     <Content Include="Media\WindowsDing.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -207,8 +208,6 @@
       <Name>WebApiService</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Image\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

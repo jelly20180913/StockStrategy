@@ -72,7 +72,7 @@ namespace StockStrategy.Properties
             {
                 this.toolStripStatusLabelIP.Text = _Ip[_Ip.Length - 1].ToString();
             }
-
+            btnAdminLogin.PerformClick();
             // loginWebApi();
         }
         /// <summary>
@@ -466,7 +466,8 @@ namespace StockStrategy.Properties
         {
             string _Log = "";
             DataAccess _DataAccess = new DataAccess();
-            DateTime _Dt = Convert.ToDateTime(this.dateTimePicker1.Text);
+            DateTime _Dt = Convert.ToDateTime(this.dtpGoodDate.Text);
+            string _Code = "";
             string _WhereDate = _Dt.ToString("yyyyMMdd");
             string _DayOfWeek = _Dt.DayOfWeek.ToString();
             int _Yestoday = _DayOfWeek == "Monday" ? -3 : -1; 
@@ -485,6 +486,7 @@ namespace StockStrategy.Properties
                 List<Stock> _GoodStockList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) > _Gain && Convert.ToDouble(x.TradeVolume) > _Volumn).ToList();
                 foreach (Stock s in _GoodStockList)
                 {
+                    _Code = s.Code;
                     if (_YestodayStockDayAllList.Where(x => x.Code == s.Code).ToList().Count > 0)
                     {
                         Stock _YestodayStock = _YestodayStockDayAllList.Where(x => x.Code == s.Code).First();
@@ -510,9 +512,8 @@ namespace StockStrategy.Properties
             }
             catch (Exception ex)
             {
-                _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " getGoodStockList:" + ex.Message + "\r\n";
-                logger.Error(_Log);
-                this.txtErrMsg.Text += _Log;
+                _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") +_Code+ " getGoodStockList:" + ex.Message + "\r\n";
+                logger.Error(_Log); 
             }
             return _StockList;
         }
@@ -531,7 +532,7 @@ namespace StockStrategy.Properties
             string _Code = "";
             string _Log = "";
             DataAccess _DataAccess = new DataAccess();
-            DateTime _Dt = Convert.ToDateTime(this.dtpDateBad.Text);
+            DateTime _Dt = Convert.ToDateTime(this.dtpBadDate.Text);
             string _WhereDate = _Dt.ToString("yyyyMMdd");
             string _DayOfWeek = _Dt.DayOfWeek.ToString();
             int _Yestoday = _DayOfWeek == "Monday" ? -3 : -1;
@@ -773,16 +774,16 @@ namespace StockStrategy.Properties
             progressBar2.Style = ProgressBarStyle.Marquee;
             progressBar2.MarqueeAnimationSpeed = 30;
             progressBar2.Show();
-            var t = new Task(getGoodStock);
-            t.Start();
+            var s = Task.Run(() => getGoodStock()); 
         }
-        private void getGoodStock()
+        private List<Stock> getGoodStock()
         { 
             string _Log = "";
             GoodStock = "";
+            List<Stock> _StockList = new List<Stock>();
             try
             { 
-                List<Stock> _StockList = getGoodStockList();
+                _StockList = getGoodStockList();
 
                 foreach (Stock s in _StockList)
                 {
@@ -797,6 +798,7 @@ namespace StockStrategy.Properties
                 _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetGoodStock:" + ex.Message + "\r\n";
                 logger.Error(_Log); 
             }
+            return _StockList;
         }
         private void UpdateUIGoodStock()
         {
@@ -809,13 +811,14 @@ namespace StockStrategy.Properties
             pgBarCtu.Style = ProgressBarStyle.Continuous;
         }
 
-        private void getBadStock()
+        private List<Stock> getBadStock()
         { 
             string _Log = "";
             BadStock = "";
+            List<Stock> _StockList = new List<Stock>();
             try
             { 
-                List<Stock> _StockList = getBadStockList(); 
+                _StockList = getBadStockList(); 
                 foreach (Stock s in _StockList)
                 {
                     BadStock = BadStock + s.Code + ";";
@@ -828,6 +831,7 @@ namespace StockStrategy.Properties
                 _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetBadStock:" + ex.Message + "\r\n";
                 logger.Error(_Log); 
             }
+            return _StockList;
         }
         private void UpdateUIBadStock()
         {
@@ -924,29 +928,14 @@ namespace StockStrategy.Properties
         /// <param name="e"></param>
         private void btnLineGoodStock_Click(object sender, EventArgs e)
         {
-            string _Log = "";
-            try
-            {
-                List<Stock> _StockList = getGoodStockList();
-                string _Stock = "";
-                foreach (Stock s in _StockList)
-                {
-                    _Stock = _Stock + s.Code + ";";
-                }
-                List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
-                foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.NotifyClass == "Good" && x.Enable == true).ToList())
-                {
-                    string _Msg = "日期:" + this.dateTimePicker1.Text + " 電腦也會選土豆:" + _Stock;
-                    CallLineNotifyApi(s.Token, _Msg);
-                } 
-            }
-            catch (Exception ex)
-            {
-                _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " LineGoodStock:" + ex.Message + "\r\n";
-                logger.Error(_Log);
-                this.txtErrMsg.Text += _Log;
-
-            }
+            progressBar2.Style = ProgressBarStyle.Marquee;
+            progressBar2.MarqueeAnimationSpeed = 30;
+            progressBar2.Show();
+            var s = Task.Run(() => getGoodStockList());
+            var _StockList = s.Result; 
+            string _DateTime = this.dtpGoodDate.Text;
+            lineAIStock(_StockList, "Good", "起漲放量", _DateTime);
+            
         }
         public async void CallLineNotifyApi(string token, string lineMsg)
         {
@@ -1005,8 +994,7 @@ namespace StockStrategy.Properties
                 catch (Exception ex)
                 {
                     _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " btnInsertStockLackOff_Click:" + _Code + ex.Message + "\r\n";
-                    logger.Error(_Log);
-                    this.txtErrMsg.Text += _Log;
+                    logger.Error(_Log); 
                 }
             } 
             sw.Stop();
@@ -1171,7 +1159,55 @@ namespace StockStrategy.Properties
                 logger.Error(_Log);
                 this.txtErrMsg.Text += _Log; 
             } 
-        } 
+        }
+
+        private void btnLineCtuStock_Click(object sender, EventArgs e)
+        {
+            progressBar2.Style = ProgressBarStyle.Marquee;
+            progressBar2.MarqueeAnimationSpeed = 30;
+            progressBar2.Show();
+            var s = Task.Run(() => getCtuStockList());
+            var _StockList = s.Result;
+            string _DateTime = this.dtpCtuDate.Text;
+            lineAIStock(_StockList, "Ctu", "連續型態", _DateTime);
+           
+        }
+        private void lineAIStock(List<Stock> stockList,string className,string name,string dateTime)
+        {
+            string _Log = "";
+            try
+            { 
+                string _Stock = "";
+                foreach (Stock s in stockList)
+                {
+                    _Stock = _Stock + s.Code + ";";
+                }
+                List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
+                foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.NotifyClass == className && x.Enable == true).ToList())
+                {
+                    string _Msg = "日期:" + dateTime + name + _Stock;
+                    CallLineNotifyApi(s.Token, _Msg);
+                }
+                this.txtErrMsg.Text += "Line  "+className+" Stock List OK";
+            }
+            catch (Exception ex)
+            {
+                _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " lineAIStock:" + ex.Message + "\r\n";
+                logger.Error(_Log);
+                this.txtErrMsg.Text += _Log; 
+            } 
+        }
+        private void btnLineBad_Click(object sender, EventArgs e)
+        {
+            progressBar2.Style = ProgressBarStyle.Marquee;
+            progressBar2.MarqueeAnimationSpeed = 30;
+            progressBar2.Show();
+            var s = Task.Run(() => getBadStockList());
+            var _StockList = s.Result; 
+            string _DateTime = this.dtpBadDate.Text;
+            lineAIStock(_StockList, "Bad", "爆量出貨", _DateTime);
+        }
+
         /// <summary>
         /// 加密後寫入config檔
         /// 公鑰:20220801
@@ -1191,6 +1227,8 @@ namespace StockStrategy.Properties
 
         private void btnAdminLogin_Click(object sender, EventArgs e)
         {
+            this.txtAccount.Text = "Rain";
+            this.txtPassword.Text = "B1050520";
             string _Username = Tool.Encrypt(this.txtAccount.Text, "20220801", "B1050520");
             string _Password = Tool.Encrypt(this.txtPassword.Text, "20220801", "B1050520");
             if (_Username == ConfigurationManager.AppSettings["Account"] && _Password == ConfigurationManager.AppSettings["Password"]) {
@@ -1206,8 +1244,7 @@ namespace StockStrategy.Properties
             pgBarBad.Style = ProgressBarStyle.Marquee;
             pgBarBad.MarqueeAnimationSpeed = 30;
             pgBarBad.Show();
-            var t = new Task(getBadStock);
-            t.Start();
+            var s = Task.Run(() => getBadStock()); 
         }
 
         private void btnCtu_Click(object sender, EventArgs e)
@@ -1216,16 +1253,16 @@ namespace StockStrategy.Properties
             pgBarCtu.MarqueeAnimationSpeed = 30;
             pgBarCtu.Show();
             GainType = this.cbGain.Text != "" ? this.cbGain.Text : "漲";
-            var t = new Task(getCtuStock);
-            t.Start();
+            var s = Task.Run(() => getCtuStock());
         }
-        private void getCtuStock()
+        private List<Stock> getCtuStock()
         {
             string _Log = "";
             CtuStock = "";
+            List<Stock> _StockList = new List<Stock>();
             try
             { 
-                List<Stock> _StockList = getCtuStockList();
+                 _StockList = getCtuStockList();
 
                 foreach (Stock s in _StockList)
                 {
@@ -1240,6 +1277,7 @@ namespace StockStrategy.Properties
                 _Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " GetCtuStock:" + ex.Message + "\r\n";
                 logger.Error(_Log); 
             }
+            return _StockList;
         }
 
         /// <summary>

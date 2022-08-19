@@ -218,7 +218,7 @@
             this.txtStockAccount.PasswordChar = '*';
             this.txtStockAccount.Size = new System.Drawing.Size(71, 22);
             this.txtStockAccount.TabIndex = 42;
-            this.txtStockAccount.Text = "";
+            this.txtStockAccount.Text = "050-0333866";
             this.txtStockAccount.TextChanged += new System.EventHandler(this.txtStockAccount_TextChanged);
             // 
             // lbStockAccount

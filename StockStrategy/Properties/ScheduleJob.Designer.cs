@@ -45,7 +45,7 @@
             this.btnResetLinePoint = new System.Windows.Forms.Button();
             this.btnGetGoodStock = new System.Windows.Forms.Button();
             this.txtGoodStock = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpGoodDate = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.chkNotHigherThan = new System.Windows.Forms.CheckBox();
@@ -123,7 +123,7 @@
             this.nudDiff = new System.Windows.Forms.NumericUpDown();
             this.label24 = new System.Windows.Forms.Label();
             this.btnLineBad = new System.Windows.Forms.Button();
-            this.dtpDateBad = new System.Windows.Forms.DateTimePicker();
+            this.dtpBadDate = new System.Windows.Forms.DateTimePicker();
             this.btnBad = new System.Windows.Forms.Button();
             this.btnStockJurical = new System.Windows.Forms.Button();
             this.pnAdmin = new System.Windows.Forms.Panel();
@@ -299,12 +299,12 @@
             this.txtGoodStock.Size = new System.Drawing.Size(406, 31);
             this.txtGoodStock.TabIndex = 16;
             // 
-            // dateTimePicker1
+            // dtpGoodDate
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(782, 13);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(126, 22);
-            this.dateTimePicker1.TabIndex = 17;
+            this.dtpGoodDate.Location = new System.Drawing.Point(782, 13);
+            this.dtpGoodDate.Name = "dtpGoodDate";
+            this.dtpGoodDate.Size = new System.Drawing.Size(126, 22);
+            this.dtpGoodDate.TabIndex = 17;
             // 
             // groupBox1
             // 
@@ -319,7 +319,7 @@
             this.groupBox1.Controls.Add(this.nupGain);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnLineGoodStock);
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
+            this.groupBox1.Controls.Add(this.dtpGoodDate);
             this.groupBox1.Controls.Add(this.txtGoodStock);
             this.groupBox1.Controls.Add(this.btnGetGoodStock);
             this.groupBox1.Location = new System.Drawing.Point(10, 121);
@@ -789,6 +789,7 @@
             this.btnLineCtuStock.TabIndex = 18;
             this.btnLineCtuStock.Text = "Line";
             this.btnLineCtuStock.UseVisualStyleBackColor = true;
+            this.btnLineCtuStock.Click += new System.EventHandler(this.btnLineCtuStock_Click);
             // 
             // dtpCtuDate
             // 
@@ -816,7 +817,7 @@
             this.groupBox3.Controls.Add(this.panel5);
             this.groupBox3.Controls.Add(this.panel6);
             this.groupBox3.Controls.Add(this.btnLineBad);
-            this.groupBox3.Controls.Add(this.dtpDateBad);
+            this.groupBox3.Controls.Add(this.dtpBadDate);
             this.groupBox3.Controls.Add(this.btnBad);
             this.groupBox3.Location = new System.Drawing.Point(12, 226);
             this.groupBox3.Name = "groupBox3";
@@ -1057,13 +1058,14 @@
             this.btnLineBad.TabIndex = 18;
             this.btnLineBad.Text = "Line";
             this.btnLineBad.UseVisualStyleBackColor = true;
+            this.btnLineBad.Click += new System.EventHandler(this.btnLineBad_Click);
             // 
-            // dtpDateBad
+            // dtpBadDate
             // 
-            this.dtpDateBad.Location = new System.Drawing.Point(780, 20);
-            this.dtpDateBad.Name = "dtpDateBad";
-            this.dtpDateBad.Size = new System.Drawing.Size(126, 22);
-            this.dtpDateBad.TabIndex = 17;
+            this.dtpBadDate.Location = new System.Drawing.Point(780, 20);
+            this.dtpBadDate.Name = "dtpBadDate";
+            this.dtpBadDate.Size = new System.Drawing.Size(126, 22);
+            this.dtpBadDate.TabIndex = 17;
             // 
             // btnBad
             // 
@@ -1107,7 +1109,6 @@
             this.pnAdmin.Controls.Add(this.btnInsertStockLackOff);
             this.pnAdmin.Controls.Add(this.btnResetLinePoint);
             this.pnAdmin.Controls.Add(this.btnUpdateJuridicaPerson);
-            this.pnAdmin.Enabled = false;
             this.pnAdmin.Location = new System.Drawing.Point(5, 25);
             this.pnAdmin.Name = "pnAdmin";
             this.pnAdmin.Size = new System.Drawing.Size(1176, 90);
@@ -1256,7 +1257,7 @@
         private System.Windows.Forms.Button btnResetLinePoint;
         private System.Windows.Forms.Button btnGetGoodStock;
         private System.Windows.Forms.TextBox txtGoodStock;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpGoodDate;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnUpdateStockGain;
         private System.Windows.Forms.Label lbPercent;
@@ -1324,7 +1325,7 @@
         private System.Windows.Forms.NumericUpDown nudDiff;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Button btnLineBad;
-        private System.Windows.Forms.DateTimePicker dtpDateBad;
+        private System.Windows.Forms.DateTimePicker dtpBadDate;
         private System.Windows.Forms.Button btnBad;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.CheckBox chkVolumnTotal;

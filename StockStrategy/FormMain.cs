@@ -80,7 +80,7 @@ new Dictionary<string, string>();
         private Dictionary<string, string> dicFutures =
 new Dictionary<string, string>();
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        private static string ConnectionString = "", Token = "", TAIEX = "";
+        private static string ConnectionString = "",  TAIEX = "";
         DataAccess _DataAccess = new DataAccess();
       
         bool LineNotify = false;
@@ -2589,8 +2589,8 @@ new Dictionary<string, string>();
                     }
                     _CodeList.Add(s.StockId);
                 }
-                string _Id = "Price1_lbTPrice";
-                string _Volume = "Price1_lbTVolume";
+                //string _Id = "Price1_lbTPrice";
+                //string _Volume = "Price1_lbTVolume";
                 string _StockFuture_URL = ConfigurationManager.AppSettings["HiStock_URL"];
                 var _LackOffList = _CodeObserverList.Except(_CodeList);
                 foreach (string s in _LackOffList)

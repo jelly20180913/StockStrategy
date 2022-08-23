@@ -19,12 +19,14 @@ namespace WebApiService
         {
 			var container = new UnityContainer();
 
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
+			// register all your components with the container here
+			// it is NOT necessary to register your controllers
 
-            // e.g. container.RegisterType<ITestService, TestService>(); 
-            string _ConnectionString = "name=StockWarehouseEntities"; 
-            var dbContext = new DynamicEntity(_ConnectionString);
+			// e.g. container.RegisterType<ITestService, TestService>(); 
+
+			// string _ConnectionString = "name=StockWarehouseEntities"; 
+			string _ConnectionString = "name=AzureStockWarehouseEntities";
+			var dbContext = new DynamicEntity(_ConnectionString);
             container.RegisterType<IDbContextFactory, DbContextFactory>(
            new HierarchicalLifetimeManager(),
            new InjectionConstructor(_ConnectionString));

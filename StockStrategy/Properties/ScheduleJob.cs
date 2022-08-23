@@ -124,26 +124,26 @@ namespace StockStrategy.Properties
                 s.Date = DateTime.Now.ToString("yyyyMMdd");
                 s.DayOfWeek = Mapping.DayOfWeekList.Where(x => x.Day == DateTime.Now.DayOfWeek.ToString()).First().Show;
                 s.DJI = _DJI_Index;
-                s.DJI_QuoteChange = Common.Job.GetTaiwanFutures(_DJI_URL, _Change, true);
+                s.DJI_QuoteChange = Common.Job.GetTaiwanFutures(_DJI_URL, _Change, true).Replace('▼', ' ').Replace('▲', ' ');
                 s.DJI_QuotePercent = Common.Job.GetTaiwanFutures(_DJI_URL, _Percent, true);
                 s.MTX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
                 s.MTX_High = "";
                 s.MTX_Open = "";
-                s.MTX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true);
+                s.MTX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', ' ').Replace('▲', ' ');
                 s.MTX_QuotePercent = Common.Job.GetTaiwanFutures(_MTX_URL, _Percent, true);
-                s.MTX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true);
+                s.MTX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true).Replace('口', ' ');
                 s.NASDAQ = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Id, true);
-                s.NASDAQ_QuoteChange = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Change, true);
+                s.NASDAQ_QuoteChange = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Change, true).Replace('▼', ' ').Replace('▲', ' ');
                 s.NASDAQ_QuotePercent = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Percent, true);
                 s.PHLX = Common.Job.GetTaiwanFutures(_PHLX_URL, _Id, true);
-                s.PHLX_QuoteChange = Common.Job.GetTaiwanFutures(_PHLX_URL, _Change, true);
+                s.PHLX_QuoteChange = Common.Job.GetTaiwanFutures(_PHLX_URL, _Change, true).Replace('▼', ' ').Replace('▲', ' ');
                 s.PHLX_QuotePercent = Common.Job.GetTaiwanFutures(_PHLX_URL, _Percent, true);
                 s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
                 s.TX_High = "";
                 s.TX_Open = "";
-                s.TX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true);
+                s.TX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', ' ').Replace('▲', ' ');
                 s.TX_QuotePercent = Common.Job.GetTaiwanFutures(_MTX_URL, _Percent, true);
-                s.TX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true);
+                s.TX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true).Replace('口', ' ');
                 s.TAIEX = _StockPrice.Price;
                 s.TAIEX_High = _StockPrice.HighPrice;
                 s.TAIEX_Open = _StockPrice.OpenPrice;
@@ -151,7 +151,7 @@ namespace StockStrategy.Properties
                 s.TAIEX_QuotePercent = Convert.ToString(Math.Round(Convert.ToDouble(s.TAIEX_QuoteChange) * 100 / Convert.ToDouble(_StockPrice.Price), 2));
                 s.Volume = _StockPrice.TotalDealQty;
                 s.TPEx = Common.Job.GetTaiwanFutures(_TPEx_URL, _Id, true);
-                s.TPEx_QuoteChange = Common.Job.GetTaiwanFutures(_TPEx_URL, _Change, true);
+                s.TPEx_QuoteChange = Common.Job.GetTaiwanFutures(_TPEx_URL, _Change, true).Replace('▼', ' ').Replace('▲', ' ');
                 s.TPEx_QuotePercent = Common.Job.GetTaiwanFutures(_TPEx_URL, _Percent, true);
 
                 if (_TopIndexDJI == _DJI_Index)
@@ -1364,9 +1364,9 @@ namespace StockStrategy.Properties
                 s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
                 s.TX_High = "";
                 s.TX_Open = "";
-                s.TX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true);
+                s.TX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', ' ').Replace('▲', ' ');
                 s.TX_QuotePercent = Common.Job.GetTaiwanFutures(_MTX_URL, _Percent, true);
-                s.TX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true);
+                s.TX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true).Replace('口', ' ');
                 int _Yestoday = DateTime.Now.DayOfWeek.ToString() == "Monday" ? -3 : -1;
                 // string _TopIndex = getTopIndex(DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd"));
                 string _TopIndex = _ListStock.Where(x => x.Date == DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd")).First().TAIEX;
@@ -1377,7 +1377,7 @@ namespace StockStrategy.Properties
                 s.TAIEX = s.TAIEX_QuoteChange != "0" ? _StockPrice.Price : "0";
                 s.Volume = _StockPrice.TotalDealQty;
                 s.TPEx = Common.Job.GetTaiwanFutures(_TPEx_URL, _Id, true);
-                s.TPEx_QuoteChange = Common.Job.GetTaiwanFutures(_TPEx_URL, _Change, true);
+                s.TPEx_QuoteChange = Common.Job.GetTaiwanFutures(_TPEx_URL, _Change, true).Replace('▼', ' ').Replace('▲', ' ');
                 s.TPEx_QuotePercent = Common.Job.GetTaiwanFutures(_TPEx_URL, _Percent, true);
 
                 if (s.TAIEX_QuoteChange == "0")

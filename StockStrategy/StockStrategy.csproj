@@ -150,8 +150,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Content Include="a9f93-tnjjv-001.ico" />
+    </Compile> 
     <Content Include="Image\a9f93-tnjjv-001.ico" />
     <Content Include="Media\WindowsDing.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

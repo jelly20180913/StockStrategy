@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Web.Http.Filters;
 using NLog;
-using WebApiService.DataModel;
+using  DataModel;
 namespace WebApiService.Filters
 {
     public class AllExceptionResponse : ExceptionFilterAttribute

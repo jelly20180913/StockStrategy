@@ -17,5 +17,9 @@ namespace WebApiService.Services.Interface.Tables
         IEnumerable<Stock> GetAll();
         List<string> MiltiCreate(List<Stock> instance);
         IEnumerable<Stock> Filter(string sql);
-    }
+        IEnumerable<DataModel.Stock.Stock> GetByDate(string parameter);
+        IEnumerable<DataModel.Stock.Stock> GetByCode(string parameter);
+		IEnumerable<DataModel.Stock.Stock> GetByPredays(string parameter);
+
+	}
 }

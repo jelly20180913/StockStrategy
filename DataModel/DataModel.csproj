@@ -48,6 +48,7 @@
     <Compile Include="Login\LoginData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnToken.cs" />
+    <Compile Include="Stock\Stock.cs" />
     <Compile Include="Stock\StockIndex.cs" />
   </ItemGroup>
   <ItemGroup />

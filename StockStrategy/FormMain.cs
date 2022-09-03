@@ -943,7 +943,7 @@ new Dictionary<string, string>();
 			//_Ma10 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(10).Sum(x => Convert.ToDouble(x.close)) / 10, 2);
 			//_Ma20 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(20).Sum(x => Convert.ToDouble(x.close)) / 20, 2);
 			//  List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockByCodeList(stockInventory.Code);
-			List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockBySqlList(stockInventory.Code, "Code");
+			List<DataModel.Stock.Stock> _StockList = _DataAccess.getStockBySqlList(stockInventory.Code, "Code");
 			if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
 			if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
 			if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
@@ -1560,7 +1560,7 @@ new Dictionary<string, string>();
 			{
 				_Code = this._StockFutureCodeList.Where(x => x.EnCode == _EnCode).First().Code;
 
-				List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockBySqlList(_Code, "Code");
+				List<DataModel.Stock.Stock> _StockList = _DataAccess.getStockBySqlList(_Code, "Code");
 				if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
 				if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
 				if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
@@ -2453,7 +2453,7 @@ new Dictionary<string, string>();
 				//double _Ma20 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(20).Sum(x => Convert.ToDouble(x.close)) / 20, 2);
 				//double _Ma60 = Math.Round(_GetMonthPriceOutList.gridList.OrderByDescending(x => x.date).ToList().Take(60).Sum(x => Convert.ToDouble(x.close)) / 60, 2);
 				double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0, _Ma60 = 0;
-				List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockBySqlList(txtStockId.Text, "Code");
+				List<DataModel.Stock.Stock> _StockList = _DataAccess.getStockBySqlList(txtStockId.Text, "Code");
 				if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
 				if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
 				if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);
@@ -2485,7 +2485,7 @@ new Dictionary<string, string>();
 
 				double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0, _Ma60 = 0;
 				DataAccess _DataAccess = new DataAccess();
-				List<WebApiService.Models.Stock> _StockList = _DataAccess.getStockBySqlList(this.txtFutureName.Text, "Code");
+				List<DataModel.Stock.Stock> _StockList = _DataAccess.getStockBySqlList(this.txtFutureName.Text, "Code");
 				if (_StockList.Count > 5) _Ma5 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(5).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 5, 2);
 				if (_StockList.Count > 10) _Ma10 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(10).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 10, 2);
 				if (_StockList.Count > 20) _Ma20 = Math.Round(_StockList.OrderByDescending(x => x.Date).ToList().Take(20).Sum(x => Convert.ToDouble(x.ClosingPrice)) / 20, 2);

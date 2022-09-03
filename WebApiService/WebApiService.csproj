@@ -185,7 +185,6 @@
     <Compile Include="Controllers\StockFutureCodeController.cs" />
     <Compile Include="Controllers\StockYestodayController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
-    <Compile Include="DataModel\ApiResultEntity.cs" />
     <Compile Include="Filters\AllExceptionResponse.cs" />
     <Compile Include="Filters\ApiResultAttribute.cs" />
     <Compile Include="Filters\Authorization\BaseJwtAuthAction.cs" />
@@ -236,6 +235,7 @@
       <DependentUpon>StockWarehouse.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Implement\StockStrategyService.cs" />
     <Compile Include="Services\Implement\Tables\LoginService.cs" />
     <Compile Include="Services\Implement\Tables\StockGroupService.cs" />
     <Compile Include="Services\Implement\Tables\StockInventoryService.cs" />
@@ -244,6 +244,7 @@
     <Compile Include="Services\Implement\Tables\StockLineNotifyService.cs" />
     <Compile Include="Services\Implement\Tables\StockService.cs" />
     <Compile Include="Services\Implement\TokenService.cs" />
+    <Compile Include="Services\Interface\IStockStrategyService.cs" />
     <Compile Include="Services\Interface\ITokenService.cs" />
     <Compile Include="Services\Interface\Tables\IStockGroupService.cs" />
     <Compile Include="Services\Interface\Tables\ILoginService.cs" />

@@ -39,7 +39,8 @@ namespace WebApiService
             container.RegisterType<IStockLineNotifyService, StockLineNotifyService>();
             container.RegisterType<IStockFutureCodeService, StockFutureCodeService>();
             container.RegisterType<ILoginService, LoginService>();
-            container.RegisterType<IRepository<StockGroup>, Repository<StockGroup>>();
+			container.RegisterType<IStockStrategyService, StockStrategyService>();
+			container.RegisterType<IRepository<StockGroup>, Repository<StockGroup>>();
             container.RegisterType<IRepository<StockIndex>, Repository<StockIndex>>();
             container.RegisterType<IRepository<StockInventory>, Repository<StockInventory>>();
             container.RegisterType<IRepository<Login>, Repository<Login>>();

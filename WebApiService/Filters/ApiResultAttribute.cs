@@ -1,6 +1,7 @@
 ﻿using System.Web.Http.Filters;
 using System.Net.Http;
-using WebApiService.DataModel;
+using DataModel;
+
 namespace WebApiService.Filters
 {
     public class ApiResultAttribute : System.Web.Http.Filters.ActionFilterAttribute

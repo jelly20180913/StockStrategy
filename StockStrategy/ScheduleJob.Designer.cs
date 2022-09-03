@@ -86,7 +86,9 @@
 			this.label13 = new System.Windows.Forms.Label();
 			this.txtTotalGain = new System.Windows.Forms.TextBox();
 			this.panel4 = new System.Windows.Forms.Panel();
+			this.label27 = new System.Windows.Forms.Label();
 			this.cbGain = new System.Windows.Forms.ComboBox();
+			this.txtVolumnCtu = new System.Windows.Forms.TextBox();
 			this.label12 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
@@ -135,8 +137,8 @@
 			this.btnAdminLogin = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelIP = new System.Windows.Forms.ToolStripStatusLabel();
-			this.label27 = new System.Windows.Forms.Label();
-			this.txtVolumnCtu = new System.Windows.Forms.TextBox();
+			this.chkMA = new System.Windows.Forms.CheckBox();
+			this.panel8 = new System.Windows.Forms.Panel();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -154,6 +156,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudDiff)).BeginInit();
 			this.pnAdmin.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
+			this.panel8.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnLogin
@@ -386,7 +389,7 @@
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(17, 12);
 			this.label10.TabIndex = 28;
-			this.label10.Text = "前*";
+			this.label10.Text = "前";
 			// 
 			// txtPreDays2
 			// 
@@ -700,6 +703,15 @@
 			this.panel4.Size = new System.Drawing.Size(365, 34);
 			this.panel4.TabIndex = 32;
 			// 
+			// label27
+			// 
+			this.label27.AutoSize = true;
+			this.label27.Location = new System.Drawing.Point(340, 12);
+			this.label27.Name = "label27";
+			this.label27.Size = new System.Drawing.Size(17, 12);
+			this.label27.TabIndex = 38;
+			this.label27.Text = "張";
+			// 
 			// cbGain
 			// 
 			this.cbGain.FormattingEnabled = true;
@@ -710,6 +722,14 @@
 			this.cbGain.Name = "cbGain";
 			this.cbGain.Size = new System.Drawing.Size(38, 20);
 			this.cbGain.TabIndex = 40;
+			// 
+			// txtVolumnCtu
+			// 
+			this.txtVolumnCtu.Location = new System.Drawing.Point(299, 6);
+			this.txtVolumnCtu.Name = "txtVolumnCtu";
+			this.txtVolumnCtu.Size = new System.Drawing.Size(35, 22);
+			this.txtVolumnCtu.TabIndex = 37;
+			this.txtVolumnCtu.Text = "1000";
 			// 
 			// label12
 			// 
@@ -813,7 +833,7 @@
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.groupBox4);
+			this.groupBox3.Controls.Add(this.panel8);
 			this.groupBox3.Controls.Add(this.panel7);
 			this.groupBox3.Controls.Add(this.pgBarBad);
 			this.groupBox3.Controls.Add(this.txtBadStock);
@@ -834,9 +854,9 @@
 			this.groupBox4.Controls.Add(this.chkDropMa20);
 			this.groupBox4.Controls.Add(this.chkDropMa10);
 			this.groupBox4.Controls.Add(this.chkDropMa5);
-			this.groupBox4.Location = new System.Drawing.Point(525, 12);
+			this.groupBox4.Location = new System.Drawing.Point(42, 0);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(189, 33);
+			this.groupBox4.Size = new System.Drawing.Size(189, 27);
 			this.groupBox4.TabIndex = 41;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "跌破";
@@ -1188,21 +1208,25 @@
 			this.toolStripStatusLabelIP.Size = new System.Drawing.Size(128, 17);
 			this.toolStripStatusLabelIP.Text = "toolStripStatusLabel1";
 			// 
-			// label27
+			// chkMA
 			// 
-			this.label27.AutoSize = true;
-			this.label27.Location = new System.Drawing.Point(340, 12);
-			this.label27.Name = "label27";
-			this.label27.Size = new System.Drawing.Size(17, 12);
-			this.label27.TabIndex = 38;
-			this.label27.Text = "張";
+			this.chkMA.AutoSize = true;
+			this.chkMA.Location = new System.Drawing.Point(6, 8);
+			this.chkMA.Name = "chkMA";
+			this.chkMA.Size = new System.Drawing.Size(36, 16);
+			this.chkMA.TabIndex = 38;
+			this.chkMA.Text = "跌";
+			this.chkMA.UseVisualStyleBackColor = true;
 			// 
-			// txtVolumnCtu
+			// panel8
 			// 
-			this.txtVolumnCtu.Location = new System.Drawing.Point(299, 6);
-			this.txtVolumnCtu.Name = "txtVolumnCtu";
-			this.txtVolumnCtu.Size = new System.Drawing.Size(35, 22);
-			this.txtVolumnCtu.TabIndex = 37;
+			this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel8.Controls.Add(this.chkMA);
+			this.panel8.Controls.Add(this.groupBox4);
+			this.panel8.Location = new System.Drawing.Point(529, 13);
+			this.panel8.Name = "panel8";
+			this.panel8.Size = new System.Drawing.Size(243, 32);
+			this.panel8.TabIndex = 42;
 			// 
 			// ScheduleJob
 			// 
@@ -1253,6 +1277,8 @@
 			this.pnAdmin.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
+			this.panel8.ResumeLayout(false);
+			this.panel8.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1368,5 +1394,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelIP;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.TextBox txtVolumnCtu;
-    }
+		private System.Windows.Forms.CheckBox chkMA;
+		private System.Windows.Forms.Panel panel8;
+	}
 }

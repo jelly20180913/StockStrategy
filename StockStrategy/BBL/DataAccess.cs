@@ -93,29 +93,29 @@ namespace StockStrategy.BBL
             ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
             _ListStock = JsonConvert.DeserializeObject<List<Stock>>(_ApiResult.Data.ToString());
             return _ListStock;
-        }
-        /// <summary>
-        /// 透過SQL語法取得股票資料-效能
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <param name="mode"></param>
-        /// <returns></returns>
-        public List<Stock> getStockBySqlList(string parameter,string mode)
-        {
-          
-            List<Stock> _ListStock = new List<Stock>();
-            string _Action = "Stock?parameter=" + parameter+"&mode="+mode;
-            string _Uri = ConnectionString + _Action;
-            ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
-            _ListStock = JsonConvert.DeserializeObject<List<Stock>>(_ApiResult.Data.ToString());
-            return _ListStock;
-        }
-        /// <summary>
-        /// 透過日期取得股票資料
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        public List<Stock> getStockYestodayList(string date)
+        } 
+		/// <summary>
+		/// 透過Linq語法取得股票資料-效能
+		/// </summary>
+		/// <param name="parameter"></param>
+		/// <param name="mode">Date/Code</param>
+		/// <returns></returns>
+		public List<DataModel.Stock.Stock> getStockBySqlList(string parameter, string mode)
+		{
+
+			List<DataModel.Stock.Stock> _ListStock = new List<DataModel.Stock.Stock>();
+			string _Action = "Stock?parameter=" + parameter + "&mode=" + mode ;
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStock = JsonConvert.DeserializeObject<List<DataModel.Stock.Stock>>(_ApiResult.Data.ToString());
+			return _ListStock;
+		}
+		/// <summary>
+		/// 透過日期取得股票資料
+		/// </summary>
+		/// <param name="date"></param>
+		/// <returns></returns>
+		public List<Stock> getStockYestodayList(string date)
         {
             List<Stock> _ListStock = new List<Stock>();
             string _Action = "StockYestoday?date=" + date;

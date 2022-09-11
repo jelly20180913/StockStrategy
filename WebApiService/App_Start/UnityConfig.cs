@@ -24,8 +24,8 @@ namespace WebApiService
 
 			// e.g. container.RegisterType<ITestService, TestService>(); 
 
-			// string _ConnectionString = "name=StockWarehouseEntities"; 
-			string _ConnectionString = "name=AzureStockWarehouseEntities";
+		    string _ConnectionString = "name=StockWarehouseEntities"; 
+			//string _ConnectionString = "name=AzureStockWarehouseEntities";
 			var dbContext = new DynamicEntity(_ConnectionString);
             container.RegisterType<IDbContextFactory, DbContextFactory>(
            new HierarchicalLifetimeManager(),

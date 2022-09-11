@@ -16,6 +16,8 @@ using System.Globalization;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Reflection;
+using DocumentFormat.OpenXml.Spreadsheet;
+
 namespace StockStrategy
 {
     public partial class ScheduleJob : Form
@@ -65,7 +67,7 @@ namespace StockStrategy
         /// <param name="e"></param>
         private void ScheduleJob_Load(object sender, EventArgs e)
         {
-            ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
+            ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
             this.Text = "股票策略選股排程機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
             var _Ip = Tool.GetIpAddresses();
             if (_Ip.Length > 0)
@@ -141,7 +143,7 @@ namespace StockStrategy
                 s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
                 s.TX_High = "";
                 s.TX_Open = "";
-                s.TX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', '-').Replace('▲', '+');
+                s.TX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', ' ').Replace('▲', '+');
                 s.TX_QuotePercent = Common.Job.GetTaiwanFutures(_MTX_URL, _Percent, true);
                 s.TX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true).Replace('口', ' ');
                 s.TAIEX = _StockPrice.Price;
@@ -151,7 +153,7 @@ namespace StockStrategy
                 s.TAIEX_QuotePercent = Convert.ToString(Math.Round(Convert.ToDouble(s.TAIEX_QuoteChange) * 100 / Convert.ToDouble(_StockPrice.Price), 2));
                 s.Volume = _StockPrice.TotalDealQty;
                 s.TPEx = Common.Job.GetTaiwanFutures(_TPEx_URL, _Id, true);
-                s.TPEx_QuoteChange = Common.Job.GetTaiwanFutures(_TPEx_URL, _Change, true).Replace('▼', '-').Replace('▲', '+');
+                s.TPEx_QuoteChange = Common.Job.GetTaiwanFutures(_TPEx_URL, _Change, true).Replace('▼', ' ').Replace('▲', '+');
                 s.TPEx_QuotePercent = Common.Job.GetTaiwanFutures(_TPEx_URL, _Percent, true);
 
                 if (_TopIndexDJI == _DJI_Index)
@@ -564,7 +566,8 @@ namespace StockStrategy
                         DataModel.Stock.Stock _YestodayStock = _YestodayStockDayAllList.Where(x => x.Code == s.Code).First();
                         if (_YestodayStock.ClosingPrice != "")
                         {
-                            decimal _Gain = Math.Round((Convert.ToDecimal(s.HighestPrice) - Convert.ToDecimal(s.ClosingPrice)) * 100 / Convert.ToDecimal(_YestodayStock.ClosingPrice), 2);
+                            if (s.HighestPrice == null) _Log = "當日資料表無高價可判斷";
+							decimal _Gain = Math.Round((Convert.ToDecimal(s.HighestPrice) - Convert.ToDecimal(s.ClosingPrice)) * 100 / Convert.ToDecimal(_YestodayStock.ClosingPrice), 2);
                             if (_Gain >= _Diff)
                             { 
 								bool _Less = true, _TotalVolumne = true, _MA5 = true, _MA10 = true, _MA20 = true;
@@ -616,7 +619,9 @@ namespace StockStrategy
                 logger.Error(_Log);  
             }
 			sw.Stop();
+            //this.lbBadPerformance.Text = sw.ElapsedMilliseconds.ToString() + "毫秒,筆數:" + _N;
 			MessageBox.Show(sw.ElapsedMilliseconds.ToString() + "毫秒,筆數:"+ _N);
+			if(_Log!=""&& _N==0) MessageBox.Show(_Log);
 			return _StockList;
         }
         /// <summary>
@@ -627,6 +632,7 @@ namespace StockStrategy
         /// <returns></returns>
         private List<DataModel.Stock.Stock> getCtuStockList()
         {
+            int _N = 0;
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
 			sw.Start();
@@ -652,6 +658,7 @@ namespace StockStrategy
 				List<DataModel.Stock.Stock> _GoodStockList = _StockDayAllList.Where(x =>Convert.ToDouble(x.TradeVolume) > _Volumn).ToList();
 				foreach (DataModel.Stock.Stock s in _GoodStockList)
                 {
+                  
                     _Code = s.Code; 
                     bool _Ctu = false, _TotalAmp = true;
 					//這樣會導致不斷的跟雲端資料庫要資料,會很慢,改成先撈一個月的資料四萬多筆一樣都要跑60幾秒
@@ -680,8 +687,8 @@ namespace StockStrategy
                             }
                         }
                     }
-                    if (_Ctu && _TotalAmp) _StockList.Add(s); 
-                }
+                    if (_Ctu && _TotalAmp) { _StockList.Add(s); _N++; }
+				}
             }
             catch (Exception ex)
             {
@@ -689,7 +696,8 @@ namespace StockStrategy
                 logger.Error(_Log);
             }
 			sw.Stop();
-			MessageBox.Show(sw.ElapsedMilliseconds.ToString() + "毫秒");
+           // this.lbCtnPerformance.Text= sw.ElapsedMilliseconds.ToString() + "毫秒";
+			MessageBox.Show(sw.ElapsedMilliseconds.ToString() + "毫秒,筆數:" + _N);
 			return _StockList;
         }
         private void btnOpen_Click(object sender, EventArgs e)
@@ -1244,6 +1252,7 @@ namespace StockStrategy
             string _DateTime = this.dtpBadDate.Text;
             lineAIStock(_StockList, "Bad", "爆量出貨", _DateTime);
         }
+ 
 
         /// <summary>
         /// 加密後寫入config檔

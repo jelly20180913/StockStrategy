@@ -101,6 +101,8 @@
 			this.dtpCtuDate = new System.Windows.Forms.DateTimePicker();
 			this.btnCtu = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.panel8 = new System.Windows.Forms.Panel();
+			this.chkMA = new System.Windows.Forms.CheckBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.chkDropMa20 = new System.Windows.Forms.CheckBox();
 			this.chkDropMa10 = new System.Windows.Forms.CheckBox();
@@ -137,8 +139,8 @@
 			this.btnAdminLogin = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelIP = new System.Windows.Forms.ToolStripStatusLabel();
-			this.chkMA = new System.Windows.Forms.CheckBox();
-			this.panel8 = new System.Windows.Forms.Panel();
+			this.lbCtnPerformance = new System.Windows.Forms.Label();
+			this.lbBadPerformance = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -148,6 +150,7 @@
 			this.panel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nupCtuGain)).BeginInit();
 			this.groupBox3.SuspendLayout();
+			this.panel8.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.panel7.SuspendLayout();
 			this.panel5.SuspendLayout();
@@ -156,7 +159,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudDiff)).BeginInit();
 			this.pnAdmin.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
-			this.panel8.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnLogin
@@ -174,7 +176,7 @@
 			this.txtErrMsg.Location = new System.Drawing.Point(1187, 4);
 			this.txtErrMsg.Multiline = true;
 			this.txtErrMsg.Name = "txtErrMsg";
-			this.txtErrMsg.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+			this.txtErrMsg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.txtErrMsg.Size = new System.Drawing.Size(363, 120);
 			this.txtErrMsg.TabIndex = 3;
 			// 
@@ -298,10 +300,10 @@
 			// 
 			// txtGoodStock
 			// 
-			this.txtGoodStock.Location = new System.Drawing.Point(988, 9);
+			this.txtGoodStock.Location = new System.Drawing.Point(5, 42);
 			this.txtGoodStock.Multiline = true;
 			this.txtGoodStock.Name = "txtGoodStock";
-			this.txtGoodStock.Size = new System.Drawing.Size(406, 31);
+			this.txtGoodStock.Size = new System.Drawing.Size(1524, 29);
 			this.txtGoodStock.TabIndex = 16;
 			// 
 			// dtpGoodDate
@@ -329,7 +331,7 @@
 			this.groupBox1.Controls.Add(this.btnGetGoodStock);
 			this.groupBox1.Location = new System.Drawing.Point(10, 121);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1534, 42);
+			this.groupBox1.Size = new System.Drawing.Size(1534, 72);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Good";
@@ -610,6 +612,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.lbCtnPerformance);
 			this.groupBox2.Controls.Add(this.pgBarCtu);
 			this.groupBox2.Controls.Add(this.txtCtuStock);
 			this.groupBox2.Controls.Add(this.panel3);
@@ -617,9 +620,9 @@
 			this.groupBox2.Controls.Add(this.btnLineCtuStock);
 			this.groupBox2.Controls.Add(this.dtpCtuDate);
 			this.groupBox2.Controls.Add(this.btnCtu);
-			this.groupBox2.Location = new System.Drawing.Point(12, 169);
+			this.groupBox2.Location = new System.Drawing.Point(12, 195);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(1532, 51);
+			this.groupBox2.Size = new System.Drawing.Size(1532, 83);
 			this.groupBox2.TabIndex = 39;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Good";
@@ -633,10 +636,10 @@
 			// 
 			// txtCtuStock
 			// 
-			this.txtCtuStock.Location = new System.Drawing.Point(986, 13);
+			this.txtCtuStock.Location = new System.Drawing.Point(6, 49);
 			this.txtCtuStock.Multiline = true;
 			this.txtCtuStock.Name = "txtCtuStock";
-			this.txtCtuStock.Size = new System.Drawing.Size(406, 31);
+			this.txtCtuStock.Size = new System.Drawing.Size(1521, 31);
 			this.txtCtuStock.TabIndex = 40;
 			// 
 			// panel3
@@ -833,6 +836,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.lbBadPerformance);
 			this.groupBox3.Controls.Add(this.panel8);
 			this.groupBox3.Controls.Add(this.panel7);
 			this.groupBox3.Controls.Add(this.pgBarBad);
@@ -842,12 +846,32 @@
 			this.groupBox3.Controls.Add(this.btnLineBad);
 			this.groupBox3.Controls.Add(this.dtpBadDate);
 			this.groupBox3.Controls.Add(this.btnBad);
-			this.groupBox3.Location = new System.Drawing.Point(12, 226);
+			this.groupBox3.Location = new System.Drawing.Point(12, 280);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(1532, 51);
+			this.groupBox3.Size = new System.Drawing.Size(1532, 86);
 			this.groupBox3.TabIndex = 40;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Bad";
+			// 
+			// panel8
+			// 
+			this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel8.Controls.Add(this.chkMA);
+			this.panel8.Controls.Add(this.groupBox4);
+			this.panel8.Location = new System.Drawing.Point(529, 13);
+			this.panel8.Name = "panel8";
+			this.panel8.Size = new System.Drawing.Size(243, 32);
+			this.panel8.TabIndex = 42;
+			// 
+			// chkMA
+			// 
+			this.chkMA.AutoSize = true;
+			this.chkMA.Location = new System.Drawing.Point(6, 8);
+			this.chkMA.Name = "chkMA";
+			this.chkMA.Size = new System.Drawing.Size(36, 16);
+			this.chkMA.TabIndex = 38;
+			this.chkMA.Text = "跌";
+			this.chkMA.UseVisualStyleBackColor = true;
 			// 
 			// groupBox4
 			// 
@@ -946,10 +970,10 @@
 			// 
 			// txtBadStock
 			// 
-			this.txtBadStock.Location = new System.Drawing.Point(986, 13);
+			this.txtBadStock.Location = new System.Drawing.Point(6, 49);
 			this.txtBadStock.Multiline = true;
 			this.txtBadStock.Name = "txtBadStock";
-			this.txtBadStock.Size = new System.Drawing.Size(406, 31);
+			this.txtBadStock.Size = new System.Drawing.Size(1520, 31);
 			this.txtBadStock.TabIndex = 40;
 			// 
 			// panel5
@@ -1208,25 +1232,21 @@
 			this.toolStripStatusLabelIP.Size = new System.Drawing.Size(128, 17);
 			this.toolStripStatusLabelIP.Text = "toolStripStatusLabel1";
 			// 
-			// chkMA
+			// lbCtnPerformance
 			// 
-			this.chkMA.AutoSize = true;
-			this.chkMA.Location = new System.Drawing.Point(6, 8);
-			this.chkMA.Name = "chkMA";
-			this.chkMA.Size = new System.Drawing.Size(36, 16);
-			this.chkMA.TabIndex = 38;
-			this.chkMA.Text = "跌";
-			this.chkMA.UseVisualStyleBackColor = true;
+			this.lbCtnPerformance.AutoSize = true;
+			this.lbCtnPerformance.Location = new System.Drawing.Point(999, 23);
+			this.lbCtnPerformance.Name = "lbCtnPerformance";
+			this.lbCtnPerformance.Size = new System.Drawing.Size(0, 12);
+			this.lbCtnPerformance.TabIndex = 41;
 			// 
-			// panel8
+			// lbBadPerformance
 			// 
-			this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel8.Controls.Add(this.chkMA);
-			this.panel8.Controls.Add(this.groupBox4);
-			this.panel8.Location = new System.Drawing.Point(529, 13);
-			this.panel8.Name = "panel8";
-			this.panel8.Size = new System.Drawing.Size(243, 32);
-			this.panel8.TabIndex = 42;
+			this.lbBadPerformance.AutoSize = true;
+			this.lbBadPerformance.Location = new System.Drawing.Point(987, 23);
+			this.lbBadPerformance.Name = "lbBadPerformance";
+			this.lbBadPerformance.Size = new System.Drawing.Size(0, 12);
+			this.lbBadPerformance.TabIndex = 43;
 			// 
 			// ScheduleJob
 			// 
@@ -1263,6 +1283,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.nupCtuGain)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			this.panel8.ResumeLayout(false);
+			this.panel8.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
 			this.panel7.ResumeLayout(false);
@@ -1277,8 +1299,6 @@
 			this.pnAdmin.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
-			this.panel8.ResumeLayout(false);
-			this.panel8.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1396,5 +1416,7 @@
         private System.Windows.Forms.TextBox txtVolumnCtu;
 		private System.Windows.Forms.CheckBox chkMA;
 		private System.Windows.Forms.Panel panel8;
+		private System.Windows.Forms.Label lbCtnPerformance;
+		private System.Windows.Forms.Label lbBadPerformance;
 	}
 }

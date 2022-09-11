@@ -80,7 +80,7 @@ namespace WebApiService.Services.Implement.Tables
 						{
 							Code = c.Code,
 							Name = c.Name,
-							TradeVolume = c.TradeValue,
+							TradeVolume = c.TradeVolume,
 							ClosingPrice = c.ClosingPrice,
 							Gain = c.Gain,
 							Shock = c.Shock,
@@ -109,7 +109,7 @@ namespace WebApiService.Services.Implement.Tables
 						{
 							Code = c.Code,
 							Name = c.Name,
-							TradeVolume = c.TradeValue,
+							TradeVolume = c.TradeVolume,
 							ClosingPrice = c.ClosingPrice,
 							Gain = c.Gain,
 							Shock = c.Shock,
@@ -148,7 +148,7 @@ namespace WebApiService.Services.Implement.Tables
 						{
 							Code = c.Code,
 							Name = c.Name,
-							TradeVolume = c.TradeValue,
+							TradeVolume = c.TradeVolume,
 							ClosingPrice = c.ClosingPrice,
 							Gain = c.Gain,
 							Shock = c.Shock,

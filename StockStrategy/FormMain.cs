@@ -830,7 +830,7 @@ new Dictionary<string, string>();
 			DataAccess _DataAccess = new DataAccess();
 			getAVG();
 			_StockFutureCodeList = _DataAccess.getStockFutureCodeList();
-			_StockGroupList = _DataAccess.getStockGroupList();
+			_StockGroupList = _DataAccess.getStockGroupList(); 
 			this.txtOberserver.Text = ConfigurationManager.AppSettings["Observer"];
 			ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
 			this.Text = "股票策略下單機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
@@ -4003,7 +4003,7 @@ new Dictionary<string, string>();
 						{
 							CallLineNotifyApi(s.Token, s.Point.ToString(), s.PointBear.ToString(), s);
 						}
-						if (DateTime.Now.Hour > 8 && DateTime.Now.Hour < 14)
+						if (DateTime.Now.Hour > 8&&DateTime.Now.Minute>45 && DateTime.Now.Hour < 14)
 						{
 							if (s.NotifyClass == "Index")
 							{

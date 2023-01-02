@@ -21,7 +21,7 @@ namespace StockStrategy.BBL
                 if (_Ip[_Ip.Length - 1].ToString() == "114.32.117.3")
                      ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
                 else
-                     ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
+                     ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
             } 
             loginWebApi();
         }
@@ -241,12 +241,21 @@ namespace StockStrategy.BBL
             _ListStockLineNotify = JsonConvert.DeserializeObject<List<StockLineNotify>>(_ApiResult.Data.ToString());
             return _ListStockLineNotify;
         }
-        /// <summary>
-        /// 更新Line通知參數
-        /// </summary>
-        /// <param name="stockLineNotify"></param>
-        /// <returns></returns>
-        public string UpdateStockLineNotify(StockLineNotify stockLineNotify)
+		public List<Holiday> getHolidayList()
+		{       
+			List<Holiday> _ListHoliday = new List<Holiday>();
+			string _Action = "Holiday";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListHoliday = JsonConvert.DeserializeObject<List<Holiday>>(_ApiResult.Data.ToString());
+			return _ListHoliday;
+		}
+		/// <summary>
+		/// 更新Line通知參數
+		/// </summary>
+		/// <param name="stockLineNotify"></param>
+		/// <returns></returns>
+		public string UpdateStockLineNotify(StockLineNotify stockLineNotify)
         {
             string json = JsonConvert.SerializeObject(stockLineNotify);
             string _Action = "StockLineNotify";

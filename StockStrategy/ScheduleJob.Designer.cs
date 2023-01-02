@@ -78,6 +78,7 @@
 			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
 			this.btnInsertStockByDate = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.lbCtnPerformance = new System.Windows.Forms.Label();
 			this.pgBarCtu = new System.Windows.Forms.ProgressBar();
 			this.txtCtuStock = new System.Windows.Forms.TextBox();
 			this.panel3 = new System.Windows.Forms.Panel();
@@ -101,6 +102,8 @@
 			this.dtpCtuDate = new System.Windows.Forms.DateTimePicker();
 			this.btnCtu = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.lbMsg = new System.Windows.Forms.Label();
+			this.lbBadPerformance = new System.Windows.Forms.Label();
 			this.panel8 = new System.Windows.Forms.Panel();
 			this.chkMA = new System.Windows.Forms.CheckBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -131,6 +134,7 @@
 			this.btnBad = new System.Windows.Forms.Button();
 			this.btnStockJurical = new System.Windows.Forms.Button();
 			this.pnAdmin = new System.Windows.Forms.Panel();
+			this.button1 = new System.Windows.Forms.Button();
 			this.btnSetting = new System.Windows.Forms.Button();
 			this.txtPassword = new System.Windows.Forms.TextBox();
 			this.label25 = new System.Windows.Forms.Label();
@@ -139,8 +143,7 @@
 			this.btnAdminLogin = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelIP = new System.Windows.Forms.ToolStripStatusLabel();
-			this.lbCtnPerformance = new System.Windows.Forms.Label();
-			this.lbBadPerformance = new System.Windows.Forms.Label();
+			this.btnLineCtuRed = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -198,6 +201,7 @@
 			this.btnGetTopIndex.TabIndex = 5;
 			this.btnGetTopIndex.Text = "getTopIndex";
 			this.btnGetTopIndex.UseVisualStyleBackColor = true;
+			this.btnGetTopIndex.Click += new System.EventHandler(this.btnGetTopIndex_Click);
 			// 
 			// timerInsertStockIndex
 			// 
@@ -417,6 +421,8 @@
 			// chkLess
 			// 
 			this.chkLess.AutoSize = true;
+			this.chkLess.Checked = true;
+			this.chkLess.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chkLess.Location = new System.Drawing.Point(13, 9);
 			this.chkLess.Name = "chkLess";
 			this.chkLess.Size = new System.Drawing.Size(15, 14);
@@ -447,6 +453,7 @@
 			this.txtLessVolumn.Name = "txtLessVolumn";
 			this.txtLessVolumn.Size = new System.Drawing.Size(35, 22);
 			this.txtLessVolumn.TabIndex = 31;
+			this.txtLessVolumn.Text = "300";
 			// 
 			// label5
 			// 
@@ -463,6 +470,7 @@
 			this.txtPreDays.Name = "txtPreDays";
 			this.txtPreDays.Size = new System.Drawing.Size(35, 22);
 			this.txtPreDays.TabIndex = 29;
+			this.txtPreDays.Text = "10";
 			// 
 			// label4
 			// 
@@ -479,7 +487,7 @@
 			this.txtMultiple.Name = "txtMultiple";
 			this.txtMultiple.Size = new System.Drawing.Size(35, 22);
 			this.txtMultiple.TabIndex = 26;
-			this.txtMultiple.Text = "5";
+			this.txtMultiple.Text = "4";
 			// 
 			// progressBar2
 			// 
@@ -503,6 +511,7 @@
 			this.txtVolumn.Name = "txtVolumn";
 			this.txtVolumn.Size = new System.Drawing.Size(35, 22);
 			this.txtVolumn.TabIndex = 22;
+			this.txtVolumn.Text = "700";
 			// 
 			// label2
 			// 
@@ -612,6 +621,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.btnLineCtuRed);
 			this.groupBox2.Controls.Add(this.lbCtnPerformance);
 			this.groupBox2.Controls.Add(this.pgBarCtu);
 			this.groupBox2.Controls.Add(this.txtCtuStock);
@@ -626,6 +636,14 @@
 			this.groupBox2.TabIndex = 39;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Good";
+			// 
+			// lbCtnPerformance
+			// 
+			this.lbCtnPerformance.AutoSize = true;
+			this.lbCtnPerformance.Location = new System.Drawing.Point(999, 23);
+			this.lbCtnPerformance.Name = "lbCtnPerformance";
+			this.lbCtnPerformance.Size = new System.Drawing.Size(0, 12);
+			this.lbCtnPerformance.TabIndex = 41;
 			// 
 			// pgBarCtu
 			// 
@@ -657,6 +675,8 @@
 			// chkTotalAmp
 			// 
 			this.chkTotalAmp.AutoSize = true;
+			this.chkTotalAmp.Checked = true;
+			this.chkTotalAmp.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chkTotalAmp.Location = new System.Drawing.Point(12, 10);
 			this.chkTotalAmp.Name = "chkTotalAmp";
 			this.chkTotalAmp.Size = new System.Drawing.Size(15, 14);
@@ -687,6 +707,7 @@
 			this.txtTotalGain.Name = "txtTotalGain";
 			this.txtTotalGain.Size = new System.Drawing.Size(35, 22);
 			this.txtTotalGain.TabIndex = 29;
+			this.txtTotalGain.Text = "6";
 			// 
 			// panel4
 			// 
@@ -725,6 +746,7 @@
 			this.cbGain.Name = "cbGain";
 			this.cbGain.Size = new System.Drawing.Size(38, 20);
 			this.cbGain.TabIndex = 40;
+			this.cbGain.Text = "漲";
 			// 
 			// txtVolumnCtu
 			// 
@@ -768,6 +790,7 @@
 			this.txtCtuDays.Name = "txtCtuDays";
 			this.txtCtuDays.Size = new System.Drawing.Size(35, 22);
 			this.txtCtuDays.TabIndex = 31;
+			this.txtCtuDays.Text = "2";
 			// 
 			// label16
 			// 
@@ -784,6 +807,7 @@
 			this.txtPreDaysCtu.Name = "txtPreDaysCtu";
 			this.txtPreDaysCtu.Size = new System.Drawing.Size(35, 22);
 			this.txtPreDaysCtu.TabIndex = 29;
+			this.txtPreDaysCtu.Text = "3";
 			// 
 			// nupCtuGain
 			// 
@@ -836,6 +860,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.lbMsg);
 			this.groupBox3.Controls.Add(this.lbBadPerformance);
 			this.groupBox3.Controls.Add(this.panel8);
 			this.groupBox3.Controls.Add(this.panel7);
@@ -853,6 +878,22 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Bad";
 			// 
+			// lbMsg
+			// 
+			this.lbMsg.AutoSize = true;
+			this.lbMsg.Location = new System.Drawing.Point(993, 23);
+			this.lbMsg.Name = "lbMsg";
+			this.lbMsg.Size = new System.Drawing.Size(0, 12);
+			this.lbMsg.TabIndex = 37;
+			// 
+			// lbBadPerformance
+			// 
+			this.lbBadPerformance.AutoSize = true;
+			this.lbBadPerformance.Location = new System.Drawing.Point(987, 23);
+			this.lbBadPerformance.Name = "lbBadPerformance";
+			this.lbBadPerformance.Size = new System.Drawing.Size(0, 12);
+			this.lbBadPerformance.TabIndex = 43;
+			// 
 			// panel8
 			// 
 			this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -866,6 +907,8 @@
 			// chkMA
 			// 
 			this.chkMA.AutoSize = true;
+			this.chkMA.Checked = true;
+			this.chkMA.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chkMA.Location = new System.Drawing.Point(6, 8);
 			this.chkMA.Name = "chkMA";
 			this.chkMA.Size = new System.Drawing.Size(36, 16);
@@ -908,6 +951,8 @@
 			// chkDropMa5
 			// 
 			this.chkDropMa5.AutoSize = true;
+			this.chkDropMa5.Checked = true;
+			this.chkDropMa5.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chkDropMa5.Location = new System.Drawing.Point(10, 13);
 			this.chkDropMa5.Name = "chkDropMa5";
 			this.chkDropMa5.Size = new System.Drawing.Size(36, 16);
@@ -1003,6 +1048,8 @@
 			// chkDrop
 			// 
 			this.chkDrop.AutoSize = true;
+			this.chkDrop.Checked = true;
+			this.chkDrop.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chkDrop.Location = new System.Drawing.Point(5, 10);
 			this.chkDrop.Name = "chkDrop";
 			this.chkDrop.Size = new System.Drawing.Size(15, 14);
@@ -1065,6 +1112,7 @@
 			this.txtVolumnBad.Name = "txtVolumnBad";
 			this.txtVolumnBad.Size = new System.Drawing.Size(35, 22);
 			this.txtVolumnBad.TabIndex = 31;
+			this.txtVolumnBad.Text = "5000";
 			// 
 			// label23
 			// 
@@ -1136,6 +1184,7 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.button1);
 			this.pnAdmin.Controls.Add(this.btnSetting);
 			this.pnAdmin.Controls.Add(this.btnLogin);
 			this.pnAdmin.Controls.Add(this.btnStockJurical);
@@ -1160,6 +1209,16 @@
 			this.pnAdmin.Name = "pnAdmin";
 			this.pnAdmin.Size = new System.Drawing.Size(1176, 90);
 			this.pnAdmin.TabIndex = 42;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(685, 4);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 89;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// btnSetting
 			// 
@@ -1232,21 +1291,15 @@
 			this.toolStripStatusLabelIP.Size = new System.Drawing.Size(128, 17);
 			this.toolStripStatusLabelIP.Text = "toolStripStatusLabel1";
 			// 
-			// lbCtnPerformance
+			// btnLineCtuRed
 			// 
-			this.lbCtnPerformance.AutoSize = true;
-			this.lbCtnPerformance.Location = new System.Drawing.Point(999, 23);
-			this.lbCtnPerformance.Name = "lbCtnPerformance";
-			this.lbCtnPerformance.Size = new System.Drawing.Size(0, 12);
-			this.lbCtnPerformance.TabIndex = 41;
-			// 
-			// lbBadPerformance
-			// 
-			this.lbBadPerformance.AutoSize = true;
-			this.lbBadPerformance.Location = new System.Drawing.Point(987, 23);
-			this.lbBadPerformance.Name = "lbBadPerformance";
-			this.lbBadPerformance.Size = new System.Drawing.Size(0, 12);
-			this.lbBadPerformance.TabIndex = 43;
+			this.btnLineCtuRed.Location = new System.Drawing.Point(985, 18);
+			this.btnLineCtuRed.Name = "btnLineCtuRed";
+			this.btnLineCtuRed.Size = new System.Drawing.Size(85, 23);
+			this.btnLineCtuRed.TabIndex = 42;
+			this.btnLineCtuRed.Text = "Line Ctn Red";
+			this.btnLineCtuRed.UseVisualStyleBackColor = true;
+			this.btnLineCtuRed.Click += new System.EventHandler(this.btnLineCtuRed_Click);
 			// 
 			// ScheduleJob
 			// 
@@ -1418,5 +1471,8 @@
 		private System.Windows.Forms.Panel panel8;
 		private System.Windows.Forms.Label lbCtnPerformance;
 		private System.Windows.Forms.Label lbBadPerformance;
+		private System.Windows.Forms.Label lbMsg;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnLineCtuRed;
 	}
 }

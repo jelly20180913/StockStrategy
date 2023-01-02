@@ -13,14 +13,16 @@ namespace WebApiService.Services.Implement
 {
 	public class StockStrategyService: IStockStrategyService
 	{
-		private IStockService _stockService; 
+		private IStockService _stockService;
+		private IHolidayService _holidayService;
 		/// <summary>
 		/// Dependence Injection
 		/// </summary>
 
-		public StockStrategyService(IStockService stockService)
+		public StockStrategyService(IStockService stockService, IHolidayService holidayService)
 		{
-			this._stockService = stockService; 
+			this._stockService = stockService;
+			_holidayService = holidayService;
 		}
 		/// <summary>
 		/// get vote item list
@@ -44,6 +46,12 @@ namespace WebApiService.Services.Implement
 		{
 			this._stockService.Update(s);
 			return true;
+		}
+		public List<Holiday> GetHolidayList( )
+		{
+			List<Holiday> _HolidayList = new List<Holiday>();
+			_HolidayList = this._holidayService.GetAll().ToList();
+			return _HolidayList;
 		}
 	}
 }

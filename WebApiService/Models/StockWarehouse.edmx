@@ -6,7 +6,15 @@
     <edmx:StorageModels>
     <Schema Namespace="StockWarehouseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--產生期間發現錯誤:
-警告 6002: 資料表/檢視 'StockWarehouse.dbo.Login' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+警告 6002: 資料表/檢視 'StockWarehouse.dbo.Holiday' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HolidayDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="Enable" Type="bit" />
+        </EntityType>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="Id" />
@@ -102,6 +110,9 @@
           <Property Name="TPEx_QuoteChange" Type="varchar" MaxLength="10" />
           <Property Name="TPEx_QuotePercent" Type="varchar" MaxLength="10" />
           <Property Name="JuridicaPerson" Type="varchar" MaxLength="10" />
+          <Property Name="USD_Index" Type="varchar" MaxLength="10" />
+          <Property Name="USD_IndexQuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="USD_IndexQuotePercent" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -136,18 +147,19 @@
           <Property Name="NotifyClass" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityContainer Name="StockWarehouseModelStoreContainer">
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockFutureCode" EntityType="Self.StockFutureCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockGroup" EntityType="Self.StockGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockIndex" EntityType="Self.StockIndex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInventory" EntityType="Self.StockInventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockLineNotify" EntityType="Self.StockLineNotify" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Login" EntityType="Self.Login" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="Holiday" EntityType="Self.Holiday" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [Login].[Id] AS [Id], 
-    [Login].[Account] AS [Account], 
-    [Login].[Password] AS [Password]
-    FROM [dbo].[Login] AS [Login]</DefiningQuery>
+    [Holiday].[Id] AS [Id], 
+    [Holiday].[HolidayDate] AS [HolidayDate], 
+    [Holiday].[Enable] AS [Enable]
+    FROM [dbo].[Holiday] AS [Holiday]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -239,6 +251,9 @@
           <Property Name="MTX_Volume" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TX_Volume" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="JuridicaPerson" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="USD_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="USD_IndexQuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="USD_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -268,6 +283,7 @@
           <EntitySet Name="StockInventory" EntityType="Self.StockInventory" />
           <EntitySet Name="StockLineNotify" EntityType="StockWarehouseModel.StockLineNotify" />
           <EntitySet Name="StockFutureCode" EntityType="StockWarehouseModel.StockFutureCode" />
+          <EntitySet Name="Holiday" EntityType="StockWarehouseModel.Holiday" />
         </EntityContainer>
         <EntityType Name="StockLineNotify">
           <Key>
@@ -290,6 +306,14 @@
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Holiday">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HolidayDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Enable" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -346,6 +370,9 @@
           <EntitySetMapping Name="StockIndex">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockIndex">
               <MappingFragment StoreEntitySet="StockIndex">
+                <ScalarProperty Name="USD_IndexQuotePercent" ColumnName="USD_IndexQuotePercent" />
+                <ScalarProperty Name="USD_IndexQuoteChange" ColumnName="USD_IndexQuoteChange" />
+                <ScalarProperty Name="USD_Index" ColumnName="USD_Index" />
                 <ScalarProperty Name="JuridicaPerson" ColumnName="JuridicaPerson" />
                 <ScalarProperty Name="TX_Volume" ColumnName="TX_Volume" />
                 <ScalarProperty Name="MTX_Volume" ColumnName="MTX_Volume" />
@@ -428,6 +455,15 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="EnCode" ColumnName="EnCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Holiday">
+            <EntityTypeMapping TypeName="StockWarehouseModel.Holiday">
+              <MappingFragment StoreEntitySet="Holiday">
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+                <ScalarProperty Name="HolidayDate" ColumnName="HolidayDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

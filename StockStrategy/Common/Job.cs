@@ -46,5 +46,27 @@ namespace StockStrategy.Common
             }
             return _FuturePrice;
         }
-    }
+		public static HtmlAgilityPack.HtmlDocument GetHtml(string url)
+		{
+			HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
+			try
+			{
+				HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+				//req.Timeout = 30000;    //Timeout 30秒
+				WebResponse resp = req.GetResponse();
+				string strHtml = string.Empty;
+				using (StreamReader reader = new StreamReader(resp.GetResponseStream(), Encoding.GetEncoding(65001)))
+				{
+					strHtml = reader.ReadToEnd();//讀取指定url的HTML
+				}
+				
+				htmlDoc.LoadHtml(strHtml);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e.ToString());
+			}
+			return htmlDoc;
+		}
+	}
 }

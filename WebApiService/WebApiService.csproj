@@ -177,6 +177,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\StockAllController.cs" />
+    <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\StockGroupController.cs" />
     <Compile Include="Controllers\StockLineNotifyController.cs" />
@@ -196,6 +197,9 @@
     <Compile Include="Models\DbContextFactory\DbContextFactory.cs" />
     <Compile Include="Models\DbContextFactory\DynamicEntity.cs" />
     <Compile Include="Models\DbContextFactory\IDbContextFactory.cs" />
+    <Compile Include="Models\Holiday.cs">
+      <DependentUpon>StockWarehouse.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Login.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
@@ -242,6 +246,7 @@
     <Compile Include="Services\Implement\Tables\StockIndexService.cs" />
     <Compile Include="Services\Implement\Tables\StockFutureCodeService.cs" />
     <Compile Include="Services\Implement\Tables\StockLineNotifyService.cs" />
+    <Compile Include="Services\Implement\Tables\HolidayService.cs" />
     <Compile Include="Services\Implement\Tables\StockService.cs" />
     <Compile Include="Services\Implement\TokenService.cs" />
     <Compile Include="Services\Interface\IStockStrategyService.cs" />
@@ -252,6 +257,7 @@
     <Compile Include="Services\Interface\Tables\IStockIndexService.cs" />
     <Compile Include="Services\Interface\Tables\IStockFutureCodeService.cs" />
     <Compile Include="Services\Interface\Tables\IStockLineNotifyService.cs" />
+    <Compile Include="Services\Interface\Tables\IHolidayService.cs" />
     <Compile Include="Services\Interface\Tables\IStockService.cs" />
   </ItemGroup>
   <ItemGroup>

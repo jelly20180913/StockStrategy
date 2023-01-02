@@ -32,5 +32,6 @@ namespace WebApiService.Models
         public virtual DbSet<StockInventory> StockInventory { get; set; }
         public virtual DbSet<StockLineNotify> StockLineNotify { get; set; }
         public virtual DbSet<StockFutureCode> StockFutureCode { get; set; }
+        public virtual DbSet<Holiday> Holiday { get; set; }
     }
 }

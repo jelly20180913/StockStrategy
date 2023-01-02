@@ -12,5 +12,6 @@ namespace WebApiService.Services.Interface
 		List<DataModel.Stock.Stock> GetStockList(string parameter, string mode);
 		bool InsertStock(List<Stock> s);
 		bool UpdateStock(Stock s);
+	    List<Holiday> GetHolidayList();
 	}
 }

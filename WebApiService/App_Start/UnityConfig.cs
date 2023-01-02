@@ -38,7 +38,8 @@ namespace WebApiService
             container.RegisterType<IStockInventoryService, StockInventoryService>();
             container.RegisterType<IStockLineNotifyService, StockLineNotifyService>();
             container.RegisterType<IStockFutureCodeService, StockFutureCodeService>();
-            container.RegisterType<ILoginService, LoginService>();
+			container.RegisterType<IHolidayService, HolidayService>();
+			container.RegisterType<ILoginService, LoginService>();
 			container.RegisterType<IStockStrategyService, StockStrategyService>();
 			container.RegisterType<IRepository<StockGroup>, Repository<StockGroup>>();
             container.RegisterType<IRepository<StockIndex>, Repository<StockIndex>>();
@@ -47,9 +48,10 @@ namespace WebApiService
             container.RegisterType<IRepository<Stock>, Repository<Stock>>();
             container.RegisterType<IRepository<StockLineNotify>, Repository<StockLineNotify>>();
             container.RegisterType<IRepository<StockFutureCode>, Repository<StockFutureCode>>();
+			container.RegisterType<IRepository<Holiday>, Repository<Holiday>>();
 
 
-            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+			GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
 }

@@ -52,5 +52,8 @@ namespace WebApiService.Models
         public string MTX_Volume { get; set; }
         public string TX_Volume { get; set; }
         public string JuridicaPerson { get; set; }
+        public string USD_Index { get; set; }
+        public string USD_IndexQuoteChange { get; set; }
+        public string USD_IndexQuotePercent { get; set; }
     }
 }

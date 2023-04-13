@@ -21,7 +21,7 @@ namespace StockStrategy.BBL
                 if (_Ip[_Ip.Length - 1].ToString() == "114.32.117.3")
                      ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
                 else
-                     ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
+                     ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
             } 
             loginWebApi();
         }
@@ -277,6 +277,6 @@ namespace StockStrategy.BBL
             ApiResultEntity _ApiResult = CallWebApi.Put(json, _Uri);
             string _Return = _ApiResult.Data.ToString();
             return _Return;
-        }
-    }
+        } 
+	}
 }

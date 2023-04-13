@@ -832,7 +832,7 @@ new Dictionary<string, string>();
 			_StockFutureCodeList = _DataAccess.getStockFutureCodeList();
 			_StockGroupList = _DataAccess.getStockGroupList(); 
 			this.txtOberserver.Text = ConfigurationManager.AppSettings["Observer"];
-			ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
+			ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
 			this.Text = "股票策略下單機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
 			this.cbPriceType.SelectedIndex = 0;
 

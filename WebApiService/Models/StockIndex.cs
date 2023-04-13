@@ -55,5 +55,9 @@ namespace WebApiService.Models
         public string USD_Index { get; set; }
         public string USD_IndexQuoteChange { get; set; }
         public string USD_IndexQuotePercent { get; set; }
+        public string OIL_Index { get; set; }
+        public string OIL_QuoteChange { get; set; }
+        public string BTC_Index { get; set; }
+        public string BTC_QuoteChange { get; set; }
     }
 }

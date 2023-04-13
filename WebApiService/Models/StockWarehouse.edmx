@@ -113,6 +113,10 @@
           <Property Name="USD_Index" Type="varchar" MaxLength="10" />
           <Property Name="USD_IndexQuoteChange" Type="varchar" MaxLength="10" />
           <Property Name="USD_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="OIL_Index" Type="varchar" MaxLength="10" />
+          <Property Name="OIL_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="BTC_Index" Type="varchar" MaxLength="10" />
+          <Property Name="BTC_QuoteChange" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -254,6 +258,10 @@
           <Property Name="USD_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="USD_IndexQuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="USD_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OIL_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OIL_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BTC_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BTC_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -370,6 +378,10 @@
           <EntitySetMapping Name="StockIndex">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockIndex">
               <MappingFragment StoreEntitySet="StockIndex">
+                <ScalarProperty Name="BTC_QuoteChange" ColumnName="BTC_QuoteChange" />
+                <ScalarProperty Name="BTC_Index" ColumnName="BTC_Index" />
+                <ScalarProperty Name="OIL_QuoteChange" ColumnName="OIL_QuoteChange" />
+                <ScalarProperty Name="OIL_Index" ColumnName="OIL_Index" />
                 <ScalarProperty Name="USD_IndexQuotePercent" ColumnName="USD_IndexQuotePercent" />
                 <ScalarProperty Name="USD_IndexQuoteChange" ColumnName="USD_IndexQuoteChange" />
                 <ScalarProperty Name="USD_Index" ColumnName="USD_Index" />

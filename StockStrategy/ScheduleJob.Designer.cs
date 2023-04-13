@@ -78,6 +78,7 @@
 			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
 			this.btnInsertStockByDate = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.btnLineCtuRed = new System.Windows.Forms.Button();
 			this.lbCtnPerformance = new System.Windows.Forms.Label();
 			this.pgBarCtu = new System.Windows.Forms.ProgressBar();
 			this.txtCtuStock = new System.Windows.Forms.TextBox();
@@ -143,7 +144,8 @@
 			this.btnAdminLogin = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelIP = new System.Windows.Forms.ToolStripStatusLabel();
-			this.btnLineCtuRed = new System.Windows.Forms.Button();
+			this.btnLineStockIndex = new System.Windows.Forms.Button();
+			this.dtpStockIndex = new System.Windows.Forms.DateTimePicker();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -636,6 +638,16 @@
 			this.groupBox2.TabIndex = 39;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Good";
+			// 
+			// btnLineCtuRed
+			// 
+			this.btnLineCtuRed.Location = new System.Drawing.Point(985, 18);
+			this.btnLineCtuRed.Name = "btnLineCtuRed";
+			this.btnLineCtuRed.Size = new System.Drawing.Size(85, 23);
+			this.btnLineCtuRed.TabIndex = 42;
+			this.btnLineCtuRed.Text = "Line Ctn Red";
+			this.btnLineCtuRed.UseVisualStyleBackColor = true;
+			this.btnLineCtuRed.Click += new System.EventHandler(this.btnLineCtuRed_Click);
 			// 
 			// lbCtnPerformance
 			// 
@@ -1184,6 +1196,8 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.dtpStockIndex);
+			this.pnAdmin.Controls.Add(this.btnLineStockIndex);
 			this.pnAdmin.Controls.Add(this.button1);
 			this.pnAdmin.Controls.Add(this.btnSetting);
 			this.pnAdmin.Controls.Add(this.btnLogin);
@@ -1291,15 +1305,22 @@
 			this.toolStripStatusLabelIP.Size = new System.Drawing.Size(128, 17);
 			this.toolStripStatusLabelIP.Text = "toolStripStatusLabel1";
 			// 
-			// btnLineCtuRed
+			// btnLineStockIndex
 			// 
-			this.btnLineCtuRed.Location = new System.Drawing.Point(985, 18);
-			this.btnLineCtuRed.Name = "btnLineCtuRed";
-			this.btnLineCtuRed.Size = new System.Drawing.Size(85, 23);
-			this.btnLineCtuRed.TabIndex = 42;
-			this.btnLineCtuRed.Text = "Line Ctn Red";
-			this.btnLineCtuRed.UseVisualStyleBackColor = true;
-			this.btnLineCtuRed.Click += new System.EventHandler(this.btnLineCtuRed_Click);
+			this.btnLineStockIndex.Location = new System.Drawing.Point(1062, 60);
+			this.btnLineStockIndex.Name = "btnLineStockIndex";
+			this.btnLineStockIndex.Size = new System.Drawing.Size(111, 23);
+			this.btnLineStockIndex.TabIndex = 90;
+			this.btnLineStockIndex.Text = "LineStockIndex";
+			this.btnLineStockIndex.UseVisualStyleBackColor = true;
+			this.btnLineStockIndex.Click += new System.EventHandler(this.LineStockIndex_Click);
+			// 
+			// dtpStockIndex
+			// 
+			this.dtpStockIndex.Location = new System.Drawing.Point(925, 59);
+			this.dtpStockIndex.Name = "dtpStockIndex";
+			this.dtpStockIndex.Size = new System.Drawing.Size(126, 22);
+			this.dtpStockIndex.TabIndex = 91;
 			// 
 			// ScheduleJob
 			// 
@@ -1474,5 +1495,7 @@
 		private System.Windows.Forms.Label lbMsg;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button btnLineCtuRed;
+		private System.Windows.Forms.Button btnLineStockIndex;
+		private System.Windows.Forms.DateTimePicker dtpStockIndex;
 	}
 }

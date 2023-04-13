@@ -19,6 +19,9 @@ using System.Reflection;
 using DocumentFormat.OpenXml.Spreadsheet;
 using NLog.Fluent;
 using DataModel.Common;
+using DocumentFormat.OpenXml.Wordprocessing;
+using static ClosedXML.Excel.XLPredefinedFormat;
+using DateTime = System.DateTime;
 
 namespace StockStrategy
 {
@@ -129,8 +132,13 @@ namespace StockStrategy
 				string _TopIndex = _ListStockAll.Where(x => x.Date == DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd")).First().TAIEX;
 				string _TopIndexDJI = _ListStockAll.Where(x => x.Date == DateTime.Now.AddDays(_Yestoday).ToString("yyyyMMdd")).First().DJI;
 				string _USD_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "USDX", _Id, true);
-				string _USD_IndexQuote = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "USDX", _Change, true).Replace('▼', '-').Replace('▲', '+');
+				string _USD_IndexQuote = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "USDX", _Change, true).Replace('▼', ' ').Replace('▲', '+');
 				string _USD_IndexPercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "USDX", _Percent, true);
+
+				string _OIL_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "N1CL", _Id, true);
+				string _OIL_IndexQuote = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "N1CL", _Change, true).Replace('▼', ' ').Replace('▲', '+');
+				string _BTC_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "BTC", _Id, true);
+				string _BTC_IndexQuote = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "BTC", _Change, true).Replace('▼', ' ').Replace('▲', '+');
 				List<StockIndex> _ListStock = new List<StockIndex>();
 				StockIndex s = new StockIndex();
 				s.ContinueName = "";
@@ -138,19 +146,19 @@ namespace StockStrategy
 				s.Date = DateTime.Now.ToString("yyyyMMdd");
 				s.DayOfWeek = Mapping.DayOfWeekList.Where(x => x.Day == DateTime.Now.DayOfWeek.ToString()).First().Show;
 				s.DJI = _DJI_Index;
-				s.DJI_QuoteChange = Common.Job.GetTaiwanFutures(_DJI_URL, _Change, true).Replace('▼', '-').Replace('▲', '+');
+				s.DJI_QuoteChange = Common.Job.GetTaiwanFutures(_DJI_URL, _Change, true).Replace('▼', ' ').Replace('▲', '+');
 				s.DJI_QuotePercent = Common.Job.GetTaiwanFutures(_DJI_URL, _Percent, true);
 				s.MTX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
 				s.MTX_High = "";
 				s.MTX_Open = "";
 				s.MTX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', '-').Replace('▲', '+');
 				s.MTX_QuotePercent = Common.Job.GetTaiwanFutures(_MTX_URL, _Percent, true);
-				s.MTX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true).Replace('口', '-');
+				s.MTX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true).Replace('口', ' ');
 				s.NASDAQ = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Id, true);
-				s.NASDAQ_QuoteChange = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Change, true).Replace('▼', '-').Replace('▲', '+');
+				s.NASDAQ_QuoteChange = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Change, true).Replace('▼', ' ').Replace('▲', '+');
 				s.NASDAQ_QuotePercent = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Percent, true);
 				s.PHLX = Common.Job.GetTaiwanFutures(_PHLX_URL, _Id, true);
-				s.PHLX_QuoteChange = Common.Job.GetTaiwanFutures(_PHLX_URL, _Change, true).Replace('▼', '-').Replace('▲', '+');
+				s.PHLX_QuoteChange = Common.Job.GetTaiwanFutures(_PHLX_URL, _Change, true).Replace('▼', ' ').Replace('▲', '+');
 				s.PHLX_QuotePercent = Common.Job.GetTaiwanFutures(_PHLX_URL, _Percent, true);
 				s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
 				s.TX_High = "";
@@ -176,7 +184,10 @@ namespace StockStrategy
 					s.NASDAQ = "0";
 					s.PHLX = "0";
 				}
-
+				s.OIL_Index = _OIL_Index;
+				s.OIL_QuoteChange = _OIL_IndexQuote;
+				s.BTC_Index = _BTC_Index;
+				s.BTC_QuoteChange = _BTC_IndexQuote;
 				_ListStock.Add(s);
 				_DataAccess.InsertStockIndex(_ListStock);
 				stockIndex = true;
@@ -245,6 +256,7 @@ namespace StockStrategy
 				this.dtpGoodDate.Value = DateTime.Now;
 				this.dtpBadDate.Value = DateTime.Now.AddDays(-1);
 				this.dtpCtuDate.Value = DateTime.Now;
+				this.dtpStockIndex.Value = DateTime.Now;
 			}
 			if (_DayOfWeek != "Sunday" && _DayOfWeek != "Saturday")
 			{
@@ -274,7 +286,9 @@ namespace StockStrategy
 				if (_Hour == "7" && _Minute == "35" && !stockIndex)
 				{
 					btnGetIndexToInsert.PerformClick();
+					btnLineStockIndex.PerformClick();
 				}
+
 				if (_Hour == "13" && _Minute == "45")
 				{
 					if (!bTAIEX)
@@ -1107,7 +1121,7 @@ namespace StockStrategy
 				_Stock.ClosingPrice = _HtmlDoc.GetElementbyId(Id).InnerText;
 				_Stock.TradeValue = _Volume != "0" ? Convert.ToString(_VolumeValue * Convert.ToDouble(_Stock.ClosingPrice)) : "0";
 				string _Change = _HtmlDoc.GetElementbyId(Change).InnerText;
-				_Change = _Change.Replace('▲', ' ').Replace('▼', ' ');
+				_Change = _Change.Replace('▲', ' ').Replace('▼', '-');
 				_Stock.Change = _Change;
 				string _Gain = _HtmlDoc.GetElementbyId(Percent).InnerText;
 				_Gain = _Gain.Replace('+', ' ').TrimEnd('%');
@@ -1366,6 +1380,48 @@ namespace StockStrategy
 			var _StockList = s.Result;
 			string _DateTime = this.dtpCtuDate.Text;
 			lineAIStock(_StockList, "Ctu", "連續小紅:", _DateTime);
+		}
+
+		private void LineStockIndex_Click(object sender, EventArgs e)
+		{
+			string _Log = ""; 
+			try
+			{
+				string _Stock = "";
+				List<StockIndex> _ListStockAll = _DataAccess.getStockIndexList();
+				//string dateTime = DateTime.Now.ToString("yyyyMMdd");
+				string dateTime =Convert.ToDateTime( this.dtpStockIndex.Text).ToString("yyyyMMdd");
+				StockIndex _StockIndex = _ListStockAll.Where(x=>x.Date==dateTime).First();
+				List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
+
+				int _Yestoday = DateTime.Now.DayOfWeek.ToString() == "Monday" ? -3 : -1;
+				List<Stock> _YestodayStockDayAllList = _DataAccess.getStockYestodayList(DateTime.Now.AddDays(_Yestoday).Date.ToString("yyyyMMdd"));
+				int _Rise = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) > 0).ToList().Count;
+				int _Fall = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) < 0).ToList().Count;
+				int _RiseHalf = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) >4.9 ).ToList().Count;
+				int _FallHalf = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) < -4.9).ToList().Count;
+				foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.NotifyClass == "USA_Index" && x.Enable == true).ToList())
+				{
+					string _Msg =String.Format( "日期:{0}({1})\r\n",  dateTime,_StockIndex.DayOfWeek ) ;
+					_Msg += String.Format("道瓊:{0} 漲跌:{1}\r\n",  _StockIndex.DJI,_StockIndex.DJI_QuoteChange);
+					_Msg += String.Format("NQ:{0} 漲跌:{1}\r\n", _StockIndex.NASDAQ, _StockIndex.NASDAQ_QuoteChange);
+					_Msg += String.Format("費半:{0} 漲跌:{1}\r\n", _StockIndex.PHLX, _StockIndex.PHLX_QuoteChange);
+					_Msg += String.Format("夜盤:{0} 漲跌:{1}\r\n", _StockIndex.MTX, _StockIndex.MTX_QuoteChange);
+					_Msg += String.Format("美元:{0} 漲跌:{1}\r\n", _StockIndex.USD_Index, _StockIndex.USD_IndexQuoteChange);
+					_Msg += String.Format("輕原油:{0} 漲跌:{1}\r\n", _StockIndex.OIL_Index, _StockIndex.OIL_QuoteChange);
+					_Msg += String.Format("比特幣:{0} 漲跌:{1}\r\n", _StockIndex.BTC_Index, _StockIndex.BTC_QuoteChange);
+					_Msg += String.Format("漲跌家數:▲{0}家 ▼{1}家\r\n", _Rise, _Fall);
+					_Msg += String.Format("半根:▲{0}家 ▼{1}家\r\n", _RiseHalf, _FallHalf);
+					CallLineNotifyApi(s.Token, _Msg);
+				}
+				this.txtErrMsg.Text += "Line Stock Index OK" + "\r\n";
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " LineStockIndex:" + ex.Message + "\r\n";
+				logger.Error(_Log);
+				this.txtErrMsg.Text += _Log;
+			}
 		}
 
 		private void btnAdminLogin_Click(object sender, EventArgs e)

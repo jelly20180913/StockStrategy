@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.Results;
 using WebApiService.Models;
 using WebApiService.Services.Implement.Tables;
 using WebApiService.Services.Interface;
@@ -15,14 +16,18 @@ namespace WebApiService.Services.Implement
 	{
 		private IStockService _stockService;
 		private IHolidayService _holidayService;
+		private IStockPickingService _stockPickingService;
+		private IStockResultService _stockResultService;
 		/// <summary>
 		/// Dependence Injection
 		/// </summary>
 
-		public StockStrategyService(IStockService stockService, IHolidayService holidayService)
+		public StockStrategyService(IStockService stockService, IHolidayService holidayService, IStockPickingService stockPickingService,IStockResultService stockResultService)
 		{
 			this._stockService = stockService;
 			_holidayService = holidayService;
+			_stockPickingService = stockPickingService;	
+			_stockResultService=stockResultService;
 		}
 		/// <summary>
 		/// get vote item list
@@ -52,6 +57,43 @@ namespace WebApiService.Services.Implement
 			List<Holiday> _HolidayList = new List<Holiday>();
 			_HolidayList = this._holidayService.GetAll().ToList();
 			return _HolidayList;
+		}
+		public bool InsertStockPicking(List<StockPicking> s)
+		{
+			this._stockPickingService.MiltiCreate(s);
+			return true;
+		}
+		public bool InsertStockResult(List<StockResult> s)
+		{
+			this._stockResultService.MiltiCreate(s);
+			return true;
+		}
+		public List<StockPicking> GetStockPickingList()
+		{
+			List<StockPicking> _StockPickingList = new List<StockPicking>();
+			_StockPickingList = this._stockPickingService.GetAll().ToList();
+			return _StockPickingList;
+		}
+		public List<StockResult> GetStockResultList()
+		{
+			List<StockResult> _StockResultList = new List<StockResult>();
+			_StockResultList = this._stockResultService.GetAll().ToList();
+			return _StockResultList;
+		}
+		public bool UpdateStockPicking(StockPicking s)
+		{
+			this._stockPickingService.Update(s);
+			return true;
+		}
+		public bool DeleteStockPicking(int id)
+		{
+			this._stockPickingService.Delete(id);
+			return true;
+		}
+		public bool DeleteStockResult(int id)
+		{
+			this._stockResultService.Delete(id);
+			return true;
 		}
 	}
 }

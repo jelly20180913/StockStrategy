@@ -59,5 +59,13 @@ namespace WebApiService.Models
         public string OIL_QuoteChange { get; set; }
         public string BTC_Index { get; set; }
         public string BTC_QuoteChange { get; set; }
+        public string Gold_Index { get; set; }
+        public string Gold_QuoteChange { get; set; }
+        public string VHSI_Index { get; set; }
+        public string VHSI_QuoteChange { get; set; }
+        public string DAX_Index { get; set; }
+        public string DAX_QuoteChange { get; set; }
+        public string NIKKEI_Index { get; set; }
+        public string NIKKEI_QuoteChange { get; set; }
     }
 }

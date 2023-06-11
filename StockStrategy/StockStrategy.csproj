@@ -125,19 +125,31 @@
     <Compile Include="BBL\DataAccess.cs" />
     <Compile Include="BBL\StockPrice.cs" />
     <Compile Include="CallWebApi.cs" />
+    <Compile Include="Common\SortableBindingList.cs" />
     <Compile Include="Common\Mapping.cs" />
     <Compile Include="Common\Job.cs" />
     <Compile Include="Common\Tool.cs" />
     <Compile Include="Common\XLSXHelper.cs" />
+    <Compile Include="FormAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAdd.Designer.cs">
+      <DependentUpon>FormAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\ContinueStock.cs" />
     <Compile Include="Model\Stock.cs" />
+    <Compile Include="Model\GoodStock.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormAdd.resx">
+      <DependentUpon>FormAdd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +173,12 @@
     <EmbeddedResource Include="ScheduleJob.resx">
       <DependentUpon>ScheduleJob.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Json\Bad.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Json\Continue.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -180,6 +198,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Json\Setting.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="StockStrategy_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

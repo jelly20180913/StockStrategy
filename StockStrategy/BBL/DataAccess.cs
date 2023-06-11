@@ -277,6 +277,77 @@ namespace StockStrategy.BBL
             ApiResultEntity _ApiResult = CallWebApi.Put(json, _Uri);
             string _Return = _ApiResult.Data.ToString();
             return _Return;
-        } 
+        }
+        /// <summary>
+        /// 選股寫入資料庫
+        /// </summary>
+        /// <param name="listStockPicking"></param>
+        /// <returns></returns>
+		public string InsertStockPicking(List<StockPicking> listStockPicking)
+		{
+			string json = JsonConvert.SerializeObject(listStockPicking);
+			string _Action = "StockPicking";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public string UpdateStockPicking(StockPicking stockPicking)
+		{
+			string json = JsonConvert.SerializeObject(stockPicking);
+			string _Action = "StockPicking";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Put(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public string DeleteStockPicking(int id)
+		{ 
+			string _Action = "StockPicking?id="+id;
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Delete("", _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		/// <summary>
+		/// 每日寫入回測log
+		/// </summary>
+		/// <param name="listStockResult"></param>
+		/// <returns></returns>
+		public string InsertStockResult(List<StockResult> listStockResult)
+		{
+			string json = JsonConvert.SerializeObject(listStockResult);
+			string _Action = "StockResult";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public List<StockPicking> getStockPickingList()
+		{
+			List<StockPicking> _ListStockPicking = new List<StockPicking>();
+			string _Action = "StockPicking";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockPicking = JsonConvert.DeserializeObject<List<StockPicking>>(_ApiResult.Data.ToString());
+			return _ListStockPicking;
+		}
+		public List<StockResult> getStockResultList()
+		{
+			List<StockResult> _ListStockResult = new List<StockResult>();
+			string _Action = "StockResult";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockResult = JsonConvert.DeserializeObject<List<StockResult>>(_ApiResult.Data.ToString());
+			return _ListStockResult;
+		}
+		public string DeleteStockResult(int id)
+		{
+			string _Action = "StockResult?id=" + id;
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Delete("", _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
 	}
 }

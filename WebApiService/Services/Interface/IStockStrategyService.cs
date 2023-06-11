@@ -13,5 +13,13 @@ namespace WebApiService.Services.Interface
 		bool InsertStock(List<Stock> s);
 		bool UpdateStock(Stock s);
 	    List<Holiday> GetHolidayList();
+		bool InsertStockPicking(List<StockPicking> s);
+		bool InsertStockResult(List<StockResult> s);
+		List<StockPicking> GetStockPickingList();
+		bool UpdateStockPicking(StockPicking s);
+		bool DeleteStockPicking(int id);
+		List<StockResult> GetStockResultList();
+		bool DeleteStockResult(int id);
+
 	}
 }

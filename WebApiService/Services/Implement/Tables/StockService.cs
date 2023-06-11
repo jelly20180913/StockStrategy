@@ -85,7 +85,9 @@ namespace WebApiService.Services.Implement.Tables
 							Gain = c.Gain,
 							Shock = c.Shock,
 							Date = c.Date,
-							HighestPrice = c.HighestPrice
+							HighestPrice = c.HighestPrice,
+							OpeningPrice=c.OpeningPrice
+
 						}; 
 			IEnumerable<DataModel.Stock.Stock> _StockList = from p in query.AsEnumerable()
 															select new DataModel.Stock.Stock(
@@ -96,7 +98,8 @@ namespace WebApiService.Services.Implement.Tables
 				p.ClosingPrice,
 				p.Date,
 				p.Gain,
-				p.Shock
+				p.Shock,
+				p.OpeningPrice
 			 ) ;
 			return _StockList;
 		}
@@ -114,7 +117,8 @@ namespace WebApiService.Services.Implement.Tables
 							Gain = c.Gain,
 							Shock = c.Shock,
 							Date = c.Date,
-							HighestPrice = c.HighestPrice
+							HighestPrice = c.HighestPrice,
+							OpeningPrice = c.OpeningPrice
 						};
 			IEnumerable<DataModel.Stock.Stock> _StockList = from p in query.AsEnumerable()
 															select new DataModel.Stock.Stock(
@@ -125,7 +129,8 @@ namespace WebApiService.Services.Implement.Tables
 				p.ClosingPrice,
 				p.Date,
 				p.Gain,
-				p.Shock
+				p.Shock,
+				p.OpeningPrice
 			 ); 
 			return _StockList;
 		}
@@ -153,7 +158,8 @@ namespace WebApiService.Services.Implement.Tables
 							Gain = c.Gain,
 							Shock = c.Shock,
 							Date = c.Date,
-							HighestPrice = c.HighestPrice
+							HighestPrice = c.HighestPrice,
+							OpeningPrice = c.OpeningPrice
 						};
 			IEnumerable<DataModel.Stock.Stock> _StockList = from p in query.AsEnumerable()
 															select new DataModel.Stock.Stock(
@@ -164,7 +170,8 @@ namespace WebApiService.Services.Implement.Tables
 				p.ClosingPrice,
 				p.Date,
 				p.Gain,
-				p.Shock
+				p.Shock,
+				p.OpeningPrice
 			 );
 			return _StockList;
 		}

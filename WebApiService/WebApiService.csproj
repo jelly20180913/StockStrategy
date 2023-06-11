@@ -178,6 +178,8 @@
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\StockAllController.cs" />
     <Compile Include="Controllers\HolidayController.cs" />
+    <Compile Include="Controllers\StockResultController.cs" />
+    <Compile Include="Controllers\StockPickingController .cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\StockGroupController.cs" />
     <Compile Include="Controllers\StockLineNotifyController.cs" />
@@ -208,6 +210,9 @@
     <Compile Include="Models\Stock.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StockBacktest.cs">
+      <DependentUpon>StockWarehouse.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StockFutureCode.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
@@ -221,6 +226,12 @@
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockLineNotify.cs">
+      <DependentUpon>StockWarehouse.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockPicking.cs">
+      <DependentUpon>StockWarehouse.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockResult.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockWarehouse.Context.cs">
@@ -241,21 +252,27 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implement\StockStrategyService.cs" />
     <Compile Include="Services\Implement\Tables\LoginService.cs" />
+    <Compile Include="Services\Implement\Tables\StockBacktestLogService.cs" />
     <Compile Include="Services\Implement\Tables\StockGroupService.cs" />
     <Compile Include="Services\Implement\Tables\StockInventoryService.cs" />
     <Compile Include="Services\Implement\Tables\StockIndexService.cs" />
     <Compile Include="Services\Implement\Tables\StockFutureCodeService.cs" />
     <Compile Include="Services\Implement\Tables\StockLineNotifyService.cs" />
     <Compile Include="Services\Implement\Tables\HolidayService.cs" />
+    <Compile Include="Services\Implement\Tables\StockBacktestService.cs" />
+    <Compile Include="Services\Implement\Tables\StockPickingService.cs" />
     <Compile Include="Services\Implement\Tables\StockService.cs" />
     <Compile Include="Services\Implement\TokenService.cs" />
     <Compile Include="Services\Interface\IStockStrategyService.cs" />
     <Compile Include="Services\Interface\ITokenService.cs" />
+    <Compile Include="Services\Interface\Tables\IStockBacktestLogService.cs" />
     <Compile Include="Services\Interface\Tables\IStockGroupService.cs" />
     <Compile Include="Services\Interface\Tables\ILoginService.cs" />
     <Compile Include="Services\Interface\Tables\IStockInventoryService.cs" />
     <Compile Include="Services\Interface\Tables\IStockIndexService.cs" />
     <Compile Include="Services\Interface\Tables\IStockFutureCodeService.cs" />
+    <Compile Include="Services\Interface\Tables\IStockBacktestService.cs" />
+    <Compile Include="Services\Interface\Tables\IStockPickingService.cs" />
     <Compile Include="Services\Interface\Tables\IStockLineNotifyService.cs" />
     <Compile Include="Services\Interface\Tables\IHolidayService.cs" />
     <Compile Include="Services\Interface\Tables\IStockService.cs" />

@@ -1,0 +1,80 @@
+  [
+    {
+        "Name": "起漲放量",
+        "Gain": 3,
+        "Volumn": 700000,
+        "Multiple": 5,
+        "PreDays": 10,
+        "LessVolumn": 500000,
+        "PreDays2": 10,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": true,
+        "Class": 5
+    },
+    {
+        "Name": "起漲十倍量",
+        "Gain": 3,
+        "Volumn": 700000,
+        "Multiple": 10,
+        "PreDays": 10,
+        "LessVolumn": 500000,
+        "PreDays2": 10,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": true,
+        "Class": 10
+    },
+    {
+        "Name": "盤月放量",
+        "Gain": 3,
+        "Volumn": 700000,
+        "Multiple": 5,
+        "PreDays": 20,
+        "LessVolumn": 500000,
+        "PreDays2": 10,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": true,
+        "Class": 6
+    },
+    {
+        "Name": "盤季放量",
+        "Gain": 3,
+        "Volumn": 700000,
+        "Multiple": 5,
+        "PreDays": 60,
+        "LessVolumn": 500000,
+        "PreDays2": 10,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": true,
+        "Class": 7
+    },
+    {
+        "Name": "半年放量",
+        "Gain": 3,
+        "Volumn": 700000,
+        "Multiple": 5,
+        "PreDays": 120,
+        "LessVolumn": 500000,
+        "PreDays2": 10,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": true,
+        "Class": 8
+    },
+    {
+        "Name": "盤年放量",
+        "Gain": 3,
+        "Volumn": 700000,
+        "Multiple": 5,
+        "PreDays": 240,
+        "LessVolumn": 500000,
+        "PreDays2": 10,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": true,
+        "Class": 9
+    }
+    ] 

@@ -17,5 +17,6 @@ namespace WebApiService.Models
         public int Id { get; set; }
         public string HolidayDate { get; set; }
         public Nullable<bool> Enable { get; set; }
+        public string Year { get; set; }
     }
 }

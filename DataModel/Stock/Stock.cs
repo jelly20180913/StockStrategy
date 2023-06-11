@@ -18,7 +18,8 @@ namespace DataModel.Stock
 		public string Date { get; set; } 
 		public string Gain { get; set; }
 		public string Shock { get; set; }
-		public Stock(string code,string name,string tradeVolume,string highestPrice,string closingPrice,string date,string gain,string shock)
+		public string OpeningPrice { get; set; }
+		public Stock(string code,string name,string tradeVolume,string highestPrice,string closingPrice,string date,string gain,string shock,string openingPrice)
 		{
 			Code = code;
 			Name = name;
@@ -28,6 +29,7 @@ namespace DataModel.Stock
 			Date = date;
 			Gain = gain;
 			Shock = shock;
+			OpeningPrice = openingPrice;
 			// doing something with CampaignID here like setting some calculated properties.
 		}
 	}

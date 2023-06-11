@@ -32,7 +32,6 @@
 			this.btnLogin = new System.Windows.Forms.Button();
 			this.txtErrMsg = new System.Windows.Forms.TextBox();
 			this.btnGetIndexToInsert = new System.Windows.Forms.Button();
-			this.btnGetTopIndex = new System.Windows.Forms.Button();
 			this.timerInsertStockIndex = new System.Windows.Forms.Timer(this.components);
 			this.btnUpdateStockIndex = new System.Windows.Forms.Button();
 			this.btnGetStockPrice = new System.Windows.Forms.Button();
@@ -47,6 +46,9 @@
 			this.txtGoodStock = new System.Windows.Forms.TextBox();
 			this.dtpGoodDate = new System.Windows.Forms.DateTimePicker();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.btnLineGoodbyJson = new System.Windows.Forms.Button();
+			this.btnGetGoodStockByJson = new System.Windows.Forms.Button();
+			this.chkPickingGood = new System.Windows.Forms.CheckBox();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.chkNotHigherThan = new System.Windows.Forms.CheckBox();
 			this.label8 = new System.Windows.Forms.Label();
@@ -75,9 +77,9 @@
 			this.lbBtnName = new System.Windows.Forms.Label();
 			this.btnClear = new System.Windows.Forms.Button();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
-			this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
 			this.btnInsertStockByDate = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.chkPickingCtu = new System.Windows.Forms.CheckBox();
 			this.btnLineCtuRed = new System.Windows.Forms.Button();
 			this.lbCtnPerformance = new System.Windows.Forms.Label();
 			this.pgBarCtu = new System.Windows.Forms.ProgressBar();
@@ -103,6 +105,7 @@
 			this.dtpCtuDate = new System.Windows.Forms.DateTimePicker();
 			this.btnCtu = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.chkPickingBad = new System.Windows.Forms.CheckBox();
 			this.lbMsg = new System.Windows.Forms.Label();
 			this.lbBadPerformance = new System.Windows.Forms.Label();
 			this.panel8 = new System.Windows.Forms.Panel();
@@ -135,6 +138,13 @@
 			this.btnBad = new System.Windows.Forms.Button();
 			this.btnStockJurical = new System.Windows.Forms.Button();
 			this.pnAdmin = new System.Windows.Forms.Panel();
+			this.chkJurical = new System.Windows.Forms.CheckBox();
+			this.dtpStockYesterday = new System.Windows.Forms.DateTimePicker();
+			this.dtpStockIndex = new System.Windows.Forms.DateTimePicker();
+			this.btnTestJson = new System.Windows.Forms.Button();
+			this.btnTestLog = new System.Windows.Forms.Button();
+			this.btnLineStockIndex = new System.Windows.Forms.Button();
+			this.btnInsertStockPicking = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.btnSetting = new System.Windows.Forms.Button();
 			this.txtPassword = new System.Windows.Forms.TextBox();
@@ -144,8 +154,43 @@
 			this.btnAdminLogin = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelIP = new System.Windows.Forms.ToolStripStatusLabel();
-			this.btnLineStockIndex = new System.Windows.Forms.Button();
-			this.dtpStockIndex = new System.Windows.Forms.DateTimePicker();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.txtManyDays = new System.Windows.Forms.TextBox();
+			this.lb = new System.Windows.Forms.Label();
+			this.chkDay = new System.Windows.Forms.CheckBox();
+			this.txtProfit = new System.Windows.Forms.TextBox();
+			this.txt = new System.Windows.Forms.Label();
+			this.txtTotalCost = new System.Windows.Forms.TextBox();
+			this.label29 = new System.Windows.Forms.Label();
+			this.txtTotalProfit = new System.Windows.Forms.TextBox();
+			this.label28 = new System.Windows.Forms.Label();
+			this.btnQuery = new System.Windows.Forms.Button();
+			this.btnStockResult = new System.Windows.Forms.Button();
+			this.dgvStockReport = new System.Windows.Forms.DataGridView();
+			this.dTPReport = new System.Windows.Forms.DateTimePicker();
+			this.chkApproved = new System.Windows.Forms.CheckBox();
+			this.label30 = new System.Windows.Forms.Label();
+			this.btnAdd = new System.Windows.Forms.Button();
+			this.txtPickingCode = new System.Windows.Forms.TextBox();
+			this.add = new System.Windows.Forms.GroupBox();
+			this.txtRemark = new System.Windows.Forms.TextBox();
+			this.cbApprove = new System.Windows.Forms.ComboBox();
+			this.progressBar3 = new System.Windows.Forms.ProgressBar();
+			this.label31 = new System.Windows.Forms.Label();
+			this.dtpReportStart = new System.Windows.Forms.DateTimePicker();
+			this.label32 = new System.Windows.Forms.Label();
+			this.label33 = new System.Windows.Forms.Label();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.label34 = new System.Windows.Forms.Label();
+			this.lbIncrease = new System.Windows.Forms.Label();
+			this.lbDecrease = new System.Windows.Forms.Label();
+			this.btnExport = new System.Windows.Forms.Button();
+			this.label35 = new System.Windows.Forms.Label();
+			this.label36 = new System.Windows.Forms.Label();
+			this.lbMessage = new System.Windows.Forms.Label();
+			this.label37 = new System.Windows.Forms.Label();
+			this.chkOpenningPrice = new System.Windows.Forms.CheckBox();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -164,11 +209,16 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudDiff)).BeginInit();
 			this.pnAdmin.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).BeginInit();
+			this.add.SuspendLayout();
+			this.groupBox6.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnLogin
 			// 
-			this.btnLogin.Location = new System.Drawing.Point(10, 2);
+			this.btnLogin.Location = new System.Drawing.Point(6, 2);
 			this.btnLogin.Name = "btnLogin";
 			this.btnLogin.Size = new System.Drawing.Size(75, 23);
 			this.btnLogin.TabIndex = 0;
@@ -187,23 +237,13 @@
 			// 
 			// btnGetIndexToInsert
 			// 
-			this.btnGetIndexToInsert.Location = new System.Drawing.Point(373, 59);
+			this.btnGetIndexToInsert.Location = new System.Drawing.Point(250, 58);
 			this.btnGetIndexToInsert.Name = "btnGetIndexToInsert";
 			this.btnGetIndexToInsert.Size = new System.Drawing.Size(97, 23);
 			this.btnGetIndexToInsert.TabIndex = 4;
 			this.btnGetIndexToInsert.Text = "getIndexToInsert";
 			this.btnGetIndexToInsert.UseVisualStyleBackColor = true;
 			this.btnGetIndexToInsert.Click += new System.EventHandler(this.btnGetIndexToInsert_Click);
-			// 
-			// btnGetTopIndex
-			// 
-			this.btnGetTopIndex.Location = new System.Drawing.Point(170, 2);
-			this.btnGetTopIndex.Name = "btnGetTopIndex";
-			this.btnGetTopIndex.Size = new System.Drawing.Size(75, 23);
-			this.btnGetTopIndex.TabIndex = 5;
-			this.btnGetTopIndex.Text = "getTopIndex";
-			this.btnGetTopIndex.UseVisualStyleBackColor = true;
-			this.btnGetTopIndex.Click += new System.EventHandler(this.btnGetTopIndex_Click);
 			// 
 			// timerInsertStockIndex
 			// 
@@ -213,7 +253,7 @@
 			// 
 			// btnUpdateStockIndex
 			// 
-			this.btnUpdateStockIndex.Location = new System.Drawing.Point(476, 59);
+			this.btnUpdateStockIndex.Location = new System.Drawing.Point(353, 58);
 			this.btnUpdateStockIndex.Name = "btnUpdateStockIndex";
 			this.btnUpdateStockIndex.Size = new System.Drawing.Size(101, 23);
 			this.btnUpdateStockIndex.TabIndex = 6;
@@ -223,7 +263,7 @@
 			// 
 			// btnGetStockPrice
 			// 
-			this.btnGetStockPrice.Location = new System.Drawing.Point(580, 58);
+			this.btnGetStockPrice.Location = new System.Drawing.Point(460, 58);
 			this.btnGetStockPrice.Name = "btnGetStockPrice";
 			this.btnGetStockPrice.Size = new System.Drawing.Size(108, 23);
 			this.btnGetStockPrice.TabIndex = 8;
@@ -233,7 +273,8 @@
 			// 
 			// btnOpen
 			// 
-			this.btnOpen.Location = new System.Drawing.Point(10, 31);
+			this.btnOpen.Enabled = false;
+			this.btnOpen.Location = new System.Drawing.Point(249, 2);
 			this.btnOpen.Name = "btnOpen";
 			this.btnOpen.Size = new System.Drawing.Size(75, 23);
 			this.btnOpen.TabIndex = 9;
@@ -243,7 +284,7 @@
 			// 
 			// txtFile
 			// 
-			this.txtFile.Location = new System.Drawing.Point(91, 31);
+			this.txtFile.Location = new System.Drawing.Point(326, 2);
 			this.txtFile.Name = "txtFile";
 			this.txtFile.Size = new System.Drawing.Size(375, 22);
 			this.txtFile.TabIndex = 10;
@@ -251,7 +292,7 @@
 			// btnImport
 			// 
 			this.btnImport.Enabled = false;
-			this.btnImport.Location = new System.Drawing.Point(472, 31);
+			this.btnImport.Location = new System.Drawing.Point(703, 2);
 			this.btnImport.Name = "btnImport";
 			this.btnImport.Size = new System.Drawing.Size(75, 23);
 			this.btnImport.TabIndex = 11;
@@ -265,7 +306,7 @@
 			// 
 			// btnInsertStockLackOff
 			// 
-			this.btnInsertStockLackOff.Location = new System.Drawing.Point(693, 58);
+			this.btnInsertStockLackOff.Location = new System.Drawing.Point(649, 29);
 			this.btnInsertStockLackOff.Name = "btnInsertStockLackOff";
 			this.btnInsertStockLackOff.Size = new System.Drawing.Size(108, 23);
 			this.btnInsertStockLackOff.TabIndex = 12;
@@ -276,7 +317,7 @@
 			// btnUpdateJuridicaPerson
 			// 
 			this.btnUpdateJuridicaPerson.Enabled = false;
-			this.btnUpdateJuridicaPerson.Location = new System.Drawing.Point(485, 3);
+			this.btnUpdateJuridicaPerson.Location = new System.Drawing.Point(899, 2);
 			this.btnUpdateJuridicaPerson.Name = "btnUpdateJuridicaPerson";
 			this.btnUpdateJuridicaPerson.Size = new System.Drawing.Size(114, 23);
 			this.btnUpdateJuridicaPerson.TabIndex = 13;
@@ -286,7 +327,7 @@
 			// 
 			// btnResetLinePoint
 			// 
-			this.btnResetLinePoint.Location = new System.Drawing.Point(805, 58);
+			this.btnResetLinePoint.Location = new System.Drawing.Point(313, 1);
 			this.btnResetLinePoint.Name = "btnResetLinePoint";
 			this.btnResetLinePoint.Size = new System.Drawing.Size(114, 23);
 			this.btnResetLinePoint.TabIndex = 14;
@@ -296,7 +337,7 @@
 			// 
 			// btnGetGoodStock
 			// 
-			this.btnGetGoodStock.Location = new System.Drawing.Point(912, 12);
+			this.btnGetGoodStock.Location = new System.Drawing.Point(929, 12);
 			this.btnGetGoodStock.Name = "btnGetGoodStock";
 			this.btnGetGoodStock.Size = new System.Drawing.Size(30, 23);
 			this.btnGetGoodStock.TabIndex = 15;
@@ -321,6 +362,9 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.btnLineGoodbyJson);
+			this.groupBox1.Controls.Add(this.btnGetGoodStockByJson);
+			this.groupBox1.Controls.Add(this.chkPickingGood);
 			this.groupBox1.Controls.Add(this.panel2);
 			this.groupBox1.Controls.Add(this.panel1);
 			this.groupBox1.Controls.Add(this.label4);
@@ -341,6 +385,35 @@
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Good";
+			// 
+			// btnLineGoodbyJson
+			// 
+			this.btnLineGoodbyJson.Location = new System.Drawing.Point(1080, 10);
+			this.btnLineGoodbyJson.Name = "btnLineGoodbyJson";
+			this.btnLineGoodbyJson.Size = new System.Drawing.Size(75, 23);
+			this.btnLineGoodbyJson.TabIndex = 38;
+			this.btnLineGoodbyJson.Text = "Line by json";
+			this.btnLineGoodbyJson.UseVisualStyleBackColor = true;
+			this.btnLineGoodbyJson.Click += new System.EventHandler(this.btnLineGoodbyJson_Click);
+			// 
+			// btnGetGoodStockByJson
+			// 
+			this.btnGetGoodStockByJson.Location = new System.Drawing.Point(1003, 11);
+			this.btnGetGoodStockByJson.Name = "btnGetGoodStockByJson";
+			this.btnGetGoodStockByJson.Size = new System.Drawing.Size(73, 23);
+			this.btnGetGoodStockByJson.TabIndex = 37;
+			this.btnGetGoodStockByJson.Text = "Get by  json";
+			this.btnGetGoodStockByJson.UseVisualStyleBackColor = true;
+			this.btnGetGoodStockByJson.Click += new System.EventHandler(this.btnGetGoodStockByJson_Click);
+			// 
+			// chkPickingGood
+			// 
+			this.chkPickingGood.AutoSize = true;
+			this.chkPickingGood.Location = new System.Drawing.Point(913, 17);
+			this.chkPickingGood.Name = "chkPickingGood";
+			this.chkPickingGood.Size = new System.Drawing.Size(15, 14);
+			this.chkPickingGood.TabIndex = 34;
+			this.chkPickingGood.UseVisualStyleBackColor = true;
 			// 
 			// panel2
 			// 
@@ -489,7 +562,7 @@
 			this.txtMultiple.Name = "txtMultiple";
 			this.txtMultiple.Size = new System.Drawing.Size(35, 22);
 			this.txtMultiple.TabIndex = 26;
-			this.txtMultiple.Text = "4";
+			this.txtMultiple.Text = "5";
 			// 
 			// progressBar2
 			// 
@@ -549,7 +622,7 @@
 			// btnLineGoodStock
 			// 
 			this.btnLineGoodStock.Enabled = false;
-			this.btnLineGoodStock.Location = new System.Drawing.Point(946, 11);
+			this.btnLineGoodStock.Location = new System.Drawing.Point(963, 11);
 			this.btnLineGoodStock.Name = "btnLineGoodStock";
 			this.btnLineGoodStock.Size = new System.Drawing.Size(36, 23);
 			this.btnLineGoodStock.TabIndex = 18;
@@ -560,7 +633,7 @@
 			// btnUpdateStockGain
 			// 
 			this.btnUpdateStockGain.Enabled = false;
-			this.btnUpdateStockGain.Location = new System.Drawing.Point(367, 3);
+			this.btnUpdateStockGain.Location = new System.Drawing.Point(781, 2);
 			this.btnUpdateStockGain.Name = "btnUpdateStockGain";
 			this.btnUpdateStockGain.Size = new System.Drawing.Size(114, 23);
 			this.btnUpdateStockGain.TabIndex = 19;
@@ -587,7 +660,7 @@
 			// 
 			// btnClear
 			// 
-			this.btnClear.Location = new System.Drawing.Point(553, 30);
+			this.btnClear.Location = new System.Drawing.Point(761, 30);
 			this.btnClear.Name = "btnClear";
 			this.btnClear.Size = new System.Drawing.Size(75, 23);
 			this.btnClear.TabIndex = 35;
@@ -597,23 +670,17 @@
 			// 
 			// progressBar1
 			// 
-			this.progressBar1.Location = new System.Drawing.Point(801, 31);
+			this.progressBar1.Location = new System.Drawing.Point(841, 30);
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(332, 23);
 			this.progressBar1.Step = 1;
 			this.progressBar1.TabIndex = 20;
 			this.progressBar1.UseWaitCursor = true;
 			// 
-			// dateTimePicker2
-			// 
-			this.dateTimePicker2.Location = new System.Drawing.Point(8, 59);
-			this.dateTimePicker2.Name = "dateTimePicker2";
-			this.dateTimePicker2.Size = new System.Drawing.Size(126, 22);
-			this.dateTimePicker2.TabIndex = 37;
-			// 
 			// btnInsertStockByDate
 			// 
-			this.btnInsertStockByDate.Location = new System.Drawing.Point(140, 58);
+			this.btnInsertStockByDate.Enabled = false;
+			this.btnInsertStockByDate.Location = new System.Drawing.Point(136, 58);
 			this.btnInsertStockByDate.Name = "btnInsertStockByDate";
 			this.btnInsertStockByDate.Size = new System.Drawing.Size(108, 23);
 			this.btnInsertStockByDate.TabIndex = 38;
@@ -623,6 +690,7 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.chkPickingCtu);
 			this.groupBox2.Controls.Add(this.btnLineCtuRed);
 			this.groupBox2.Controls.Add(this.lbCtnPerformance);
 			this.groupBox2.Controls.Add(this.pgBarCtu);
@@ -639,9 +707,18 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Good";
 			// 
+			// chkPickingCtu
+			// 
+			this.chkPickingCtu.AutoSize = true;
+			this.chkPickingCtu.Location = new System.Drawing.Point(911, 23);
+			this.chkPickingCtu.Name = "chkPickingCtu";
+			this.chkPickingCtu.Size = new System.Drawing.Size(15, 14);
+			this.chkPickingCtu.TabIndex = 37;
+			this.chkPickingCtu.UseVisualStyleBackColor = true;
+			// 
 			// btnLineCtuRed
 			// 
-			this.btnLineCtuRed.Location = new System.Drawing.Point(985, 18);
+			this.btnLineCtuRed.Location = new System.Drawing.Point(1002, 18);
 			this.btnLineCtuRed.Name = "btnLineCtuRed";
 			this.btnLineCtuRed.Size = new System.Drawing.Size(85, 23);
 			this.btnLineCtuRed.TabIndex = 42;
@@ -802,7 +879,7 @@
 			this.txtCtuDays.Name = "txtCtuDays";
 			this.txtCtuDays.Size = new System.Drawing.Size(35, 22);
 			this.txtCtuDays.TabIndex = 31;
-			this.txtCtuDays.Text = "2";
+			this.txtCtuDays.Text = "3";
 			// 
 			// label16
 			// 
@@ -819,7 +896,7 @@
 			this.txtPreDaysCtu.Name = "txtPreDaysCtu";
 			this.txtPreDaysCtu.Size = new System.Drawing.Size(35, 22);
 			this.txtPreDaysCtu.TabIndex = 29;
-			this.txtPreDaysCtu.Text = "3";
+			this.txtPreDaysCtu.Text = "4";
 			// 
 			// nupCtuGain
 			// 
@@ -845,7 +922,7 @@
 			// btnLineCtuStock
 			// 
 			this.btnLineCtuStock.Enabled = false;
-			this.btnLineCtuStock.Location = new System.Drawing.Point(944, 18);
+			this.btnLineCtuStock.Location = new System.Drawing.Point(961, 18);
 			this.btnLineCtuStock.Name = "btnLineCtuStock";
 			this.btnLineCtuStock.Size = new System.Drawing.Size(36, 23);
 			this.btnLineCtuStock.TabIndex = 18;
@@ -862,7 +939,7 @@
 			// 
 			// btnCtu
 			// 
-			this.btnCtu.Location = new System.Drawing.Point(910, 19);
+			this.btnCtu.Location = new System.Drawing.Point(927, 19);
 			this.btnCtu.Name = "btnCtu";
 			this.btnCtu.Size = new System.Drawing.Size(30, 23);
 			this.btnCtu.TabIndex = 15;
@@ -872,6 +949,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.chkPickingBad);
 			this.groupBox3.Controls.Add(this.lbMsg);
 			this.groupBox3.Controls.Add(this.lbBadPerformance);
 			this.groupBox3.Controls.Add(this.panel8);
@@ -889,6 +967,15 @@
 			this.groupBox3.TabIndex = 40;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Bad";
+			// 
+			// chkPickingBad
+			// 
+			this.chkPickingBad.AutoSize = true;
+			this.chkPickingBad.Location = new System.Drawing.Point(911, 24);
+			this.chkPickingBad.Name = "chkPickingBad";
+			this.chkPickingBad.Size = new System.Drawing.Size(15, 14);
+			this.chkPickingBad.TabIndex = 43;
+			this.chkPickingBad.UseVisualStyleBackColor = true;
 			// 
 			// lbMsg
 			// 
@@ -1159,7 +1246,7 @@
 			// btnLineBad
 			// 
 			this.btnLineBad.Enabled = false;
-			this.btnLineBad.Location = new System.Drawing.Point(944, 18);
+			this.btnLineBad.Location = new System.Drawing.Point(961, 18);
 			this.btnLineBad.Name = "btnLineBad";
 			this.btnLineBad.Size = new System.Drawing.Size(36, 23);
 			this.btnLineBad.TabIndex = 18;
@@ -1176,7 +1263,7 @@
 			// 
 			// btnBad
 			// 
-			this.btnBad.Location = new System.Drawing.Point(910, 19);
+			this.btnBad.Location = new System.Drawing.Point(927, 19);
 			this.btnBad.Name = "btnBad";
 			this.btnBad.Size = new System.Drawing.Size(30, 23);
 			this.btnBad.TabIndex = 15;
@@ -1186,9 +1273,9 @@
 			// 
 			// btnStockJurical
 			// 
-			this.btnStockJurical.Location = new System.Drawing.Point(254, 59);
+			this.btnStockJurical.Location = new System.Drawing.Point(160, 29);
 			this.btnStockJurical.Name = "btnStockJurical";
-			this.btnStockJurical.Size = new System.Drawing.Size(114, 23);
+			this.btnStockJurical.Size = new System.Drawing.Size(107, 23);
 			this.btnStockJurical.TabIndex = 41;
 			this.btnStockJurical.Text = "updateStockJurical";
 			this.btnStockJurical.UseVisualStyleBackColor = true;
@@ -1196,20 +1283,25 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.lbMessage);
+			this.pnAdmin.Controls.Add(this.chkJurical);
+			this.pnAdmin.Controls.Add(this.dtpStockYesterday);
 			this.pnAdmin.Controls.Add(this.dtpStockIndex);
+			this.pnAdmin.Controls.Add(this.btnTestJson);
+			this.pnAdmin.Controls.Add(this.btnTestLog);
 			this.pnAdmin.Controls.Add(this.btnLineStockIndex);
+			this.pnAdmin.Controls.Add(this.btnInsertStockPicking);
 			this.pnAdmin.Controls.Add(this.button1);
 			this.pnAdmin.Controls.Add(this.btnSetting);
 			this.pnAdmin.Controls.Add(this.btnLogin);
 			this.pnAdmin.Controls.Add(this.btnStockJurical);
 			this.pnAdmin.Controls.Add(this.btnGetIndexToInsert);
 			this.pnAdmin.Controls.Add(this.btnInsertStockByDate);
-			this.pnAdmin.Controls.Add(this.btnGetTopIndex);
-			this.pnAdmin.Controls.Add(this.dateTimePicker2);
 			this.pnAdmin.Controls.Add(this.btnUpdateStockIndex);
 			this.pnAdmin.Controls.Add(this.btnClear);
 			this.pnAdmin.Controls.Add(this.lbBtnName);
 			this.pnAdmin.Controls.Add(this.btnGetStockPrice);
+			this.pnAdmin.Controls.Add(this.btnStockResult);
 			this.pnAdmin.Controls.Add(this.lbPercent);
 			this.pnAdmin.Controls.Add(this.btnOpen);
 			this.pnAdmin.Controls.Add(this.progressBar1);
@@ -1217,27 +1309,93 @@
 			this.pnAdmin.Controls.Add(this.btnUpdateStockGain);
 			this.pnAdmin.Controls.Add(this.btnImport);
 			this.pnAdmin.Controls.Add(this.btnInsertStockLackOff);
-			this.pnAdmin.Controls.Add(this.btnResetLinePoint);
 			this.pnAdmin.Controls.Add(this.btnUpdateJuridicaPerson);
 			this.pnAdmin.Location = new System.Drawing.Point(5, 25);
 			this.pnAdmin.Name = "pnAdmin";
 			this.pnAdmin.Size = new System.Drawing.Size(1176, 90);
 			this.pnAdmin.TabIndex = 42;
 			// 
+			// chkJurical
+			// 
+			this.chkJurical.AutoSize = true;
+			this.chkJurical.Location = new System.Drawing.Point(139, 34);
+			this.chkJurical.Name = "chkJurical";
+			this.chkJurical.Size = new System.Drawing.Size(15, 14);
+			this.chkJurical.TabIndex = 37;
+			this.chkJurical.UseVisualStyleBackColor = true;
+			// 
+			// dtpStockYesterday
+			// 
+			this.dtpStockYesterday.Location = new System.Drawing.Point(7, 31);
+			this.dtpStockYesterday.Name = "dtpStockYesterday";
+			this.dtpStockYesterday.Size = new System.Drawing.Size(126, 22);
+			this.dtpStockYesterday.TabIndex = 92;
+			// 
+			// dtpStockIndex
+			// 
+			this.dtpStockIndex.Location = new System.Drawing.Point(8, 59);
+			this.dtpStockIndex.Name = "dtpStockIndex";
+			this.dtpStockIndex.Size = new System.Drawing.Size(126, 22);
+			this.dtpStockIndex.TabIndex = 91;
+			// 
+			// btnTestJson
+			// 
+			this.btnTestJson.Enabled = false;
+			this.btnTestJson.Location = new System.Drawing.Point(176, 2);
+			this.btnTestJson.Name = "btnTestJson";
+			this.btnTestJson.Size = new System.Drawing.Size(71, 23);
+			this.btnTestJson.TabIndex = 51;
+			this.btnTestJson.Text = "test json";
+			this.btnTestJson.UseVisualStyleBackColor = true;
+			this.btnTestJson.Click += new System.EventHandler(this.btnTestJson_Click);
+			// 
+			// btnTestLog
+			// 
+			this.btnTestLog.Enabled = false;
+			this.btnTestLog.Location = new System.Drawing.Point(82, 1);
+			this.btnTestLog.Name = "btnTestLog";
+			this.btnTestLog.Size = new System.Drawing.Size(56, 23);
+			this.btnTestLog.TabIndex = 49;
+			this.btnTestLog.Text = "test log";
+			this.btnTestLog.UseVisualStyleBackColor = true;
+			this.btnTestLog.Click += new System.EventHandler(this.btnTestLog_Click);
+			// 
+			// btnLineStockIndex
+			// 
+			this.btnLineStockIndex.Location = new System.Drawing.Point(572, 58);
+			this.btnLineStockIndex.Name = "btnLineStockIndex";
+			this.btnLineStockIndex.Size = new System.Drawing.Size(111, 23);
+			this.btnLineStockIndex.TabIndex = 90;
+			this.btnLineStockIndex.Text = "LineStockIndex";
+			this.btnLineStockIndex.UseVisualStyleBackColor = true;
+			this.btnLineStockIndex.Click += new System.EventHandler(this.LineStockIndex_Click);
+			// 
+			// btnInsertStockPicking
+			// 
+			this.btnInsertStockPicking.Enabled = false;
+			this.btnInsertStockPicking.Location = new System.Drawing.Point(138, 1);
+			this.btnInsertStockPicking.Name = "btnInsertStockPicking";
+			this.btnInsertStockPicking.Size = new System.Drawing.Size(36, 23);
+			this.btnInsertStockPicking.TabIndex = 48;
+			this.btnInsertStockPicking.Text = "test";
+			this.btnInsertStockPicking.UseVisualStyleBackColor = true;
+			this.btnInsertStockPicking.Click += new System.EventHandler(this.btnInsertStockPicking_Click);
+			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(685, 4);
+			this.button1.Enabled = false;
+			this.button1.Location = new System.Drawing.Point(1099, 3);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 89;
-			this.button1.Text = "button1";
+			this.button1.Text = "get holiday";
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// btnSetting
 			// 
 			this.btnSetting.Enabled = false;
-			this.btnSetting.Location = new System.Drawing.Point(603, 3);
+			this.btnSetting.Location = new System.Drawing.Point(1017, 2);
 			this.btnSetting.Name = "btnSetting";
 			this.btnSetting.Size = new System.Drawing.Size(75, 23);
 			this.btnSetting.TabIndex = 88;
@@ -1293,7 +1451,7 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelIP});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 710);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 835);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(1556, 22);
 			this.statusStrip1.TabIndex = 90;
@@ -1305,28 +1463,371 @@
 			this.toolStripStatusLabelIP.Size = new System.Drawing.Size(128, 17);
 			this.toolStripStatusLabelIP.Text = "toolStripStatusLabel1";
 			// 
-			// btnLineStockIndex
+			// groupBox5
 			// 
-			this.btnLineStockIndex.Location = new System.Drawing.Point(1062, 60);
-			this.btnLineStockIndex.Name = "btnLineStockIndex";
-			this.btnLineStockIndex.Size = new System.Drawing.Size(111, 23);
-			this.btnLineStockIndex.TabIndex = 90;
-			this.btnLineStockIndex.Text = "LineStockIndex";
-			this.btnLineStockIndex.UseVisualStyleBackColor = true;
-			this.btnLineStockIndex.Click += new System.EventHandler(this.LineStockIndex_Click);
+			this.groupBox5.Controls.Add(this.label36);
+			this.groupBox5.Controls.Add(this.label35);
+			this.groupBox5.Controls.Add(this.btnExport);
+			this.groupBox5.Controls.Add(this.lbDecrease);
+			this.groupBox5.Controls.Add(this.lbIncrease);
+			this.groupBox5.Controls.Add(this.groupBox7);
+			this.groupBox5.Controls.Add(this.groupBox6);
+			this.groupBox5.Controls.Add(this.add);
+			this.groupBox5.Controls.Add(this.dgvStockReport);
+			this.groupBox5.Location = new System.Drawing.Point(20, 372);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(1524, 460);
+			this.groupBox5.TabIndex = 91;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Report";
 			// 
-			// dtpStockIndex
+			// txtManyDays
 			// 
-			this.dtpStockIndex.Location = new System.Drawing.Point(925, 59);
-			this.dtpStockIndex.Name = "dtpStockIndex";
-			this.dtpStockIndex.Size = new System.Drawing.Size(126, 22);
-			this.dtpStockIndex.TabIndex = 91;
+			this.txtManyDays.Location = new System.Drawing.Point(323, 7);
+			this.txtManyDays.Name = "txtManyDays";
+			this.txtManyDays.Size = new System.Drawing.Size(23, 22);
+			this.txtManyDays.TabIndex = 61;
+			this.txtManyDays.Text = "1";
+			// 
+			// lb
+			// 
+			this.lb.AutoSize = true;
+			this.lb.Location = new System.Drawing.Point(349, 12);
+			this.lb.Name = "lb";
+			this.lb.Size = new System.Drawing.Size(17, 12);
+			this.lb.TabIndex = 60;
+			this.lb.Text = "日";
+			// 
+			// chkDay
+			// 
+			this.chkDay.AutoSize = true;
+			this.chkDay.Location = new System.Drawing.Point(305, 11);
+			this.chkDay.Name = "chkDay";
+			this.chkDay.Size = new System.Drawing.Size(15, 14);
+			this.chkDay.TabIndex = 59;
+			this.chkDay.UseVisualStyleBackColor = true;
+			// 
+			// txtProfit
+			// 
+			this.txtProfit.Location = new System.Drawing.Point(306, 12);
+			this.txtProfit.Name = "txtProfit";
+			this.txtProfit.Size = new System.Drawing.Size(41, 22);
+			this.txtProfit.TabIndex = 58;
+			// 
+			// txt
+			// 
+			this.txt.AutoSize = true;
+			this.txt.Location = new System.Drawing.Point(264, 15);
+			this.txt.Name = "txt";
+			this.txt.Size = new System.Drawing.Size(41, 12);
+			this.txt.TabIndex = 57;
+			this.txt.Text = "報酬率";
+			// 
+			// txtTotalCost
+			// 
+			this.txtTotalCost.Location = new System.Drawing.Point(178, 11);
+			this.txtTotalCost.Name = "txtTotalCost";
+			this.txtTotalCost.Size = new System.Drawing.Size(82, 22);
+			this.txtTotalCost.TabIndex = 56;
+			// 
+			// label29
+			// 
+			this.label29.AutoSize = true;
+			this.label29.Location = new System.Drawing.Point(136, 17);
+			this.label29.Name = "label29";
+			this.label29.Size = new System.Drawing.Size(41, 12);
+			this.label29.TabIndex = 55;
+			this.label29.Text = "總成本";
+			// 
+			// txtTotalProfit
+			// 
+			this.txtTotalProfit.Location = new System.Drawing.Point(50, 11);
+			this.txtTotalProfit.Name = "txtTotalProfit";
+			this.txtTotalProfit.Size = new System.Drawing.Size(81, 22);
+			this.txtTotalProfit.TabIndex = 54;
+			// 
+			// label28
+			// 
+			this.label28.AutoSize = true;
+			this.label28.Location = new System.Drawing.Point(8, 18);
+			this.label28.Name = "label28";
+			this.label28.Size = new System.Drawing.Size(41, 12);
+			this.label28.TabIndex = 53;
+			this.label28.Text = "總獲利";
+			// 
+			// btnQuery
+			// 
+			this.btnQuery.Location = new System.Drawing.Point(487, 7);
+			this.btnQuery.Name = "btnQuery";
+			this.btnQuery.Size = new System.Drawing.Size(42, 23);
+			this.btnQuery.TabIndex = 51;
+			this.btnQuery.Text = "Query";
+			this.btnQuery.UseVisualStyleBackColor = true;
+			this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
+			// 
+			// btnStockResult
+			// 
+			this.btnStockResult.Location = new System.Drawing.Point(689, 58);
+			this.btnStockResult.Name = "btnStockResult";
+			this.btnStockResult.Size = new System.Drawing.Size(71, 23);
+			this.btnStockResult.TabIndex = 50;
+			this.btnStockResult.Text = "Stock Result";
+			this.btnStockResult.UseVisualStyleBackColor = true;
+			this.btnStockResult.Click += new System.EventHandler(this.btnStockResult_Click);
+			// 
+			// dgvStockReport
+			// 
+			this.dgvStockReport.AllowUserToAddRows = false;
+			this.dgvStockReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgvStockReport.Location = new System.Drawing.Point(3, 49);
+			this.dgvStockReport.Name = "dgvStockReport";
+			this.dgvStockReport.RowTemplate.Height = 24;
+			this.dgvStockReport.Size = new System.Drawing.Size(1515, 400);
+			this.dgvStockReport.TabIndex = 47;
+			// 
+			// dTPReport
+			// 
+			this.dTPReport.Location = new System.Drawing.Point(175, 9);
+			this.dTPReport.Name = "dTPReport";
+			this.dTPReport.Size = new System.Drawing.Size(126, 22);
+			this.dTPReport.TabIndex = 45;
+			// 
+			// chkApproved
+			// 
+			this.chkApproved.AutoSize = true;
+			this.chkApproved.Location = new System.Drawing.Point(370, 11);
+			this.chkApproved.Name = "chkApproved";
+			this.chkApproved.Size = new System.Drawing.Size(15, 14);
+			this.chkApproved.TabIndex = 63;
+			this.chkApproved.UseVisualStyleBackColor = true;
+			// 
+			// label30
+			// 
+			this.label30.AutoSize = true;
+			this.label30.Location = new System.Drawing.Point(386, 12);
+			this.label30.Name = "label30";
+			this.label30.Size = new System.Drawing.Size(17, 12);
+			this.label30.TabIndex = 64;
+			this.label30.Text = "核";
+			// 
+			// btnAdd
+			// 
+			this.btnAdd.Location = new System.Drawing.Point(426, 12);
+			this.btnAdd.Name = "btnAdd";
+			this.btnAdd.Size = new System.Drawing.Size(51, 23);
+			this.btnAdd.TabIndex = 65;
+			this.btnAdd.Text = "update";
+			this.btnAdd.UseVisualStyleBackColor = true;
+			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+			// 
+			// txtPickingCode
+			// 
+			this.txtPickingCode.ForeColor = System.Drawing.SystemColors.ScrollBar;
+			this.txtPickingCode.Location = new System.Drawing.Point(96, 12);
+			this.txtPickingCode.Name = "txtPickingCode";
+			this.txtPickingCode.Size = new System.Drawing.Size(44, 22);
+			this.txtPickingCode.TabIndex = 66;
+			this.txtPickingCode.TextChanged += new System.EventHandler(this.txtPickingCode_TextChanged);
+			// 
+			// add
+			// 
+			this.add.Controls.Add(this.label34);
+			this.add.Controls.Add(this.txtRemark);
+			this.add.Controls.Add(this.cbApprove);
+			this.add.Controls.Add(this.txtPickingCode);
+			this.add.Controls.Add(this.btnAdd);
+			this.add.Location = new System.Drawing.Point(1034, 9);
+			this.add.Name = "add";
+			this.add.Size = new System.Drawing.Size(481, 39);
+			this.add.TabIndex = 67;
+			this.add.TabStop = false;
+			// 
+			// txtRemark
+			// 
+			this.txtRemark.Location = new System.Drawing.Point(142, 12);
+			this.txtRemark.Name = "txtRemark";
+			this.txtRemark.Size = new System.Drawing.Size(280, 22);
+			this.txtRemark.TabIndex = 67;
+			// 
+			// cbApprove
+			// 
+			this.cbApprove.FormattingEnabled = true;
+			this.cbApprove.Items.AddRange(new object[] {
+            "不核放",
+            "核放"});
+			this.cbApprove.Location = new System.Drawing.Point(3, 13);
+			this.cbApprove.Name = "cbApprove";
+			this.cbApprove.Size = new System.Drawing.Size(58, 20);
+			this.cbApprove.TabIndex = 68;
+			// 
+			// progressBar3
+			// 
+			this.progressBar3.Location = new System.Drawing.Point(1388, 835);
+			this.progressBar3.Name = "progressBar3";
+			this.progressBar3.Size = new System.Drawing.Size(129, 23);
+			this.progressBar3.TabIndex = 92;
+			// 
+			// label31
+			// 
+			this.label31.AutoSize = true;
+			this.label31.Location = new System.Drawing.Point(353, 16);
+			this.label31.Name = "label31";
+			this.label31.Size = new System.Drawing.Size(14, 12);
+			this.label31.TabIndex = 69;
+			this.label31.Text = "%";
+			// 
+			// dtpReportStart
+			// 
+			this.dtpReportStart.Location = new System.Drawing.Point(23, 8);
+			this.dtpReportStart.Name = "dtpReportStart";
+			this.dtpReportStart.Size = new System.Drawing.Size(126, 22);
+			this.dtpReportStart.TabIndex = 70;
+			this.dtpReportStart.Value = new System.DateTime(2023, 4, 19, 0, 0, 0, 0);
+			// 
+			// label32
+			// 
+			this.label32.AutoSize = true;
+			this.label32.Location = new System.Drawing.Point(6, 13);
+			this.label32.Name = "label32";
+			this.label32.Size = new System.Drawing.Size(17, 12);
+			this.label32.TabIndex = 71;
+			this.label32.Text = "起";
+			// 
+			// label33
+			// 
+			this.label33.AutoSize = true;
+			this.label33.Location = new System.Drawing.Point(154, 13);
+			this.label33.Name = "label33";
+			this.label33.Size = new System.Drawing.Size(17, 12);
+			this.label33.TabIndex = 72;
+			this.label33.Text = "迄";
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.label28);
+			this.groupBox6.Controls.Add(this.txtTotalProfit);
+			this.groupBox6.Controls.Add(this.label29);
+			this.groupBox6.Controls.Add(this.txtTotalCost);
+			this.groupBox6.Controls.Add(this.label31);
+			this.groupBox6.Controls.Add(this.txt);
+			this.groupBox6.Controls.Add(this.txtProfit);
+			this.groupBox6.Location = new System.Drawing.Point(659, 9);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(369, 37);
+			this.groupBox6.TabIndex = 73;
+			this.groupBox6.TabStop = false;
+			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.label37);
+			this.groupBox7.Controls.Add(this.chkOpenningPrice);
+			this.groupBox7.Controls.Add(this.label32);
+			this.groupBox7.Controls.Add(this.dTPReport);
+			this.groupBox7.Controls.Add(this.label33);
+			this.groupBox7.Controls.Add(this.btnQuery);
+			this.groupBox7.Controls.Add(this.chkDay);
+			this.groupBox7.Controls.Add(this.dtpReportStart);
+			this.groupBox7.Controls.Add(this.lb);
+			this.groupBox7.Controls.Add(this.txtManyDays);
+			this.groupBox7.Controls.Add(this.label30);
+			this.groupBox7.Controls.Add(this.chkApproved);
+			this.groupBox7.Location = new System.Drawing.Point(6, 10);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(533, 37);
+			this.groupBox7.TabIndex = 74;
+			this.groupBox7.TabStop = false;
+			// 
+			// label34
+			// 
+			this.label34.AutoSize = true;
+			this.label34.Location = new System.Drawing.Point(64, 18);
+			this.label34.Name = "label34";
+			this.label34.Size = new System.Drawing.Size(29, 12);
+			this.label34.TabIndex = 69;
+			this.label34.Text = "代碼";
+			// 
+			// lbIncrease
+			// 
+			this.lbIncrease.AutoSize = true;
+			this.lbIncrease.ForeColor = System.Drawing.Color.Red;
+			this.lbIncrease.Location = new System.Drawing.Point(608, 24);
+			this.lbIncrease.Name = "lbIncrease";
+			this.lbIncrease.Size = new System.Drawing.Size(0, 12);
+			this.lbIncrease.TabIndex = 70;
+			// 
+			// lbDecrease
+			// 
+			this.lbDecrease.AutoSize = true;
+			this.lbDecrease.ForeColor = System.Drawing.Color.LimeGreen;
+			this.lbDecrease.Location = new System.Drawing.Point(641, 24);
+			this.lbDecrease.Name = "lbDecrease";
+			this.lbDecrease.Size = new System.Drawing.Size(0, 12);
+			this.lbDecrease.TabIndex = 75;
+			// 
+			// btnExport
+			// 
+			this.btnExport.Location = new System.Drawing.Point(545, 18);
+			this.btnExport.Name = "btnExport";
+			this.btnExport.Size = new System.Drawing.Size(45, 23);
+			this.btnExport.TabIndex = 73;
+			this.btnExport.Text = "Export";
+			this.btnExport.UseVisualStyleBackColor = true;
+			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+			// 
+			// label35
+			// 
+			this.label35.AutoSize = true;
+			this.label35.ForeColor = System.Drawing.Color.Black;
+			this.label35.Location = new System.Drawing.Point(590, 24);
+			this.label35.Name = "label35";
+			this.label35.Size = new System.Drawing.Size(17, 12);
+			this.label35.TabIndex = 76;
+			this.label35.Text = "漲";
+			// 
+			// label36
+			// 
+			this.label36.AutoSize = true;
+			this.label36.ForeColor = System.Drawing.Color.Black;
+			this.label36.Location = new System.Drawing.Point(624, 24);
+			this.label36.Name = "label36";
+			this.label36.Size = new System.Drawing.Size(17, 12);
+			this.label36.TabIndex = 77;
+			this.label36.Text = "跌";
+			// 
+			// lbMessage
+			// 
+			this.lbMessage.AutoSize = true;
+			this.lbMessage.ForeColor = System.Drawing.Color.Teal;
+			this.lbMessage.Location = new System.Drawing.Point(766, 63);
+			this.lbMessage.Name = "lbMessage";
+			this.lbMessage.Size = new System.Drawing.Size(0, 12);
+			this.lbMessage.TabIndex = 78;
+			// 
+			// label37
+			// 
+			this.label37.AutoSize = true;
+			this.label37.Location = new System.Drawing.Point(422, 12);
+			this.label37.Name = "label37";
+			this.label37.Size = new System.Drawing.Size(65, 12);
+			this.label37.TabIndex = 74;
+			this.label37.Text = "隔日開盤價";
+			// 
+			// chkOpenningPrice
+			// 
+			this.chkOpenningPrice.AutoSize = true;
+			this.chkOpenningPrice.Location = new System.Drawing.Point(406, 11);
+			this.chkOpenningPrice.Name = "chkOpenningPrice";
+			this.chkOpenningPrice.Size = new System.Drawing.Size(15, 14);
+			this.chkOpenningPrice.TabIndex = 73;
+			this.chkOpenningPrice.UseVisualStyleBackColor = true;
 			// 
 			// ScheduleJob
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1556, 732);
+			this.ClientSize = new System.Drawing.Size(1556, 857);
+			this.Controls.Add(this.progressBar3);
+			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.btnAdminLogin);
 			this.Controls.Add(this.txtPassword);
@@ -1338,6 +1839,7 @@
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.txtAccount);
 			this.Controls.Add(this.lbStockAccount);
+			this.Controls.Add(this.btnResetLinePoint);
 			this.Name = "ScheduleJob";
 			this.Text = "ScheduleJob";
 			this.Load += new System.EventHandler(this.ScheduleJob_Load);
@@ -1373,6 +1875,15 @@
 			this.pnAdmin.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).EndInit();
+			this.add.ResumeLayout(false);
+			this.add.PerformLayout();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1383,7 +1894,6 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.TextBox txtErrMsg;
         private System.Windows.Forms.Button btnGetIndexToInsert;
-        private System.Windows.Forms.Button btnGetTopIndex;
         private System.Windows.Forms.Timer timerInsertStockIndex;
         private System.Windows.Forms.Button btnUpdateStockIndex;
         private System.Windows.Forms.Button btnGetStockPrice;
@@ -1426,7 +1936,6 @@
         private System.Windows.Forms.CheckBox chkLess;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.Button btnInsertStockByDate;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Panel panel3;
@@ -1497,5 +2006,52 @@
 		private System.Windows.Forms.Button btnLineCtuRed;
 		private System.Windows.Forms.Button btnLineStockIndex;
 		private System.Windows.Forms.DateTimePicker dtpStockIndex;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.DateTimePicker dTPReport;
+		private System.Windows.Forms.DataGridView dgvStockReport;
+		private System.Windows.Forms.Button btnInsertStockPicking;
+		private System.Windows.Forms.Button btnTestLog;
+		private System.Windows.Forms.Button btnStockResult;
+		private System.Windows.Forms.CheckBox chkPickingGood;
+		private System.Windows.Forms.CheckBox chkPickingCtu;
+		private System.Windows.Forms.CheckBox chkPickingBad;
+		private System.Windows.Forms.Button btnTestJson;
+		private System.Windows.Forms.Button btnGetGoodStockByJson;
+		private System.Windows.Forms.DateTimePicker dtpStockYesterday;
+		private System.Windows.Forms.CheckBox chkJurical;
+		private System.Windows.Forms.Button btnLineGoodbyJson;
+		private System.Windows.Forms.Button btnQuery;
+		private System.Windows.Forms.Label label28;
+		private System.Windows.Forms.TextBox txtTotalProfit;
+		private System.Windows.Forms.TextBox txtTotalCost;
+		private System.Windows.Forms.Label label29;
+		private System.Windows.Forms.TextBox txtProfit;
+		private System.Windows.Forms.Label txt;
+		private System.Windows.Forms.CheckBox chkDay;
+		private System.Windows.Forms.TextBox txtManyDays;
+		private System.Windows.Forms.Label lb;
+		private System.Windows.Forms.Label label30;
+		private System.Windows.Forms.CheckBox chkApproved;
+		private System.Windows.Forms.Button btnAdd;
+		private System.Windows.Forms.GroupBox add;
+		private System.Windows.Forms.TextBox txtRemark;
+		private System.Windows.Forms.TextBox txtPickingCode;
+		private System.Windows.Forms.ComboBox cbApprove;
+		private System.Windows.Forms.ProgressBar progressBar3;
+		private System.Windows.Forms.Label label31;
+		private System.Windows.Forms.Label label33;
+		private System.Windows.Forms.Label label32;
+		private System.Windows.Forms.DateTimePicker dtpReportStart;
+		private System.Windows.Forms.GroupBox groupBox6;
+		private System.Windows.Forms.GroupBox groupBox7;
+		private System.Windows.Forms.Label label34;
+		private System.Windows.Forms.Label lbIncrease;
+		private System.Windows.Forms.Label lbDecrease;
+		private System.Windows.Forms.Button btnExport;
+		private System.Windows.Forms.Label label36;
+		private System.Windows.Forms.Label label35;
+		private System.Windows.Forms.Label lbMessage;
+		private System.Windows.Forms.Label label37;
+		private System.Windows.Forms.CheckBox chkOpenningPrice;
 	}
 }

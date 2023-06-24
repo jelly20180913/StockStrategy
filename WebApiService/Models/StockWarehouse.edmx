@@ -84,6 +84,44 @@
           <Property Name="StockType" Type="bit" />
           <Property Name="Code" Type="varchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="StockGroupTotalCount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="20" />
+          <Property Name="TotalCount" Type="int" />
+        </EntityType>
+        <EntityType Name="StockGroupTrend">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockGroupId" Type="int" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
+          <Property Name="StrengthType" Type="bit" />
+          <Property Name="StrengthPercent" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="RedLight" Type="int" />
+          <Property Name="GreenLight" Type="int" />
+          <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="StockHighLow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CurrentPrice" Type="varchar" MaxLength="10" />
+          <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
+          <Property Name="HighestPrice" Type="varchar" MaxLength="10" />
+          <Property Name="LowestPrice" Type="varchar" MaxLength="10" />
+          <Property Name="HighLowRatio" Type="decimal" Precision="12" Scale="6" />
+          <Property Name="HighestPriceDate" Type="varchar" MaxLength="10" />
+          <Property Name="LowestPriceDate" Type="varchar" MaxLength="10" />
+          <Property Name="NewRecord" Type="bit" />
+        </EntityType>
         <EntityType Name="StockIndex">
           <Key>
             <PropertyRef Name="Id" />
@@ -141,6 +179,10 @@
           <Property Name="DAX_QuoteChange" Type="varchar" MaxLength="10" />
           <Property Name="NIKKEI_Index" Type="varchar" MaxLength="10" />
           <Property Name="NIKKEI_QuoteChange" Type="varchar" MaxLength="10" />
+          <Property Name="Ups" Type="varchar" MaxLength="10" />
+          <Property Name="Downs" Type="varchar" MaxLength="10" />
+          <Property Name="UpsHalf" Type="varchar" MaxLength="10" />
+          <Property Name="DownsHalf" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -161,6 +203,25 @@
           <Property Name="SellAll" Type="bit" />
           <Property Name="ClosePtLost" Type="bit" />
           <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="StockInventoryLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="Cost" Type="varchar" MaxLength="20" />
+          <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CoverPrice" Type="varchar" MaxLength="10" />
+          <Property Name="Winning" Type="bit" />
+          <Property Name="CreateDate" Type="varchar" MaxLength="10" />
+          <Property Name="StartPrice" Type="varchar" MaxLength="10" />
+          <Property Name="Profit" Type="varchar" MaxLength="20" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="200" />
+          <Property Name="CoverDate" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StockLineNotify">
           <Key>
@@ -194,6 +255,7 @@
           <Property Name="CreateId" Type="varchar" MaxLength="20" />
           <Property Name="Approve" Type="bit" />
           <Property Name="OpeningPrice" Type="varchar" MaxLength="10" />
+          <Property Name="SuspendDate" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="StockResult">
           <Key>
@@ -209,17 +271,35 @@
           <Property Name="Precise" Type="bit" />
           <Property Name="Class" Type="int" />
         </EntityType>
+        <EntityType Name="StockThreeInstitutional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="20" />
+          <Property Name="ForeignInvestment" Type="varchar" MaxLength="20" />
+          <Property Name="Investment" Type="varchar" MaxLength="20" />
+          <Property Name="Dealer" Type="varchar" MaxLength="20" />
+          <Property Name="Date" Type="varchar" MaxLength="20" />
+          <Property Name="Rank" Type="int" />
+          <Property Name="BuySellOver" Type="bit" />
+        </EntityType>
         <EntityContainer Name="StockWarehouseModelStoreContainer">
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockBacktest" EntityType="Self.StockBacktest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockFutureCode" EntityType="Self.StockFutureCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockGroup" EntityType="Self.StockGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockGroupTotalCount" EntityType="Self.StockGroupTotalCount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockGroupTrend" EntityType="Self.StockGroupTrend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockHighLow" EntityType="Self.StockHighLow" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockIndex" EntityType="Self.StockIndex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInventory" EntityType="Self.StockInventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockInventoryLog" EntityType="Self.StockInventoryLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockLineNotify" EntityType="Self.StockLineNotify" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockPicking" EntityType="Self.StockPicking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockResult" EntityType="Self.StockResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockThreeInstitutional" EntityType="Self.StockThreeInstitutional" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Holiday" EntityType="Self.Holiday" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Holiday].[Id] AS [Id], 
@@ -333,6 +413,10 @@
           <Property Name="DAX_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NIKKEI_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NIKKEI_QuoteChange" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Ups" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Downs" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UpsHalf" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DownsHalf" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -366,6 +450,11 @@
           <EntitySet Name="StockBacktest" EntityType="StockWarehouseModel.StockBacktest" />
           <EntitySet Name="StockPicking" EntityType="StockWarehouseModel.StockPicking" />
           <EntitySet Name="StockResult" EntityType="StockWarehouseModel.StockResult" />
+          <EntitySet Name="StockGroupTotalCount" EntityType="StockWarehouseModel.StockGroupTotalCount" />
+          <EntitySet Name="StockInventoryLog" EntityType="StockWarehouseModel.StockInventoryLog" />
+          <EntitySet Name="StockThreeInstitutional" EntityType="StockWarehouseModel.StockThreeInstitutional" />
+          <EntitySet Name="StockHighLow" EntityType="StockWarehouseModel.StockHighLow" />
+          <EntitySet Name="StockGroupTrend" EntityType="StockWarehouseModel.StockGroupTrend" />
         </EntityContainer>
         <EntityType Name="StockLineNotify">
           <Key>
@@ -433,6 +522,7 @@
           <Property Name="CreateId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Approve" Type="Boolean" />
           <Property Name="OpeningPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SuspendDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockResult">
           <Key>
@@ -447,6 +537,76 @@
           <Property Name="StockPickingId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Precise" Type="Boolean" />
           <Property Name="Class" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StockGroupTotalCount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TotalCount" Type="Int32" />
+        </EntityType>
+        <EntityType Name="StockInventoryLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="Cost" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CoverPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Winning" Type="Boolean" />
+          <Property Name="CreateDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StartPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Profit" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CoverDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="StockThreeInstitutional">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ForeignInvestment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Investment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Dealer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Rank" Type="Int32" />
+          <Property Name="BuySellOver" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="StockHighLow">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HighestPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LowestPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HighLowRatio" Type="Decimal" Precision="12" Scale="6" />
+          <Property Name="HighestPriceDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LowestPriceDate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NewRecord" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="StockGroupTrend">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockGroupId" Type="Int32" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StrengthType" Type="Boolean" />
+          <Property Name="StrengthPercent" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="RedLight" Type="Int32" />
+          <Property Name="GreenLight" Type="Int32" />
+          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -503,6 +663,10 @@
           <EntitySetMapping Name="StockIndex">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockIndex">
               <MappingFragment StoreEntitySet="StockIndex">
+                <ScalarProperty Name="DownsHalf" ColumnName="DownsHalf" />
+                <ScalarProperty Name="UpsHalf" ColumnName="UpsHalf" />
+                <ScalarProperty Name="Downs" ColumnName="Downs" />
+                <ScalarProperty Name="Ups" ColumnName="Ups" />
                 <ScalarProperty Name="NIKKEI_QuoteChange" ColumnName="NIKKEI_QuoteChange" />
                 <ScalarProperty Name="NIKKEI_Index" ColumnName="NIKKEI_Index" />
                 <ScalarProperty Name="DAX_QuoteChange" ColumnName="DAX_QuoteChange" />
@@ -633,6 +797,7 @@
           <EntitySetMapping Name="StockPicking">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockPicking">
               <MappingFragment StoreEntitySet="StockPicking">
+                <ScalarProperty Name="SuspendDate" ColumnName="SuspendDate" />
                 <ScalarProperty Name="OpeningPrice" ColumnName="OpeningPrice" />
                 <ScalarProperty Name="Approve" ColumnName="Approve" />
                 <ScalarProperty Name="CreateId" ColumnName="CreateId" />
@@ -663,6 +828,81 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="ClosingPrice" ColumnName="ClosingPrice" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockGroupTotalCount">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockGroupTotalCount">
+              <MappingFragment StoreEntitySet="StockGroupTotalCount">
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInventoryLog">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockInventoryLog">
+              <MappingFragment StoreEntitySet="StockInventoryLog">
+                <ScalarProperty Name="CoverDate" ColumnName="CoverDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Profit" ColumnName="Profit" />
+                <ScalarProperty Name="StartPrice" ColumnName="StartPrice" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Winning" ColumnName="Winning" />
+                <ScalarProperty Name="CoverPrice" ColumnName="CoverPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockThreeInstitutional">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockThreeInstitutional">
+              <MappingFragment StoreEntitySet="StockThreeInstitutional">
+                <ScalarProperty Name="BuySellOver" ColumnName="BuySellOver" />
+                <ScalarProperty Name="Rank" ColumnName="Rank" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Dealer" ColumnName="Dealer" />
+                <ScalarProperty Name="Investment" ColumnName="Investment" />
+                <ScalarProperty Name="ForeignInvestment" ColumnName="ForeignInvestment" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockHighLow">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockHighLow">
+              <MappingFragment StoreEntitySet="StockHighLow">
+                <ScalarProperty Name="NewRecord" ColumnName="NewRecord" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="LowestPriceDate" ColumnName="LowestPriceDate" />
+                <ScalarProperty Name="HighestPriceDate" ColumnName="HighestPriceDate" />
+                <ScalarProperty Name="HighLowRatio" ColumnName="HighLowRatio" />
+                <ScalarProperty Name="LowestPrice" ColumnName="LowestPrice" />
+                <ScalarProperty Name="HighestPrice" ColumnName="HighestPrice" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockGroupTrend">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockGroupTrend">
+              <MappingFragment StoreEntitySet="StockGroupTrend">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="GreenLight" ColumnName="GreenLight" />
+                <ScalarProperty Name="RedLight" ColumnName="RedLight" />
+                <ScalarProperty Name="StrengthPercent" ColumnName="StrengthPercent" />
+                <ScalarProperty Name="StrengthType" ColumnName="StrengthType" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StockGroupId" ColumnName="StockGroupId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

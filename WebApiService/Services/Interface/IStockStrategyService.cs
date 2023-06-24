@@ -20,6 +20,12 @@ namespace WebApiService.Services.Interface
 		bool DeleteStockPicking(int id);
 		List<StockResult> GetStockResultList();
 		bool DeleteStockResult(int id);
-
+		List<StockHighLow> GetStockHighLowList();
+		bool InsertStockHighLow(List<StockHighLow> s);
+		bool InsertStockGroupTrend(List<StockGroupTrend> s);
+		List<StockGroupTrend> GetStockGroupTrendList();
+		bool InsertStockThreeInstitutional(List<StockThreeInstitutional> s);
+		List<StockThreeInstitutional> GetStockThreeInstitutionalList();
+		List<StockGroupTotalCount> GetStockGroupTotalCountList();
 	}
 }

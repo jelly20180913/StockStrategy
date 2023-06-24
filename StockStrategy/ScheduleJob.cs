@@ -26,6 +26,7 @@ using System.IO;
 using DocumentFormat.OpenXml.Office2010.ExcelAc;
 //using DataModel.Stock;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 //using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace StockStrategy
@@ -42,7 +43,7 @@ namespace StockStrategy
 		string Volume = "Price1_lbTVolume";
 		string GoodStock = "", CtuStock = "", GainType = "", BadStock = "";
 		DataAccess _DataAccess = new DataAccess();
-		private bool bGoodStockLineNotify = false, bGoodStockByJsonLineNotify = false;
+		private bool bGoodStockLineNotify = false, bGoodStockByJsonLineNotify = false,bStockGroupTrend=false,bStockThreeInstitutional=false;
 		private bool bBadStockLineNotify;
 		List<Holiday> HolidayList = new List<Holiday>();
 		Dictionary<int, string> GoodStockClass = new Dictionary<int, string>() { };
@@ -99,7 +100,10 @@ namespace StockStrategy
 			GoodStockClass.Add(7, "盤季放量");
 			GoodStockClass.Add(8, "半年放量");
 			GoodStockClass.Add(9, "盤年放量");
-			this.cbApprove.SelectedIndex = 0;
+			GoodStockClass.Add(11, "萬張放量");
+			this.cbApprove.SelectedIndex = 0; 
+			this.ContextMenuStrip = PopupMenu; 
+			PopupMenu.Show();
 		}
 		/// <summary>
 		/// 寫入加權指數到資料庫
@@ -290,6 +294,8 @@ namespace StockStrategy
 				bGoodStockLineNotify = false;
 				bBadStockLineNotify = false;
 				bGoodStockByJsonLineNotify = false;
+				bStockGroupTrend = false;
+				bStockThreeInstitutional = false;
 				this.dtpGoodDate.Value = DateTime.Now;
 				this.dtpBadDate.Value = DateTime.Now.AddDays(-1);
 				this.dtpCtuDate.Value = DateTime.Now;
@@ -314,6 +320,14 @@ namespace StockStrategy
 						btnResetLinePoint.PerformClick();
 					}
 
+				}
+				if (_Hour == "8" && _Minute == "40")
+				{
+					if (!bStockThreeInstitutional)
+					{
+						bStockThreeInstitutional = true;
+						btnLineThree.PerformClick(); 
+					} 
 				}
 				if (_Hour == "8" && _Minute == "45")
 				{
@@ -362,6 +376,7 @@ namespace StockStrategy
 						btnLineCtuRed.PerformClick();
 						btnStockResult.PerformClick();
 						btnGetGoodStockByJson.PerformClick();
+						btnInsertGroupTrend.PerformClick();
 					}
 
 				}
@@ -373,7 +388,13 @@ namespace StockStrategy
 						btnLineGoodbyJson.PerformClick();
 					}
 				}
-
+				if (_Hour == "18" && _Minute == "20")
+				{
+					if (!bStockGroupTrend)
+					{
+						bStockGroupTrend = true; 
+					}
+				}
 			}
 		}
 		/// <summary>
@@ -1585,6 +1606,10 @@ namespace StockStrategy
 				int _Fall = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) < 0).ToList().Count;
 				int _RiseHalf = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) > 4.9).ToList().Count;
 				int _FallHalf = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) < -4.9).ToList().Count;
+				_StockIndex.Ups = _Rise.ToString();
+				_StockIndex.Downs = _Fall.ToString();
+				_StockIndex.UpsHalf=_RiseHalf.ToString();
+				_StockIndex.DownsHalf=_FallHalf.ToString();
 				foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.NotifyClass == "USA_Index" && x.Enable == true).ToList())
 				{
 					string _Msg = String.Format("日期:{0}({1})\r\n", dateTime, _StockIndex.DayOfWeek);
@@ -1602,6 +1627,9 @@ namespace StockStrategy
 					_Msg += String.Format("恆生:{0} 漲跌:{1}\r\n", _StockIndex.VHSI_Index, _StockIndex.VHSI_QuoteChange);
 					_Msg += String.Format("漲跌家數:▲{0}家 ▼{1}家\r\n", _Rise, _Fall);
 					_Msg += String.Format("半根:▲{0}家 ▼{1}家\r\n", _RiseHalf, _FallHalf);
+					_DataAccess.UpdateStockIndex(_StockIndex);
+					_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " update stock half ok.";
+					this.txtErrMsg.Text += _Log;
 					CallLineNotifyApi(s.Token, _Msg);
 				}
 				this.txtErrMsg.Text += "Line Stock Index OK" + "\r\n";
@@ -1750,7 +1778,7 @@ namespace StockStrategy
 				DateTime _YestodayDate = skipHoliday(_Dt.AddDays(_Yestoday));
 				List<DataModel.Stock.Stock> _YestodayStockDayAllList = _DataAccess.getStockBySqlList(_YestodayDate.Date.ToString("yyyyMMdd"), "Date");
 				List<StockPicking> _ListStockPicking = _DataAccess.getStockPickingList().Where(x => x.Enabled == true).ToList();
-				List<StockPicking> _StockPickingList = _ListStockPicking.Where(x => (x.Class == 1 || x.Class == 5 || x.Class == 6 || x.Class == 7 || x.Class == 8 || x.Class == 9 || x.Class == 10) && Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
+				List<StockPicking> _StockPickingList = _ListStockPicking.Where(x => (x.Class == 1 || x.Class == 5 || x.Class == 6 || x.Class == 7 || x.Class == 8 || x.Class == 9 || x.Class == 10 || x.Class == 11) && Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
 				List<StockPicking> _StockPickingCtnList = _ListStockPicking.Where(x => (x.Class == 2 || x.Class == 3) && Convert.ToInt32(x.Date) == Convert.ToInt32(_YestodayDate.ToString("yyyyMMdd"))).ToList();
 				List<StockPicking> _StockPickingBadList = _ListStockPicking.Where(x => x.Class == 4 && Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
 				List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
@@ -1760,39 +1788,43 @@ namespace StockStrategy
 				foreach (StockPicking s in _StockPickingList.Union(_StockPickingCtnList).OrderBy(x => x.Class))
 				{
 					List<StockResult> stockResultList = _DataAccess.getStockResultList();
-					DataModel.Stock.Stock _Stock = _StockDayAllList.Where(x => x.Code == s.Code).First();
-					StockResult _StockResult = new StockResult();
-					_StockResult.Code = s.Code;
-					_StockResult.ClosingPrice = _Stock.ClosingPrice;
-					_StockResult.Gain = _Stock.Gain;
-					_StockResult.Date = _WhereDate;
-					_StockResult.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-					_StockResult.StockPickingId = s.StockPickingId;
-					_StockResult.Precise = IsPrecise(s.Class, _Stock.Gain);
-					_StockResult.Class = s.Class;
-					_AccumulatedGain = Math.Round((Convert.ToDecimal(_Stock.ClosingPrice) - Convert.ToDecimal(s.StartPrice)) / Convert.ToDecimal(s.StartPrice), 4) * 100;
-					s.AccumulatedGain = _AccumulatedGain.ToString();
-					s.AccumulatedDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-					if (Convert.ToInt32( s.Date) == Convert.ToInt32(_YestodayDate.Date.ToString("yyyyMMdd"))) {
-						s.OpeningPrice = _Stock.OpeningPrice;
-					}
-
-					_DataAccess.UpdateStockPicking(s);
-					if (stockResultList.Where(x => x.Code == s.Code && x.Date == _WhereDate).Count() > 0)
+					if (_StockDayAllList.Where(x => x.Code == s.Code).ToList().Count > 0)
 					{
-						foreach (StockResult sr in stockResultList.Where(x => x.Code == s.Code && x.Date == _WhereDate).ToList())
+						DataModel.Stock.Stock _Stock = _StockDayAllList.Where(x => x.Code == s.Code).First();
+						StockResult _StockResult = new StockResult();
+						_StockResult.Code = s.Code;
+						_StockResult.ClosingPrice = _Stock.ClosingPrice;
+						_StockResult.Gain = _Stock.Gain;
+						_StockResult.Date = _WhereDate;
+						_StockResult.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+						_StockResult.StockPickingId = s.StockPickingId;
+						_StockResult.Precise = IsPrecise(s.Class, _Stock.Gain);
+						_StockResult.Class = s.Class;
+						_AccumulatedGain = Math.Round((Convert.ToDecimal(_Stock.ClosingPrice) - Convert.ToDecimal(s.StartPrice)) / Convert.ToDecimal(s.StartPrice), 4) * 100;
+						s.AccumulatedGain = _AccumulatedGain.ToString();
+						s.AccumulatedDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+						if (Convert.ToInt32(s.Date) == Convert.ToInt32(_YestodayDate.Date.ToString("yyyyMMdd")))
 						{
-							_DataAccess.DeleteStockResult(sr.Id);
+							s.OpeningPrice = _Stock.OpeningPrice;
 						}
+
+						_DataAccess.UpdateStockPicking(s);
+						if (stockResultList.Where(x => x.Code == s.Code && x.Date == _WhereDate).Count() > 0)
+						{
+							foreach (StockResult sr in stockResultList.Where(x => x.Code == s.Code && x.Date == _WhereDate).ToList())
+							{
+								_DataAccess.DeleteStockResult(sr.Id);
+							}
+						}
+						if (_StockResultList.Where(x => x.Code == s.Code).ToList().Count > 0)
+							_StockResultList.Remove(_StockResultList.Where(x => x.Code == s.Code).First());
+						_StockResultList.Add(_StockResult);
 					}
-					if (_StockResultList.Where(x => x.Code == s.Code).ToList().Count > 0)
-						_StockResultList.Remove(_StockResultList.Where(x => x.Code == s.Code).First());
-					_StockResultList.Add(_StockResult);
 				}
 				_DataAccess.InsertStockResult(_StockResultList);
 				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " insert stock Result ok.\r\n";
 				this.txtErrMsg.Text += _Log;
-				this.lbMessage.Text = _WhereDate+ " insert stock Result ok";
+				this.lbMessage.Text = _WhereDate + " insert stock Result ok";
 			}
 			catch (Exception ex)
 			{
@@ -1866,6 +1898,7 @@ namespace StockStrategy
 			progressBar3.Show();
 			string _Log = "";
 			int _Num = 1;
+			string Code = "";
 			try
 			{
 				DataAccess _DataAccess = new DataAccess();
@@ -1873,13 +1906,19 @@ namespace StockStrategy
 				DateTime _Dt = Convert.ToDateTime(this.dTPReport.Text);
 				string _DayOfWeek = _Dt.DayOfWeek.ToString();
 				string _WhereDate = _Dt.ToString("yyyyMMdd");
+				
 				int _Yestoday = _DayOfWeek == "Monday" ? -3 : -1;
 				DateTime _YestodayDate = skipHoliday(_Dt.AddDays(_Yestoday));
+				DateTime _LastDate = skipHoliday(DateTime.Now.AddDays(-1));
+				string _Last = _LastDate.ToString("yyyyMMdd");
+				//撈取50萬筆一年的股票row data要一分鐘
+				//List<Stock> _StockList = _DataAccess.getStockAllList().ToList();
 				List<StockPicking> _ListStockPicking = _DataAccess.getStockPickingList().Where(x => x.Enabled == true).ToList();
-				List<StockPicking> _StockPickingList = _ListStockPicking.Where(x => (x.Class == 1 || x.Class == 5 || x.Class == 6 || x.Class == 7 || x.Class == 8 || x.Class == 9 || x.Class == 10) && Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
-				_StockPickingList = _StockPickingList.Where(x => Convert.ToInt32(x.Date) > Convert.ToInt32(this.dtpReportStart.Value.ToString("yyyyMMdd"))).ToList();
+				List<StockPicking> _StockPickingList = _ListStockPicking.Where(x => (x.Class == 1 || x.Class == 5 || x.Class == 6 || x.Class == 7 || x.Class == 8 || x.Class == 9 || x.Class == 10 || x.Class == 11) && Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
+				_StockPickingList = _StockPickingList.Where(x => Convert.ToInt32(x.Date) >= Convert.ToInt32(this.dtpReportStart.Value.ToString("yyyyMMdd"))).ToList();
 				List<StockGroup> _ListStockGroup = _DataAccess.getStockGroupList();
 				List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
+				List<DataModel.Stock.Stock> _StockTodayList = _DataAccess.getStockBySqlList(_Last, "Date");
 				decimal _AccumulatedGain = 0;
 				List<StockResult> _StockResultList = _DataAccess.getStockResultList();
 				//List<DataModel.Stock.StockReport> _StockReportList = new List<DataModel.Stock.StockReport>();
@@ -1888,6 +1927,7 @@ namespace StockStrategy
 				int _Increase = 0, _Decrease = 0;
 				foreach (StockPicking s in _StockPickingList.OrderBy(x => x.Date).ToList())
 				{
+					Code = s.Code;
 					//改成更新open price
 					//if (_Num == 1) this.txtStartDate.Text = s.Date;
 					//List<DataModel.Stock.Stock> _StockList = _DataAccess.getStockBySqlList(s.Date, "Date");
@@ -1896,34 +1936,45 @@ namespace StockStrategy
 					_StockReport.StockClass = GoodStockClass.Where(x => x.Key == s.Class) != null ? GoodStockClass.Where(x => x.Key == s.Class).First().Value : "";
 					_StockReport.StartDate = s.Date;
 					_StockReport.Code = s.Code;
-					_StockReport.Name = _ListStockGroup.Where(x => x.Code == s.Code).First().Name;
+					if (_ListStockGroup.Where(x => x.Code == s.Code).ToList().Count > 0)
+						_StockReport.Name = _ListStockGroup.Where(x => x.Code == s.Code).First().Name;
 					_StockReport.StartPrice = s.StartPrice;
 
 					_StockReport.Remark = s.Remark;
-					_StockReport.AccumulatedGain = Convert.ToDecimal(s.AccumulatedGain);
+					
 					//_StockReport.SecondDayOpeningPrice = _Stock.OpeningPrice;
 					_StockReport.SecondDayOpeningPrice = s.OpeningPrice;
 					if (chkDay.Checked)
 					{
 						_WhereDate = Convert.ToString(Convert.ToDouble(s.Date) + Convert.ToDouble(txtManyDays.Text));
 					}
-					_StockReport.ClosingPrice = _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).ToList().Count > 0 ? _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).First().ClosingPrice : s.StartPrice;
-
+					List<DataModel.Stock.Stock> _StockList = _DataAccess.getStockBySqlList(s.Code, "Code").ToList();
+					string _ClosingPrice = s.StartPrice;
+					if(_StockList.Where(x => x.Date == _WhereDate).ToList().Count>0)
+						_ClosingPrice = _StockList.Where(x => x.Date == _WhereDate).First().ClosingPrice;
+					
+					_StockReport.ClosingPrice = _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).ToList().Count > 0 ? _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).First().ClosingPrice : _ClosingPrice;
+					if (s.SuspendDate != ""&& s.SuspendDate != null) _StockReport.ClosingPrice = _StockList.Where(x => x.Date == s.SuspendDate).First().ClosingPrice;
 					decimal _StartPrice = 0m;
 					_StartPrice = Convert.ToDecimal(_StockReport.StartPrice);
-					if (chkOpenningPrice.Checked) {
+					if (chkOpenningPrice.Checked)
+					{
 						if (_StockReport.SecondDayOpeningPrice != null)
 							_StartPrice = Convert.ToDecimal(_StockReport.SecondDayOpeningPrice);
 					} 
 					_AccumulatedGain = Convert.ToDecimal(_StockReport.ClosingPrice) - _StartPrice;
+					_StockReport.AccumulatedGain = s.AccumulatedGain != "0" ? Convert.ToDecimal(s.AccumulatedGain) : _AccumulatedGain;
 					if (chkDay.Checked) _StockReport.AccumulatedGain = Math.Round(_AccumulatedGain / _StartPrice, 2);
 					_StockReport.GainProfit = _AccumulatedGain * 1000;
 					if (_StockReport.GainProfit > 0) _Increase++;
 					else _Decrease++;
-					_StockReport.StartVolumn = s.StartVolume;
-					_StockReport.YesterdayVolumn = s.YesterdayVolume;
+					_StockReport.StartVolumn =Convert.ToString( Convert.ToInt32( s.StartVolume)/1000);
+					_StockReport.YesterdayVolumn = Convert.ToString(Convert.ToInt32(s.YesterdayVolume) / 1000);
 					_StockReport.StockPickingId = s.StockPickingId;
 					_StockReport.Approve = s.Approve == true ? "核放" : "不核放";
+					_StockReport.TodayPrice = _StockTodayList.Where(x => x.Code == s.Code).Count()>0? _StockTodayList.Where(x => x.Code == s.Code).First().ClosingPrice:s.StartPrice;
+					decimal _TotalGain = Convert.ToDecimal(_StockReport.TodayPrice) - Convert.ToDecimal(_StockReport.StartPrice);
+					_StockReport.TotalGain =Math.Round(_TotalGain / Convert.ToDecimal(_StockReport.StartPrice) ,2);
 					_StockReportList.Add(_StockReport);
 					_Num++;
 				}
@@ -1934,8 +1985,7 @@ namespace StockStrategy
 				decimal _Profit = Math.Round(_TotalGainProfit / _TotalCost, 2) * 100;
 				this.txtTotalCost.Text = _TotalCost.ToString();
 				this.txtProfit.Text = _Profit.ToString();
-				this.txtTotalProfit.Text = _TotalGainProfit.ToString();
-
+				this.txtTotalProfit.Text = _TotalGainProfit.ToString(); 
 				this.dgvStockReport.DataSource = _StockReportList;
 				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " query stock report ok.\r\n";
 				this.txtErrMsg.Text += _Log;
@@ -1943,18 +1993,18 @@ namespace StockStrategy
 			}
 			catch (Exception ex)
 			{
-				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " btnQuery:第" + _Num + "筆" + ex.Message + "\r\n";
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " btnQuery:第" + _Num + "筆 "+Code + ex.Message + "\r\n";
 				logger.Error(_Log);
 				this.txtErrMsg.Text += _Log;
 			}
 		}
-		private  List<DataModel.Stock.StockReport> getStockReport()
+		private List<DataModel.Stock.StockReport> getStockReport()
 		{
 
 			DataAccess _DataAccess = new DataAccess();
 			string _Log = "";
 			int _Num = 1;
-			 List<DataModel.Stock.StockReport> _StockReportList = new  List<DataModel.Stock.StockReport>();
+			List<DataModel.Stock.StockReport> _StockReportList = new List<DataModel.Stock.StockReport>();
 			try
 			{
 				this.btnLogin.PerformClick();
@@ -1964,7 +2014,7 @@ namespace StockStrategy
 				int _Yestoday = _DayOfWeek == "Monday" ? -3 : -1;
 				DateTime _YestodayDate = skipHoliday(_Dt.AddDays(_Yestoday));
 				List<StockPicking> _ListStockPicking = _DataAccess.getStockPickingList().Where(x => x.Enabled == true).ToList();
-				List<StockPicking> _StockPickingList = _ListStockPicking.Where(x => (x.Class == 1 || x.Class == 5 || x.Class == 6 || x.Class == 7 || x.Class == 8 || x.Class == 9 || x.Class == 10) && Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
+				List<StockPicking> _StockPickingList = _ListStockPicking.Where(x => (x.Class == 1 || x.Class == 5 || x.Class == 6 || x.Class == 7 || x.Class == 8 || x.Class == 9 || x.Class == 10 || x.Class == 11) && Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
 				_StockPickingList = _StockPickingList.Where(x => Convert.ToInt32(x.Date) > Convert.ToInt32(this.dtpReportStart.Value.ToString("yyyyMMdd"))).ToList();
 				List<StockGroup> _ListStockGroup = _DataAccess.getStockGroupList();
 				List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
@@ -1985,19 +2035,19 @@ namespace StockStrategy
 					_StockReport.Name = _ListStockGroup.Where(x => x.Code == s.Code).First().Name;
 					_StockReport.StartPrice = s.StartPrice;
 					_StockReport.Remark = s.Remark;
-					_StockReport.AccumulatedGain = Math.Round(Convert.ToDecimal(s.AccumulatedGain),2);
+					_StockReport.AccumulatedGain = Math.Round(Convert.ToDecimal(s.AccumulatedGain), 2);
 					_StockReport.SecondDayOpeningPrice = _Stock.OpeningPrice;
 					if (chkDay.Checked)
 					{
 						_WhereDate = Convert.ToString(Convert.ToDouble(s.Date) + Convert.ToDouble(txtManyDays.Text));
 					}
 					_StockReport.ClosingPrice = _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).ToList().Count > 0 ? _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).First().ClosingPrice : s.StartPrice;
-					_AccumulatedGain = Math.Round(Convert.ToDecimal(_StockReport.ClosingPrice) - Convert.ToDecimal(_StockReport.StartPrice),2);
+					_AccumulatedGain = Math.Round(Convert.ToDecimal(_StockReport.ClosingPrice) - Convert.ToDecimal(_StockReport.StartPrice), 2);
 					if (chkDay.Checked) _StockReport.AccumulatedGain = Math.Round(_AccumulatedGain / Convert.ToDecimal(_StockReport.StartPrice), 2);
 					_StockReport.GainProfit = _AccumulatedGain * 1000;
 					if (_StockReport.GainProfit > 0) _Increase++;
 					else _Decrease++;
-					_StockReport.StartVolumn =Convert.ToString( Convert.ToDecimal( s.StartVolume)/1000);
+					_StockReport.StartVolumn = Convert.ToString(Convert.ToDecimal(s.StartVolume) / 1000);
 					_StockReport.YesterdayVolumn = Convert.ToString(Convert.ToDecimal(s.YesterdayVolume) / 1000);
 					_StockReport.StockPickingId = s.StockPickingId;
 					_StockReport.Approve = s.Approve == true ? "核放" : "不核放";
@@ -2056,6 +2106,7 @@ namespace StockStrategy
 				}
 				_StockPickingList.Add(stockPicking);
 				_DataAccess.InsertStockPicking(_StockPickingList);
+				MessageBox.Show("新增完成");
 				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " insert stock picking " + txtPickingCode.Text + "ok.\r\n";
 				this.txtErrMsg.Text += _Log;
 			}
@@ -2070,7 +2121,7 @@ namespace StockStrategy
 		{
 			if (this.txtPickingCode.Text != "") addStockPicking();
 			else updateStockPicking();
-			MessageBox.Show("更新完成");
+
 		}
 		private void updateStockPicking()
 		{
@@ -2078,18 +2129,22 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
+				//string  _Dt = DateTime.Now.ToString("yyyyMMdd");
+				string _Dt = Convert.ToDateTime(this.dtpSuspendDate.Text).ToString("yyyyMMdd");
 				List<StockPicking> _ListStockPicking = _DataAccess.getStockPickingList();
 				foreach (DataGridViewRow row in this.dgvStockReport.Rows)
 				{
 					if (row.Selected)
 					{
 						string _StockPickingId = row.Cells["StockPickingId"].Value.ToString();
-						string _SecondDayOpeningPrice = row.Cells["SecondDayOpeningPrice"].Value.ToString();
+						string _SecondDayOpeningPrice = row.Cells["SecondDayOpeningPrice"].Value != null ? row.Cells["SecondDayOpeningPrice"].Value.ToString() : "";
 						StockPicking _StockPicking = _ListStockPicking.Where(x => x.StockPickingId == _StockPickingId).First();
-						_StockPicking.Remark = row.Cells["Remark"].Value!=null?row.Cells["Remark"].Value.ToString():"";
+						_StockPicking.Remark = row.Cells["Remark"].Value != null ? row.Cells["Remark"].Value.ToString() : "";
 						_StockPicking.Approve = cbApprove.Text == "核放" ? true : false;
 						_StockPicking.OpeningPrice = _SecondDayOpeningPrice;
+						_StockPicking.SuspendDate = chkSuspend.Checked ? _Dt : "";
 						_DataAccess.UpdateStockPicking(_StockPicking);
+						MessageBox.Show("更新完成");
 					}
 				}
 				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " update stock picking  ok.\r\n";
@@ -2132,6 +2187,264 @@ namespace StockStrategy
 			}
 		}
 
+		private void highLowToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormHighLow _FormHighLow = new FormHighLow();
+			_FormHighLow.ShowDialog();
+		}
+
+		private void autoOrderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormMain _FormMain = new FormMain();
+			_FormMain.ShowDialog();
+		}
+
+		private void strengthWeaknessToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormStockGroupTrend _FormStockGroupTrend = new FormStockGroupTrend();
+			_FormStockGroupTrend.ShowDialog();
+
+		}
+
+		private void btnInsertGroupTrend_Click(object sender, EventArgs e)
+		{ 
+			var t = new Task(insertStockGroupTrendList);
+			t.Start();
+		}
+		private void insertStockGroupTrendList()
+		{
+			string _Log = "";
+			try
+			{
+				DataAccess _DataAccess = new DataAccess();
+				List<StockGroupTrend> _StockGroupTrendList = setStockGroupTrendList();
+				_DataAccess.insertStockGroupTrend(_StockGroupTrendList);
+
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " insertStockGroupTrendList:" + ex.Message + "\r\n";
+				logger.Error(_Log);
+			}
+		}
+
+		private void btnLineTrend_Click(object sender, EventArgs e)
+		{
+			string _Log = "";
+			try
+			{
+				string _WhereDate = Convert.ToDateTime(this.dtpStockIndex.Value).ToString("yyyyMMdd");
+				DataAccess _DataAccess = new DataAccess();
+				List<StockGroupTotalCount> _StockGroupTotalCountList = _DataAccess.getStockGroupTotalCountList();
+				List<StockGroupTrend> _StockGroupTrend = _DataAccess.getStockGroupTrendList().Where(x => x.Date == _WhereDate).ToList();
+				List<DataModel.Stock.StockGroupTrend> _ListStockGroupTrend = _StockGroupTrend.Join(_StockGroupTotalCountList,
+					c => c.StockGroupId, s => s.Id, (c, s) => (
+					 new DataModel.Stock.StockGroupTrend
+					 {
+						 GroupName = s.GroupName,
+						 Date = _WhereDate,
+						 StrengthType = c.StrengthType == true ? "強勢" : "弱勢",
+						 StrengthPercent = Convert.ToDecimal(c.StrengthPercent),
+						 RedLight = c.RedLight.ToString(),
+						 GreenLight = c.GreenLight.ToString(),
+						 Remark = c.Remark
+
+					 })).ToList();
+				string _StrengthGroup = "強勢族群:";
+				foreach (DataModel.Stock.StockGroupTrend s in _ListStockGroupTrend.Where(x=>x.StrengthType=="強勢"&&x.StrengthPercent>0.1m).OrderByDescending(x=>x.StrengthPercent).ToList()) {
+					_StrengthGroup+=s.GroupName+";";
+				}
+			    string _WeaknessGroup = "弱勢族群:";
+				foreach (DataModel.Stock.StockGroupTrend s in _ListStockGroupTrend.Where(x => x.StrengthType == "弱勢" && x.StrengthPercent > 0.1m).OrderByDescending(x => x.StrengthPercent).ToList())
+				{
+					_WeaknessGroup += s.GroupName + ";";
+				}
+				List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
+				foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.NotifyClass == "Trend" && x.Enable == true).ToList())
+				{
+					string _Msg = _StrengthGroup+"\r\n"+ _WeaknessGroup;
+					CallLineNotifyApi(s.Token, _Msg);
+				}
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " btnLineTrend_Click:" + ex.Message + "\r\n";
+				logger.Error(_Log);
+			}
+		}
+
+		private void threeInvestmentToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormThreeInstitutional _FormThreeInstitutional = new FormThreeInstitutional();
+			_FormThreeInstitutional.ShowDialog();
+		}
+
+		private void maintainToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormMaintain _FormMaintain = new FormMaintain();
+			_FormMaintain.ShowDialog();
+		}
+
+		private void btnLineThree_Click(object sender, EventArgs e)
+		{
+			string _Log = "";
+			try
+			{
+				string _WhereDate = Convert.ToDateTime(this.dtpStockIndex.Value).ToString("yyyyMMdd");
+				DateTime _Dt = Convert.ToDateTime(this.dtpStockIndex.Value);
+				int _Yestoday = DateTime.Now.DayOfWeek.ToString() == "Monday" ? -3 : -1;
+				DateTime _YestodayDate = skipHoliday(_Dt.AddDays(_Yestoday));
+				_WhereDate= _YestodayDate.ToString("yyyyMMdd");
+				DataAccess _DataAccess = new DataAccess();
+				List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
+				List<DataModel.Stock.StockThreeInstitutional> _ListStockThreeInstitutional = new List<DataModel.Stock.StockThreeInstitutional>();
+				int _Rank = 1; 
+				string _Foreign =string.Format( "日期{0} 外資買超:\r\n",_WhereDate);
+				foreach (DataModel.Stock.Stock s in _StockDayAllList.OrderByDescending(x => Convert.ToDecimal(x.ForeignInvestment)).ToList().Take(10).ToList())
+				{
+					_Foreign = _Foreign+string.Format("第{0}名,{1}:{2},{3};\r\n",_Rank,s.Code,s.Name,s.ForeignInvestment);
+					_Rank++;
+				}
+				_Rank = 1;
+				string _Investment = string.Format("日期{0} 投信買超:\r\n", _WhereDate);
+				foreach (DataModel.Stock.Stock s in _StockDayAllList.OrderByDescending(x => Convert.ToDecimal(x.Investment)).ToList().Take(10).ToList())
+				{
+					_Investment = _Investment + string.Format("第{0}名,{1}:{2},{3};\r\n", _Rank, s.Code, s.Name,s.Investment);
+					_Rank++;
+				}
+				_Rank = 1;
+				string _ForeignSell = string.Format("日期{0} 外資賣超:\r\n", _WhereDate);
+				foreach (DataModel.Stock.Stock s in _StockDayAllList.OrderBy(x => Convert.ToDecimal(x.ForeignInvestment)).ToList().Take(10).ToList())
+				{
+					_ForeignSell = _ForeignSell + string.Format("第{0}名,{1}:{2},{3};\r\n", _Rank, s.Code, s.Name,s.ForeignInvestment);
+					_Rank++;
+				}
+				_Rank = 1;
+				string _InvestmentSell = string.Format("日期{0} 投信賣超:\r\n", _WhereDate);
+				foreach (DataModel.Stock.Stock s in _StockDayAllList.OrderBy(x => Convert.ToDecimal(x.Investment)).ToList().Take(10).ToList())
+				{
+					_InvestmentSell = _InvestmentSell + string.Format("第{0}名,{1}:{2},{3};\r\n", _Rank, s.Code, s.Name,s.Investment);
+					_Rank++;
+				}
+				List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
+				foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.NotifyClass == "Three" && x.Enable == true).ToList())
+				{ 
+					CallLineNotifyApi(s.Token, _Foreign);
+					CallLineNotifyApi(s.Token, _Investment);
+					CallLineNotifyApi(s.Token, _ForeignSell);
+					CallLineNotifyApi(s.Token, _InvestmentSell);
+				}
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " btnLineThree_Click:" + ex.Message + "\r\n";
+				logger.Error(_Log);
+			}
+		}
+
+		private List<StockGroupTrend> setStockGroupTrendList()
+		{
+			string _Log = "", _GroupName = "";
+			List<StockGroupTrend> _StockGroupTrendList = new List<StockGroupTrend>();
+			DataAccess _DataAccess = new DataAccess();
+			int _No = 0;
+			List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
+			List<StockGroupTotalCount> _StockGroupTotalCountList = _DataAccess.getStockGroupTotalCountList();
+			string _WhereDate = Convert.ToDateTime(this.dtpStockIndex.Value).ToString("yyyyMMdd");
+			List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
+			List<DataModel.Stock.Stock> _StockDayAllStengthList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) > 3).ToList();
+			List<DataModel.Stock.Stock> _StockDayAllWeaknessList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) < -3).ToList();
+			var _StockList = _StockDayAllStengthList.Join(_StockGroupList,
+					c => c.Code, x => x.Code, (c, x) => (
+					 new
+					 {
+						 Code = c.Code,
+						 Name = c.Name,
+						 Class = x.Class,
+						 Gain = c.Gain,
+
+					 })).ToList();
+			var _StockWeaknessList = _StockDayAllWeaknessList.Join(_StockGroupList,
+					c => c.Code, x => x.Code, (c, x) => (
+					 new
+					 {
+						 Code = c.Code,
+						 Name = c.Name,
+						 Class = x.Class,
+						 Gain = c.Gain,
+
+					 })).ToList();
+			foreach (StockGroupTotalCount s in _StockGroupTotalCountList)
+			{
+				try
+				{
+					var _StockByClassList = _StockList.Where(x => x.Class == s.GroupName).ToList();
+					StockGroupTrend _StockGroupTrend = new StockGroupTrend();
+					_StockGroupTrend.StockGroupId = s.Id;
+					_StockGroupTrend.Date = _WhereDate;
+					_StockGroupTrend.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+					_StockGroupTrend.RedLight = _StockByClassList.Where(x => Convert.ToDecimal(x.Gain) > 9.5m).Count();
+					_StockGroupTrend.GreenLight = _StockByClassList.Where(x => Convert.ToDecimal(x.Gain) < -9.5m).Count();
+					string _Remark = "";
+					foreach (var dms in _StockByClassList)
+					{
+						_Remark = _Remark + dms.Code + ":" + dms.Name + ";";
+					}
+					_StockGroupTrend.Remark = _Remark;
+					_StockGroupTrend.StrengthType = true;
+					decimal _StrengthPercent = Math.Round(Convert.ToDecimal(_StockByClassList.Count) / Convert.ToDecimal(s.TotalCount), 2);
+					_StockGroupTrend.StrengthPercent = _StrengthPercent;
+					if (_StockByClassList.Count > 0)
+					{
+						_GroupName = s.GroupName;
+						_StockGroupTrendList.Add(_StockGroupTrend);
+					}
+					_No++;
+				}
+				catch (Exception ex)
+				{
+					_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " setStockGroupTrendList:" + _GroupName + ex.Message + "\r\n";
+					logger.Error(_Log);
+				}
+			}
+			foreach (StockGroupTotalCount s in _StockGroupTotalCountList)
+			{
+				try
+				{
+					var _StockByClassWeaknessList = _StockWeaknessList.Where(x => x.Class == s.GroupName).ToList();
+					StockGroupTrend _StockGroupTrend = new StockGroupTrend();
+					_StockGroupTrend.StockGroupId = s.Id;
+					_StockGroupTrend.Date = _WhereDate;
+					_StockGroupTrend.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+					_StockGroupTrend.RedLight = _StockByClassWeaknessList.Where(x => Convert.ToDecimal(x.Gain) > 9.5m).Count();
+					_StockGroupTrend.GreenLight = _StockByClassWeaknessList.Where(x => Convert.ToDecimal(x.Gain) < -9.5m).Count();
+					string _Remark = "";
+					foreach (var dms in _StockByClassWeaknessList)
+					{
+						_Remark = _Remark + dms.Code + ":" + dms.Name + ";";
+					}
+					_StockGroupTrend.Remark = _Remark;
+
+					_StockGroupTrend.StrengthType = false;
+					decimal _StrengthPercentWeakness = Math.Round(Convert.ToDecimal(_StockByClassWeaknessList.Count) / Convert.ToDecimal(s.TotalCount), 2);
+					_StockGroupTrend.StrengthPercent = _StrengthPercentWeakness;
+					if (_StockByClassWeaknessList.Count > 0)
+					{
+						_GroupName = s.GroupName;
+						_StockGroupTrendList.Add(_StockGroupTrend);
+					}
+					_No++;
+				}
+				catch (Exception ex)
+				{
+					_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " setStockGroupTrendList:" + _GroupName + ex.Message + "\r\n";
+					logger.Error(_Log);
+				}
+			}
+			MethodInvoker mi = new MethodInvoker(this.UpdateUI);
+			this.BeginInvoke(mi, null);
+			return _StockGroupTrendList;
+		}
 		/// <summary>
 		/// Json檔 起漲放量選股策略賴通知
 		/// </summary>
@@ -2159,7 +2472,7 @@ namespace StockStrategy
 					List<DataModel.Stock.Stock> stockList = new List<DataModel.Stock.Stock>();
 					foreach (var s in _StockList.Where(x => x.Class == item.Key).ToList())
 					{
-						DataModel.Stock.Stock st = new DataModel.Stock.Stock(s.Code, s.Name, "", "", "", "", "", "", "");
+						DataModel.Stock.Stock st = new DataModel.Stock.Stock(s.Code, s.Name, "", "", "", "", "", "", "","","","");
 						stockList.Add(st);
 					}
 					if (stockList.Count > 0) lineAIStock(stockList, "Good", item.Value, _Dt.ToString("yyyyMMdd"));

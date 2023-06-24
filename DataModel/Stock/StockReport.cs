@@ -19,8 +19,10 @@ namespace DataModel.Stock
 		public string Name { get; set; }
 		[Description("選股收盤價")]
 		public string StartPrice { get; set; }
-		[Description("隔日開盤價")]
-		public string SecondDayOpeningPrice { get; set; }
+		[Description("今日價")]
+		public string TodayPrice { get; set; }
+		[Description("總漲幅")]
+		public decimal TotalGain { get; set; }
 		[Description("報表日收盤價")]
 		public string ClosingPrice { get; set; }
 		[Description("初量")]
@@ -33,6 +35,8 @@ namespace DataModel.Stock
 		public decimal AccumulatedGain { get; set; }
 		[Description("獲利")]
 		public decimal  GainProfit { get; set; }
+		[Description("隔日開盤價")]
+		public string SecondDayOpeningPrice { get; set; }
 		[Description("Key")]
 		public string StockPickingId { get; set; }
 		[Description("核放")]

@@ -18,16 +18,25 @@ namespace WebApiService.Services.Implement
 		private IHolidayService _holidayService;
 		private IStockPickingService _stockPickingService;
 		private IStockResultService _stockResultService;
+		private IStockHighLowService _stockHighLowService;
+		private IStockGroupTrendService _stockGroupTrendService;
+		private IStockThreeInstitutionalService _stockThreeInstitutionalService;
+		private IStockGroupTotalCountService _stockGroupTotalCountService;
 		/// <summary>
 		/// Dependence Injection
 		/// </summary>
 
-		public StockStrategyService(IStockService stockService, IHolidayService holidayService, IStockPickingService stockPickingService,IStockResultService stockResultService)
+		public StockStrategyService(IStockService stockService, IHolidayService holidayService, IStockPickingService stockPickingService,IStockResultService stockResultService,IStockHighLowService stockHighLowService
+			, IStockGroupTrendService stockGroupTrendService, IStockThreeInstitutionalService stockThreeInstitutionalService, IStockGroupTotalCountService stockGroupTotalCountService)
 		{
 			this._stockService = stockService;
 			_holidayService = holidayService;
 			_stockPickingService = stockPickingService;	
 			_stockResultService=stockResultService;
+			_stockHighLowService=stockHighLowService;
+			_stockGroupTrendService=stockGroupTrendService;
+			_stockThreeInstitutionalService=stockThreeInstitutionalService;
+			_stockGroupTotalCountService=stockGroupTotalCountService;
 		}
 		/// <summary>
 		/// get vote item list
@@ -94,6 +103,45 @@ namespace WebApiService.Services.Implement
 		{
 			this._stockResultService.Delete(id);
 			return true;
+		}
+		public bool InsertStockHighLow(List<StockHighLow> s)
+		{
+			this._stockHighLowService.MiltiCreate(s);
+			return true;
+		}
+		public List<StockHighLow> GetStockHighLowList()
+		{
+			List<StockHighLow> _StockHighLowList = new List<StockHighLow>();
+			_StockHighLowList = this._stockHighLowService.GetAll().ToList();
+			return _StockHighLowList;
+		}
+		public bool InsertStockGroupTrend(List<StockGroupTrend> s)
+		{
+			this._stockGroupTrendService.MiltiCreate(s);
+			return true;
+		}
+		public List<StockGroupTrend> GetStockGroupTrendList()
+		{
+			List<StockGroupTrend> _StockGroupTrendList = new List<StockGroupTrend>();
+			_StockGroupTrendList = this._stockGroupTrendService.GetAll().ToList();
+			return _StockGroupTrendList;
+		}
+		public bool InsertStockThreeInstitutional(List<StockThreeInstitutional> s)
+		{
+			this._stockThreeInstitutionalService.MiltiCreate(s);
+			return true;
+		}
+		public List<StockThreeInstitutional> GetStockThreeInstitutionalList()
+		{
+			List<StockThreeInstitutional> _StockThreeInstitutionalList = new List<StockThreeInstitutional>();
+			_StockThreeInstitutionalList = this._stockThreeInstitutionalService.GetAll().ToList();
+			return _StockThreeInstitutionalList;
+		}
+		public List<StockGroupTotalCount> GetStockGroupTotalCountList()
+		{
+			List<StockGroupTotalCount> _StockGroupTotalCountList = new List<StockGroupTotalCount>();
+			_StockGroupTotalCountList = this._stockGroupTotalCountService.GetAll().ToList();
+			return _StockGroupTotalCountList;
 		}
 	}
 }

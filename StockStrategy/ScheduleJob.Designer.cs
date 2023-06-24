@@ -138,6 +138,7 @@
 			this.btnBad = new System.Windows.Forms.Button();
 			this.btnStockJurical = new System.Windows.Forms.Button();
 			this.pnAdmin = new System.Windows.Forms.Panel();
+			this.lbMessage = new System.Windows.Forms.Label();
 			this.chkJurical = new System.Windows.Forms.CheckBox();
 			this.dtpStockYesterday = new System.Windows.Forms.DateTimePicker();
 			this.dtpStockIndex = new System.Windows.Forms.DateTimePicker();
@@ -147,6 +148,7 @@
 			this.btnInsertStockPicking = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.btnSetting = new System.Windows.Forms.Button();
+			this.btnStockResult = new System.Windows.Forms.Button();
 			this.txtPassword = new System.Windows.Forms.TextBox();
 			this.label25 = new System.Windows.Forms.Label();
 			this.txtAccount = new System.Windows.Forms.TextBox();
@@ -155,42 +157,55 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelIP = new System.Windows.Forms.ToolStripStatusLabel();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.txtManyDays = new System.Windows.Forms.TextBox();
-			this.lb = new System.Windows.Forms.Label();
-			this.chkDay = new System.Windows.Forms.CheckBox();
-			this.txtProfit = new System.Windows.Forms.TextBox();
-			this.txt = new System.Windows.Forms.Label();
-			this.txtTotalCost = new System.Windows.Forms.TextBox();
-			this.label29 = new System.Windows.Forms.Label();
-			this.txtTotalProfit = new System.Windows.Forms.TextBox();
-			this.label28 = new System.Windows.Forms.Label();
-			this.btnQuery = new System.Windows.Forms.Button();
-			this.btnStockResult = new System.Windows.Forms.Button();
-			this.dgvStockReport = new System.Windows.Forms.DataGridView();
-			this.dTPReport = new System.Windows.Forms.DateTimePicker();
-			this.chkApproved = new System.Windows.Forms.CheckBox();
-			this.label30 = new System.Windows.Forms.Label();
-			this.btnAdd = new System.Windows.Forms.Button();
-			this.txtPickingCode = new System.Windows.Forms.TextBox();
-			this.add = new System.Windows.Forms.GroupBox();
-			this.txtRemark = new System.Windows.Forms.TextBox();
-			this.cbApprove = new System.Windows.Forms.ComboBox();
-			this.progressBar3 = new System.Windows.Forms.ProgressBar();
-			this.label31 = new System.Windows.Forms.Label();
-			this.dtpReportStart = new System.Windows.Forms.DateTimePicker();
-			this.label32 = new System.Windows.Forms.Label();
-			this.label33 = new System.Windows.Forms.Label();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.label34 = new System.Windows.Forms.Label();
-			this.lbIncrease = new System.Windows.Forms.Label();
-			this.lbDecrease = new System.Windows.Forms.Label();
-			this.btnExport = new System.Windows.Forms.Button();
-			this.label35 = new System.Windows.Forms.Label();
 			this.label36 = new System.Windows.Forms.Label();
-			this.lbMessage = new System.Windows.Forms.Label();
+			this.label35 = new System.Windows.Forms.Label();
+			this.btnExport = new System.Windows.Forms.Button();
+			this.lbDecrease = new System.Windows.Forms.Label();
+			this.lbIncrease = new System.Windows.Forms.Label();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
 			this.label37 = new System.Windows.Forms.Label();
 			this.chkOpenningPrice = new System.Windows.Forms.CheckBox();
+			this.label32 = new System.Windows.Forms.Label();
+			this.dTPReport = new System.Windows.Forms.DateTimePicker();
+			this.label33 = new System.Windows.Forms.Label();
+			this.btnQuery = new System.Windows.Forms.Button();
+			this.chkDay = new System.Windows.Forms.CheckBox();
+			this.dtpReportStart = new System.Windows.Forms.DateTimePicker();
+			this.lb = new System.Windows.Forms.Label();
+			this.txtManyDays = new System.Windows.Forms.TextBox();
+			this.label30 = new System.Windows.Forms.Label();
+			this.chkApproved = new System.Windows.Forms.CheckBox();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.label28 = new System.Windows.Forms.Label();
+			this.txtTotalProfit = new System.Windows.Forms.TextBox();
+			this.label29 = new System.Windows.Forms.Label();
+			this.txtTotalCost = new System.Windows.Forms.TextBox();
+			this.label31 = new System.Windows.Forms.Label();
+			this.txt = new System.Windows.Forms.Label();
+			this.txtProfit = new System.Windows.Forms.TextBox();
+			this.add = new System.Windows.Forms.GroupBox();
+			this.dtpSuspendDate = new System.Windows.Forms.DateTimePicker();
+			this.label38 = new System.Windows.Forms.Label();
+			this.label34 = new System.Windows.Forms.Label();
+			this.chkSuspend = new System.Windows.Forms.CheckBox();
+			this.txtRemark = new System.Windows.Forms.TextBox();
+			this.cbApprove = new System.Windows.Forms.ComboBox();
+			this.txtPickingCode = new System.Windows.Forms.TextBox();
+			this.btnAdd = new System.Windows.Forms.Button();
+			this.dgvStockReport = new System.Windows.Forms.DataGridView();
+			this.progressBar3 = new System.Windows.Forms.ProgressBar();
+			this.PopupMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.strateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.maintainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.highLowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.threeInvestmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.strengthWeaknessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.autoOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnInsertGroupTrend = new System.Windows.Forms.Button();
+			this.btnLineTrend = new System.Windows.Forms.Button();
+			this.btnLineThree = new System.Windows.Forms.Button();
+			this.label39 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -210,10 +225,11 @@
 			this.pnAdmin.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).BeginInit();
-			this.add.SuspendLayout();
-			this.groupBox6.SuspendLayout();
 			this.groupBox7.SuspendLayout();
+			this.groupBox6.SuspendLayout();
+			this.add.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).BeginInit();
+			this.PopupMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnLogin
@@ -1283,6 +1299,9 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.btnLineThree);
+			this.pnAdmin.Controls.Add(this.btnLineTrend);
+			this.pnAdmin.Controls.Add(this.btnInsertGroupTrend);
 			this.pnAdmin.Controls.Add(this.lbMessage);
 			this.pnAdmin.Controls.Add(this.chkJurical);
 			this.pnAdmin.Controls.Add(this.dtpStockYesterday);
@@ -1314,6 +1333,15 @@
 			this.pnAdmin.Name = "pnAdmin";
 			this.pnAdmin.Size = new System.Drawing.Size(1176, 90);
 			this.pnAdmin.TabIndex = 42;
+			// 
+			// lbMessage
+			// 
+			this.lbMessage.AutoSize = true;
+			this.lbMessage.ForeColor = System.Drawing.Color.Teal;
+			this.lbMessage.Location = new System.Drawing.Point(766, 63);
+			this.lbMessage.Name = "lbMessage";
+			this.lbMessage.Size = new System.Drawing.Size(0, 12);
+			this.lbMessage.TabIndex = 78;
 			// 
 			// chkJurical
 			// 
@@ -1403,6 +1431,16 @@
 			this.btnSetting.UseVisualStyleBackColor = true;
 			this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
 			// 
+			// btnStockResult
+			// 
+			this.btnStockResult.Location = new System.Drawing.Point(689, 58);
+			this.btnStockResult.Name = "btnStockResult";
+			this.btnStockResult.Size = new System.Drawing.Size(71, 23);
+			this.btnStockResult.TabIndex = 50;
+			this.btnStockResult.Text = "Stock Result";
+			this.btnStockResult.UseVisualStyleBackColor = true;
+			this.btnStockResult.Click += new System.EventHandler(this.btnStockResult_Click);
+			// 
 			// txtPassword
 			// 
 			this.txtPassword.Location = new System.Drawing.Point(157, 3);
@@ -1481,241 +1519,53 @@
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Report";
 			// 
-			// txtManyDays
+			// label36
 			// 
-			this.txtManyDays.Location = new System.Drawing.Point(323, 7);
-			this.txtManyDays.Name = "txtManyDays";
-			this.txtManyDays.Size = new System.Drawing.Size(23, 22);
-			this.txtManyDays.TabIndex = 61;
-			this.txtManyDays.Text = "1";
+			this.label36.AutoSize = true;
+			this.label36.ForeColor = System.Drawing.Color.Black;
+			this.label36.Location = new System.Drawing.Point(580, 24);
+			this.label36.Name = "label36";
+			this.label36.Size = new System.Drawing.Size(17, 12);
+			this.label36.TabIndex = 77;
+			this.label36.Text = "跌";
 			// 
-			// lb
+			// label35
 			// 
-			this.lb.AutoSize = true;
-			this.lb.Location = new System.Drawing.Point(349, 12);
-			this.lb.Name = "lb";
-			this.lb.Size = new System.Drawing.Size(17, 12);
-			this.lb.TabIndex = 60;
-			this.lb.Text = "日";
+			this.label35.AutoSize = true;
+			this.label35.ForeColor = System.Drawing.Color.Black;
+			this.label35.Location = new System.Drawing.Point(546, 24);
+			this.label35.Name = "label35";
+			this.label35.Size = new System.Drawing.Size(17, 12);
+			this.label35.TabIndex = 76;
+			this.label35.Text = "漲";
 			// 
-			// chkDay
+			// btnExport
 			// 
-			this.chkDay.AutoSize = true;
-			this.chkDay.Location = new System.Drawing.Point(305, 11);
-			this.chkDay.Name = "chkDay";
-			this.chkDay.Size = new System.Drawing.Size(15, 14);
-			this.chkDay.TabIndex = 59;
-			this.chkDay.UseVisualStyleBackColor = true;
+			this.btnExport.Location = new System.Drawing.Point(501, 18);
+			this.btnExport.Name = "btnExport";
+			this.btnExport.Size = new System.Drawing.Size(45, 23);
+			this.btnExport.TabIndex = 73;
+			this.btnExport.Text = "Export";
+			this.btnExport.UseVisualStyleBackColor = true;
+			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
 			// 
-			// txtProfit
+			// lbDecrease
 			// 
-			this.txtProfit.Location = new System.Drawing.Point(306, 12);
-			this.txtProfit.Name = "txtProfit";
-			this.txtProfit.Size = new System.Drawing.Size(41, 22);
-			this.txtProfit.TabIndex = 58;
+			this.lbDecrease.AutoSize = true;
+			this.lbDecrease.ForeColor = System.Drawing.Color.LimeGreen;
+			this.lbDecrease.Location = new System.Drawing.Point(597, 24);
+			this.lbDecrease.Name = "lbDecrease";
+			this.lbDecrease.Size = new System.Drawing.Size(0, 12);
+			this.lbDecrease.TabIndex = 75;
 			// 
-			// txt
+			// lbIncrease
 			// 
-			this.txt.AutoSize = true;
-			this.txt.Location = new System.Drawing.Point(264, 15);
-			this.txt.Name = "txt";
-			this.txt.Size = new System.Drawing.Size(41, 12);
-			this.txt.TabIndex = 57;
-			this.txt.Text = "報酬率";
-			// 
-			// txtTotalCost
-			// 
-			this.txtTotalCost.Location = new System.Drawing.Point(178, 11);
-			this.txtTotalCost.Name = "txtTotalCost";
-			this.txtTotalCost.Size = new System.Drawing.Size(82, 22);
-			this.txtTotalCost.TabIndex = 56;
-			// 
-			// label29
-			// 
-			this.label29.AutoSize = true;
-			this.label29.Location = new System.Drawing.Point(136, 17);
-			this.label29.Name = "label29";
-			this.label29.Size = new System.Drawing.Size(41, 12);
-			this.label29.TabIndex = 55;
-			this.label29.Text = "總成本";
-			// 
-			// txtTotalProfit
-			// 
-			this.txtTotalProfit.Location = new System.Drawing.Point(50, 11);
-			this.txtTotalProfit.Name = "txtTotalProfit";
-			this.txtTotalProfit.Size = new System.Drawing.Size(81, 22);
-			this.txtTotalProfit.TabIndex = 54;
-			// 
-			// label28
-			// 
-			this.label28.AutoSize = true;
-			this.label28.Location = new System.Drawing.Point(8, 18);
-			this.label28.Name = "label28";
-			this.label28.Size = new System.Drawing.Size(41, 12);
-			this.label28.TabIndex = 53;
-			this.label28.Text = "總獲利";
-			// 
-			// btnQuery
-			// 
-			this.btnQuery.Location = new System.Drawing.Point(487, 7);
-			this.btnQuery.Name = "btnQuery";
-			this.btnQuery.Size = new System.Drawing.Size(42, 23);
-			this.btnQuery.TabIndex = 51;
-			this.btnQuery.Text = "Query";
-			this.btnQuery.UseVisualStyleBackColor = true;
-			this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
-			// 
-			// btnStockResult
-			// 
-			this.btnStockResult.Location = new System.Drawing.Point(689, 58);
-			this.btnStockResult.Name = "btnStockResult";
-			this.btnStockResult.Size = new System.Drawing.Size(71, 23);
-			this.btnStockResult.TabIndex = 50;
-			this.btnStockResult.Text = "Stock Result";
-			this.btnStockResult.UseVisualStyleBackColor = true;
-			this.btnStockResult.Click += new System.EventHandler(this.btnStockResult_Click);
-			// 
-			// dgvStockReport
-			// 
-			this.dgvStockReport.AllowUserToAddRows = false;
-			this.dgvStockReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgvStockReport.Location = new System.Drawing.Point(3, 49);
-			this.dgvStockReport.Name = "dgvStockReport";
-			this.dgvStockReport.RowTemplate.Height = 24;
-			this.dgvStockReport.Size = new System.Drawing.Size(1515, 400);
-			this.dgvStockReport.TabIndex = 47;
-			// 
-			// dTPReport
-			// 
-			this.dTPReport.Location = new System.Drawing.Point(175, 9);
-			this.dTPReport.Name = "dTPReport";
-			this.dTPReport.Size = new System.Drawing.Size(126, 22);
-			this.dTPReport.TabIndex = 45;
-			// 
-			// chkApproved
-			// 
-			this.chkApproved.AutoSize = true;
-			this.chkApproved.Location = new System.Drawing.Point(370, 11);
-			this.chkApproved.Name = "chkApproved";
-			this.chkApproved.Size = new System.Drawing.Size(15, 14);
-			this.chkApproved.TabIndex = 63;
-			this.chkApproved.UseVisualStyleBackColor = true;
-			// 
-			// label30
-			// 
-			this.label30.AutoSize = true;
-			this.label30.Location = new System.Drawing.Point(386, 12);
-			this.label30.Name = "label30";
-			this.label30.Size = new System.Drawing.Size(17, 12);
-			this.label30.TabIndex = 64;
-			this.label30.Text = "核";
-			// 
-			// btnAdd
-			// 
-			this.btnAdd.Location = new System.Drawing.Point(426, 12);
-			this.btnAdd.Name = "btnAdd";
-			this.btnAdd.Size = new System.Drawing.Size(51, 23);
-			this.btnAdd.TabIndex = 65;
-			this.btnAdd.Text = "update";
-			this.btnAdd.UseVisualStyleBackColor = true;
-			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-			// 
-			// txtPickingCode
-			// 
-			this.txtPickingCode.ForeColor = System.Drawing.SystemColors.ScrollBar;
-			this.txtPickingCode.Location = new System.Drawing.Point(96, 12);
-			this.txtPickingCode.Name = "txtPickingCode";
-			this.txtPickingCode.Size = new System.Drawing.Size(44, 22);
-			this.txtPickingCode.TabIndex = 66;
-			this.txtPickingCode.TextChanged += new System.EventHandler(this.txtPickingCode_TextChanged);
-			// 
-			// add
-			// 
-			this.add.Controls.Add(this.label34);
-			this.add.Controls.Add(this.txtRemark);
-			this.add.Controls.Add(this.cbApprove);
-			this.add.Controls.Add(this.txtPickingCode);
-			this.add.Controls.Add(this.btnAdd);
-			this.add.Location = new System.Drawing.Point(1034, 9);
-			this.add.Name = "add";
-			this.add.Size = new System.Drawing.Size(481, 39);
-			this.add.TabIndex = 67;
-			this.add.TabStop = false;
-			// 
-			// txtRemark
-			// 
-			this.txtRemark.Location = new System.Drawing.Point(142, 12);
-			this.txtRemark.Name = "txtRemark";
-			this.txtRemark.Size = new System.Drawing.Size(280, 22);
-			this.txtRemark.TabIndex = 67;
-			// 
-			// cbApprove
-			// 
-			this.cbApprove.FormattingEnabled = true;
-			this.cbApprove.Items.AddRange(new object[] {
-            "不核放",
-            "核放"});
-			this.cbApprove.Location = new System.Drawing.Point(3, 13);
-			this.cbApprove.Name = "cbApprove";
-			this.cbApprove.Size = new System.Drawing.Size(58, 20);
-			this.cbApprove.TabIndex = 68;
-			// 
-			// progressBar3
-			// 
-			this.progressBar3.Location = new System.Drawing.Point(1388, 835);
-			this.progressBar3.Name = "progressBar3";
-			this.progressBar3.Size = new System.Drawing.Size(129, 23);
-			this.progressBar3.TabIndex = 92;
-			// 
-			// label31
-			// 
-			this.label31.AutoSize = true;
-			this.label31.Location = new System.Drawing.Point(353, 16);
-			this.label31.Name = "label31";
-			this.label31.Size = new System.Drawing.Size(14, 12);
-			this.label31.TabIndex = 69;
-			this.label31.Text = "%";
-			// 
-			// dtpReportStart
-			// 
-			this.dtpReportStart.Location = new System.Drawing.Point(23, 8);
-			this.dtpReportStart.Name = "dtpReportStart";
-			this.dtpReportStart.Size = new System.Drawing.Size(126, 22);
-			this.dtpReportStart.TabIndex = 70;
-			this.dtpReportStart.Value = new System.DateTime(2023, 4, 19, 0, 0, 0, 0);
-			// 
-			// label32
-			// 
-			this.label32.AutoSize = true;
-			this.label32.Location = new System.Drawing.Point(6, 13);
-			this.label32.Name = "label32";
-			this.label32.Size = new System.Drawing.Size(17, 12);
-			this.label32.TabIndex = 71;
-			this.label32.Text = "起";
-			// 
-			// label33
-			// 
-			this.label33.AutoSize = true;
-			this.label33.Location = new System.Drawing.Point(154, 13);
-			this.label33.Name = "label33";
-			this.label33.Size = new System.Drawing.Size(17, 12);
-			this.label33.TabIndex = 72;
-			this.label33.Text = "迄";
-			// 
-			// groupBox6
-			// 
-			this.groupBox6.Controls.Add(this.label28);
-			this.groupBox6.Controls.Add(this.txtTotalProfit);
-			this.groupBox6.Controls.Add(this.label29);
-			this.groupBox6.Controls.Add(this.txtTotalCost);
-			this.groupBox6.Controls.Add(this.label31);
-			this.groupBox6.Controls.Add(this.txt);
-			this.groupBox6.Controls.Add(this.txtProfit);
-			this.groupBox6.Location = new System.Drawing.Point(659, 9);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(369, 37);
-			this.groupBox6.TabIndex = 73;
-			this.groupBox6.TabStop = false;
+			this.lbIncrease.AutoSize = true;
+			this.lbIncrease.ForeColor = System.Drawing.Color.Red;
+			this.lbIncrease.Location = new System.Drawing.Point(564, 24);
+			this.lbIncrease.Name = "lbIncrease";
+			this.lbIncrease.Size = new System.Drawing.Size(0, 12);
+			this.lbIncrease.TabIndex = 70;
 			// 
 			// groupBox7
 			// 
@@ -1733,80 +1583,14 @@
 			this.groupBox7.Controls.Add(this.chkApproved);
 			this.groupBox7.Location = new System.Drawing.Point(6, 10);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(533, 37);
+			this.groupBox7.Size = new System.Drawing.Size(491, 37);
 			this.groupBox7.TabIndex = 74;
 			this.groupBox7.TabStop = false;
-			// 
-			// label34
-			// 
-			this.label34.AutoSize = true;
-			this.label34.Location = new System.Drawing.Point(64, 18);
-			this.label34.Name = "label34";
-			this.label34.Size = new System.Drawing.Size(29, 12);
-			this.label34.TabIndex = 69;
-			this.label34.Text = "代碼";
-			// 
-			// lbIncrease
-			// 
-			this.lbIncrease.AutoSize = true;
-			this.lbIncrease.ForeColor = System.Drawing.Color.Red;
-			this.lbIncrease.Location = new System.Drawing.Point(608, 24);
-			this.lbIncrease.Name = "lbIncrease";
-			this.lbIncrease.Size = new System.Drawing.Size(0, 12);
-			this.lbIncrease.TabIndex = 70;
-			// 
-			// lbDecrease
-			// 
-			this.lbDecrease.AutoSize = true;
-			this.lbDecrease.ForeColor = System.Drawing.Color.LimeGreen;
-			this.lbDecrease.Location = new System.Drawing.Point(641, 24);
-			this.lbDecrease.Name = "lbDecrease";
-			this.lbDecrease.Size = new System.Drawing.Size(0, 12);
-			this.lbDecrease.TabIndex = 75;
-			// 
-			// btnExport
-			// 
-			this.btnExport.Location = new System.Drawing.Point(545, 18);
-			this.btnExport.Name = "btnExport";
-			this.btnExport.Size = new System.Drawing.Size(45, 23);
-			this.btnExport.TabIndex = 73;
-			this.btnExport.Text = "Export";
-			this.btnExport.UseVisualStyleBackColor = true;
-			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
-			// 
-			// label35
-			// 
-			this.label35.AutoSize = true;
-			this.label35.ForeColor = System.Drawing.Color.Black;
-			this.label35.Location = new System.Drawing.Point(590, 24);
-			this.label35.Name = "label35";
-			this.label35.Size = new System.Drawing.Size(17, 12);
-			this.label35.TabIndex = 76;
-			this.label35.Text = "漲";
-			// 
-			// label36
-			// 
-			this.label36.AutoSize = true;
-			this.label36.ForeColor = System.Drawing.Color.Black;
-			this.label36.Location = new System.Drawing.Point(624, 24);
-			this.label36.Name = "label36";
-			this.label36.Size = new System.Drawing.Size(17, 12);
-			this.label36.TabIndex = 77;
-			this.label36.Text = "跌";
-			// 
-			// lbMessage
-			// 
-			this.lbMessage.AutoSize = true;
-			this.lbMessage.ForeColor = System.Drawing.Color.Teal;
-			this.lbMessage.Location = new System.Drawing.Point(766, 63);
-			this.lbMessage.Name = "lbMessage";
-			this.lbMessage.Size = new System.Drawing.Size(0, 12);
-			this.lbMessage.TabIndex = 78;
 			// 
 			// label37
 			// 
 			this.label37.AutoSize = true;
-			this.label37.Location = new System.Drawing.Point(422, 12);
+			this.label37.Location = new System.Drawing.Point(377, 14);
 			this.label37.Name = "label37";
 			this.label37.Size = new System.Drawing.Size(65, 12);
 			this.label37.TabIndex = 74;
@@ -1815,17 +1599,384 @@
 			// chkOpenningPrice
 			// 
 			this.chkOpenningPrice.AutoSize = true;
-			this.chkOpenningPrice.Location = new System.Drawing.Point(406, 11);
+			this.chkOpenningPrice.Location = new System.Drawing.Point(361, 13);
 			this.chkOpenningPrice.Name = "chkOpenningPrice";
 			this.chkOpenningPrice.Size = new System.Drawing.Size(15, 14);
 			this.chkOpenningPrice.TabIndex = 73;
 			this.chkOpenningPrice.UseVisualStyleBackColor = true;
+			// 
+			// label32
+			// 
+			this.label32.AutoSize = true;
+			this.label32.Location = new System.Drawing.Point(6, 13);
+			this.label32.Name = "label32";
+			this.label32.Size = new System.Drawing.Size(17, 12);
+			this.label32.TabIndex = 71;
+			this.label32.Text = "起";
+			// 
+			// dTPReport
+			// 
+			this.dTPReport.Location = new System.Drawing.Point(150, 9);
+			this.dTPReport.Name = "dTPReport";
+			this.dTPReport.Size = new System.Drawing.Size(107, 22);
+			this.dTPReport.TabIndex = 45;
+			// 
+			// label33
+			// 
+			this.label33.AutoSize = true;
+			this.label33.Location = new System.Drawing.Point(129, 13);
+			this.label33.Name = "label33";
+			this.label33.Size = new System.Drawing.Size(17, 12);
+			this.label33.TabIndex = 72;
+			this.label33.Text = "迄";
+			// 
+			// btnQuery
+			// 
+			this.btnQuery.Location = new System.Drawing.Point(442, 9);
+			this.btnQuery.Name = "btnQuery";
+			this.btnQuery.Size = new System.Drawing.Size(42, 23);
+			this.btnQuery.TabIndex = 51;
+			this.btnQuery.Text = "Query";
+			this.btnQuery.UseVisualStyleBackColor = true;
+			this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
+			// 
+			// chkDay
+			// 
+			this.chkDay.AutoSize = true;
+			this.chkDay.Location = new System.Drawing.Point(260, 13);
+			this.chkDay.Name = "chkDay";
+			this.chkDay.Size = new System.Drawing.Size(15, 14);
+			this.chkDay.TabIndex = 59;
+			this.chkDay.UseVisualStyleBackColor = true;
+			// 
+			// dtpReportStart
+			// 
+			this.dtpReportStart.Location = new System.Drawing.Point(23, 8);
+			this.dtpReportStart.Name = "dtpReportStart";
+			this.dtpReportStart.Size = new System.Drawing.Size(102, 22);
+			this.dtpReportStart.TabIndex = 70;
+			this.dtpReportStart.Value = new System.DateTime(2023, 4, 19, 0, 0, 0, 0);
+			// 
+			// lb
+			// 
+			this.lb.AutoSize = true;
+			this.lb.Location = new System.Drawing.Point(304, 14);
+			this.lb.Name = "lb";
+			this.lb.Size = new System.Drawing.Size(17, 12);
+			this.lb.TabIndex = 60;
+			this.lb.Text = "日";
+			// 
+			// txtManyDays
+			// 
+			this.txtManyDays.Location = new System.Drawing.Point(278, 9);
+			this.txtManyDays.Name = "txtManyDays";
+			this.txtManyDays.Size = new System.Drawing.Size(23, 22);
+			this.txtManyDays.TabIndex = 61;
+			this.txtManyDays.Text = "1";
+			// 
+			// label30
+			// 
+			this.label30.AutoSize = true;
+			this.label30.Location = new System.Drawing.Point(341, 14);
+			this.label30.Name = "label30";
+			this.label30.Size = new System.Drawing.Size(17, 12);
+			this.label30.TabIndex = 64;
+			this.label30.Text = "核";
+			// 
+			// chkApproved
+			// 
+			this.chkApproved.AutoSize = true;
+			this.chkApproved.Location = new System.Drawing.Point(325, 13);
+			this.chkApproved.Name = "chkApproved";
+			this.chkApproved.Size = new System.Drawing.Size(15, 14);
+			this.chkApproved.TabIndex = 63;
+			this.chkApproved.UseVisualStyleBackColor = true;
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.label28);
+			this.groupBox6.Controls.Add(this.txtTotalProfit);
+			this.groupBox6.Controls.Add(this.label29);
+			this.groupBox6.Controls.Add(this.txtTotalCost);
+			this.groupBox6.Controls.Add(this.label31);
+			this.groupBox6.Controls.Add(this.txt);
+			this.groupBox6.Controls.Add(this.txtProfit);
+			this.groupBox6.Location = new System.Drawing.Point(611, 9);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(369, 37);
+			this.groupBox6.TabIndex = 73;
+			this.groupBox6.TabStop = false;
+			// 
+			// label28
+			// 
+			this.label28.AutoSize = true;
+			this.label28.Location = new System.Drawing.Point(8, 18);
+			this.label28.Name = "label28";
+			this.label28.Size = new System.Drawing.Size(41, 12);
+			this.label28.TabIndex = 53;
+			this.label28.Text = "總獲利";
+			// 
+			// txtTotalProfit
+			// 
+			this.txtTotalProfit.Location = new System.Drawing.Point(50, 11);
+			this.txtTotalProfit.Name = "txtTotalProfit";
+			this.txtTotalProfit.Size = new System.Drawing.Size(81, 22);
+			this.txtTotalProfit.TabIndex = 54;
+			// 
+			// label29
+			// 
+			this.label29.AutoSize = true;
+			this.label29.Location = new System.Drawing.Point(136, 17);
+			this.label29.Name = "label29";
+			this.label29.Size = new System.Drawing.Size(41, 12);
+			this.label29.TabIndex = 55;
+			this.label29.Text = "總成本";
+			// 
+			// txtTotalCost
+			// 
+			this.txtTotalCost.Location = new System.Drawing.Point(178, 11);
+			this.txtTotalCost.Name = "txtTotalCost";
+			this.txtTotalCost.Size = new System.Drawing.Size(82, 22);
+			this.txtTotalCost.TabIndex = 56;
+			// 
+			// label31
+			// 
+			this.label31.AutoSize = true;
+			this.label31.Location = new System.Drawing.Point(350, 16);
+			this.label31.Name = "label31";
+			this.label31.Size = new System.Drawing.Size(14, 12);
+			this.label31.TabIndex = 69;
+			this.label31.Text = "%";
+			// 
+			// txt
+			// 
+			this.txt.AutoSize = true;
+			this.txt.Location = new System.Drawing.Point(264, 17);
+			this.txt.Name = "txt";
+			this.txt.Size = new System.Drawing.Size(41, 12);
+			this.txt.TabIndex = 57;
+			this.txt.Text = "報酬率";
+			// 
+			// txtProfit
+			// 
+			this.txtProfit.Location = new System.Drawing.Point(306, 12);
+			this.txtProfit.Name = "txtProfit";
+			this.txtProfit.Size = new System.Drawing.Size(41, 22);
+			this.txtProfit.TabIndex = 58;
+			// 
+			// add
+			// 
+			this.add.Controls.Add(this.dtpSuspendDate);
+			this.add.Controls.Add(this.label38);
+			this.add.Controls.Add(this.label34);
+			this.add.Controls.Add(this.chkSuspend);
+			this.add.Controls.Add(this.txtRemark);
+			this.add.Controls.Add(this.cbApprove);
+			this.add.Controls.Add(this.txtPickingCode);
+			this.add.Controls.Add(this.btnAdd);
+			this.add.Location = new System.Drawing.Point(981, 9);
+			this.add.Name = "add";
+			this.add.Size = new System.Drawing.Size(534, 39);
+			this.add.TabIndex = 67;
+			this.add.TabStop = false;
+			// 
+			// dtpSuspendDate
+			// 
+			this.dtpSuspendDate.Location = new System.Drawing.Point(38, 12);
+			this.dtpSuspendDate.Name = "dtpSuspendDate";
+			this.dtpSuspendDate.Size = new System.Drawing.Size(102, 22);
+			this.dtpSuspendDate.TabIndex = 75;
+			this.dtpSuspendDate.Value = new System.DateTime(2023, 4, 19, 0, 0, 0, 0);
+			// 
+			// label38
+			// 
+			this.label38.AutoSize = true;
+			this.label38.Location = new System.Drawing.Point(18, 17);
+			this.label38.Name = "label38";
+			this.label38.Size = new System.Drawing.Size(17, 12);
+			this.label38.TabIndex = 76;
+			this.label38.Text = "停";
+			// 
+			// label34
+			// 
+			this.label34.AutoSize = true;
+			this.label34.Location = new System.Drawing.Point(206, 18);
+			this.label34.Name = "label34";
+			this.label34.Size = new System.Drawing.Size(29, 12);
+			this.label34.TabIndex = 69;
+			this.label34.Text = "代碼";
+			// 
+			// chkSuspend
+			// 
+			this.chkSuspend.AutoSize = true;
+			this.chkSuspend.Location = new System.Drawing.Point(2, 16);
+			this.chkSuspend.Name = "chkSuspend";
+			this.chkSuspend.Size = new System.Drawing.Size(15, 14);
+			this.chkSuspend.TabIndex = 75;
+			this.chkSuspend.UseVisualStyleBackColor = true;
+			// 
+			// txtRemark
+			// 
+			this.txtRemark.Location = new System.Drawing.Point(287, 12);
+			this.txtRemark.Name = "txtRemark";
+			this.txtRemark.Size = new System.Drawing.Size(190, 22);
+			this.txtRemark.TabIndex = 67;
+			// 
+			// cbApprove
+			// 
+			this.cbApprove.FormattingEnabled = true;
+			this.cbApprove.Items.AddRange(new object[] {
+            "不核放",
+            "核放"});
+			this.cbApprove.Location = new System.Drawing.Point(146, 13);
+			this.cbApprove.Name = "cbApprove";
+			this.cbApprove.Size = new System.Drawing.Size(58, 20);
+			this.cbApprove.TabIndex = 68;
+			// 
+			// txtPickingCode
+			// 
+			this.txtPickingCode.ForeColor = System.Drawing.SystemColors.ScrollBar;
+			this.txtPickingCode.Location = new System.Drawing.Point(238, 12);
+			this.txtPickingCode.Name = "txtPickingCode";
+			this.txtPickingCode.Size = new System.Drawing.Size(44, 22);
+			this.txtPickingCode.TabIndex = 66;
+			this.txtPickingCode.TextChanged += new System.EventHandler(this.txtPickingCode_TextChanged);
+			// 
+			// btnAdd
+			// 
+			this.btnAdd.Location = new System.Drawing.Point(480, 12);
+			this.btnAdd.Name = "btnAdd";
+			this.btnAdd.Size = new System.Drawing.Size(51, 23);
+			this.btnAdd.TabIndex = 65;
+			this.btnAdd.Text = "update";
+			this.btnAdd.UseVisualStyleBackColor = true;
+			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+			// 
+			// dgvStockReport
+			// 
+			this.dgvStockReport.AllowUserToAddRows = false;
+			this.dgvStockReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgvStockReport.Location = new System.Drawing.Point(3, 49);
+			this.dgvStockReport.Name = "dgvStockReport";
+			this.dgvStockReport.RowTemplate.Height = 24;
+			this.dgvStockReport.Size = new System.Drawing.Size(1515, 400);
+			this.dgvStockReport.TabIndex = 47;
+			// 
+			// progressBar3
+			// 
+			this.progressBar3.Location = new System.Drawing.Point(1388, 835);
+			this.progressBar3.Name = "progressBar3";
+			this.progressBar3.Size = new System.Drawing.Size(129, 23);
+			this.progressBar3.TabIndex = 92;
+			// 
+			// PopupMenu
+			// 
+			this.PopupMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.strateToolStripMenuItem,
+            this.reportToolStripMenuItem,
+            this.maintainToolStripMenuItem});
+			this.PopupMenu.Name = "PopupMenu";
+			this.PopupMenu.Size = new System.Drawing.Size(125, 70);
+			// 
+			// strateToolStripMenuItem
+			// 
+			this.strateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.autoOrderToolStripMenuItem});
+			this.strateToolStripMenuItem.Name = "strateToolStripMenuItem";
+			this.strateToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+			this.strateToolStripMenuItem.Text = "Strategy";
+			// 
+			// reportToolStripMenuItem
+			// 
+			this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.highLowToolStripMenuItem,
+            this.threeInvestmentToolStripMenuItem,
+            this.strengthWeaknessToolStripMenuItem});
+			this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
+			this.reportToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+			this.reportToolStripMenuItem.Text = "Report";
+			// 
+			// maintainToolStripMenuItem
+			// 
+			this.maintainToolStripMenuItem.Name = "maintainToolStripMenuItem";
+			this.maintainToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.maintainToolStripMenuItem.Text = "Maintain";
+			this.maintainToolStripMenuItem.Click += new System.EventHandler(this.maintainToolStripMenuItem_Click);
+			// 
+			// highLowToolStripMenuItem
+			// 
+			this.highLowToolStripMenuItem.Name = "highLowToolStripMenuItem";
+			this.highLowToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.highLowToolStripMenuItem.Text = "HighLow";
+			this.highLowToolStripMenuItem.Click += new System.EventHandler(this.highLowToolStripMenuItem_Click);
+			// 
+			// threeInvestmentToolStripMenuItem
+			// 
+			this.threeInvestmentToolStripMenuItem.Name = "threeInvestmentToolStripMenuItem";
+			this.threeInvestmentToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.threeInvestmentToolStripMenuItem.Text = "Three Investment";
+			this.threeInvestmentToolStripMenuItem.Click += new System.EventHandler(this.threeInvestmentToolStripMenuItem_Click);
+			// 
+			// strengthWeaknessToolStripMenuItem
+			// 
+			this.strengthWeaknessToolStripMenuItem.Name = "strengthWeaknessToolStripMenuItem";
+			this.strengthWeaknessToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.strengthWeaknessToolStripMenuItem.Text = "Strength Weakness";
+			this.strengthWeaknessToolStripMenuItem.Click += new System.EventHandler(this.strengthWeaknessToolStripMenuItem_Click);
+			// 
+			// autoOrderToolStripMenuItem
+			// 
+			this.autoOrderToolStripMenuItem.Name = "autoOrderToolStripMenuItem";
+			this.autoOrderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.autoOrderToolStripMenuItem.Text = "Auto Order";
+			this.autoOrderToolStripMenuItem.Click += new System.EventHandler(this.autoOrderToolStripMenuItem_Click);
+			// 
+			// btnInsertGroupTrend
+			// 
+			this.btnInsertGroupTrend.Location = new System.Drawing.Point(489, 29);
+			this.btnInsertGroupTrend.Name = "btnInsertGroupTrend";
+			this.btnInsertGroupTrend.Size = new System.Drawing.Size(75, 23);
+			this.btnInsertGroupTrend.TabIndex = 94;
+			this.btnInsertGroupTrend.Text = "Insert Trend";
+			this.btnInsertGroupTrend.UseVisualStyleBackColor = true;
+			this.btnInsertGroupTrend.Click += new System.EventHandler(this.btnInsertGroupTrend_Click);
+			// 
+			// btnLineTrend
+			// 
+			this.btnLineTrend.Location = new System.Drawing.Point(570, 29);
+			this.btnLineTrend.Name = "btnLineTrend";
+			this.btnLineTrend.Size = new System.Drawing.Size(75, 23);
+			this.btnLineTrend.TabIndex = 95;
+			this.btnLineTrend.Text = "Line Trend";
+			this.btnLineTrend.UseVisualStyleBackColor = true;
+			this.btnLineTrend.Click += new System.EventHandler(this.btnLineTrend_Click);
+			// 
+			// btnLineThree
+			// 
+			this.btnLineThree.Location = new System.Drawing.Point(409, 28);
+			this.btnLineThree.Name = "btnLineThree";
+			this.btnLineThree.Size = new System.Drawing.Size(75, 23);
+			this.btnLineThree.TabIndex = 96;
+			this.btnLineThree.Text = "Line Three";
+			this.btnLineThree.UseVisualStyleBackColor = true;
+			this.btnLineThree.Click += new System.EventHandler(this.btnLineThree_Click);
+			// 
+			// label39
+			// 
+			this.label39.AutoSize = true;
+			this.label39.ForeColor = System.Drawing.Color.Red;
+			this.label39.Location = new System.Drawing.Point(437, 7);
+			this.label39.Name = "label39";
+			this.label39.Size = new System.Drawing.Size(205, 12);
+			this.label39.TabIndex = 94;
+			this.label39.Text = "周K須突破無套蛙並且盤大平台再出手";
 			// 
 			// ScheduleJob
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1556, 857);
+			this.Controls.Add(this.label39);
 			this.Controls.Add(this.progressBar3);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.statusStrip1);
@@ -1877,13 +2028,14 @@
 			this.statusStrip1.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).EndInit();
-			this.add.ResumeLayout(false);
-			this.add.PerformLayout();
-			this.groupBox6.ResumeLayout(false);
-			this.groupBox6.PerformLayout();
 			this.groupBox7.ResumeLayout(false);
 			this.groupBox7.PerformLayout();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
+			this.add.ResumeLayout(false);
+			this.add.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).EndInit();
+			this.PopupMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2053,5 +2205,20 @@
 		private System.Windows.Forms.Label lbMessage;
 		private System.Windows.Forms.Label label37;
 		private System.Windows.Forms.CheckBox chkOpenningPrice;
+		private System.Windows.Forms.Label label38;
+		private System.Windows.Forms.CheckBox chkSuspend;
+		private System.Windows.Forms.DateTimePicker dtpSuspendDate;
+		private System.Windows.Forms.ContextMenuStrip PopupMenu;
+		private System.Windows.Forms.ToolStripMenuItem strateToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem reportToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem highLowToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem threeInvestmentToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem strengthWeaknessToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem maintainToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem autoOrderToolStripMenuItem;
+		private System.Windows.Forms.Button btnInsertGroupTrend;
+		private System.Windows.Forms.Button btnLineTrend;
+		private System.Windows.Forms.Button btnLineThree;
+		private System.Windows.Forms.Label label39;
 	}
 }

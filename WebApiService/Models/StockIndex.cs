@@ -67,5 +67,9 @@ namespace WebApiService.Models
         public string DAX_QuoteChange { get; set; }
         public string NIKKEI_Index { get; set; }
         public string NIKKEI_QuoteChange { get; set; }
+        public string Ups { get; set; }
+        public string Downs { get; set; }
+        public string UpsHalf { get; set; }
+        public string DownsHalf { get; set; }
     }
 }

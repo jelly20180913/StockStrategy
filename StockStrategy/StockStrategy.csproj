@@ -136,11 +136,35 @@
     <Compile Include="FormAdd.Designer.cs">
       <DependentUpon>FormAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormHighLow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormHighLow.Designer.cs">
+      <DependentUpon>FormHighLow.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMaintain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMaintain.Designer.cs">
+      <DependentUpon>FormMaintain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStockGroupTrend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockGroupTrend.Designer.cs">
+      <DependentUpon>FormStockGroupTrend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormThreeInstitutional.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormThreeInstitutional.Designer.cs">
+      <DependentUpon>FormThreeInstitutional.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ContinueStock.cs" />
     <Compile Include="Model\Stock.cs" />
@@ -150,8 +174,20 @@
     <EmbeddedResource Include="FormAdd.resx">
       <DependentUpon>FormAdd.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormHighLow.resx">
+      <DependentUpon>FormHighLow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMaintain.resx">
+      <DependentUpon>FormMaintain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockGroupTrend.resx">
+      <DependentUpon>FormStockGroupTrend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormThreeInstitutional.resx">
+      <DependentUpon>FormThreeInstitutional.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

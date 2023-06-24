@@ -19,7 +19,10 @@ namespace DataModel.Stock
 		public string Gain { get; set; }
 		public string Shock { get; set; }
 		public string OpeningPrice { get; set; }
-		public Stock(string code,string name,string tradeVolume,string highestPrice,string closingPrice,string date,string gain,string shock,string openingPrice)
+		public string ForeignInvestment { get; set; }
+		public string Investment { get; set; }
+		public string Dealer { get; set; }
+		public Stock(string code,string name,string tradeVolume,string highestPrice,string closingPrice,string date,string gain,string shock,string openingPrice,string foreignInvestment,string investment,string dealer )
 		{
 			Code = code;
 			Name = name;
@@ -30,6 +33,9 @@ namespace DataModel.Stock
 			Gain = gain;
 			Shock = shock;
 			OpeningPrice = openingPrice;
+			ForeignInvestment = foreignInvestment;
+			Investment = investment;
+			Dealer = dealer;
 			// doing something with CampaignID here like setting some calculated properties.
 		}
 	}

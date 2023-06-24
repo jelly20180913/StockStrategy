@@ -86,7 +86,10 @@ namespace WebApiService.Services.Implement.Tables
 							Shock = c.Shock,
 							Date = c.Date,
 							HighestPrice = c.HighestPrice,
-							OpeningPrice=c.OpeningPrice
+							OpeningPrice=c.OpeningPrice,
+							ForeignInvestment=c.ForeignInvestment,
+							Investment=c.Investment,
+							Dealer=c.Dealer
 
 						}; 
 			IEnumerable<DataModel.Stock.Stock> _StockList = from p in query.AsEnumerable()
@@ -99,7 +102,10 @@ namespace WebApiService.Services.Implement.Tables
 				p.Date,
 				p.Gain,
 				p.Shock,
-				p.OpeningPrice
+				p.OpeningPrice,
+				p.ForeignInvestment,
+				p.Investment,
+				p.Dealer
 			 ) ;
 			return _StockList;
 		}
@@ -118,7 +124,10 @@ namespace WebApiService.Services.Implement.Tables
 							Shock = c.Shock,
 							Date = c.Date,
 							HighestPrice = c.HighestPrice,
-							OpeningPrice = c.OpeningPrice
+							OpeningPrice = c.OpeningPrice,
+							ForeignInvestment = c.ForeignInvestment,
+							Investment = c.Investment,
+							Dealer = c.Dealer
 						};
 			IEnumerable<DataModel.Stock.Stock> _StockList = from p in query.AsEnumerable()
 															select new DataModel.Stock.Stock(
@@ -130,7 +139,10 @@ namespace WebApiService.Services.Implement.Tables
 				p.Date,
 				p.Gain,
 				p.Shock,
-				p.OpeningPrice
+				p.OpeningPrice,
+				p.ForeignInvestment,
+				p.Investment,
+				p.Dealer
 			 ); 
 			return _StockList;
 		}
@@ -159,7 +171,10 @@ namespace WebApiService.Services.Implement.Tables
 							Shock = c.Shock,
 							Date = c.Date,
 							HighestPrice = c.HighestPrice,
-							OpeningPrice = c.OpeningPrice
+							OpeningPrice = c.OpeningPrice,
+							ForeignInvestment = c.ForeignInvestment,
+							Investment = c.Investment,
+							Dealer = c.Dealer
 						};
 			IEnumerable<DataModel.Stock.Stock> _StockList = from p in query.AsEnumerable()
 															select new DataModel.Stock.Stock(
@@ -171,7 +186,10 @@ namespace WebApiService.Services.Implement.Tables
 				p.Date,
 				p.Gain,
 				p.Shock,
-				p.OpeningPrice
+				p.OpeningPrice,
+				p.ForeignInvestment,
+				p.Investment,
+				p.Dealer
 			 );
 			return _StockList;
 		}

@@ -36,5 +36,10 @@ namespace WebApiService.Models
         public virtual DbSet<StockBacktest> StockBacktest { get; set; }
         public virtual DbSet<StockPicking> StockPicking { get; set; }
         public virtual DbSet<StockResult> StockResult { get; set; }
+        public virtual DbSet<StockGroupTotalCount> StockGroupTotalCount { get; set; }
+        public virtual DbSet<StockInventoryLog> StockInventoryLog { get; set; }
+        public virtual DbSet<StockThreeInstitutional> StockThreeInstitutional { get; set; }
+        public virtual DbSet<StockHighLow> StockHighLow { get; set; }
+        public virtual DbSet<StockGroupTrend> StockGroupTrend { get; set; }
     }
 }

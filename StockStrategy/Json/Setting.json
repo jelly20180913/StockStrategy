@@ -76,5 +76,18 @@
         "ChkLess": true,
         "ChkNotHigherThan": true,
         "Class": 9
+    },
+    {
+        "Name": "萬張放量",
+        "Gain": 3,
+        "Volumn": 10000000,
+        "Multiple": 4,
+        "PreDays": 8,
+        "LessVolumn": 3000000,
+        "PreDays2": 8,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": false,
+        "Class": 11
     }
-    ] 
+  ] 

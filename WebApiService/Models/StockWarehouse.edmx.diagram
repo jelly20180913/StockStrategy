@@ -16,6 +16,11 @@
         <EntityTypeShape EntityType="StockWarehouseModel.StockBacktest" Width="1.5" PointX="10.75" PointY="0.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockPicking" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockResult" Width="1.5" PointX="10.375" PointY="8.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockGroupTotalCount" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockInventoryLog" Width="1.5" PointX="12.375" PointY="8.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockThreeInstitutional" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockHighLow" Width="1.5" PointX="12.375" PointY="4.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockGroupTrend" Width="1.5" PointX="8.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -349,5 +349,68 @@ namespace StockStrategy.BBL
 			string _Return = _ApiResult.Data.ToString();
 			return _Return;
 		}
+		public string insertStockHighLow(List<StockHighLow> listStockHighLow)
+		{
+			string json = JsonConvert.SerializeObject(listStockHighLow);
+			string _Action = "StockHighLow";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public List<StockHighLow> getStockHighLowList()
+		{
+			List<StockHighLow> _ListStockHighLow = new List<StockHighLow>();
+			string _Action = "StockHighLow";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockHighLow = JsonConvert.DeserializeObject<List<StockHighLow>>(_ApiResult.Data.ToString());
+			return _ListStockHighLow;
+		}
+		public string insertStockGroupTrend(List<StockGroupTrend> listStockStockGroupTrend)
+		{
+			string json = JsonConvert.SerializeObject(listStockStockGroupTrend);
+			string _Action = "StockGroupTrend";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public List<StockGroupTrend> getStockGroupTrendList()
+		{
+			List<StockGroupTrend> _ListStockGroupTrend = new List<StockGroupTrend>();
+			string _Action = "StockGroupTrend";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockGroupTrend = JsonConvert.DeserializeObject<List<StockGroupTrend>>(_ApiResult.Data.ToString());
+			return _ListStockGroupTrend;
+		}
+		public string insertStockThreeInstitutional(List<StockThreeInstitutional> listStockThreeInstitutional)
+		{
+			string json = JsonConvert.SerializeObject(listStockThreeInstitutional);
+			string _Action = "StockThreeInstitutional";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public List<StockThreeInstitutional> getStockThreeInstitutionalList()
+		{
+			List<StockThreeInstitutional> _ListStockThreeInstitutional = new List<StockThreeInstitutional>();
+			string _Action = "StockThreeInstitutional";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockThreeInstitutional = JsonConvert.DeserializeObject<List<StockThreeInstitutional>>(_ApiResult.Data.ToString());
+			return _ListStockThreeInstitutional;
+		}
+		public List<StockGroupTotalCount> getStockGroupTotalCountList()
+		{
+			List<StockGroupTotalCount> _ListStockGroupTotalCount = new List<StockGroupTotalCount>();
+			string _Action = "StockGroupTotalCount";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockGroupTotalCount = JsonConvert.DeserializeObject<List<StockGroupTotalCount>>(_ApiResult.Data.ToString());
+			return _ListStockGroupTotalCount;
+		}
 	}
 }

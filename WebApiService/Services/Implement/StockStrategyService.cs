@@ -22,12 +22,13 @@ namespace WebApiService.Services.Implement
 		private IStockGroupTrendService _stockGroupTrendService;
 		private IStockThreeInstitutionalService _stockThreeInstitutionalService;
 		private IStockGroupTotalCountService _stockGroupTotalCountService;
+		private IStockEventNotifyService _stockEventNotifyService;
 		/// <summary>
 		/// Dependence Injection
 		/// </summary>
 
 		public StockStrategyService(IStockService stockService, IHolidayService holidayService, IStockPickingService stockPickingService,IStockResultService stockResultService,IStockHighLowService stockHighLowService
-			, IStockGroupTrendService stockGroupTrendService, IStockThreeInstitutionalService stockThreeInstitutionalService, IStockGroupTotalCountService stockGroupTotalCountService)
+			, IStockGroupTrendService stockGroupTrendService, IStockThreeInstitutionalService stockThreeInstitutionalService, IStockGroupTotalCountService stockGroupTotalCountService,IStockEventNotifyService stockEventNotifyService)
 		{
 			this._stockService = stockService;
 			_holidayService = holidayService;
@@ -37,6 +38,7 @@ namespace WebApiService.Services.Implement
 			_stockGroupTrendService=stockGroupTrendService;
 			_stockThreeInstitutionalService=stockThreeInstitutionalService;
 			_stockGroupTotalCountService=stockGroupTotalCountService;
+			_stockEventNotifyService=stockEventNotifyService;
 		}
 		/// <summary>
 		/// get vote item list
@@ -142,6 +144,18 @@ namespace WebApiService.Services.Implement
 			List<StockGroupTotalCount> _StockGroupTotalCountList = new List<StockGroupTotalCount>();
 			_StockGroupTotalCountList = this._stockGroupTotalCountService.GetAll().ToList();
 			return _StockGroupTotalCountList;
+		}
+
+		public bool InsertStockEventNotify(List<StockEventNotify> s)
+		{
+			this._stockEventNotifyService.MiltiCreate(s);
+			return true;
+		}
+		public List<StockEventNotify> GetStockEventNotifyList()
+		{
+			List<StockEventNotify> _StockEventNotifyList = new List<StockEventNotify>();
+			_StockEventNotifyList = this._stockEventNotifyService.GetAll().ToList();
+			return _StockEventNotifyList;
 		}
 	}
 }

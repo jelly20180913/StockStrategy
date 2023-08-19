@@ -62,6 +62,19 @@
           <Property Name="WorkDays" Type="int" />
           <Property Name="ProfitRatio" Type="varchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="StockEventNotify">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="nvarchar" MaxLength="10" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="EndDate" Type="nvarchar" MaxLength="10" />
+          <Property Name="IsEnable" Type="bit" />
+          <Property Name="Subject" Type="nvarchar" MaxLength="20" />
+          <Property Name="AlertDay" Type="int" />
+          <Property Name="Year" Type="nvarchar" MaxLength="4" />
+        </EntityType>
         <EntityType Name="StockFutureCode">
           <Key>
             <PropertyRef Name="Id" />
@@ -183,6 +196,24 @@
           <Property Name="Downs" Type="varchar" MaxLength="10" />
           <Property Name="UpsHalf" Type="varchar" MaxLength="10" />
           <Property Name="DownsHalf" Type="varchar" MaxLength="10" />
+          <Property Name="TSM_Index" Type="varchar" MaxLength="10" />
+          <Property Name="TSM_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="NVDA_Index" Type="varchar" MaxLength="10" />
+          <Property Name="NVDA_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="AAPL_Index" Type="varchar" MaxLength="10" />
+          <Property Name="AAPL_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="MSFT_Index" Type="varchar" MaxLength="10" />
+          <Property Name="MSFT_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="GOOG_Index" Type="varchar" MaxLength="10" />
+          <Property Name="GOOG_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="FB_Index" Type="varchar" MaxLength="10" />
+          <Property Name="FB_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="BAC_Index" Type="varchar" MaxLength="10" />
+          <Property Name="BAC_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="MU_Index" Type="varchar" MaxLength="10" />
+          <Property Name="MU_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="TSLA_Index" Type="varchar" MaxLength="10" />
+          <Property Name="TSLA_IndexQuotePercent" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -288,6 +319,7 @@
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockBacktest" EntityType="Self.StockBacktest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockEventNotify" EntityType="Self.StockEventNotify" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockFutureCode" EntityType="Self.StockFutureCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockGroup" EntityType="Self.StockGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockGroupTotalCount" EntityType="Self.StockGroupTotalCount" Schema="dbo" store:Type="Tables" />
@@ -417,6 +449,24 @@
           <Property Name="Downs" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="UpsHalf" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="DownsHalf" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TSM_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TSM_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NVDA_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NVDA_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AAPL_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AAPL_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MSFT_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MSFT_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GOOG_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GOOG_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FB_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FB_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BAC_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BAC_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MU_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MU_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TSLA_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TSLA_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -455,6 +505,7 @@
           <EntitySet Name="StockThreeInstitutional" EntityType="StockWarehouseModel.StockThreeInstitutional" />
           <EntitySet Name="StockHighLow" EntityType="StockWarehouseModel.StockHighLow" />
           <EntitySet Name="StockGroupTrend" EntityType="StockWarehouseModel.StockGroupTrend" />
+          <EntitySet Name="StockEventNotify" EntityType="StockWarehouseModel.StockEventNotify" />
         </EntityContainer>
         <EntityType Name="StockLineNotify">
           <Key>
@@ -608,6 +659,19 @@
           <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="StockEventNotify">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EndDate" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnable" Type="Boolean" />
+          <Property Name="Subject" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AlertDay" Type="Int32" />
+          <Property Name="Year" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -663,6 +727,24 @@
           <EntitySetMapping Name="StockIndex">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockIndex">
               <MappingFragment StoreEntitySet="StockIndex">
+                <ScalarProperty Name="TSLA_IndexQuotePercent" ColumnName="TSLA_IndexQuotePercent" />
+                <ScalarProperty Name="TSLA_Index" ColumnName="TSLA_Index" />
+                <ScalarProperty Name="MU_IndexQuotePercent" ColumnName="MU_IndexQuotePercent" />
+                <ScalarProperty Name="MU_Index" ColumnName="MU_Index" />
+                <ScalarProperty Name="BAC_IndexQuotePercent" ColumnName="BAC_IndexQuotePercent" />
+                <ScalarProperty Name="BAC_Index" ColumnName="BAC_Index" />
+                <ScalarProperty Name="FB_IndexQuotePercent" ColumnName="FB_IndexQuotePercent" />
+                <ScalarProperty Name="FB_Index" ColumnName="FB_Index" />
+                <ScalarProperty Name="GOOG_IndexQuotePercent" ColumnName="GOOG_IndexQuotePercent" />
+                <ScalarProperty Name="GOOG_Index" ColumnName="GOOG_Index" />
+                <ScalarProperty Name="MSFT_IndexQuotePercent" ColumnName="MSFT_IndexQuotePercent" />
+                <ScalarProperty Name="MSFT_Index" ColumnName="MSFT_Index" />
+                <ScalarProperty Name="AAPL_IndexQuotePercent" ColumnName="AAPL_IndexQuotePercent" />
+                <ScalarProperty Name="AAPL_Index" ColumnName="AAPL_Index" />
+                <ScalarProperty Name="NVDA_IndexQuotePercent" ColumnName="NVDA_IndexQuotePercent" />
+                <ScalarProperty Name="NVDA_Index" ColumnName="NVDA_Index" />
+                <ScalarProperty Name="TSM_IndexQuotePercent" ColumnName="TSM_IndexQuotePercent" />
+                <ScalarProperty Name="TSM_Index" ColumnName="TSM_Index" />
                 <ScalarProperty Name="DownsHalf" ColumnName="DownsHalf" />
                 <ScalarProperty Name="UpsHalf" ColumnName="UpsHalf" />
                 <ScalarProperty Name="Downs" ColumnName="Downs" />
@@ -903,6 +985,20 @@
                 <ScalarProperty Name="StrengthType" ColumnName="StrengthType" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="StockGroupId" ColumnName="StockGroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockEventNotify">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockEventNotify">
+              <MappingFragment StoreEntitySet="StockEventNotify">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="AlertDay" ColumnName="AlertDay" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

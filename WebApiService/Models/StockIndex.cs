@@ -71,5 +71,23 @@ namespace WebApiService.Models
         public string Downs { get; set; }
         public string UpsHalf { get; set; }
         public string DownsHalf { get; set; }
+        public string TSM_Index { get; set; }
+        public string TSM_IndexQuotePercent { get; set; }
+        public string NVDA_Index { get; set; }
+        public string NVDA_IndexQuotePercent { get; set; }
+        public string AAPL_Index { get; set; }
+        public string AAPL_IndexQuotePercent { get; set; }
+        public string MSFT_Index { get; set; }
+        public string MSFT_IndexQuotePercent { get; set; }
+        public string GOOG_Index { get; set; }
+        public string GOOG_IndexQuotePercent { get; set; }
+        public string FB_Index { get; set; }
+        public string FB_IndexQuotePercent { get; set; }
+        public string BAC_Index { get; set; }
+        public string BAC_IndexQuotePercent { get; set; }
+        public string MU_Index { get; set; }
+        public string MU_IndexQuotePercent { get; set; }
+        public string TSLA_Index { get; set; }
+        public string TSLA_IndexQuotePercent { get; set; }
     }
 }

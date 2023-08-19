@@ -129,6 +129,7 @@ namespace StockStrategy
 					 {
 						 Code = c.Code,
 						 Name = c.Name,
+						 CurrentPrice= Convert.ToDecimal(c.CurrentPrice),
 						 HighestPrice = Convert.ToDecimal(c.HighestPrice),
 						 LowestPrice = Convert.ToDecimal(c.LowestPrice),
 						 HighestDate = c.HighestPriceDate,

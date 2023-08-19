@@ -412,5 +412,14 @@ namespace StockStrategy.BBL
 			_ListStockGroupTotalCount = JsonConvert.DeserializeObject<List<StockGroupTotalCount>>(_ApiResult.Data.ToString());
 			return _ListStockGroupTotalCount;
 		}
+		public List<StockEventNotify> getStockEventNotifyList()
+		{
+			List<StockEventNotify> _ListStockEventNotify = new List<StockEventNotify>();
+			string _Action = "StockEventNotify";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockEventNotify = JsonConvert.DeserializeObject<List<StockEventNotify>>(_ApiResult.Data.ToString());
+			return _ListStockEventNotify;
+		}
 	}
 }

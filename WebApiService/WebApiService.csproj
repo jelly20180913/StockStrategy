@@ -179,6 +179,7 @@
     <Compile Include="Controllers\StockAllController.cs" />
     <Compile Include="Controllers\HolidayController.cs" />
     <Compile Include="Controllers\StockGroupTotalCountController.cs" />
+    <Compile Include="Controllers\StockEventNotifyController.cs" />
     <Compile Include="Controllers\StockThreeInstitutionalController.cs" />
     <Compile Include="Controllers\StockGroupTrendController.cs" />
     <Compile Include="Controllers\StockHighLowController.cs" />
@@ -215,6 +216,9 @@
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockBacktest.cs">
+      <DependentUpon>StockWarehouse.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockEventNotify.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockFutureCode.cs">
@@ -275,6 +279,7 @@
     <Compile Include="Services\Implement\Tables\StockGroupService.cs" />
     <Compile Include="Services\Implement\Tables\StockGroupTotalCountService.cs" />
     <Compile Include="Services\Implement\Tables\StockGroupTrendService.cs" />
+    <Compile Include="Services\Implement\Tables\StockEventNotifyService.cs" />
     <Compile Include="Services\Implement\Tables\StockThreeInstitutionalService.cs" />
     <Compile Include="Services\Implement\Tables\StockInventoryService.cs" />
     <Compile Include="Services\Implement\Tables\StockIndexService.cs" />
@@ -293,6 +298,7 @@
     <Compile Include="Services\Interface\Tables\ILoginService.cs" />
     <Compile Include="Services\Interface\Tables\IStockGroupTotaclCountService.cs" />
     <Compile Include="Services\Interface\Tables\IStockGroupTrendService.cs" />
+    <Compile Include="Services\Interface\Tables\IStockEventNotifyService.cs" />
     <Compile Include="Services\Interface\Tables\IStockThreeInstitutionalService.cs" />
     <Compile Include="Services\Interface\Tables\IStockInventoryService.cs" />
     <Compile Include="Services\Interface\Tables\IStockIndexService.cs" />

@@ -18,7 +18,7 @@
         "Volumn": 700000,
         "Multiple": 10,
         "PreDays": 10,
-        "LessVolumn": 500000,
+        "LessVolumn": 1000000,
         "PreDays2": 10,
         "MoreGain": 3,
         "ChkLess": true,

@@ -27,5 +27,7 @@ namespace WebApiService.Services.Interface
 		bool InsertStockThreeInstitutional(List<StockThreeInstitutional> s);
 		List<StockThreeInstitutional> GetStockThreeInstitutionalList();
 		List<StockGroupTotalCount> GetStockGroupTotalCountList();
+		bool InsertStockEventNotify(List<StockEventNotify> s);
+		List<StockEventNotify> GetStockEventNotifyList();
 	}
 }

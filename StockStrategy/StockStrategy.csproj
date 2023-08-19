@@ -50,10 +50,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E722858C9CE9C374C1E386647FAF244770DEF25E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>0D3D4AF81F56CC9414B1C0A2BA10F8723FB8C84B</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>StockStrategy_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>StockStrategy_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -237,6 +237,7 @@
     <EmbeddedResource Include="Json\Setting.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="StockStrategy_1_TemporaryKey.pfx" />
     <None Include="StockStrategy_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

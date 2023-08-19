@@ -44,7 +44,7 @@
 			this.dgvHighLow.Location = new System.Drawing.Point(12, 41);
 			this.dgvHighLow.Name = "dgvHighLow";
 			this.dgvHighLow.RowTemplate.Height = 24;
-			this.dgvHighLow.Size = new System.Drawing.Size(970, 743);
+			this.dgvHighLow.Size = new System.Drawing.Size(1159, 743);
 			this.dgvHighLow.TabIndex = 0;
 			// 
 			// btnQuery
@@ -107,7 +107,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(994, 796);
+			this.ClientSize = new System.Drawing.Size(1183, 796);
 			this.Controls.Add(this.btnExport);
 			this.Controls.Add(this.btnGetData);
 			this.Controls.Add(this.lbPercent);

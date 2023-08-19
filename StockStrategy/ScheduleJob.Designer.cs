@@ -138,6 +138,10 @@
 			this.btnBad = new System.Windows.Forms.Button();
 			this.btnStockJurical = new System.Windows.Forms.Button();
 			this.pnAdmin = new System.Windows.Forms.Panel();
+			this.btnLineEvent = new System.Windows.Forms.Button();
+			this.btnLineThree = new System.Windows.Forms.Button();
+			this.btnLineTrend = new System.Windows.Forms.Button();
+			this.btnInsertGroupTrend = new System.Windows.Forms.Button();
 			this.lbMessage = new System.Windows.Forms.Label();
 			this.chkJurical = new System.Windows.Forms.CheckBox();
 			this.dtpStockYesterday = new System.Windows.Forms.DateTimePicker();
@@ -196,16 +200,19 @@
 			this.progressBar3 = new System.Windows.Forms.ProgressBar();
 			this.PopupMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.strateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.autoOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.reportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.maintainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.highLowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.threeInvestmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.strengthWeaknessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.autoOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.btnInsertGroupTrend = new System.Windows.Forms.Button();
-			this.btnLineTrend = new System.Windows.Forms.Button();
-			this.btnLineThree = new System.Windows.Forms.Button();
+			this.maintainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.label39 = new System.Windows.Forms.Label();
+			this.label40 = new System.Windows.Forms.Label();
+			this.lbLineMsgCount = new System.Windows.Forms.Label();
+			this.btnResetLineMsgCount = new System.Windows.Forms.Button();
+			this.txtMSCI = new System.Windows.Forms.TextBox();
+			this.btnMSCI = new System.Windows.Forms.Button();
+			this.panel9 = new System.Windows.Forms.Panel();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -230,6 +237,7 @@
 			this.add.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).BeginInit();
 			this.PopupMenu.SuspendLayout();
+			this.panel9.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnLogin
@@ -688,7 +696,7 @@
 			// 
 			this.progressBar1.Location = new System.Drawing.Point(841, 30);
 			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(332, 23);
+			this.progressBar1.Size = new System.Drawing.Size(300, 23);
 			this.progressBar1.Step = 1;
 			this.progressBar1.TabIndex = 20;
 			this.progressBar1.UseWaitCursor = true;
@@ -1299,6 +1307,8 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.panel9);
+			this.pnAdmin.Controls.Add(this.btnLineEvent);
 			this.pnAdmin.Controls.Add(this.btnLineThree);
 			this.pnAdmin.Controls.Add(this.btnLineTrend);
 			this.pnAdmin.Controls.Add(this.btnInsertGroupTrend);
@@ -1333,6 +1343,46 @@
 			this.pnAdmin.Name = "pnAdmin";
 			this.pnAdmin.Size = new System.Drawing.Size(1176, 90);
 			this.pnAdmin.TabIndex = 42;
+			// 
+			// btnLineEvent
+			// 
+			this.btnLineEvent.Location = new System.Drawing.Point(328, 28);
+			this.btnLineEvent.Name = "btnLineEvent";
+			this.btnLineEvent.Size = new System.Drawing.Size(75, 23);
+			this.btnLineEvent.TabIndex = 97;
+			this.btnLineEvent.Text = "Line Event";
+			this.btnLineEvent.UseVisualStyleBackColor = true;
+			this.btnLineEvent.Click += new System.EventHandler(this.btnLineEvent_Click);
+			// 
+			// btnLineThree
+			// 
+			this.btnLineThree.Location = new System.Drawing.Point(409, 28);
+			this.btnLineThree.Name = "btnLineThree";
+			this.btnLineThree.Size = new System.Drawing.Size(75, 23);
+			this.btnLineThree.TabIndex = 96;
+			this.btnLineThree.Text = "Line Three";
+			this.btnLineThree.UseVisualStyleBackColor = true;
+			this.btnLineThree.Click += new System.EventHandler(this.btnLineThree_Click);
+			// 
+			// btnLineTrend
+			// 
+			this.btnLineTrend.Location = new System.Drawing.Point(570, 29);
+			this.btnLineTrend.Name = "btnLineTrend";
+			this.btnLineTrend.Size = new System.Drawing.Size(75, 23);
+			this.btnLineTrend.TabIndex = 95;
+			this.btnLineTrend.Text = "Line Trend";
+			this.btnLineTrend.UseVisualStyleBackColor = true;
+			this.btnLineTrend.Click += new System.EventHandler(this.btnLineTrend_Click);
+			// 
+			// btnInsertGroupTrend
+			// 
+			this.btnInsertGroupTrend.Location = new System.Drawing.Point(489, 29);
+			this.btnInsertGroupTrend.Name = "btnInsertGroupTrend";
+			this.btnInsertGroupTrend.Size = new System.Drawing.Size(75, 23);
+			this.btnInsertGroupTrend.TabIndex = 94;
+			this.btnInsertGroupTrend.Text = "Insert Trend";
+			this.btnInsertGroupTrend.UseVisualStyleBackColor = true;
+			this.btnInsertGroupTrend.Click += new System.EventHandler(this.btnInsertGroupTrend_Click);
 			// 
 			// lbMessage
 			// 
@@ -1491,7 +1541,7 @@
             this.toolStripStatusLabelIP});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 835);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1556, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1607, 22);
 			this.statusStrip1.TabIndex = 90;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -1514,7 +1564,7 @@
 			this.groupBox5.Controls.Add(this.dgvStockReport);
 			this.groupBox5.Location = new System.Drawing.Point(20, 372);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(1524, 460);
+			this.groupBox5.Size = new System.Drawing.Size(1587, 460);
 			this.groupBox5.TabIndex = 91;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Report";
@@ -1523,7 +1573,7 @@
 			// 
 			this.label36.AutoSize = true;
 			this.label36.ForeColor = System.Drawing.Color.Black;
-			this.label36.Location = new System.Drawing.Point(580, 24);
+			this.label36.Location = new System.Drawing.Point(642, 24);
 			this.label36.Name = "label36";
 			this.label36.Size = new System.Drawing.Size(17, 12);
 			this.label36.TabIndex = 77;
@@ -1533,7 +1583,7 @@
 			// 
 			this.label35.AutoSize = true;
 			this.label35.ForeColor = System.Drawing.Color.Black;
-			this.label35.Location = new System.Drawing.Point(546, 24);
+			this.label35.Location = new System.Drawing.Point(608, 24);
 			this.label35.Name = "label35";
 			this.label35.Size = new System.Drawing.Size(17, 12);
 			this.label35.TabIndex = 76;
@@ -1541,7 +1591,7 @@
 			// 
 			// btnExport
 			// 
-			this.btnExport.Location = new System.Drawing.Point(501, 18);
+			this.btnExport.Location = new System.Drawing.Point(563, 18);
 			this.btnExport.Name = "btnExport";
 			this.btnExport.Size = new System.Drawing.Size(45, 23);
 			this.btnExport.TabIndex = 73;
@@ -1553,7 +1603,7 @@
 			// 
 			this.lbDecrease.AutoSize = true;
 			this.lbDecrease.ForeColor = System.Drawing.Color.LimeGreen;
-			this.lbDecrease.Location = new System.Drawing.Point(597, 24);
+			this.lbDecrease.Location = new System.Drawing.Point(659, 24);
 			this.lbDecrease.Name = "lbDecrease";
 			this.lbDecrease.Size = new System.Drawing.Size(0, 12);
 			this.lbDecrease.TabIndex = 75;
@@ -1562,7 +1612,7 @@
 			// 
 			this.lbIncrease.AutoSize = true;
 			this.lbIncrease.ForeColor = System.Drawing.Color.Red;
-			this.lbIncrease.Location = new System.Drawing.Point(564, 24);
+			this.lbIncrease.Location = new System.Drawing.Point(626, 24);
 			this.lbIncrease.Name = "lbIncrease";
 			this.lbIncrease.Size = new System.Drawing.Size(0, 12);
 			this.lbIncrease.TabIndex = 70;
@@ -1583,7 +1633,7 @@
 			this.groupBox7.Controls.Add(this.chkApproved);
 			this.groupBox7.Location = new System.Drawing.Point(6, 10);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(491, 37);
+			this.groupBox7.Size = new System.Drawing.Size(559, 37);
 			this.groupBox7.TabIndex = 74;
 			this.groupBox7.TabStop = false;
 			// 
@@ -1632,7 +1682,7 @@
 			// 
 			// btnQuery
 			// 
-			this.btnQuery.Location = new System.Drawing.Point(442, 9);
+			this.btnQuery.Location = new System.Drawing.Point(511, 11);
 			this.btnQuery.Name = "btnQuery";
 			this.btnQuery.Size = new System.Drawing.Size(42, 23);
 			this.btnQuery.TabIndex = 51;
@@ -1655,7 +1705,7 @@
 			this.dtpReportStart.Name = "dtpReportStart";
 			this.dtpReportStart.Size = new System.Drawing.Size(102, 22);
 			this.dtpReportStart.TabIndex = 70;
-			this.dtpReportStart.Value = new System.DateTime(2023, 4, 19, 0, 0, 0, 0);
+			this.dtpReportStart.Value = new System.DateTime(2023, 7, 3, 0, 0, 0, 0);
 			// 
 			// lb
 			// 
@@ -1701,7 +1751,7 @@
 			this.groupBox6.Controls.Add(this.label31);
 			this.groupBox6.Controls.Add(this.txt);
 			this.groupBox6.Controls.Add(this.txtProfit);
-			this.groupBox6.Location = new System.Drawing.Point(611, 9);
+			this.groupBox6.Location = new System.Drawing.Point(673, 9);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(369, 37);
 			this.groupBox6.TabIndex = 73;
@@ -1774,7 +1824,7 @@
 			this.add.Controls.Add(this.cbApprove);
 			this.add.Controls.Add(this.txtPickingCode);
 			this.add.Controls.Add(this.btnAdd);
-			this.add.Location = new System.Drawing.Point(981, 9);
+			this.add.Location = new System.Drawing.Point(1043, 9);
 			this.add.Name = "add";
 			this.add.Size = new System.Drawing.Size(534, 39);
 			this.add.TabIndex = 67;
@@ -1859,8 +1909,9 @@
 			this.dgvStockReport.Location = new System.Drawing.Point(3, 49);
 			this.dgvStockReport.Name = "dgvStockReport";
 			this.dgvStockReport.RowTemplate.Height = 24;
-			this.dgvStockReport.Size = new System.Drawing.Size(1515, 400);
+			this.dgvStockReport.Size = new System.Drawing.Size(1572, 400);
 			this.dgvStockReport.TabIndex = 47;
+			this.dgvStockReport.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvStockReport_DataBindingComplete);
 			// 
 			// progressBar3
 			// 
@@ -1886,6 +1937,13 @@
 			this.strateToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
 			this.strateToolStripMenuItem.Text = "Strategy";
 			// 
+			// autoOrderToolStripMenuItem
+			// 
+			this.autoOrderToolStripMenuItem.Name = "autoOrderToolStripMenuItem";
+			this.autoOrderToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+			this.autoOrderToolStripMenuItem.Text = "Auto Order";
+			this.autoOrderToolStripMenuItem.Click += new System.EventHandler(this.autoOrderToolStripMenuItem_Click);
+			// 
 			// reportToolStripMenuItem
 			// 
 			this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1895,13 +1953,6 @@
 			this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
 			this.reportToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
 			this.reportToolStripMenuItem.Text = "Report";
-			// 
-			// maintainToolStripMenuItem
-			// 
-			this.maintainToolStripMenuItem.Name = "maintainToolStripMenuItem";
-			this.maintainToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.maintainToolStripMenuItem.Text = "Maintain";
-			this.maintainToolStripMenuItem.Click += new System.EventHandler(this.maintainToolStripMenuItem_Click);
 			// 
 			// highLowToolStripMenuItem
 			// 
@@ -1924,42 +1975,12 @@
 			this.strengthWeaknessToolStripMenuItem.Text = "Strength Weakness";
 			this.strengthWeaknessToolStripMenuItem.Click += new System.EventHandler(this.strengthWeaknessToolStripMenuItem_Click);
 			// 
-			// autoOrderToolStripMenuItem
+			// maintainToolStripMenuItem
 			// 
-			this.autoOrderToolStripMenuItem.Name = "autoOrderToolStripMenuItem";
-			this.autoOrderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.autoOrderToolStripMenuItem.Text = "Auto Order";
-			this.autoOrderToolStripMenuItem.Click += new System.EventHandler(this.autoOrderToolStripMenuItem_Click);
-			// 
-			// btnInsertGroupTrend
-			// 
-			this.btnInsertGroupTrend.Location = new System.Drawing.Point(489, 29);
-			this.btnInsertGroupTrend.Name = "btnInsertGroupTrend";
-			this.btnInsertGroupTrend.Size = new System.Drawing.Size(75, 23);
-			this.btnInsertGroupTrend.TabIndex = 94;
-			this.btnInsertGroupTrend.Text = "Insert Trend";
-			this.btnInsertGroupTrend.UseVisualStyleBackColor = true;
-			this.btnInsertGroupTrend.Click += new System.EventHandler(this.btnInsertGroupTrend_Click);
-			// 
-			// btnLineTrend
-			// 
-			this.btnLineTrend.Location = new System.Drawing.Point(570, 29);
-			this.btnLineTrend.Name = "btnLineTrend";
-			this.btnLineTrend.Size = new System.Drawing.Size(75, 23);
-			this.btnLineTrend.TabIndex = 95;
-			this.btnLineTrend.Text = "Line Trend";
-			this.btnLineTrend.UseVisualStyleBackColor = true;
-			this.btnLineTrend.Click += new System.EventHandler(this.btnLineTrend_Click);
-			// 
-			// btnLineThree
-			// 
-			this.btnLineThree.Location = new System.Drawing.Point(409, 28);
-			this.btnLineThree.Name = "btnLineThree";
-			this.btnLineThree.Size = new System.Drawing.Size(75, 23);
-			this.btnLineThree.TabIndex = 96;
-			this.btnLineThree.Text = "Line Three";
-			this.btnLineThree.UseVisualStyleBackColor = true;
-			this.btnLineThree.Click += new System.EventHandler(this.btnLineThree_Click);
+			this.maintainToolStripMenuItem.Name = "maintainToolStripMenuItem";
+			this.maintainToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+			this.maintainToolStripMenuItem.Text = "Maintain";
+			this.maintainToolStripMenuItem.Click += new System.EventHandler(this.maintainToolStripMenuItem_Click);
 			// 
 			// label39
 			// 
@@ -1971,11 +1992,67 @@
 			this.label39.TabIndex = 94;
 			this.label39.Text = "周K須突破無套蛙並且盤大平台再出手";
 			// 
+			// label40
+			// 
+			this.label40.AutoSize = true;
+			this.label40.Location = new System.Drawing.Point(1102, 6);
+			this.label40.Name = "label40";
+			this.label40.Size = new System.Drawing.Size(44, 12);
+			this.label40.TabIndex = 95;
+			this.label40.Text = "賴通知:";
+			// 
+			// lbLineMsgCount
+			// 
+			this.lbLineMsgCount.AutoSize = true;
+			this.lbLineMsgCount.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+			this.lbLineMsgCount.Location = new System.Drawing.Point(1146, 7);
+			this.lbLineMsgCount.Name = "lbLineMsgCount";
+			this.lbLineMsgCount.Size = new System.Drawing.Size(0, 12);
+			this.lbLineMsgCount.TabIndex = 96;
+			// 
+			// btnResetLineMsgCount
+			// 
+			this.btnResetLineMsgCount.Location = new System.Drawing.Point(1062, 1);
+			this.btnResetLineMsgCount.Name = "btnResetLineMsgCount";
+			this.btnResetLineMsgCount.Size = new System.Drawing.Size(37, 23);
+			this.btnResetLineMsgCount.TabIndex = 98;
+			this.btnResetLineMsgCount.Text = "clear";
+			this.btnResetLineMsgCount.UseVisualStyleBackColor = true;
+			this.btnResetLineMsgCount.Click += new System.EventHandler(this.btnResetLineMsgCount_Click);
+			// 
+			// txtMSCI
+			// 
+			this.txtMSCI.Location = new System.Drawing.Point(4, 4);
+			this.txtMSCI.Name = "txtMSCI";
+			this.txtMSCI.Size = new System.Drawing.Size(289, 22);
+			this.txtMSCI.TabIndex = 98;
+			// 
+			// btnMSCI
+			// 
+			this.btnMSCI.Location = new System.Drawing.Point(298, 4);
+			this.btnMSCI.Name = "btnMSCI";
+			this.btnMSCI.Size = new System.Drawing.Size(71, 23);
+			this.btnMSCI.TabIndex = 99;
+			this.btnMSCI.Text = "MSCI";
+			this.btnMSCI.UseVisualStyleBackColor = true;
+			// 
+			// panel9
+			// 
+			this.panel9.Controls.Add(this.txtMSCI);
+			this.panel9.Controls.Add(this.btnMSCI);
+			this.panel9.Location = new System.Drawing.Point(766, 58);
+			this.panel9.Name = "panel9";
+			this.panel9.Size = new System.Drawing.Size(375, 32);
+			this.panel9.TabIndex = 100;
+			// 
 			// ScheduleJob
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1556, 857);
+			this.ClientSize = new System.Drawing.Size(1607, 857);
+			this.Controls.Add(this.btnResetLineMsgCount);
+			this.Controls.Add(this.lbLineMsgCount);
+			this.Controls.Add(this.label40);
 			this.Controls.Add(this.label39);
 			this.Controls.Add(this.progressBar3);
 			this.Controls.Add(this.groupBox5);
@@ -2036,6 +2113,8 @@
 			this.add.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).EndInit();
 			this.PopupMenu.ResumeLayout(false);
+			this.panel9.ResumeLayout(false);
+			this.panel9.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2220,5 +2299,12 @@
 		private System.Windows.Forms.Button btnLineTrend;
 		private System.Windows.Forms.Button btnLineThree;
 		private System.Windows.Forms.Label label39;
+		private System.Windows.Forms.Button btnLineEvent;
+		private System.Windows.Forms.Label label40;
+		private System.Windows.Forms.Label lbLineMsgCount;
+		private System.Windows.Forms.Button btnResetLineMsgCount;
+		private System.Windows.Forms.Panel panel9;
+		private System.Windows.Forms.TextBox txtMSCI;
+		private System.Windows.Forms.Button btnMSCI;
 	}
 }

@@ -27,9 +27,12 @@ namespace StockStrategy.BBL
         }
         public string  loginWebApi()
         {
+			string _PublicKey = ConfigurationManager.AppSettings["PublicKey"];
+			string _SecretKey = ConfigurationManager.AppSettings["SecretKey"];
             //Login
-            string _Username = Tool.Decrypt(ConfigurationManager.AppSettings["Account"], "20220801", "B1050520");
-            string _Password = Tool.Decrypt(ConfigurationManager.AppSettings["Password"], "20220801", "B1050520");
+            string _Username = Tool.Decrypt(ConfigurationManager.AppSettings["Account"], _PublicKey, _SecretKey);
+            string _Password = Tool.Decrypt(ConfigurationManager.AppSettings["Password"], _PublicKey, _SecretKey);
+            //Login
             LoginData _LoginData = new LoginData();
             _LoginData.Username = _Username;
             _LoginData.Password = _Password;
@@ -108,6 +111,22 @@ namespace StockStrategy.BBL
 			string _Uri = ConnectionString + _Action;
 			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
 			_ListStock = JsonConvert.DeserializeObject<List<DataModel.Stock.Stock>>(_ApiResult.Data.ToString());
+			return _ListStock;
+		}
+
+        /// <summary>
+        /// 取得單一股票的清單
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+		public List< Stock> getStockByCodeList(string parameter, string mode)
+		{ 
+			List< Stock> _ListStock = new List<Stock>();
+			string _Action = "StockByCode?parameter=" + parameter + "&mode=" + mode;
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStock = JsonConvert.DeserializeObject<List< Stock>>(_ApiResult.Data.ToString());
 			return _ListStock;
 		}
 		/// <summary>
@@ -224,6 +243,12 @@ namespace StockStrategy.BBL
             string _Return = _ApiResult.Data.ToString();
             return _Return;
         } 
+        /// <summary>
+        /// 賴通知
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public async Task postLineMsg(string  msg, string token)
         { 
             var result = await CallWebApi.CallLineNotifyApi(token,msg); 
@@ -241,6 +266,10 @@ namespace StockStrategy.BBL
             _ListStockLineNotify = JsonConvert.DeserializeObject<List<StockLineNotify>>(_ApiResult.Data.ToString());
             return _ListStockLineNotify;
         }
+        /// <summary>
+        /// 取得假日
+        /// </summary>
+        /// <returns></returns>
 		public List<Holiday> getHolidayList()
 		{       
 			List<Holiday> _ListHoliday = new List<Holiday>();
@@ -279,10 +308,24 @@ namespace StockStrategy.BBL
             return _Return;
         }
         /// <summary>
-        /// 選股寫入資料庫
+        /// 更新股票清單為完成 好讓爬蟲辨識已經更新三大法人資料
         /// </summary>
-        /// <param name="listStockPicking"></param>
+        /// <param name="stockGroup"></param>
         /// <returns></returns>
+		public string UpdateStockGroupFinish(StockGroup stockGroup)
+		{
+			string json = JsonConvert.SerializeObject(stockGroup);
+			string _Action = "StockGroup";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Put(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		/// <summary>
+		/// 選股寫入資料庫
+		/// </summary>
+		/// <param name="listStockPicking"></param>
+		/// <returns></returns>
 		public string InsertStockPicking(List<StockPicking> listStockPicking)
 		{
 			string json = JsonConvert.SerializeObject(listStockPicking);
@@ -292,6 +335,11 @@ namespace StockStrategy.BBL
 			string _Return = _ApiResult.Data.ToString();
 			return _Return;
 		}
+        /// <summary>
+        /// 更新選股
+        /// </summary>
+        /// <param name="stockPicking"></param>
+        /// <returns></returns>
 		public string UpdateStockPicking(StockPicking stockPicking)
 		{
 			string json = JsonConvert.SerializeObject(stockPicking);
@@ -301,6 +349,11 @@ namespace StockStrategy.BBL
 			string _Return = _ApiResult.Data.ToString();
 			return _Return;
 		}
+        /// <summary>
+        /// 刪除選股
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 		public string DeleteStockPicking(int id)
 		{ 
 			string _Action = "StockPicking?id="+id;
@@ -323,6 +376,10 @@ namespace StockStrategy.BBL
 			string _Return = _ApiResult.Data.ToString();
 			return _Return;
 		}
+        /// <summary>
+        /// 取得選股清單
+        /// </summary>
+        /// <returns></returns>
 		public List<StockPicking> getStockPickingList()
 		{
 			List<StockPicking> _ListStockPicking = new List<StockPicking>();
@@ -332,6 +389,10 @@ namespace StockStrategy.BBL
 			_ListStockPicking = JsonConvert.DeserializeObject<List<StockPicking>>(_ApiResult.Data.ToString());
 			return _ListStockPicking;
 		}
+        /// <summary>
+        /// 取得股票結果清單
+        /// </summary>
+        /// <returns></returns>
 		public List<StockResult> getStockResultList()
 		{
 			List<StockResult> _ListStockResult = new List<StockResult>();
@@ -341,6 +402,11 @@ namespace StockStrategy.BBL
 			_ListStockResult = JsonConvert.DeserializeObject<List<StockResult>>(_ApiResult.Data.ToString());
 			return _ListStockResult;
 		}
+        /// <summary>
+        /// 刪除股票結果
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 		public string DeleteStockResult(int id)
 		{
 			string _Action = "StockResult?id=" + id;

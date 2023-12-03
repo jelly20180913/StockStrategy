@@ -178,6 +178,7 @@
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\StockAllController.cs" />
     <Compile Include="Controllers\HolidayController.cs" />
+    <Compile Include="Controllers\StockByCodeController.cs" />
     <Compile Include="Controllers\StockGroupTotalCountController.cs" />
     <Compile Include="Controllers\StockEventNotifyController.cs" />
     <Compile Include="Controllers\StockThreeInstitutionalController.cs" />

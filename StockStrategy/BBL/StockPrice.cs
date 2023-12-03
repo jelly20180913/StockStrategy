@@ -89,6 +89,10 @@ namespace StockStrategy.BBL
             }
             return _PriceList;
         }
+        /// <summary>
+        /// 取得昨日股票清單 證交所
+        /// </summary>
+        /// <returns></returns>
         public static List<Stock.StockDayAll> GetStockDayAll( )
         {
             string _Log = "";
@@ -217,6 +221,11 @@ namespace StockStrategy.BBL
 
 
         }
+        /// <summary>
+        /// 取得股票三大法人(已失效)
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public static List<Stock.StockJuridical> GetJuridical(string date)
         { 
             string _Log = "";
@@ -228,8 +237,9 @@ namespace StockStrategy.BBL
                 string downloadedData = "";
                 using (WebClient wClient = new WebClient())
                 {
-                    // 網頁回傳
-                    downloadedData = wClient.DownloadString(download_url);
+                    wClient.Encoding = Encoding.UTF8;
+					// 網頁回傳
+					downloadedData = wClient.DownloadString(download_url);
                 }
                 if (downloadedData.Trim().Length > 0)
                 { 

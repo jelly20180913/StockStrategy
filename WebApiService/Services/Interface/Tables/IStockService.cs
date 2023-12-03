@@ -20,6 +20,8 @@ namespace WebApiService.Services.Interface.Tables
         IEnumerable<DataModel.Stock.Stock> GetByDate(string parameter);
         IEnumerable<DataModel.Stock.Stock> GetByCode(string parameter);
 		IEnumerable<DataModel.Stock.Stock> GetByPredays(string parameter);
+        IEnumerable<DataModel.Stock.Stock> GetByBetweenDate(string dtStart, string dtEnd);
+        IEnumerable<Stock> GetByStockCode(string parameter);
 
 	}
 }

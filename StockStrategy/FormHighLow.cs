@@ -46,6 +46,16 @@ namespace StockStrategy
 				logger.Error(_Log);
 			}
 		}
+
+		/// <summary>
+		/// 1. 輪詢股票群組表
+		/// 2. 最高價
+		/// 3. 最低價
+		/// 4. 最高假日
+		/// 5. 最低價日
+		/// 6. 幾倍
+		/// </summary>
+		/// <returns></returns>
 		private List<StockHighLow> setStockHighLowList()
 		{
 
@@ -114,7 +124,11 @@ namespace StockStrategy
 			this.lbPercent.Refresh();
 			//this.lbMsg.Text = "Insert Stock High Low ok";
 		}
-
+		/// <summary>
+		/// 取得高低價資料表
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnGetData_Click(object sender, EventArgs e)
 		{
 			string _Log = "";
@@ -150,7 +164,11 @@ namespace StockStrategy
 				logger.Error(_Log);
 			}
 		}
-
+		/// <summary>
+		/// 匯出報表
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnExport_Click(object sender, EventArgs e)
 		{
 			string _Log = "";

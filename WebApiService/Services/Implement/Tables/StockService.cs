@@ -146,6 +146,11 @@ namespace WebApiService.Services.Implement.Tables
 			 ); 
 			return _StockList;
 		}
+		public IEnumerable< Stock> GetByStockCode(string parameter)
+		{
+			DbSet<Stock> _StockDbSet = this._repository.GetDbSet(); 
+			return _StockDbSet.Where(x=>x.Code==parameter);
+		}
 		/// <summary>
 		/// 撈一個月的資料
 		/// </summary>
@@ -158,6 +163,54 @@ namespace WebApiService.Services.Implement.Tables
 			
 			DateTime _DtStart = DateTime.ParseExact(_EndDate.ToString(), "yyyyMMdd", null, System.Globalization.DateTimeStyles.AllowWhiteSpaces).AddMonths(-1); 
 			int _StartDate =Convert.ToInt32( _DtStart.ToString("yyyyMMdd"));
+			//AsEnumerable() 不然轉型會報錯
+			var query = from c in _StockDbSet.AsEnumerable()
+						where Convert.ToInt32(c.Date) <= _EndDate && Convert.ToInt32(c.Date) > _StartDate
+						select new
+						{
+							Code = c.Code,
+							Name = c.Name,
+							TradeVolume = c.TradeVolume,
+							ClosingPrice = c.ClosingPrice,
+							Gain = c.Gain,
+							Shock = c.Shock,
+							Date = c.Date,
+							HighestPrice = c.HighestPrice,
+							OpeningPrice = c.OpeningPrice,
+							ForeignInvestment = c.ForeignInvestment,
+							Investment = c.Investment,
+							Dealer = c.Dealer
+						};
+			IEnumerable<DataModel.Stock.Stock> _StockList = from p in query.AsEnumerable()
+															select new DataModel.Stock.Stock(
+				p.Code,
+				p.Name,
+				p.TradeVolume,
+				p.HighestPrice,
+				p.ClosingPrice,
+				p.Date,
+				p.Gain,
+				p.Shock,
+				p.OpeningPrice,
+				p.ForeignInvestment,
+				p.Investment,
+				p.Dealer
+			 );
+			return _StockList;
+		}
+		/// <summary>
+		/// 還沒寫好  起訖日
+		/// </summary>
+		/// <param name="dtStart"></param>
+		/// <param name="dtEnd"></param>
+		/// <returns></returns>
+		public IEnumerable<DataModel.Stock.Stock> GetByBetweenDate(string dtStart,string dtEnd)
+		{
+			DbSet<Stock> _StockDbSet = this._repository.GetDbSet();
+			int _EndDate = Convert.ToInt32(dtEnd);
+			int _StartDate = Convert.ToInt32(dtStart);
+			//DateTime _DtStart = DateTime.ParseExact(_EndDate.ToString(), "yyyyMMdd", null, System.Globalization.DateTimeStyles.AllowWhiteSpaces).AddMonths(-1);
+			//int _StartDate = Convert.ToInt32(_DtStart.ToString("yyyyMMdd"));
 			//AsEnumerable() 不然轉型會報錯
 			var query = from c in _StockDbSet.AsEnumerable()
 						where Convert.ToInt32(c.Date) <= _EndDate && Convert.ToInt32(c.Date) > _StartDate

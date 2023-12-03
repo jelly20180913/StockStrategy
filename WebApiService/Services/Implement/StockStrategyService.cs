@@ -49,8 +49,19 @@ namespace WebApiService.Services.Implement
 		{
 			List<DataModel.Stock.Stock> _StockList = new List<DataModel.Stock.Stock>();
 			if (mode == "Code") _StockList = this._stockService.GetByCode(parameter).ToList();
-			else if(mode == "Date") _StockList = this._stockService.GetByDate(parameter).ToList();
+			else if (mode == "Date") _StockList = this._stockService.GetByDate(parameter).ToList();
 			else if (mode == "Predays") _StockList = this._stockService.GetByPredays(parameter).ToList(); //取前N日會有六日問題
+			else if (mode == "BetweenDate")
+			{
+				string[] _Date = parameter.Split('~');
+				_StockList = this._stockService.GetByBetweenDate(_Date[0], _Date[1]).ToList();
+			}
+			return _StockList;
+		}
+		public List< Stock> GetByStockCodeList(string parameter, string mode)
+		{
+			List< Stock> _StockList = new List< Stock>();
+			if (mode == "Code") _StockList = this._stockService.GetByStockCode(parameter).ToList(); 
 			return _StockList;
 		}
 		public bool InsertStock(List<Stock> s)

@@ -30,7 +30,7 @@
         {
 			this.components = new System.ComponentModel.Container();
 			this.btnLogin = new System.Windows.Forms.Button();
-			this.txtErrMsg = new System.Windows.Forms.TextBox();
+			this.btnErrorMsg = new System.Windows.Forms.TextBox();
 			this.btnGetIndexToInsert = new System.Windows.Forms.Button();
 			this.timerInsertStockIndex = new System.Windows.Forms.Timer(this.components);
 			this.btnUpdateStockIndex = new System.Windows.Forms.Button();
@@ -138,21 +138,30 @@
 			this.btnBad = new System.Windows.Forms.Button();
 			this.btnStockJurical = new System.Windows.Forms.Button();
 			this.pnAdmin = new System.Windows.Forms.Panel();
+			this.btnEveryThree = new System.Windows.Forms.Button();
+			this.btnThree = new System.Windows.Forms.Button();
+			this.btnGetValue = new System.Windows.Forms.Button();
+			this.panel9 = new System.Windows.Forms.Panel();
+			this.chkPickingMSCI = new System.Windows.Forms.CheckBox();
+			this.txtMSCI_Stock = new System.Windows.Forms.TextBox();
+			this.btnOpenMSCI = new System.Windows.Forms.Button();
+			this.dtpMSCI = new System.Windows.Forms.DateTimePicker();
+			this.txtFileMSCI = new System.Windows.Forms.TextBox();
+			this.btnMSCI = new System.Windows.Forms.Button();
 			this.btnLineEvent = new System.Windows.Forms.Button();
 			this.btnLineThree = new System.Windows.Forms.Button();
 			this.btnLineTrend = new System.Windows.Forms.Button();
 			this.btnInsertGroupTrend = new System.Windows.Forms.Button();
-			this.lbMessage = new System.Windows.Forms.Label();
 			this.chkJurical = new System.Windows.Forms.CheckBox();
 			this.dtpStockYesterday = new System.Windows.Forms.DateTimePicker();
 			this.dtpStockIndex = new System.Windows.Forms.DateTimePicker();
 			this.btnTestJson = new System.Windows.Forms.Button();
-			this.btnTestLog = new System.Windows.Forms.Button();
 			this.btnLineStockIndex = new System.Windows.Forms.Button();
 			this.btnInsertStockPicking = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.btnSetting = new System.Windows.Forms.Button();
 			this.btnStockResult = new System.Windows.Forms.Button();
+			this.lbMessage = new System.Windows.Forms.Label();
 			this.txtPassword = new System.Windows.Forms.TextBox();
 			this.label25 = new System.Windows.Forms.Label();
 			this.txtAccount = new System.Windows.Forms.TextBox();
@@ -160,13 +169,16 @@
 			this.btnAdminLogin = new System.Windows.Forms.Button();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelIP = new System.Windows.Forms.ToolStripStatusLabel();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.label36 = new System.Windows.Forms.Label();
-			this.label35 = new System.Windows.Forms.Label();
-			this.btnExport = new System.Windows.Forms.Button();
-			this.lbDecrease = new System.Windows.Forms.Label();
-			this.lbIncrease = new System.Windows.Forms.Label();
+			this.gpReport = new System.Windows.Forms.GroupBox();
+			this.pnRight = new System.Windows.Forms.Panel();
+			this.dgvStatistics = new System.Windows.Forms.DataGridView();
+			this.panel10 = new System.Windows.Forms.Panel();
+			this.dgvStockReport = new System.Windows.Forms.DataGridView();
+			this.pnMiddle = new System.Windows.Forms.Panel();
+			this.btnStatistics = new System.Windows.Forms.Button();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.chkClass = new System.Windows.Forms.CheckBox();
+			this.cbClass = new System.Windows.Forms.ComboBox();
 			this.label37 = new System.Windows.Forms.Label();
 			this.chkOpenningPrice = new System.Windows.Forms.CheckBox();
 			this.label32 = new System.Windows.Forms.Label();
@@ -179,14 +191,7 @@
 			this.txtManyDays = new System.Windows.Forms.TextBox();
 			this.label30 = new System.Windows.Forms.Label();
 			this.chkApproved = new System.Windows.Forms.CheckBox();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.label28 = new System.Windows.Forms.Label();
-			this.txtTotalProfit = new System.Windows.Forms.TextBox();
-			this.label29 = new System.Windows.Forms.Label();
-			this.txtTotalCost = new System.Windows.Forms.TextBox();
-			this.label31 = new System.Windows.Forms.Label();
-			this.txt = new System.Windows.Forms.Label();
-			this.txtProfit = new System.Windows.Forms.TextBox();
+			this.label36 = new System.Windows.Forms.Label();
 			this.add = new System.Windows.Forms.GroupBox();
 			this.dtpSuspendDate = new System.Windows.Forms.DateTimePicker();
 			this.label38 = new System.Windows.Forms.Label();
@@ -196,7 +201,18 @@
 			this.cbApprove = new System.Windows.Forms.ComboBox();
 			this.txtPickingCode = new System.Windows.Forms.TextBox();
 			this.btnAdd = new System.Windows.Forms.Button();
-			this.dgvStockReport = new System.Windows.Forms.DataGridView();
+			this.label35 = new System.Windows.Forms.Label();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.label28 = new System.Windows.Forms.Label();
+			this.txtTotalProfit = new System.Windows.Forms.TextBox();
+			this.label29 = new System.Windows.Forms.Label();
+			this.txtTotalCost = new System.Windows.Forms.TextBox();
+			this.label31 = new System.Windows.Forms.Label();
+			this.txt = new System.Windows.Forms.Label();
+			this.txtProfit = new System.Windows.Forms.TextBox();
+			this.btnExport = new System.Windows.Forms.Button();
+			this.lbIncrease = new System.Windows.Forms.Label();
+			this.lbDecrease = new System.Windows.Forms.Label();
 			this.progressBar3 = new System.Windows.Forms.ProgressBar();
 			this.PopupMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.strateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -210,9 +226,9 @@
 			this.label40 = new System.Windows.Forms.Label();
 			this.lbLineMsgCount = new System.Windows.Forms.Label();
 			this.btnResetLineMsgCount = new System.Windows.Forms.Button();
-			this.txtMSCI = new System.Windows.Forms.TextBox();
-			this.btnMSCI = new System.Windows.Forms.Button();
-			this.panel9 = new System.Windows.Forms.Panel();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.pnTop = new System.Windows.Forms.Panel();
+			this.timerSStockResult = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -230,14 +246,23 @@
 			this.panel6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudDiff)).BeginInit();
 			this.pnAdmin.SuspendLayout();
-			this.statusStrip1.SuspendLayout();
-			this.groupBox5.SuspendLayout();
-			this.groupBox7.SuspendLayout();
-			this.groupBox6.SuspendLayout();
-			this.add.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).BeginInit();
-			this.PopupMenu.SuspendLayout();
 			this.panel9.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
+			this.gpReport.SuspendLayout();
+			this.pnRight.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvStatistics)).BeginInit();
+			this.panel10.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).BeginInit();
+			this.pnMiddle.SuspendLayout();
+			this.groupBox7.SuspendLayout();
+			this.add.SuspendLayout();
+			this.groupBox6.SuspendLayout();
+			this.PopupMenu.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
+			this.pnTop.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnLogin
@@ -250,14 +275,14 @@
 			this.btnLogin.UseVisualStyleBackColor = true;
 			this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
 			// 
-			// txtErrMsg
+			// btnErrorMsg
 			// 
-			this.txtErrMsg.Location = new System.Drawing.Point(1187, 4);
-			this.txtErrMsg.Multiline = true;
-			this.txtErrMsg.Name = "txtErrMsg";
-			this.txtErrMsg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtErrMsg.Size = new System.Drawing.Size(363, 120);
-			this.txtErrMsg.TabIndex = 3;
+			this.btnErrorMsg.Location = new System.Drawing.Point(1177, 4);
+			this.btnErrorMsg.Multiline = true;
+			this.btnErrorMsg.Name = "btnErrorMsg";
+			this.btnErrorMsg.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.btnErrorMsg.Size = new System.Drawing.Size(411, 230);
+			this.btnErrorMsg.TabIndex = 3;
 			// 
 			// btnGetIndexToInsert
 			// 
@@ -297,7 +322,6 @@
 			// 
 			// btnOpen
 			// 
-			this.btnOpen.Enabled = false;
 			this.btnOpen.Location = new System.Drawing.Point(249, 2);
 			this.btnOpen.Name = "btnOpen";
 			this.btnOpen.Size = new System.Drawing.Size(75, 23);
@@ -351,7 +375,7 @@
 			// 
 			// btnResetLinePoint
 			// 
-			this.btnResetLinePoint.Location = new System.Drawing.Point(313, 1);
+			this.btnResetLinePoint.Location = new System.Drawing.Point(306, 4);
 			this.btnResetLinePoint.Name = "btnResetLinePoint";
 			this.btnResetLinePoint.Size = new System.Drawing.Size(114, 23);
 			this.btnResetLinePoint.TabIndex = 14;
@@ -374,7 +398,7 @@
 			this.txtGoodStock.Location = new System.Drawing.Point(5, 42);
 			this.txtGoodStock.Multiline = true;
 			this.txtGoodStock.Name = "txtGoodStock";
-			this.txtGoodStock.Size = new System.Drawing.Size(1524, 29);
+			this.txtGoodStock.Size = new System.Drawing.Size(1580, 29);
 			this.txtGoodStock.TabIndex = 16;
 			// 
 			// dtpGoodDate
@@ -403,9 +427,9 @@
 			this.groupBox1.Controls.Add(this.dtpGoodDate);
 			this.groupBox1.Controls.Add(this.txtGoodStock);
 			this.groupBox1.Controls.Add(this.btnGetGoodStock);
-			this.groupBox1.Location = new System.Drawing.Point(10, 121);
+			this.groupBox1.Location = new System.Drawing.Point(3, 240);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1534, 72);
+			this.groupBox1.Size = new System.Drawing.Size(1597, 72);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Good";
@@ -592,7 +616,7 @@
 			// 
 			this.progressBar2.Location = new System.Drawing.Point(1400, 13);
 			this.progressBar2.Name = "progressBar2";
-			this.progressBar2.Size = new System.Drawing.Size(129, 23);
+			this.progressBar2.Size = new System.Drawing.Size(184, 23);
 			this.progressBar2.TabIndex = 36;
 			// 
 			// label3
@@ -724,9 +748,9 @@
 			this.groupBox2.Controls.Add(this.btnLineCtuStock);
 			this.groupBox2.Controls.Add(this.dtpCtuDate);
 			this.groupBox2.Controls.Add(this.btnCtu);
-			this.groupBox2.Location = new System.Drawing.Point(12, 195);
+			this.groupBox2.Location = new System.Drawing.Point(5, 314);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(1532, 83);
+			this.groupBox2.Size = new System.Drawing.Size(1595, 83);
 			this.groupBox2.TabIndex = 39;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Good";
@@ -762,7 +786,7 @@
 			// 
 			this.pgBarCtu.Location = new System.Drawing.Point(1398, 18);
 			this.pgBarCtu.Name = "pgBarCtu";
-			this.pgBarCtu.Size = new System.Drawing.Size(129, 23);
+			this.pgBarCtu.Size = new System.Drawing.Size(185, 23);
 			this.pgBarCtu.TabIndex = 37;
 			// 
 			// txtCtuStock
@@ -770,7 +794,7 @@
 			this.txtCtuStock.Location = new System.Drawing.Point(6, 49);
 			this.txtCtuStock.Multiline = true;
 			this.txtCtuStock.Name = "txtCtuStock";
-			this.txtCtuStock.Size = new System.Drawing.Size(1521, 31);
+			this.txtCtuStock.Size = new System.Drawing.Size(1576, 31);
 			this.txtCtuStock.TabIndex = 40;
 			// 
 			// panel3
@@ -985,9 +1009,9 @@
 			this.groupBox3.Controls.Add(this.btnLineBad);
 			this.groupBox3.Controls.Add(this.dtpBadDate);
 			this.groupBox3.Controls.Add(this.btnBad);
-			this.groupBox3.Location = new System.Drawing.Point(12, 280);
+			this.groupBox3.Location = new System.Drawing.Point(5, 399);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(1532, 86);
+			this.groupBox3.Size = new System.Drawing.Size(1595, 86);
 			this.groupBox3.TabIndex = 40;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Bad";
@@ -1133,7 +1157,7 @@
 			// 
 			this.pgBarBad.Location = new System.Drawing.Point(1398, 18);
 			this.pgBarBad.Name = "pgBarBad";
-			this.pgBarBad.Size = new System.Drawing.Size(129, 23);
+			this.pgBarBad.Size = new System.Drawing.Size(185, 23);
 			this.pgBarBad.TabIndex = 37;
 			// 
 			// txtBadStock
@@ -1141,7 +1165,7 @@
 			this.txtBadStock.Location = new System.Drawing.Point(6, 49);
 			this.txtBadStock.Multiline = true;
 			this.txtBadStock.Name = "txtBadStock";
-			this.txtBadStock.Size = new System.Drawing.Size(1520, 31);
+			this.txtBadStock.Size = new System.Drawing.Size(1576, 31);
 			this.txtBadStock.TabIndex = 40;
 			// 
 			// panel5
@@ -1307,17 +1331,18 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.btnEveryThree);
+			this.pnAdmin.Controls.Add(this.btnThree);
+			this.pnAdmin.Controls.Add(this.btnGetValue);
 			this.pnAdmin.Controls.Add(this.panel9);
 			this.pnAdmin.Controls.Add(this.btnLineEvent);
 			this.pnAdmin.Controls.Add(this.btnLineThree);
 			this.pnAdmin.Controls.Add(this.btnLineTrend);
 			this.pnAdmin.Controls.Add(this.btnInsertGroupTrend);
-			this.pnAdmin.Controls.Add(this.lbMessage);
 			this.pnAdmin.Controls.Add(this.chkJurical);
 			this.pnAdmin.Controls.Add(this.dtpStockYesterday);
 			this.pnAdmin.Controls.Add(this.dtpStockIndex);
 			this.pnAdmin.Controls.Add(this.btnTestJson);
-			this.pnAdmin.Controls.Add(this.btnTestLog);
 			this.pnAdmin.Controls.Add(this.btnLineStockIndex);
 			this.pnAdmin.Controls.Add(this.btnInsertStockPicking);
 			this.pnAdmin.Controls.Add(this.button1);
@@ -1339,10 +1364,105 @@
 			this.pnAdmin.Controls.Add(this.btnImport);
 			this.pnAdmin.Controls.Add(this.btnInsertStockLackOff);
 			this.pnAdmin.Controls.Add(this.btnUpdateJuridicaPerson);
-			this.pnAdmin.Location = new System.Drawing.Point(5, 25);
+			this.pnAdmin.Location = new System.Drawing.Point(-2, 28);
 			this.pnAdmin.Name = "pnAdmin";
-			this.pnAdmin.Size = new System.Drawing.Size(1176, 90);
+			this.pnAdmin.Size = new System.Drawing.Size(1176, 206);
 			this.pnAdmin.TabIndex = 42;
+			// 
+			// btnEveryThree
+			// 
+			this.btnEveryThree.Location = new System.Drawing.Point(763, 58);
+			this.btnEveryThree.Name = "btnEveryThree";
+			this.btnEveryThree.Size = new System.Drawing.Size(73, 23);
+			this.btnEveryThree.TabIndex = 105;
+			this.btnEveryThree.Text = "每日法人";
+			this.btnEveryThree.UseVisualStyleBackColor = true;
+			this.btnEveryThree.Click += new System.EventHandler(this.btnEveryThree_Click);
+			// 
+			// btnThree
+			// 
+			this.btnThree.Enabled = false;
+			this.btnThree.Location = new System.Drawing.Point(60, 125);
+			this.btnThree.Name = "btnThree";
+			this.btnThree.Size = new System.Drawing.Size(73, 23);
+			this.btnThree.TabIndex = 104;
+			this.btnThree.Text = "三大法人";
+			this.btnThree.UseVisualStyleBackColor = true;
+			this.btnThree.Click += new System.EventHandler(this.btnThree_Click);
+			// 
+			// btnGetValue
+			// 
+			this.btnGetValue.Enabled = false;
+			this.btnGetValue.Location = new System.Drawing.Point(10, 125);
+			this.btnGetValue.Name = "btnGetValue";
+			this.btnGetValue.Size = new System.Drawing.Size(44, 23);
+			this.btnGetValue.TabIndex = 103;
+			this.btnGetValue.Text = "取值";
+			this.btnGetValue.UseVisualStyleBackColor = true;
+			this.btnGetValue.Click += new System.EventHandler(this.btnGetValue_Click);
+			// 
+			// panel9
+			// 
+			this.panel9.Controls.Add(this.chkPickingMSCI);
+			this.panel9.Controls.Add(this.txtMSCI_Stock);
+			this.panel9.Controls.Add(this.btnOpenMSCI);
+			this.panel9.Controls.Add(this.dtpMSCI);
+			this.panel9.Controls.Add(this.txtFileMSCI);
+			this.panel9.Controls.Add(this.btnMSCI);
+			this.panel9.Location = new System.Drawing.Point(3, 87);
+			this.panel9.Name = "panel9";
+			this.panel9.Size = new System.Drawing.Size(1170, 32);
+			this.panel9.TabIndex = 100;
+			// 
+			// chkPickingMSCI
+			// 
+			this.chkPickingMSCI.AutoSize = true;
+			this.chkPickingMSCI.Location = new System.Drawing.Point(437, 10);
+			this.chkPickingMSCI.Name = "chkPickingMSCI";
+			this.chkPickingMSCI.Size = new System.Drawing.Size(15, 14);
+			this.chkPickingMSCI.TabIndex = 39;
+			this.chkPickingMSCI.UseVisualStyleBackColor = true;
+			// 
+			// txtMSCI_Stock
+			// 
+			this.txtMSCI_Stock.Location = new System.Drawing.Point(508, 5);
+			this.txtMSCI_Stock.Name = "txtMSCI_Stock";
+			this.txtMSCI_Stock.Size = new System.Drawing.Size(649, 22);
+			this.txtMSCI_Stock.TabIndex = 102;
+			// 
+			// btnOpenMSCI
+			// 
+			this.btnOpenMSCI.Location = new System.Drawing.Point(133, 5);
+			this.btnOpenMSCI.Name = "btnOpenMSCI";
+			this.btnOpenMSCI.Size = new System.Drawing.Size(44, 23);
+			this.btnOpenMSCI.TabIndex = 101;
+			this.btnOpenMSCI.Text = "Open";
+			this.btnOpenMSCI.UseVisualStyleBackColor = true;
+			this.btnOpenMSCI.Click += new System.EventHandler(this.btnOpenMSCI_Click);
+			// 
+			// dtpMSCI
+			// 
+			this.dtpMSCI.Location = new System.Drawing.Point(5, 5);
+			this.dtpMSCI.Name = "dtpMSCI";
+			this.dtpMSCI.Size = new System.Drawing.Size(126, 22);
+			this.dtpMSCI.TabIndex = 100;
+			// 
+			// txtFileMSCI
+			// 
+			this.txtFileMSCI.Location = new System.Drawing.Point(180, 6);
+			this.txtFileMSCI.Name = "txtFileMSCI";
+			this.txtFileMSCI.Size = new System.Drawing.Size(252, 22);
+			this.txtFileMSCI.TabIndex = 98;
+			// 
+			// btnMSCI
+			// 
+			this.btnMSCI.Location = new System.Drawing.Point(457, 4);
+			this.btnMSCI.Name = "btnMSCI";
+			this.btnMSCI.Size = new System.Drawing.Size(48, 23);
+			this.btnMSCI.TabIndex = 99;
+			this.btnMSCI.Text = "MSCI";
+			this.btnMSCI.UseVisualStyleBackColor = true;
+			this.btnMSCI.Click += new System.EventHandler(this.btnMSCI_Click);
 			// 
 			// btnLineEvent
 			// 
@@ -1384,15 +1504,6 @@
 			this.btnInsertGroupTrend.UseVisualStyleBackColor = true;
 			this.btnInsertGroupTrend.Click += new System.EventHandler(this.btnInsertGroupTrend_Click);
 			// 
-			// lbMessage
-			// 
-			this.lbMessage.AutoSize = true;
-			this.lbMessage.ForeColor = System.Drawing.Color.Teal;
-			this.lbMessage.Location = new System.Drawing.Point(766, 63);
-			this.lbMessage.Name = "lbMessage";
-			this.lbMessage.Size = new System.Drawing.Size(0, 12);
-			this.lbMessage.TabIndex = 78;
-			// 
 			// chkJurical
 			// 
 			this.chkJurical.AutoSize = true;
@@ -1426,17 +1537,6 @@
 			this.btnTestJson.Text = "test json";
 			this.btnTestJson.UseVisualStyleBackColor = true;
 			this.btnTestJson.Click += new System.EventHandler(this.btnTestJson_Click);
-			// 
-			// btnTestLog
-			// 
-			this.btnTestLog.Enabled = false;
-			this.btnTestLog.Location = new System.Drawing.Point(82, 1);
-			this.btnTestLog.Name = "btnTestLog";
-			this.btnTestLog.Size = new System.Drawing.Size(56, 23);
-			this.btnTestLog.TabIndex = 49;
-			this.btnTestLog.Text = "test log";
-			this.btnTestLog.UseVisualStyleBackColor = true;
-			this.btnTestLog.Click += new System.EventHandler(this.btnTestLog_Click);
 			// 
 			// btnLineStockIndex
 			// 
@@ -1491,9 +1591,18 @@
 			this.btnStockResult.UseVisualStyleBackColor = true;
 			this.btnStockResult.Click += new System.EventHandler(this.btnStockResult_Click);
 			// 
+			// lbMessage
+			// 
+			this.lbMessage.AutoSize = true;
+			this.lbMessage.ForeColor = System.Drawing.Color.Teal;
+			this.lbMessage.Location = new System.Drawing.Point(638, 11);
+			this.lbMessage.Name = "lbMessage";
+			this.lbMessage.Size = new System.Drawing.Size(0, 12);
+			this.lbMessage.TabIndex = 78;
+			// 
 			// txtPassword
 			// 
-			this.txtPassword.Location = new System.Drawing.Point(157, 3);
+			this.txtPassword.Location = new System.Drawing.Point(150, 6);
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.PasswordChar = '*';
 			this.txtPassword.Size = new System.Drawing.Size(71, 22);
@@ -1502,7 +1611,7 @@
 			// label25
 			// 
 			this.label25.AutoSize = true;
-			this.label25.Location = new System.Drawing.Point(119, 8);
+			this.label25.Location = new System.Drawing.Point(112, 11);
 			this.label25.Name = "label25";
 			this.label25.Size = new System.Drawing.Size(32, 12);
 			this.label25.TabIndex = 85;
@@ -1510,7 +1619,7 @@
 			// 
 			// txtAccount
 			// 
-			this.txtAccount.Location = new System.Drawing.Point(42, 3);
+			this.txtAccount.Location = new System.Drawing.Point(35, 6);
 			this.txtAccount.Name = "txtAccount";
 			this.txtAccount.PasswordChar = '*';
 			this.txtAccount.Size = new System.Drawing.Size(71, 22);
@@ -1519,7 +1628,7 @@
 			// lbStockAccount
 			// 
 			this.lbStockAccount.AutoSize = true;
-			this.lbStockAccount.Location = new System.Drawing.Point(7, 8);
+			this.lbStockAccount.Location = new System.Drawing.Point(0, 11);
 			this.lbStockAccount.Name = "lbStockAccount";
 			this.lbStockAccount.Size = new System.Drawing.Size(32, 12);
 			this.lbStockAccount.TabIndex = 83;
@@ -1527,7 +1636,7 @@
 			// 
 			// btnAdminLogin
 			// 
-			this.btnAdminLogin.Location = new System.Drawing.Point(234, 2);
+			this.btnAdminLogin.Location = new System.Drawing.Point(227, 5);
 			this.btnAdminLogin.Name = "btnAdminLogin";
 			this.btnAdminLogin.Size = new System.Drawing.Size(75, 23);
 			this.btnAdminLogin.TabIndex = 89;
@@ -1539,7 +1648,7 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelIP});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 835);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 953);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(1607, 22);
 			this.statusStrip1.TabIndex = 90;
@@ -1551,74 +1660,91 @@
 			this.toolStripStatusLabelIP.Size = new System.Drawing.Size(128, 17);
 			this.toolStripStatusLabelIP.Text = "toolStripStatusLabel1";
 			// 
-			// groupBox5
+			// gpReport
 			// 
-			this.groupBox5.Controls.Add(this.label36);
-			this.groupBox5.Controls.Add(this.label35);
-			this.groupBox5.Controls.Add(this.btnExport);
-			this.groupBox5.Controls.Add(this.lbDecrease);
-			this.groupBox5.Controls.Add(this.lbIncrease);
-			this.groupBox5.Controls.Add(this.groupBox7);
-			this.groupBox5.Controls.Add(this.groupBox6);
-			this.groupBox5.Controls.Add(this.add);
-			this.groupBox5.Controls.Add(this.dgvStockReport);
-			this.groupBox5.Location = new System.Drawing.Point(20, 372);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(1587, 460);
-			this.groupBox5.TabIndex = 91;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Report";
+			this.gpReport.Controls.Add(this.pnRight);
+			this.gpReport.Controls.Add(this.panel10);
+			this.gpReport.Controls.Add(this.pnMiddle);
+			this.gpReport.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gpReport.Location = new System.Drawing.Point(0, 0);
+			this.gpReport.Name = "gpReport";
+			this.gpReport.Size = new System.Drawing.Size(1607, 438);
+			this.gpReport.TabIndex = 91;
+			this.gpReport.TabStop = false;
+			this.gpReport.Text = "Report";
 			// 
-			// label36
+			// pnRight
 			// 
-			this.label36.AutoSize = true;
-			this.label36.ForeColor = System.Drawing.Color.Black;
-			this.label36.Location = new System.Drawing.Point(642, 24);
-			this.label36.Name = "label36";
-			this.label36.Size = new System.Drawing.Size(17, 12);
-			this.label36.TabIndex = 77;
-			this.label36.Text = "跌";
+			this.pnRight.Controls.Add(this.dgvStatistics);
+			this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
+			this.pnRight.Location = new System.Drawing.Point(1177, 101);
+			this.pnRight.Name = "pnRight";
+			this.pnRight.Size = new System.Drawing.Size(427, 334);
+			this.pnRight.TabIndex = 80;
 			// 
-			// label35
+			// dgvStatistics
 			// 
-			this.label35.AutoSize = true;
-			this.label35.ForeColor = System.Drawing.Color.Black;
-			this.label35.Location = new System.Drawing.Point(608, 24);
-			this.label35.Name = "label35";
-			this.label35.Size = new System.Drawing.Size(17, 12);
-			this.label35.TabIndex = 76;
-			this.label35.Text = "漲";
+			this.dgvStatistics.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgvStatistics.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgvStatistics.Location = new System.Drawing.Point(0, 0);
+			this.dgvStatistics.Name = "dgvStatistics";
+			this.dgvStatistics.RowTemplate.Height = 24;
+			this.dgvStatistics.Size = new System.Drawing.Size(427, 334);
+			this.dgvStatistics.TabIndex = 0;
+			this.dgvStatistics.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvStatistics_DataBindingComplete);
 			// 
-			// btnExport
+			// panel10
 			// 
-			this.btnExport.Location = new System.Drawing.Point(563, 18);
-			this.btnExport.Name = "btnExport";
-			this.btnExport.Size = new System.Drawing.Size(45, 23);
-			this.btnExport.TabIndex = 73;
-			this.btnExport.Text = "Export";
-			this.btnExport.UseVisualStyleBackColor = true;
-			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+			this.panel10.Controls.Add(this.dgvStockReport);
+			this.panel10.Dock = System.Windows.Forms.DockStyle.Left;
+			this.panel10.Location = new System.Drawing.Point(3, 101);
+			this.panel10.Name = "panel10";
+			this.panel10.Size = new System.Drawing.Size(1169, 334);
+			this.panel10.TabIndex = 79;
 			// 
-			// lbDecrease
+			// dgvStockReport
 			// 
-			this.lbDecrease.AutoSize = true;
-			this.lbDecrease.ForeColor = System.Drawing.Color.LimeGreen;
-			this.lbDecrease.Location = new System.Drawing.Point(659, 24);
-			this.lbDecrease.Name = "lbDecrease";
-			this.lbDecrease.Size = new System.Drawing.Size(0, 12);
-			this.lbDecrease.TabIndex = 75;
+			this.dgvStockReport.AllowUserToAddRows = false;
+			this.dgvStockReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgvStockReport.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgvStockReport.Location = new System.Drawing.Point(0, 0);
+			this.dgvStockReport.Name = "dgvStockReport";
+			this.dgvStockReport.RowTemplate.Height = 24;
+			this.dgvStockReport.Size = new System.Drawing.Size(1169, 334);
+			this.dgvStockReport.TabIndex = 47;
+			this.dgvStockReport.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvStockReport_DataBindingComplete);
 			// 
-			// lbIncrease
+			// pnMiddle
 			// 
-			this.lbIncrease.AutoSize = true;
-			this.lbIncrease.ForeColor = System.Drawing.Color.Red;
-			this.lbIncrease.Location = new System.Drawing.Point(626, 24);
-			this.lbIncrease.Name = "lbIncrease";
-			this.lbIncrease.Size = new System.Drawing.Size(0, 12);
-			this.lbIncrease.TabIndex = 70;
+			this.pnMiddle.Controls.Add(this.btnStatistics);
+			this.pnMiddle.Controls.Add(this.groupBox7);
+			this.pnMiddle.Controls.Add(this.label36);
+			this.pnMiddle.Controls.Add(this.add);
+			this.pnMiddle.Controls.Add(this.label35);
+			this.pnMiddle.Controls.Add(this.groupBox6);
+			this.pnMiddle.Controls.Add(this.btnExport);
+			this.pnMiddle.Controls.Add(this.lbIncrease);
+			this.pnMiddle.Controls.Add(this.lbDecrease);
+			this.pnMiddle.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pnMiddle.Location = new System.Drawing.Point(3, 18);
+			this.pnMiddle.Name = "pnMiddle";
+			this.pnMiddle.Size = new System.Drawing.Size(1601, 83);
+			this.pnMiddle.TabIndex = 78;
+			// 
+			// btnStatistics
+			// 
+			this.btnStatistics.Location = new System.Drawing.Point(1014, 12);
+			this.btnStatistics.Name = "btnStatistics";
+			this.btnStatistics.Size = new System.Drawing.Size(42, 23);
+			this.btnStatistics.TabIndex = 77;
+			this.btnStatistics.Text = "統計";
+			this.btnStatistics.UseVisualStyleBackColor = true;
+			this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
 			// 
 			// groupBox7
 			// 
+			this.groupBox7.Controls.Add(this.chkClass);
+			this.groupBox7.Controls.Add(this.cbClass);
 			this.groupBox7.Controls.Add(this.label37);
 			this.groupBox7.Controls.Add(this.chkOpenningPrice);
 			this.groupBox7.Controls.Add(this.label32);
@@ -1631,11 +1757,28 @@
 			this.groupBox7.Controls.Add(this.txtManyDays);
 			this.groupBox7.Controls.Add(this.label30);
 			this.groupBox7.Controls.Add(this.chkApproved);
-			this.groupBox7.Location = new System.Drawing.Point(6, 10);
+			this.groupBox7.Location = new System.Drawing.Point(9, 3);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(559, 37);
+			this.groupBox7.Size = new System.Drawing.Size(999, 37);
 			this.groupBox7.TabIndex = 74;
 			this.groupBox7.TabStop = false;
+			// 
+			// chkClass
+			// 
+			this.chkClass.AutoSize = true;
+			this.chkClass.Location = new System.Drawing.Point(446, 13);
+			this.chkClass.Name = "chkClass";
+			this.chkClass.Size = new System.Drawing.Size(15, 14);
+			this.chkClass.TabIndex = 76;
+			this.chkClass.UseVisualStyleBackColor = true;
+			// 
+			// cbClass
+			// 
+			this.cbClass.FormattingEnabled = true;
+			this.cbClass.Location = new System.Drawing.Point(467, 10);
+			this.cbClass.Name = "cbClass";
+			this.cbClass.Size = new System.Drawing.Size(121, 20);
+			this.cbClass.TabIndex = 75;
 			// 
 			// label37
 			// 
@@ -1682,7 +1825,7 @@
 			// 
 			// btnQuery
 			// 
-			this.btnQuery.Location = new System.Drawing.Point(511, 11);
+			this.btnQuery.Location = new System.Drawing.Point(952, 10);
 			this.btnQuery.Name = "btnQuery";
 			this.btnQuery.Size = new System.Drawing.Size(42, 23);
 			this.btnQuery.TabIndex = 51;
@@ -1742,77 +1885,15 @@
 			this.chkApproved.TabIndex = 63;
 			this.chkApproved.UseVisualStyleBackColor = true;
 			// 
-			// groupBox6
+			// label36
 			// 
-			this.groupBox6.Controls.Add(this.label28);
-			this.groupBox6.Controls.Add(this.txtTotalProfit);
-			this.groupBox6.Controls.Add(this.label29);
-			this.groupBox6.Controls.Add(this.txtTotalCost);
-			this.groupBox6.Controls.Add(this.label31);
-			this.groupBox6.Controls.Add(this.txt);
-			this.groupBox6.Controls.Add(this.txtProfit);
-			this.groupBox6.Location = new System.Drawing.Point(673, 9);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(369, 37);
-			this.groupBox6.TabIndex = 73;
-			this.groupBox6.TabStop = false;
-			// 
-			// label28
-			// 
-			this.label28.AutoSize = true;
-			this.label28.Location = new System.Drawing.Point(8, 18);
-			this.label28.Name = "label28";
-			this.label28.Size = new System.Drawing.Size(41, 12);
-			this.label28.TabIndex = 53;
-			this.label28.Text = "總獲利";
-			// 
-			// txtTotalProfit
-			// 
-			this.txtTotalProfit.Location = new System.Drawing.Point(50, 11);
-			this.txtTotalProfit.Name = "txtTotalProfit";
-			this.txtTotalProfit.Size = new System.Drawing.Size(81, 22);
-			this.txtTotalProfit.TabIndex = 54;
-			// 
-			// label29
-			// 
-			this.label29.AutoSize = true;
-			this.label29.Location = new System.Drawing.Point(136, 17);
-			this.label29.Name = "label29";
-			this.label29.Size = new System.Drawing.Size(41, 12);
-			this.label29.TabIndex = 55;
-			this.label29.Text = "總成本";
-			// 
-			// txtTotalCost
-			// 
-			this.txtTotalCost.Location = new System.Drawing.Point(178, 11);
-			this.txtTotalCost.Name = "txtTotalCost";
-			this.txtTotalCost.Size = new System.Drawing.Size(82, 22);
-			this.txtTotalCost.TabIndex = 56;
-			// 
-			// label31
-			// 
-			this.label31.AutoSize = true;
-			this.label31.Location = new System.Drawing.Point(350, 16);
-			this.label31.Name = "label31";
-			this.label31.Size = new System.Drawing.Size(14, 12);
-			this.label31.TabIndex = 69;
-			this.label31.Text = "%";
-			// 
-			// txt
-			// 
-			this.txt.AutoSize = true;
-			this.txt.Location = new System.Drawing.Point(264, 17);
-			this.txt.Name = "txt";
-			this.txt.Size = new System.Drawing.Size(41, 12);
-			this.txt.TabIndex = 57;
-			this.txt.Text = "報酬率";
-			// 
-			// txtProfit
-			// 
-			this.txtProfit.Location = new System.Drawing.Point(306, 12);
-			this.txtProfit.Name = "txtProfit";
-			this.txtProfit.Size = new System.Drawing.Size(41, 22);
-			this.txtProfit.TabIndex = 58;
+			this.label36.AutoSize = true;
+			this.label36.ForeColor = System.Drawing.Color.Black;
+			this.label36.Location = new System.Drawing.Point(1175, 17);
+			this.label36.Name = "label36";
+			this.label36.Size = new System.Drawing.Size(17, 12);
+			this.label36.TabIndex = 77;
+			this.label36.Text = "跌";
 			// 
 			// add
 			// 
@@ -1824,7 +1905,7 @@
 			this.add.Controls.Add(this.cbApprove);
 			this.add.Controls.Add(this.txtPickingCode);
 			this.add.Controls.Add(this.btnAdd);
-			this.add.Location = new System.Drawing.Point(1043, 9);
+			this.add.Location = new System.Drawing.Point(5, 41);
 			this.add.Name = "add";
 			this.add.Size = new System.Drawing.Size(534, 39);
 			this.add.TabIndex = 67;
@@ -1902,20 +1983,119 @@
 			this.btnAdd.UseVisualStyleBackColor = true;
 			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
 			// 
-			// dgvStockReport
+			// label35
 			// 
-			this.dgvStockReport.AllowUserToAddRows = false;
-			this.dgvStockReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgvStockReport.Location = new System.Drawing.Point(3, 49);
-			this.dgvStockReport.Name = "dgvStockReport";
-			this.dgvStockReport.RowTemplate.Height = 24;
-			this.dgvStockReport.Size = new System.Drawing.Size(1572, 400);
-			this.dgvStockReport.TabIndex = 47;
-			this.dgvStockReport.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvStockReport_DataBindingComplete);
+			this.label35.AutoSize = true;
+			this.label35.ForeColor = System.Drawing.Color.Black;
+			this.label35.Location = new System.Drawing.Point(1143, 17);
+			this.label35.Name = "label35";
+			this.label35.Size = new System.Drawing.Size(17, 12);
+			this.label35.TabIndex = 76;
+			this.label35.Text = "漲";
+			// 
+			// groupBox6
+			// 
+			this.groupBox6.Controls.Add(this.label28);
+			this.groupBox6.Controls.Add(this.txtTotalProfit);
+			this.groupBox6.Controls.Add(this.label29);
+			this.groupBox6.Controls.Add(this.txtTotalCost);
+			this.groupBox6.Controls.Add(this.label31);
+			this.groupBox6.Controls.Add(this.txt);
+			this.groupBox6.Controls.Add(this.txtProfit);
+			this.groupBox6.Location = new System.Drawing.Point(1227, 3);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(369, 37);
+			this.groupBox6.TabIndex = 73;
+			this.groupBox6.TabStop = false;
+			// 
+			// label28
+			// 
+			this.label28.AutoSize = true;
+			this.label28.Location = new System.Drawing.Point(8, 18);
+			this.label28.Name = "label28";
+			this.label28.Size = new System.Drawing.Size(41, 12);
+			this.label28.TabIndex = 53;
+			this.label28.Text = "總獲利";
+			// 
+			// txtTotalProfit
+			// 
+			this.txtTotalProfit.Location = new System.Drawing.Point(50, 11);
+			this.txtTotalProfit.Name = "txtTotalProfit";
+			this.txtTotalProfit.Size = new System.Drawing.Size(81, 22);
+			this.txtTotalProfit.TabIndex = 54;
+			// 
+			// label29
+			// 
+			this.label29.AutoSize = true;
+			this.label29.Location = new System.Drawing.Point(136, 17);
+			this.label29.Name = "label29";
+			this.label29.Size = new System.Drawing.Size(41, 12);
+			this.label29.TabIndex = 55;
+			this.label29.Text = "總成本";
+			// 
+			// txtTotalCost
+			// 
+			this.txtTotalCost.Location = new System.Drawing.Point(178, 11);
+			this.txtTotalCost.Name = "txtTotalCost";
+			this.txtTotalCost.Size = new System.Drawing.Size(82, 22);
+			this.txtTotalCost.TabIndex = 56;
+			// 
+			// label31
+			// 
+			this.label31.AutoSize = true;
+			this.label31.Location = new System.Drawing.Point(350, 16);
+			this.label31.Name = "label31";
+			this.label31.Size = new System.Drawing.Size(14, 12);
+			this.label31.TabIndex = 69;
+			this.label31.Text = "%";
+			// 
+			// txt
+			// 
+			this.txt.AutoSize = true;
+			this.txt.Location = new System.Drawing.Point(264, 17);
+			this.txt.Name = "txt";
+			this.txt.Size = new System.Drawing.Size(41, 12);
+			this.txt.TabIndex = 57;
+			this.txt.Text = "報酬率";
+			// 
+			// txtProfit
+			// 
+			this.txtProfit.Location = new System.Drawing.Point(306, 12);
+			this.txtProfit.Name = "txtProfit";
+			this.txtProfit.Size = new System.Drawing.Size(41, 22);
+			this.txtProfit.TabIndex = 58;
+			// 
+			// btnExport
+			// 
+			this.btnExport.Location = new System.Drawing.Point(1093, 12);
+			this.btnExport.Name = "btnExport";
+			this.btnExport.Size = new System.Drawing.Size(45, 23);
+			this.btnExport.TabIndex = 73;
+			this.btnExport.Text = "Export";
+			this.btnExport.UseVisualStyleBackColor = true;
+			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+			// 
+			// lbIncrease
+			// 
+			this.lbIncrease.AutoSize = true;
+			this.lbIncrease.ForeColor = System.Drawing.Color.Red;
+			this.lbIncrease.Location = new System.Drawing.Point(1161, 15);
+			this.lbIncrease.Name = "lbIncrease";
+			this.lbIncrease.Size = new System.Drawing.Size(0, 12);
+			this.lbIncrease.TabIndex = 70;
+			// 
+			// lbDecrease
+			// 
+			this.lbDecrease.AutoSize = true;
+			this.lbDecrease.ForeColor = System.Drawing.Color.LimeGreen;
+			this.lbDecrease.Location = new System.Drawing.Point(1204, 19);
+			this.lbDecrease.Name = "lbDecrease";
+			this.lbDecrease.Size = new System.Drawing.Size(0, 12);
+			this.lbDecrease.TabIndex = 75;
 			// 
 			// progressBar3
 			// 
-			this.progressBar3.Location = new System.Drawing.Point(1388, 835);
+			this.progressBar3.Location = new System.Drawing.Point(1410, 952);
 			this.progressBar3.Name = "progressBar3";
 			this.progressBar3.Size = new System.Drawing.Size(129, 23);
 			this.progressBar3.TabIndex = 92;
@@ -1986,7 +2166,7 @@
 			// 
 			this.label39.AutoSize = true;
 			this.label39.ForeColor = System.Drawing.Color.Red;
-			this.label39.Location = new System.Drawing.Point(437, 7);
+			this.label39.Location = new System.Drawing.Point(430, 10);
 			this.label39.Name = "label39";
 			this.label39.Size = new System.Drawing.Size(205, 12);
 			this.label39.TabIndex = 94;
@@ -1995,7 +2175,7 @@
 			// label40
 			// 
 			this.label40.AutoSize = true;
-			this.label40.Location = new System.Drawing.Point(1102, 6);
+			this.label40.Location = new System.Drawing.Point(1095, 9);
 			this.label40.Name = "label40";
 			this.label40.Size = new System.Drawing.Size(44, 12);
 			this.label40.TabIndex = 95;
@@ -2005,14 +2185,14 @@
 			// 
 			this.lbLineMsgCount.AutoSize = true;
 			this.lbLineMsgCount.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.lbLineMsgCount.Location = new System.Drawing.Point(1146, 7);
+			this.lbLineMsgCount.Location = new System.Drawing.Point(1139, 10);
 			this.lbLineMsgCount.Name = "lbLineMsgCount";
 			this.lbLineMsgCount.Size = new System.Drawing.Size(0, 12);
 			this.lbLineMsgCount.TabIndex = 96;
 			// 
 			// btnResetLineMsgCount
 			// 
-			this.btnResetLineMsgCount.Location = new System.Drawing.Point(1062, 1);
+			this.btnResetLineMsgCount.Location = new System.Drawing.Point(1055, 4);
 			this.btnResetLineMsgCount.Name = "btnResetLineMsgCount";
 			this.btnResetLineMsgCount.Size = new System.Drawing.Size(37, 23);
 			this.btnResetLineMsgCount.TabIndex = 98;
@@ -2020,54 +2200,60 @@
 			this.btnResetLineMsgCount.UseVisualStyleBackColor = true;
 			this.btnResetLineMsgCount.Click += new System.EventHandler(this.btnResetLineMsgCount_Click);
 			// 
-			// txtMSCI
+			// splitContainer1
 			// 
-			this.txtMSCI.Location = new System.Drawing.Point(4, 4);
-			this.txtMSCI.Name = "txtMSCI";
-			this.txtMSCI.Size = new System.Drawing.Size(289, 22);
-			this.txtMSCI.TabIndex = 98;
+			this.splitContainer1.Location = new System.Drawing.Point(0, 4);
+			this.splitContainer1.Name = "splitContainer1";
+			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
-			// btnMSCI
+			// splitContainer1.Panel1
 			// 
-			this.btnMSCI.Location = new System.Drawing.Point(298, 4);
-			this.btnMSCI.Name = "btnMSCI";
-			this.btnMSCI.Size = new System.Drawing.Size(71, 23);
-			this.btnMSCI.TabIndex = 99;
-			this.btnMSCI.Text = "MSCI";
-			this.btnMSCI.UseVisualStyleBackColor = true;
+			this.splitContainer1.Panel1.Controls.Add(this.pnTop);
 			// 
-			// panel9
+			// splitContainer1.Panel2
 			// 
-			this.panel9.Controls.Add(this.txtMSCI);
-			this.panel9.Controls.Add(this.btnMSCI);
-			this.panel9.Location = new System.Drawing.Point(766, 58);
-			this.panel9.Name = "panel9";
-			this.panel9.Size = new System.Drawing.Size(375, 32);
-			this.panel9.TabIndex = 100;
+			this.splitContainer1.Panel2.Controls.Add(this.gpReport);
+			this.splitContainer1.Size = new System.Drawing.Size(1607, 942);
+			this.splitContainer1.SplitterDistance = 500;
+			this.splitContainer1.TabIndex = 44;
+			// 
+			// pnTop
+			// 
+			this.pnTop.Controls.Add(this.pnAdmin);
+			this.pnTop.Controls.Add(this.btnResetLinePoint);
+			this.pnTop.Controls.Add(this.btnResetLineMsgCount);
+			this.pnTop.Controls.Add(this.lbStockAccount);
+			this.pnTop.Controls.Add(this.lbLineMsgCount);
+			this.pnTop.Controls.Add(this.txtAccount);
+			this.pnTop.Controls.Add(this.label40);
+			this.pnTop.Controls.Add(this.groupBox1);
+			this.pnTop.Controls.Add(this.lbMessage);
+			this.pnTop.Controls.Add(this.label39);
+			this.pnTop.Controls.Add(this.label25);
+			this.pnTop.Controls.Add(this.groupBox2);
+			this.pnTop.Controls.Add(this.btnErrorMsg);
+			this.pnTop.Controls.Add(this.btnAdminLogin);
+			this.pnTop.Controls.Add(this.groupBox3);
+			this.pnTop.Controls.Add(this.txtPassword);
+			this.pnTop.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnTop.Location = new System.Drawing.Point(0, 0);
+			this.pnTop.Name = "pnTop";
+			this.pnTop.Size = new System.Drawing.Size(1607, 500);
+			this.pnTop.TabIndex = 99;
+			// 
+			// timerSStockResult
+			// 
+			this.timerSStockResult.Interval = 1000;
+			this.timerSStockResult.Tick += new System.EventHandler(this.timerSStockResult_Tick);
 			// 
 			// ScheduleJob
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1607, 857);
-			this.Controls.Add(this.btnResetLineMsgCount);
-			this.Controls.Add(this.lbLineMsgCount);
-			this.Controls.Add(this.label40);
-			this.Controls.Add(this.label39);
+			this.ClientSize = new System.Drawing.Size(1607, 975);
+			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.progressBar3);
-			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.statusStrip1);
-			this.Controls.Add(this.btnAdminLogin);
-			this.Controls.Add(this.txtPassword);
-			this.Controls.Add(this.pnAdmin);
-			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.txtErrMsg);
-			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.label25);
-			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.txtAccount);
-			this.Controls.Add(this.lbStockAccount);
-			this.Controls.Add(this.btnResetLinePoint);
 			this.Name = "ScheduleJob";
 			this.Text = "ScheduleJob";
 			this.Load += new System.EventHandler(this.ScheduleJob_Load);
@@ -2101,20 +2287,30 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudDiff)).EndInit();
 			this.pnAdmin.ResumeLayout(false);
 			this.pnAdmin.PerformLayout();
-			this.statusStrip1.ResumeLayout(false);
-			this.statusStrip1.PerformLayout();
-			this.groupBox5.ResumeLayout(false);
-			this.groupBox5.PerformLayout();
-			this.groupBox7.ResumeLayout(false);
-			this.groupBox7.PerformLayout();
-			this.groupBox6.ResumeLayout(false);
-			this.groupBox6.PerformLayout();
-			this.add.ResumeLayout(false);
-			this.add.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).EndInit();
-			this.PopupMenu.ResumeLayout(false);
 			this.panel9.ResumeLayout(false);
 			this.panel9.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
+			this.gpReport.ResumeLayout(false);
+			this.pnRight.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgvStatistics)).EndInit();
+			this.panel10.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dgvStockReport)).EndInit();
+			this.pnMiddle.ResumeLayout(false);
+			this.pnMiddle.PerformLayout();
+			this.groupBox7.ResumeLayout(false);
+			this.groupBox7.PerformLayout();
+			this.add.ResumeLayout(false);
+			this.add.PerformLayout();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
+			this.PopupMenu.ResumeLayout(false);
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+			this.splitContainer1.ResumeLayout(false);
+			this.pnTop.ResumeLayout(false);
+			this.pnTop.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2123,7 +2319,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnLogin;
-        private System.Windows.Forms.TextBox txtErrMsg;
+        private System.Windows.Forms.TextBox btnErrorMsg;
         private System.Windows.Forms.Button btnGetIndexToInsert;
         private System.Windows.Forms.Timer timerInsertStockIndex;
         private System.Windows.Forms.Button btnUpdateStockIndex;
@@ -2237,11 +2433,10 @@
 		private System.Windows.Forms.Button btnLineCtuRed;
 		private System.Windows.Forms.Button btnLineStockIndex;
 		private System.Windows.Forms.DateTimePicker dtpStockIndex;
-		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.GroupBox gpReport;
 		private System.Windows.Forms.DateTimePicker dTPReport;
 		private System.Windows.Forms.DataGridView dgvStockReport;
 		private System.Windows.Forms.Button btnInsertStockPicking;
-		private System.Windows.Forms.Button btnTestLog;
 		private System.Windows.Forms.Button btnStockResult;
 		private System.Windows.Forms.CheckBox chkPickingGood;
 		private System.Windows.Forms.CheckBox chkPickingCtu;
@@ -2304,7 +2499,24 @@
 		private System.Windows.Forms.Label lbLineMsgCount;
 		private System.Windows.Forms.Button btnResetLineMsgCount;
 		private System.Windows.Forms.Panel panel9;
-		private System.Windows.Forms.TextBox txtMSCI;
+		private System.Windows.Forms.TextBox txtFileMSCI;
 		private System.Windows.Forms.Button btnMSCI;
+		private System.Windows.Forms.Button btnOpenMSCI;
+		private System.Windows.Forms.DateTimePicker dtpMSCI;
+		private System.Windows.Forms.TextBox txtMSCI_Stock;
+		private System.Windows.Forms.CheckBox chkPickingMSCI;
+		private System.Windows.Forms.SplitContainer splitContainer1;
+		private System.Windows.Forms.Panel pnTop;
+		private System.Windows.Forms.Panel pnMiddle;
+		private System.Windows.Forms.Panel panel10;
+		private System.Windows.Forms.CheckBox chkClass;
+		private System.Windows.Forms.ComboBox cbClass;
+		private System.Windows.Forms.Button btnStatistics;
+		private System.Windows.Forms.Panel pnRight;
+		private System.Windows.Forms.DataGridView dgvStatistics;
+		private System.Windows.Forms.Timer timerSStockResult;
+		private System.Windows.Forms.Button btnGetValue;
+		private System.Windows.Forms.Button btnThree;
+		private System.Windows.Forms.Button btnEveryThree;
 	}
 }

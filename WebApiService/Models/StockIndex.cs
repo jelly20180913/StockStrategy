@@ -89,5 +89,7 @@ namespace WebApiService.Models
         public string MU_IndexQuotePercent { get; set; }
         public string TSLA_Index { get; set; }
         public string TSLA_IndexQuotePercent { get; set; }
+        public string C10YearBond_Index { get; set; }
+        public string C10YearBond_IndexQuotePercent { get; set; }
     }
 }

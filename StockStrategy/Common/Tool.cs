@@ -4,9 +4,12 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
+using System.Diagnostics;
+using System.Globalization;
+
 namespace StockStrategy.Common
 {
-    public class Tool
+    public static class Tool
     {
         public static void AddOrUpdateAppSettings(string key, string value)
         {
@@ -113,5 +116,29 @@ namespace StockStrategy.Common
             string hostName = GetServerName();
             return System.Net.Dns.GetHostAddresses(hostName).Select(i => i.ToString()).ToArray();
         }
-    }
+		/// <summary>
+		/// 将千分位字符串转换成数字
+		/// 说明：将诸如"–111,222,333的千分位"转换成-111222333数字
+		/// 若转换失败则返回-1
+		/// </summary>
+		/// <param name="thousandthStr">需要转换的千分位</param>
+		/// <returns>数字</returns>
+		public static int ParseThousandthString(this string thousandthStr)
+		{
+			int _value = -1;
+			if (!string.IsNullOrEmpty(thousandthStr))
+			{
+				try
+				{
+					_value = int.Parse(thousandthStr, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign);
+				}
+				catch (Exception ex)
+				{
+					_value = -1;
+					Debug.WriteLine(string.Format("将千分位字符串{0}转换成数字异常，原因:{0}", thousandthStr, ex.Message));
+				}
+			}
+			return _value;
+		}
+	}
 }

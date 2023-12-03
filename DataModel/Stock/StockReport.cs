@@ -46,5 +46,7 @@ namespace DataModel.Stock
 		public string SecondDayOpeningPrice { get; set; }
 		[Description("Key")]
 		public string StockPickingId { get; set; }
+		[Description("分數")]
+		public int Point { get; set; }
 	}
 }

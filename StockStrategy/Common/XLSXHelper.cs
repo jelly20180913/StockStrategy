@@ -99,7 +99,7 @@ namespace StockStrategy.Common
                         dt.Rows.Add();
                         int i = 0;
                         int _CellCount = row.Cells().ToList().Count();
-                        if (_CellCount > 1)
+                        if (_CellCount > 0)
                         {
                             //below resolve issue about not work to get empty value 
                             foreach (IXLCell cell in row.Cells(row.FirstCellUsed().Address.ColumnNumber, row.LastCellUsed().Address.ColumnNumber))

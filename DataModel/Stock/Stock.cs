@@ -38,6 +38,7 @@ namespace DataModel.Stock
 			Dealer = dealer;
 			// doing something with CampaignID here like setting some calculated properties.
 		}
+		 
 	}
 	
 }

@@ -29,5 +29,6 @@ namespace WebApiService.Services.Interface
 		List<StockGroupTotalCount> GetStockGroupTotalCountList();
 		bool InsertStockEventNotify(List<StockEventNotify> s);
 		List<StockEventNotify> GetStockEventNotifyList();
+		List<Stock> GetByStockCodeList(string parameter, string mode);
 	}
 }

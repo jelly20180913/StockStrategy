@@ -21,5 +21,6 @@ namespace WebApiService.Models
         public string UpdateTime { get; set; }
         public Nullable<bool> StockType { get; set; }
         public string Code { get; set; }
+        public Nullable<bool> IsFinish { get; set; }
     }
 }

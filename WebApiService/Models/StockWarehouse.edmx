@@ -96,6 +96,7 @@
           <Property Name="UpdateTime" Type="nvarchar" MaxLength="20" />
           <Property Name="StockType" Type="bit" />
           <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="IsFinish" Type="bit" />
         </EntityType>
         <EntityType Name="StockGroupTotalCount">
           <Key>
@@ -214,6 +215,8 @@
           <Property Name="MU_IndexQuotePercent" Type="varchar" MaxLength="10" />
           <Property Name="TSLA_Index" Type="varchar" MaxLength="10" />
           <Property Name="TSLA_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="10YearBond_Index" Type="varchar" MaxLength="10" />
+          <Property Name="10YearBond_IndexQuotePercent" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -387,6 +390,7 @@
           <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="StockType" Type="Boolean" />
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IsFinish" Type="Boolean" />
         </EntityType>
         <EntityType Name="StockIndex">
           <Key>
@@ -467,6 +471,8 @@
           <Property Name="MU_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TSLA_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TSLA_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="C10YearBond_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="C10YearBond_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -714,6 +720,7 @@
           <EntitySetMapping Name="StockGroup">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockGroup">
               <MappingFragment StoreEntitySet="StockGroup">
+                <ScalarProperty Name="IsFinish" ColumnName="IsFinish" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="StockType" ColumnName="StockType" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -727,6 +734,8 @@
           <EntitySetMapping Name="StockIndex">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockIndex">
               <MappingFragment StoreEntitySet="StockIndex">
+                <ScalarProperty Name="C10YearBond_IndexQuotePercent" ColumnName="10YearBond_IndexQuotePercent" />
+                <ScalarProperty Name="C10YearBond_Index" ColumnName="10YearBond_Index" />
                 <ScalarProperty Name="TSLA_IndexQuotePercent" ColumnName="TSLA_IndexQuotePercent" />
                 <ScalarProperty Name="TSLA_Index" ColumnName="TSLA_Index" />
                 <ScalarProperty Name="MU_IndexQuotePercent" ColumnName="MU_IndexQuotePercent" />

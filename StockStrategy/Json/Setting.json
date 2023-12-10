@@ -1,4 +1,17 @@
-  [
+[
+    {
+        "Name": "投信認養",
+        "Gain": 0,
+        "Volumn": 700000,
+        "Multiple": 0,
+        "PreDays": 10,
+        "LessVolumn": 300000,
+        "PreDays2": 10,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": false,
+        "Class": 13
+    },
     {
         "Name": "起漲放量",
         "Gain": 3,
@@ -90,4 +103,4 @@
         "ChkNotHigherThan": false,
         "Class": 11
     }
-  ] 
+] 

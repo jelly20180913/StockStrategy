@@ -39,7 +39,7 @@ namespace StockStrategy
 		DataAccess _DataAccess = new DataAccess();
 		private bool bGoodStockLineNotify = false, bGoodStockByJsonLineNotify = false, bStockGroupTrend = false, bStockThreeInstitutional = false, bStockEventNotify = false;
 		private bool bBadStockLineNotify;
-		private bool bStockResult = false,bEveryThree = false;
+		private bool bStockResult = false, bEveryThree = false;
 		List<Holiday> HolidayList = new List<Holiday>();
 		Dictionary<int, string> GoodStockClass = new Dictionary<int, string>() { };
 		List<string> ListGoodStockClass = new List<string>();
@@ -95,7 +95,7 @@ namespace StockStrategy
 			GoodStockClass.Add(2, "連續型態");
 			GoodStockClass.Add(3, "連續小紅");
 			GoodStockClass.Add(4, "爆量出貨");
-			GoodStockClass.Add(5, "5起漲放量");
+			GoodStockClass.Add(5, "5倍起漲放量");
 			GoodStockClass.Add(10, "十倍放量");
 			GoodStockClass.Add(6, "盤月放量");
 			GoodStockClass.Add(7, "盤季放量");
@@ -103,11 +103,12 @@ namespace StockStrategy
 			GoodStockClass.Add(9, "盤年放量");
 			GoodStockClass.Add(11, "萬張放量");
 			GoodStockClass.Add(12, "MSCI");
+			GoodStockClass.Add(13, "投信認養");
 			ListGoodStockClass.Add("起漲放量");
 			ListGoodStockClass.Add("連續型態");
 			ListGoodStockClass.Add("連續小紅");
 			ListGoodStockClass.Add("爆量出貨");
-			ListGoodStockClass.Add("5起漲放量");
+			ListGoodStockClass.Add("5倍起漲放量");
 			ListGoodStockClass.Add("十倍放量");
 			ListGoodStockClass.Add("盤月放量");
 			ListGoodStockClass.Add("盤季放量");
@@ -115,6 +116,7 @@ namespace StockStrategy
 			ListGoodStockClass.Add("盤年放量");
 			ListGoodStockClass.Add("萬張放量");
 			ListGoodStockClass.Add("MSCI");
+			ListGoodStockClass.Add("投信認養");
 			this.cbClass.DataSource = ListGoodStockClass;
 			this.cbApprove.SelectedIndex = 0;
 			this.ContextMenuStrip = PopupMenu;
@@ -357,7 +359,7 @@ namespace StockStrategy
 						bStockAll = true;
 						btnGetStockPrice.PerformClick();
 						btnClear.PerformClick();
-						btnStockJurical.PerformClick();
+						//btnStockJurical.PerformClick();
 
 					}
 					if (!bUpdateStockLineNotify)
@@ -647,7 +649,7 @@ namespace StockStrategy
 			List<DataModel.Stock.Stock> _YestodayStockDayAllList = _DataAccess.getStockBySqlList(_YestodayDate.Date.ToString("yyyyMMdd"), "Date");
 			List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
 			List<DataModel.Stock.Stock> _StockList = new List<DataModel.Stock.Stock>();
-			decimal _Gain = this.nupGain.Value != 0 ? this.nupGain.Value : 3;
+			decimal _Gain = this.nupGain.Value;
 			int _Volumn = this.txtVolumn.Text != "" ? Convert.ToInt32(this.txtVolumn.Text) * 1000 : 700000;
 			int multiple = this.txtMultiple.Text != "" ? Convert.ToInt32(this.txtMultiple.Text) : 5;
 			int _PreDays = this.txtPreDays.Text != "" ? Convert.ToInt32(this.txtPreDays.Text) : 10;
@@ -670,7 +672,11 @@ namespace StockStrategy
 			}
 			try
 			{
-				List<DataModel.Stock.Stock> _GoodStockList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) > _Gain && Convert.ToDouble(x.TradeVolume) > _Volumn).ToList();
+				List<DataModel.Stock.Stock> _GoodStockList = new List<DataModel.Stock.Stock>();
+				if (goodStock.Class == 13||this.chkInvestment.Checked)
+					_GoodStockList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) > _Gain && Convert.ToDouble(x.Investment) * 1000 > _Volumn).ToList();
+				else
+					_GoodStockList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) > _Gain && Convert.ToDouble(x.TradeVolume) > _Volumn).ToList();
 				foreach (DataModel.Stock.Stock s in _GoodStockList)
 				{
 					_Code = s.Code;
@@ -689,7 +695,10 @@ namespace StockStrategy
 									_StockListByCode = _DataAccess.getStockBySqlList(s.Code, "Code").Where(x => Convert.ToInt32(x.Date) <= Convert.ToInt32(_WhereDate)).OrderByDescending(x => x.Date).ToList();
 									if (_ChkLess)
 									{
-										_Less = _StockListByCode.Take(_PreDays + 1).Where(x => Convert.ToDouble(x.TradeVolume) < _LessVolumn).ToList().Count >= _PreDays;
+										if (goodStock.Class == 13 || this.chkInvestment.Checked)//投信認養
+											_Less = _StockListByCode.Take(_PreDays + 1).Where(x => Convert.ToDouble(x.Investment) * 1000 < _LessVolumn).ToList().Count >= _PreDays;
+										else
+											_Less = _StockListByCode.Take(_PreDays + 1).Where(x => Convert.ToDouble(x.TradeVolume) < _LessVolumn).ToList().Count >= _PreDays;
 									}
 									if (_ChkNotHigherThan)
 									{
@@ -1389,7 +1398,7 @@ namespace StockStrategy
 		///  <param name="stockType"></param>
 		///   <param name="add"></param>
 		/// <returns></returns>
-		private List<StockStrategy.Model.Stock.StockJuridical> getHiStockThreeData(string code, bool? stockType, bool add)
+		private List<StockStrategy.Model.Stock.StockJuridical> getHiStockThreeData(string code, bool? stockType, int max, int startIndex)
 		{
 			string _Log = "";
 			List<StockStrategy.Model.Stock.StockJuridical> _ListStockJuridical = new List<StockStrategy.Model.Stock.StockJuridical>();
@@ -1398,8 +1407,8 @@ namespace StockStrategy
 			//string _HiStockThree_URL = ConfigurationManager.AppSettings["HiStockThree_URL"];
 			HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL);
 			//string _10BondRate = Common.Job.GetTaiwanFutures(_Wantgoo_URL, test, false);
-			int _Max = add ? 61 : 1;
-			for (int i = 1; i <= _Max; i++)
+			//int _Max = add ? 61 : 1;//今天若為當日則為1,昨日為2 以此類推
+			for (int i = startIndex; i <= max; i++)
 			{
 				try
 				{
@@ -1601,6 +1610,7 @@ namespace StockStrategy
 		{
 			string _Log = "";
 			string _Code = "";
+			int _No = 1;
 			foreach (Stock s in stockList.Where(x => x.Date == whereDate).ToList())
 			{
 				try
@@ -1615,13 +1625,14 @@ namespace StockStrategy
 						s.Dealer = _StockJuridical.Dealer;
 						s.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
 						_DataAccess.UpdateStock(s);
-						_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}時間:{whereDate}股票: {_Code} 已更新大法人資料 \r\n";
+						_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} 序號:{_No} 時間:{whereDate}股票: {_Code} 已更新大法人資料 \r\n";
 						logger.Info(_Log);
+						_No++;
 					}
 				}
 				catch (Exception ex)
 				{
-					_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + $"股票:{_Code} 時間:{whereDate} btnThree" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+					_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + $"序號:{_No} 股票:{_Code} 時間:{whereDate} btnThree" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
 					logger.Error(_Log);
 					this.btnErrorMsg.Text += _Log;
 				}
@@ -1797,11 +1808,11 @@ namespace StockStrategy
 				this.btnErrorMsg.Text += _Log;
 			}
 		}
-/// <summary>
-/// Test新增選股
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+		/// <summary>
+		/// Test新增選股
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnInsertStockPicking_Click(object sender, EventArgs e)
 		{
 			string _Log = "";
@@ -2792,11 +2803,11 @@ namespace StockStrategy
 			if (_Hour == "7" && _Minute == "30")
 			{
 				bStockResult = false;
-				bEveryThree= false;
+				bEveryThree = false;
 			}
 			if (_DayOfWeek != "Sunday" && _DayOfWeek != "Saturday")
 			{
-				if (_Hour == "17" && _Minute == "20")
+				if (_Hour == "19" && _Minute == "10")
 				{
 					if (!bEveryThree)
 					{
@@ -2804,7 +2815,7 @@ namespace StockStrategy
 						btnEveryThree.PerformClick();
 					}
 				}
-				if (_Hour == "18" && _Minute == "10")
+				if (_Hour == "20" && _Minute == "10")
 				{
 					if (!bStockResult)
 					{
@@ -2838,7 +2849,7 @@ namespace StockStrategy
 		{
 			string _Log = "";
 			bool _IsFinish = false;
-			DataAccess _DataAccess = new DataAccess(); 
+			DataAccess _DataAccess = new DataAccess();
 
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
@@ -2846,12 +2857,12 @@ namespace StockStrategy
 			try
 			{
 				List<StockStrategy.Model.Stock.StockJuridical> _ListStockJuridical = new List<Model.Stock.StockJuridical>();
-				List<StockStrategy.Model.Stock.StockJuridical> _ListStockJuridicalOneStock = getHiStockThreeData("2610", true, true);
-				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList(); 
+				List<StockStrategy.Model.Stock.StockJuridical> _ListStockJuridicalOneStock = getHiStockThreeData("2610", true, 61, 1);
+				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
 				foreach (StockGroup sg in _StockGroupList.Where(x => x.IsFinish == false).ToList())
 				{
 					List<Stock> _StockList = _DataAccess.getStockByCodeList(sg.Code, "Code");
-					_ListStockJuridical = getHiStockThreeData(sg.Code, sg.StockType, true);
+					_ListStockJuridical = getHiStockThreeData(sg.Code, sg.StockType, 61, 1);
 					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已爬三大法人資料 \r\n";
 					logger.Info(_Log);
 
@@ -2889,28 +2900,42 @@ namespace StockStrategy
 			var t = new Task(InsertThree);
 			t.Start();
 		}
+
+		private void calendarToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormCalendar _FormCalendar = new FormCalendar();
+			_FormCalendar.ShowDialog();
+		}
+
 		/// <summary>
 		/// 更新股票三大法人資料
 		/// </summary>
 		private void InsertThree()
 		{
-			string _Log = ""; 
+			string _Log = "";
+			string _Code = "";
 			DataAccess _DataAccess = new DataAccess();
 			string _WhereDate = Convert.ToDateTime(this.dtpStockIndex.Value).ToString("yyyyMMdd");
 			List<Stock> _StockList = _DataAccess.getStockYestodayList(_WhereDate);
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
 			sw.Start();
+			int _No = 1;
+			int _StartIndex = this.txtStartIndex.Text != "" ? Convert.ToInt32(this.txtStartIndex.Text) : 1;
+			int _Max = this.txtMax.Text != "" ? Convert.ToInt32(this.txtMax.Text) : 1;
 			try
 			{
 				List<StockStrategy.Model.Stock.StockJuridical> _ListStockJuridical = new List<Model.Stock.StockJuridical>();
 				//List<StockStrategy.Model.Stock.StockJuridical> _ListStockJuridicalOneStock = getHiStockThreeData("2610", true);
 				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
+
 				foreach (StockGroup sg in _StockGroupList)
 				{
-					_ListStockJuridical.AddRange(getHiStockThreeData(sg.Code, sg.StockType, false));
-					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已爬三大法人資料 \r\n";
+					_Code = sg.Code;
+					_ListStockJuridical.AddRange(getHiStockThreeData(sg.Code, sg.StockType, _StartIndex, _Max));
+					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} 序號:{_No} 股票:{sg.Code} 已爬三大法人資料 \r\n";
 					logger.Info(_Log);
+					_No++;
 				}
 				updateStockJuridical(_WhereDate, _ListStockJuridical, _StockList);
 				_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}   已全部更新三大法人資料 \r\n";
@@ -2918,7 +2943,7 @@ namespace StockStrategy
 			}
 			catch (Exception ex)
 			{
-				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " InsertThree:" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + $" InsertThree: 序號:{_No} 股票:{_Code}" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
 				logger.Error(_Log);
 				this.btnErrorMsg.Text += _Log;
 			}
@@ -3190,18 +3215,18 @@ namespace StockStrategy
 
 			string _PublicKey = ConfigurationManager.AppSettings["PublicKey"];
 			string _SecretKey = ConfigurationManager.AppSettings["SecretKey"];
-			
+
 			string _Username = Tool.Decrypt(ConfigurationManager.AppSettings["Account"], _PublicKey, _SecretKey);
 			string _Password = Tool.Decrypt(ConfigurationManager.AppSettings["Password"], _PublicKey, _SecretKey);
 			this.txtAccount.Text = _Username;
 			this.txtPassword.Text = _Password;
-			if (_Username == ConfigurationManager.AppSettings["Account"] && _Password == ConfigurationManager.AppSettings["Password"])
-			{
-				this.pnAdmin.Enabled = true;
-				this.btnLineBad.Enabled = true;
-				this.btnLineCtuStock.Enabled = true;
-				this.btnLineGoodStock.Enabled = true;
-			}
+			//if (_Username == ConfigurationManager.AppSettings["Account"] && _Password == ConfigurationManager.AppSettings["Password"])
+			//{
+			this.pnAdmin.Enabled = true;
+			this.btnLineBad.Enabled = true;
+			this.btnLineCtuStock.Enabled = true;
+			this.btnLineGoodStock.Enabled = true;
+			//}
 		}
 		/// <summary>
 		/// 空方策略:爆量出貨,目前感覺不是很準

@@ -229,6 +229,11 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.pnTop = new System.Windows.Forms.Panel();
 			this.timerSStockResult = new System.Windows.Forms.Timer(this.components);
+			this.gp = new System.Windows.Forms.GroupBox();
+			this.txtStartIndex = new System.Windows.Forms.TextBox();
+			this.txtMax = new System.Windows.Forms.TextBox();
+			this.chkInvestment = new System.Windows.Forms.CheckBox();
+			this.calendarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -263,6 +268,7 @@
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			this.pnTop.SuspendLayout();
+			this.gp.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnLogin
@@ -410,6 +416,7 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.chkInvestment);
 			this.groupBox1.Controls.Add(this.btnLineGoodbyJson);
 			this.groupBox1.Controls.Add(this.btnGetGoodStockByJson);
 			this.groupBox1.Controls.Add(this.chkPickingGood);
@@ -1331,7 +1338,7 @@
 			// 
 			// pnAdmin
 			// 
-			this.pnAdmin.Controls.Add(this.btnEveryThree);
+			this.pnAdmin.Controls.Add(this.gp);
 			this.pnAdmin.Controls.Add(this.btnThree);
 			this.pnAdmin.Controls.Add(this.btnGetValue);
 			this.pnAdmin.Controls.Add(this.panel9);
@@ -1371,7 +1378,7 @@
 			// 
 			// btnEveryThree
 			// 
-			this.btnEveryThree.Location = new System.Drawing.Point(763, 58);
+			this.btnEveryThree.Location = new System.Drawing.Point(86, 13);
 			this.btnEveryThree.Name = "btnEveryThree";
 			this.btnEveryThree.Size = new System.Drawing.Size(73, 23);
 			this.btnEveryThree.TabIndex = 105;
@@ -2107,7 +2114,7 @@
             this.reportToolStripMenuItem,
             this.maintainToolStripMenuItem});
 			this.PopupMenu.Name = "PopupMenu";
-			this.PopupMenu.Size = new System.Drawing.Size(125, 70);
+			this.PopupMenu.Size = new System.Drawing.Size(181, 92);
 			// 
 			// strateToolStripMenuItem
 			// 
@@ -2129,9 +2136,10 @@
 			this.reportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.highLowToolStripMenuItem,
             this.threeInvestmentToolStripMenuItem,
-            this.strengthWeaknessToolStripMenuItem});
+            this.strengthWeaknessToolStripMenuItem,
+            this.calendarToolStripMenuItem});
 			this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
-			this.reportToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+			this.reportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.reportToolStripMenuItem.Text = "Report";
 			// 
 			// highLowToolStripMenuItem
@@ -2243,8 +2251,52 @@
 			// 
 			// timerSStockResult
 			// 
+			this.timerSStockResult.Enabled = true;
 			this.timerSStockResult.Interval = 1000;
 			this.timerSStockResult.Tick += new System.EventHandler(this.timerSStockResult_Tick);
+			// 
+			// gp
+			// 
+			this.gp.Controls.Add(this.txtMax);
+			this.gp.Controls.Add(this.txtStartIndex);
+			this.gp.Controls.Add(this.btnEveryThree);
+			this.gp.Location = new System.Drawing.Point(136, 125);
+			this.gp.Name = "gp";
+			this.gp.Size = new System.Drawing.Size(167, 40);
+			this.gp.TabIndex = 106;
+			this.gp.TabStop = false;
+			this.gp.Text = "補";
+			// 
+			// txtStartIndex
+			// 
+			this.txtStartIndex.Location = new System.Drawing.Point(7, 14);
+			this.txtStartIndex.Name = "txtStartIndex";
+			this.txtStartIndex.Size = new System.Drawing.Size(34, 22);
+			this.txtStartIndex.TabIndex = 106;
+			// 
+			// txtMax
+			// 
+			this.txtMax.Location = new System.Drawing.Point(46, 14);
+			this.txtMax.Name = "txtMax";
+			this.txtMax.Size = new System.Drawing.Size(34, 22);
+			this.txtMax.TabIndex = 107;
+			// 
+			// chkInvestment
+			// 
+			this.chkInvestment.AutoSize = true;
+			this.chkInvestment.Location = new System.Drawing.Point(681, 16);
+			this.chkInvestment.Name = "chkInvestment";
+			this.chkInvestment.Size = new System.Drawing.Size(72, 16);
+			this.chkInvestment.TabIndex = 39;
+			this.chkInvestment.Text = "投信認養";
+			this.chkInvestment.UseVisualStyleBackColor = true;
+			// 
+			// calendarToolStripMenuItem
+			// 
+			this.calendarToolStripMenuItem.Name = "calendarToolStripMenuItem";
+			this.calendarToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.calendarToolStripMenuItem.Text = "Calendar";
+			this.calendarToolStripMenuItem.Click += new System.EventHandler(this.calendarToolStripMenuItem_Click);
 			// 
 			// ScheduleJob
 			// 
@@ -2311,6 +2363,8 @@
 			this.splitContainer1.ResumeLayout(false);
 			this.pnTop.ResumeLayout(false);
 			this.pnTop.PerformLayout();
+			this.gp.ResumeLayout(false);
+			this.gp.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2518,5 +2572,10 @@
 		private System.Windows.Forms.Button btnGetValue;
 		private System.Windows.Forms.Button btnThree;
 		private System.Windows.Forms.Button btnEveryThree;
+		private System.Windows.Forms.GroupBox gp;
+		private System.Windows.Forms.TextBox txtMax;
+		private System.Windows.Forms.TextBox txtStartIndex;
+		private System.Windows.Forms.CheckBox chkInvestment;
+		private System.Windows.Forms.ToolStripMenuItem calendarToolStripMenuItem;
 	}
 }

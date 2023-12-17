@@ -90,7 +90,7 @@ namespace StockStrategy
 						 _HalfPt= getHalfPoint(Convert.ToInt32(si.UpsHalf) - Convert.ToInt32(si.DownsHalf));
 					}
 					_TotalPoint = _Pt + _HalfPt;
-					_TextBox.Text = $" {si.Date.Substring(4,4)}_{_TotalPoint}";
+					_TextBox.Text = $" {si.Date.Substring(4,4)}  {_TotalPoint}";
 					_TextBox.Enabled = false;
 					_TextBox.BackColor = getColor(_TotalPoint);
 					_TextBox.ForeColor = Color.Black;

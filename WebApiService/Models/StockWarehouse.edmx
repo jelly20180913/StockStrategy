@@ -62,6 +62,36 @@
           <Property Name="WorkDays" Type="int" />
           <Property Name="ProfitRatio" Type="varchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="StockChips">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="BrokerBuySide" Type="nvarchar" MaxLength="20" />
+          <Property Name="BuyQtyBuySide" Type="varchar" MaxLength="10" />
+          <Property Name="SellQtyBuySide" Type="varchar" MaxLength="10" />
+          <Property Name="BrokerSellSide" Type="nvarchar" MaxLength="20" />
+          <Property Name="BuyQtySellSide" Type="varchar" MaxLength="10" />
+          <Property Name="SellQtySellSide" Type="varchar" MaxLength="10" />
+          <Property Name="OverBuy" Type="varchar" MaxLength="10" />
+          <Property Name="OverSell" Type="varchar" MaxLength="10" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
+          <Property Name="CreateDate" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="StockEps">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YearQ" Type="varchar" MaxLength="10" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="CreateDate" Type="varchar" MaxLength="20" />
+          <Property Name="Eps" Type="varchar" MaxLength="10" />
+          <Property Name="QoQ" Type="varchar" MaxLength="20" />
+          <Property Name="YoY" Type="varchar" MaxLength="20" />
+          <Property Name="AvgQ" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="StockEventNotify">
           <Key>
             <PropertyRef Name="Id" />
@@ -305,6 +335,22 @@
           <Property Name="Precise" Type="bit" />
           <Property Name="Class" Type="int" />
         </EntityType>
+        <EntityType Name="StockRevenue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
+          <Property Name="Revenue" Type="varchar" MaxLength="20" />
+          <Property Name="MoM" Type="varchar" MaxLength="10" />
+          <Property Name="LastYearRevenue" Type="varchar" MaxLength="20" />
+          <Property Name="YoY" Type="varchar" MaxLength="10" />
+          <Property Name="CreateDate" Type="varchar" MaxLength="20" />
+          <Property Name="Code" Type="varchar" MaxLength="10" />
+          <Property Name="SumMonthRevenue" Type="varchar" MaxLength="20" />
+          <Property Name="SumLastYearRevenue" Type="varchar" MaxLength="20" />
+          <Property Name="SumYoY" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="StockThreeInstitutional">
           <Key>
             <PropertyRef Name="Id" />
@@ -322,6 +368,8 @@
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockBacktest" EntityType="Self.StockBacktest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockChips" EntityType="Self.StockChips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockEps" EntityType="Self.StockEps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockEventNotify" EntityType="Self.StockEventNotify" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockFutureCode" EntityType="Self.StockFutureCode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockGroup" EntityType="Self.StockGroup" Schema="dbo" store:Type="Tables" />
@@ -334,6 +382,7 @@
           <EntitySet Name="StockLineNotify" EntityType="Self.StockLineNotify" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockPicking" EntityType="Self.StockPicking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockResult" EntityType="Self.StockResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockRevenue" EntityType="Self.StockRevenue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockThreeInstitutional" EntityType="Self.StockThreeInstitutional" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Holiday" EntityType="Self.Holiday" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -512,6 +561,9 @@
           <EntitySet Name="StockHighLow" EntityType="StockWarehouseModel.StockHighLow" />
           <EntitySet Name="StockGroupTrend" EntityType="StockWarehouseModel.StockGroupTrend" />
           <EntitySet Name="StockEventNotify" EntityType="StockWarehouseModel.StockEventNotify" />
+          <EntitySet Name="StockRevenue" EntityType="StockWarehouseModel.StockRevenue" />
+          <EntitySet Name="StockChips" EntityType="StockWarehouseModel.StockChips" />
+          <EntitySet Name="StockEps" EntityType="StockWarehouseModel.StockEps" />
         </EntityContainer>
         <EntityType Name="StockLineNotify">
           <Key>
@@ -677,6 +729,52 @@
           <Property Name="Subject" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AlertDay" Type="Int32" />
           <Property Name="Year" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StockRevenue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Revenue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MoM" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LastYearRevenue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="YoY" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SumMonthRevenue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SumLastYearRevenue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SumYoY" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="StockChips">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BrokerBuySide" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BuyQtyBuySide" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SellQtyBuySide" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BrokerSellSide" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BuyQtySellSide" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SellQtySellSide" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OverBuy" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="OverSell" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StockEps">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YearQ" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Eps" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="QoQ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="YoY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AvgQ" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1008,6 +1106,55 @@
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockRevenue">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockRevenue">
+              <MappingFragment StoreEntitySet="StockRevenue">
+                <ScalarProperty Name="SumYoY" ColumnName="SumYoY" />
+                <ScalarProperty Name="SumLastYearRevenue" ColumnName="SumLastYearRevenue" />
+                <ScalarProperty Name="SumMonthRevenue" ColumnName="SumMonthRevenue" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="YoY" ColumnName="YoY" />
+                <ScalarProperty Name="LastYearRevenue" ColumnName="LastYearRevenue" />
+                <ScalarProperty Name="MoM" ColumnName="MoM" />
+                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockChips">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockChips">
+              <MappingFragment StoreEntitySet="StockChips">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="OverSell" ColumnName="OverSell" />
+                <ScalarProperty Name="OverBuy" ColumnName="OverBuy" />
+                <ScalarProperty Name="SellQtySellSide" ColumnName="SellQtySellSide" />
+                <ScalarProperty Name="BuyQtySellSide" ColumnName="BuyQtySellSide" />
+                <ScalarProperty Name="BrokerSellSide" ColumnName="BrokerSellSide" />
+                <ScalarProperty Name="SellQtyBuySide" ColumnName="SellQtyBuySide" />
+                <ScalarProperty Name="BuyQtyBuySide" ColumnName="BuyQtyBuySide" />
+                <ScalarProperty Name="BrokerBuySide" ColumnName="BrokerBuySide" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockEps">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockEps">
+              <MappingFragment StoreEntitySet="StockEps">
+                <ScalarProperty Name="AvgQ" ColumnName="AvgQ" />
+                <ScalarProperty Name="YoY" ColumnName="YoY" />
+                <ScalarProperty Name="QoQ" ColumnName="QoQ" />
+                <ScalarProperty Name="Eps" ColumnName="Eps" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="YearQ" ColumnName="YearQ" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

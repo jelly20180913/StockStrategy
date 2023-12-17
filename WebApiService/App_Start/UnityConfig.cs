@@ -49,6 +49,9 @@ namespace WebApiService
 			container.RegisterType<IStockThreeInstitutionalService, StockThreeInstitutionalService>();
 			container.RegisterType<IStockGroupTotalCountService, StockGroupTotalCountService>();
 			container.RegisterType<IStockEventNotifyService, StockEventNotifyService>();
+			container.RegisterType<IStockRevenueService, StockRevenueService>();
+			container.RegisterType<IStockEpsService, StockEpsService>();
+			container.RegisterType<IStockChipsService, StockChipsService>();
 
 			container.RegisterType<IRepository<StockGroup>, Repository<StockGroup>>();
             container.RegisterType<IRepository<StockIndex>, Repository<StockIndex>>();
@@ -66,6 +69,9 @@ namespace WebApiService
 			container.RegisterType<IRepository<StockThreeInstitutional>, Repository<StockThreeInstitutional>>();
 			container.RegisterType<IRepository<StockGroupTotalCount>, Repository<StockGroupTotalCount>>();
 			container.RegisterType<IRepository<StockEventNotify>, Repository<StockEventNotify>>();
+			container.RegisterType<IRepository<StockRevenue>, Repository<StockRevenue>>();
+			container.RegisterType<IRepository<StockEps>, Repository<StockEps>>();
+			container.RegisterType<IRepository<StockChips>, Repository<StockChips>>();
 			GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

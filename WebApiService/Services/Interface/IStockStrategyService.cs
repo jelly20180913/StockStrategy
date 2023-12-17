@@ -30,5 +30,8 @@ namespace WebApiService.Services.Interface
 		bool InsertStockEventNotify(List<StockEventNotify> s);
 		List<StockEventNotify> GetStockEventNotifyList();
 		List<Stock> GetByStockCodeList(string parameter, string mode);
+		bool InsertStockRevenue(List<StockRevenue> s);
+		bool InsertStockEps(List<StockEps> s);
+		bool InsertStockChips(List<StockChips> s);
 	}
 }

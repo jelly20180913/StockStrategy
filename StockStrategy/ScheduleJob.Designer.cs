@@ -234,6 +234,10 @@
 			this.txtMax = new System.Windows.Forms.TextBox();
 			this.chkInvestment = new System.Windows.Forms.CheckBox();
 			this.calendarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.chkbull = new System.Windows.Forms.CheckBox();
+			this.btnRenvenue = new System.Windows.Forms.Button();
+			this.btnEps = new System.Windows.Forms.Button();
+			this.btnStockChips = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -1750,6 +1754,7 @@
 			// 
 			// groupBox7
 			// 
+			this.groupBox7.Controls.Add(this.chkbull);
 			this.groupBox7.Controls.Add(this.chkClass);
 			this.groupBox7.Controls.Add(this.cbClass);
 			this.groupBox7.Controls.Add(this.label37);
@@ -1855,7 +1860,7 @@
 			this.dtpReportStart.Name = "dtpReportStart";
 			this.dtpReportStart.Size = new System.Drawing.Size(102, 22);
 			this.dtpReportStart.TabIndex = 70;
-			this.dtpReportStart.Value = new System.DateTime(2023, 7, 3, 0, 0, 0, 0);
+			this.dtpReportStart.Value = new System.DateTime(2023, 12, 1, 0, 0, 0, 0);
 			// 
 			// lb
 			// 
@@ -2114,7 +2119,7 @@
             this.reportToolStripMenuItem,
             this.maintainToolStripMenuItem});
 			this.PopupMenu.Name = "PopupMenu";
-			this.PopupMenu.Size = new System.Drawing.Size(181, 92);
+			this.PopupMenu.Size = new System.Drawing.Size(125, 70);
 			// 
 			// strateToolStripMenuItem
 			// 
@@ -2127,7 +2132,7 @@
 			// autoOrderToolStripMenuItem
 			// 
 			this.autoOrderToolStripMenuItem.Name = "autoOrderToolStripMenuItem";
-			this.autoOrderToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+			this.autoOrderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.autoOrderToolStripMenuItem.Text = "Auto Order";
 			this.autoOrderToolStripMenuItem.Click += new System.EventHandler(this.autoOrderToolStripMenuItem_Click);
 			// 
@@ -2139,7 +2144,7 @@
             this.strengthWeaknessToolStripMenuItem,
             this.calendarToolStripMenuItem});
 			this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
-			this.reportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.reportToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
 			this.reportToolStripMenuItem.Text = "Report";
 			// 
 			// highLowToolStripMenuItem
@@ -2257,12 +2262,15 @@
 			// 
 			// gp
 			// 
+			this.gp.Controls.Add(this.btnStockChips);
+			this.gp.Controls.Add(this.btnEps);
+			this.gp.Controls.Add(this.btnRenvenue);
 			this.gp.Controls.Add(this.txtMax);
 			this.gp.Controls.Add(this.txtStartIndex);
 			this.gp.Controls.Add(this.btnEveryThree);
 			this.gp.Location = new System.Drawing.Point(136, 125);
 			this.gp.Name = "gp";
-			this.gp.Size = new System.Drawing.Size(167, 40);
+			this.gp.Size = new System.Drawing.Size(394, 40);
 			this.gp.TabIndex = 106;
 			this.gp.TabStop = false;
 			this.gp.Text = "補";
@@ -2297,6 +2305,50 @@
 			this.calendarToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
 			this.calendarToolStripMenuItem.Text = "Calendar";
 			this.calendarToolStripMenuItem.Click += new System.EventHandler(this.calendarToolStripMenuItem_Click);
+			// 
+			// chkbull
+			// 
+			this.chkbull.AutoSize = true;
+			this.chkbull.Checked = true;
+			this.chkbull.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkbull.Location = new System.Drawing.Point(602, 13);
+			this.chkbull.Name = "chkbull";
+			this.chkbull.Size = new System.Drawing.Size(48, 16);
+			this.chkbull.TabIndex = 77;
+			this.chkbull.Text = "多方";
+			this.chkbull.UseVisualStyleBackColor = true;
+			// 
+			// btnRenvenue
+			// 
+			this.btnRenvenue.Enabled = false;
+			this.btnRenvenue.Location = new System.Drawing.Point(162, 13);
+			this.btnRenvenue.Name = "btnRenvenue";
+			this.btnRenvenue.Size = new System.Drawing.Size(73, 23);
+			this.btnRenvenue.TabIndex = 107;
+			this.btnRenvenue.Text = "股票營收";
+			this.btnRenvenue.UseVisualStyleBackColor = true;
+			this.btnRenvenue.Click += new System.EventHandler(this.btnRenvenue_Click);
+			// 
+			// btnEps
+			// 
+			this.btnEps.Enabled = false;
+			this.btnEps.Location = new System.Drawing.Point(238, 13);
+			this.btnEps.Name = "btnEps";
+			this.btnEps.Size = new System.Drawing.Size(73, 23);
+			this.btnEps.TabIndex = 108;
+			this.btnEps.Text = "股票EPS";
+			this.btnEps.UseVisualStyleBackColor = true;
+			this.btnEps.Click += new System.EventHandler(this.btnEps_Click);
+			// 
+			// btnStockChips
+			// 
+			this.btnStockChips.Location = new System.Drawing.Point(313, 13);
+			this.btnStockChips.Name = "btnStockChips";
+			this.btnStockChips.Size = new System.Drawing.Size(73, 23);
+			this.btnStockChips.TabIndex = 109;
+			this.btnStockChips.Text = "買賣超籌碼";
+			this.btnStockChips.UseVisualStyleBackColor = true;
+			this.btnStockChips.Click += new System.EventHandler(this.btnStockChips_Click);
 			// 
 			// ScheduleJob
 			// 
@@ -2577,5 +2629,9 @@
 		private System.Windows.Forms.TextBox txtStartIndex;
 		private System.Windows.Forms.CheckBox chkInvestment;
 		private System.Windows.Forms.ToolStripMenuItem calendarToolStripMenuItem;
+		private System.Windows.Forms.CheckBox chkbull;
+		private System.Windows.Forms.Button btnRenvenue;
+		private System.Windows.Forms.Button btnEps;
+		private System.Windows.Forms.Button btnStockChips;
 	}
 }

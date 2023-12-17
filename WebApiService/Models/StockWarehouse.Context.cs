@@ -42,5 +42,8 @@ namespace WebApiService.Models
         public virtual DbSet<StockHighLow> StockHighLow { get; set; }
         public virtual DbSet<StockGroupTrend> StockGroupTrend { get; set; }
         public virtual DbSet<StockEventNotify> StockEventNotify { get; set; }
+        public virtual DbSet<StockRevenue> StockRevenue { get; set; }
+        public virtual DbSet<StockChips> StockChips { get; set; }
+        public virtual DbSet<StockEps> StockEps { get; set; }
     }
 }

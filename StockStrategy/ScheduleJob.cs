@@ -39,7 +39,7 @@ namespace StockStrategy
 		DataAccess _DataAccess = new DataAccess();
 		private bool bGoodStockLineNotify = false, bGoodStockByJsonLineNotify = false, bStockGroupTrend = false, bStockThreeInstitutional = false, bStockEventNotify = false;
 		private bool bBadStockLineNotify;
-		private bool bStockResult = false, bEveryThree = false;
+		private bool bStockResult = false, bEveryThree = false,bStockChips=false;
 		List<Holiday> HolidayList = new List<Holiday>();
 		Dictionary<int, string> GoodStockClass = new Dictionary<int, string>() { };
 		List<string> ListGoodStockClass = new List<string>();
@@ -149,6 +149,7 @@ namespace StockStrategy
 				string _TX_URL = ConfigurationManager.AppSettings["TX_URL"];
 				string _TPEx_URL = ConfigurationManager.AppSettings["TPEx_URL"];
 				string _HiStockIndex_URL = ConfigurationManager.AppSettings["HiStock_URL"];
+				string _Yahoo_URL = ConfigurationManager.AppSettings["Yahoo_URL"];
 				string _PHLX_Index = Common.Job.GetTaiwanFutures(_PHLX_URL, _Id, true);
 				string _DJI_Index = Common.Job.GetTaiwanFutures(_DJI_URL, _Id, true);
 				string _NASDAQ_Index = Common.Job.GetTaiwanFutures(_NASDAQ_URL, _Id, true);
@@ -177,8 +178,12 @@ namespace StockStrategy
 				string _OIL_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "N1CL", _Id, true);
 				string _OIL_IndexQuote = Convert.ToString(Convert.ToDecimal(_OIL_Index) - Convert.ToDecimal(_TopIndexOIL));
 				//string _OIL_IndexQuote = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "N1CL", _Change, true).Replace('▼', ' ').Replace('▲', '+');
-				string _BTC_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "BTC", _Id, true);
-				string _BTC_IndexQuote = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "BTC", _Change, true).Replace('▼', ' ').Replace('▲', '+');
+
+				//string _BTC_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "BTC", _Id, true);
+				string _BTC_Id = "//*[@id=\"main-0-QuoteHeader-Proxy\"]/div/div[2]/div/div/span[1]";
+				string _BTC_IndexQuoteId = "//*[@id=\"main-0-QuoteHeader-Proxy\"]/div/div[2]/div/div/span[3]";
+				string _BTC_Index = Common.Job.GetTaiwanFutures(_Yahoo_URL + "BTC-USD", _BTC_Id, false);
+				string _BTC_IndexQuote = Common.Job.GetTaiwanFutures(_Yahoo_URL + "BTC-USD", _BTC_IndexQuoteId, false);
 				string _Gold_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "GOLD", _Id, true);
 				string _Gold_IndexQuote = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "GOLD", _Change, true).Replace('▼', ' ').Replace('▲', '+');
 
@@ -350,7 +355,7 @@ namespace StockStrategy
 				this.dTPReport.Value = DateTime.Now;
 				this.dtpStockYesterday.Value = DateTime.Now;
 			}
-			if (_DayOfWeek != "Sunday" && _DayOfWeek != "Saturday")
+			if (!isHoliday(DateTime.Now))
 			{
 				if (_Hour == "8" && _Minute == "35")
 				{
@@ -673,7 +678,7 @@ namespace StockStrategy
 			try
 			{
 				List<DataModel.Stock.Stock> _GoodStockList = new List<DataModel.Stock.Stock>();
-				if (goodStock.Class == 13||this.chkInvestment.Checked)
+				if (goodStock.Class == 13 || this.chkInvestment.Checked)
 					_GoodStockList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) > _Gain && Convert.ToDouble(x.Investment) * 1000 > _Volumn).ToList();
 				else
 					_GoodStockList = _StockDayAllList.Where(x => Convert.ToDecimal(x.Gain) > _Gain && Convert.ToDouble(x.TradeVolume) > _Volumn).ToList();
@@ -1435,6 +1440,153 @@ namespace StockStrategy
 			return _ListStockJuridical;
 		}
 		/// <summary>
+		/// 取得營收資料
+		/// </summary>
+		/// <param name="code"></param>
+		/// <param name="stockType"></param>
+		/// <param name="max"></param>
+		/// <param name="startIndex"></param>
+		/// <returns></returns>
+		private List<StockRevenue> getYahooRevenueData(string code, bool? stockType, int max, int startIndex)
+		{
+			string _Log = "";
+			string _DateMsg = "";
+			List<StockRevenue> _ListStockRevenue = new List<StockRevenue>();
+			string _StockType = Convert.ToBoolean(stockType) == true ? "TW" : "TWO";
+			string _YahooStock_URL = $"https://tw.stock.yahoo.com/quote/{code}.{_StockType}/revenue";
+			HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL);
+			//int _Max = add ? 60 : 1;//今天若為當日則為1,昨日為2 以此類推
+			for (int i = startIndex; i <= max; i++)
+			{
+				try
+				{
+					string _Date = $"//*[@id=\"qsp-revenue-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[1]/div";
+					string _MonthRevenue = $"//*[@id=\"qsp-revenue-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[2]/ul/li[1]/span";
+					string _MoM = $"//*[@id=\"qsp-revenue-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[2]/ul/li[2]/span";
+					string _LastYearRevenue = $"//*[@id=\"qsp-revenue-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[2]/ul/li[3]/span";
+					string _YoY = $"//*[@id=\"qsp-revenue-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[2]/ul/li[4]/span";
+					string _SumMonthRevenue = $"//*[@id=\"qsp-revenue-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[3]/ul/li[1]/span";
+					string _SumLastYearRevenue = $"//*[@id=\"qsp-revenue-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[3]/ul/li[2]/span";
+					string _SumYoY = $"//*[@id=\"qsp-revenue-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[3]/ul/li[3]/span";
+					StockRevenue _StockRevenue = new StockRevenue();
+					_StockRevenue.Code = code;
+					_StockRevenue.Date = Convert.ToDateTime(Common.Job.GetValue(_HtmlDoc, _Date)).ToString("yyyyMM");
+					_Date = _StockRevenue.Date;
+					int _IMonthRevenue = Common.Job.GetValue(_HtmlDoc, _MonthRevenue).ParseThousandthString();
+					_StockRevenue.Revenue = _IMonthRevenue.ToString();
+					_StockRevenue.MoM = Common.Job.GetValue(_HtmlDoc, _MoM).Replace('%',' ').Trim().ToString();
+					_StockRevenue.LastYearRevenue = Common.Job.GetValue(_HtmlDoc, _LastYearRevenue).ParseThousandthString().ToString();
+					_StockRevenue.YoY = Common.Job.GetValue(_HtmlDoc, _YoY).Replace('%', ' ').Trim().ToString();
+					_StockRevenue.CreateDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+					_StockRevenue.SumMonthRevenue=Common.Job.GetValue(_HtmlDoc, _SumMonthRevenue).ParseThousandthString().ToString();
+					_StockRevenue.SumLastYearRevenue = Common.Job.GetValue(_HtmlDoc, _SumLastYearRevenue).ParseThousandthString().ToString();
+					_StockRevenue.SumYoY = Common.Job.GetValue(_HtmlDoc, _SumYoY).Replace('%', ' ').Trim().ToString();
+					_ListStockRevenue.Add(_StockRevenue);
+				}
+				catch (Exception ex)
+				{
+					_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + $"股票:{code} 日期:{_DateMsg} getYahooRevenueData:{i}" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+					logger.Error(_Log);
+					this.btnErrorMsg.Text += _Log;
+				}
+			}
+			return _ListStockRevenue;
+		}
+		/// <summary>
+		/// 取得eps資料
+		/// </summary>
+		/// <param name="code"></param>
+		/// <param name="stockType"></param>
+		/// <param name="max"></param>
+		/// <param name="startIndex"></param>
+		/// <returns></returns>
+		private List<StockEps> getYahooEpsData(string code, bool? stockType, int max, int startIndex)
+		{
+			string _Log = "";
+			string _DateMsg = "";
+			string _YearQMsg = "";
+			List<StockEps> _ListStockEps = new List<StockEps>();
+			string _StockType = Convert.ToBoolean(stockType) == true ? "TW" : "TWO";
+			string _YahooStock_URL = $"https://tw.stock.yahoo.com/quote/{code}.{_StockType}/eps";
+			HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL);
+			//int _Max = add ? 20 : 1;//今天若為當日則為1,昨日為2 以此類推
+			for (int i = startIndex; i <= max; i++)
+			{
+				try
+				{
+					string _YearQ = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[1]/div";
+					string _Eps = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[2]/span";
+					string _QoQ = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[3]/span"; 
+					string _YoY = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[4]/span";
+					string _AvgQ = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[5]/span"; 
+					StockEps _StockEps = new StockEps();
+					_StockEps.Code = code;
+					_StockEps.YearQ =  Common.Job.GetValue(_HtmlDoc, _YearQ);
+					_YearQMsg = _StockEps.YearQ; 
+					_StockEps.Eps = Common.Job.GetValue(_HtmlDoc, _Eps);
+					_StockEps.QoQ = Common.Job.GetValue(_HtmlDoc, _QoQ).Replace('%', ' ').Trim().ToString();
+					_StockEps.AvgQ = Common.Job.GetValue(_HtmlDoc, _AvgQ);
+					_StockEps.YoY = Common.Job.GetValue(_HtmlDoc, _YoY).Replace('%', ' ').Trim().ToString();
+					_StockEps.CreateDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss"); 
+					_ListStockEps.Add(_StockEps);
+				}
+				catch (Exception ex)
+				{
+					_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + $"股票:{code} 日期:{_YearQMsg} getYahooRevenueData:{i}" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+					logger.Error(_Log);
+					this.btnErrorMsg.Text += _Log;
+				}
+			}
+			return _ListStockEps;
+		}
+
+		private List<StockChips> getYahooStockChipsData(string code, bool? stockType, int max, int startIndex)
+		{
+			string _Log = ""; 
+			string _YearQMsg = "";
+			string _Date = "";
+			List<StockChips> _ListStockChips = new List<StockChips>();
+			string _StockType = Convert.ToBoolean(stockType) == true ? "TW" : "TWO";
+			string _WhereDate = Convert.ToDateTime(this.dtpStockIndex.Value).ToString("yyyyMMdd");
+			string _YahooStock_URL = $"https://tw.stock.yahoo.com/quote/{code}.{_StockType}/broker-trading";
+			HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL);
+			//int _Max = add ? 20 :2;//今天若為當日則為1,昨日為2 以此類推
+			for (int i = startIndex; i <= max; i++)
+			{
+				try
+				{
+					string _BrokerBuySide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[1]";
+					string _BuyQtyBuySide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[2]";
+					string _SellQtyBuySide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[3]"; 
+					string _BrokerSellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[1]"; 
+					string _BuyQtySellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[2]"; 
+					string _SellQtySellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[3]"; 
+					string _OverBuy = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[4]";
+					string _OverSell = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[4]";
+					StockChips _StockChips = new StockChips();
+					_StockChips.Code = code;
+					_StockChips.BrokerBuySide = Common.Job.GetValue(_HtmlDoc, _BrokerBuySide);
+					_StockChips.BuyQtyBuySide = Common.Job.GetValue(_HtmlDoc, _BuyQtyBuySide).ParseThousandthString().ToString();
+					_StockChips.SellQtyBuySide = Common.Job.GetValue(_HtmlDoc, _SellQtyBuySide).ParseThousandthString().ToString();
+					_StockChips.OverBuy = Common.Job.GetValue(_HtmlDoc, _OverBuy).ParseThousandthString().ToString();
+					_StockChips.BrokerSellSide = Common.Job.GetValue(_HtmlDoc, _BrokerSellSide);
+					_StockChips.BuyQtySellSide = Common.Job.GetValue(_HtmlDoc, _BuyQtySellSide).ParseThousandthString().ToString();
+					_StockChips.SellQtySellSide = Common.Job.GetValue(_HtmlDoc, _SellQtySellSide).ParseThousandthString().ToString();
+					_StockChips.OverSell = Common.Job.GetValue(_HtmlDoc, _OverSell).ParseThousandthString().ToString();
+					_StockChips.CreateDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+					_StockChips.Date = _WhereDate;
+					if (_StockChips.BrokerBuySide!="" )  _ListStockChips.Add(_StockChips);
+				}
+				catch (Exception ex)
+				{
+					_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + $"股票:{code} 日期:{_Date} getYahooStockChipsData:{i}" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+					logger.Error(_Log);
+					this.btnErrorMsg.Text += _Log;
+				}
+			}
+			return _ListStockChips;
+		}
+		/// <summary>
 		/// 根據日期取得證交所資料打算補該日期的股票資料,目前交易過於頻繁會被鎖IP
 		/// </summary>
 		/// <returns></returns>
@@ -2102,6 +2254,7 @@ namespace StockStrategy
 				//撈取50萬筆一年的股票row data要一分鐘
 				//List<Stock> _StockList = _DataAccess.getStockAllList().ToList();
 				List<StockPicking> _ListStockPicking = _DataAccess.getStockPickingList().Where(x => x.Enabled == true).ToList();
+				if (this.chkbull.Checked) _ListStockPicking = _ListStockPicking.Where(x => x.Class != 4).ToList();
 				//List<StockPicking> _StockPickingList = _ListStockPicking.Where(x => (x.Class == 1 || x.Class == 5 || x.Class == 6 || x.Class == 7 || x.Class == 8 || x.Class == 9 || x.Class == 10 || x.Class == 11) && Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
 				List<StockPicking> _StockPickingList = _ListStockPicking.Where(x => Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
 				_StockPickingList = _StockPickingList.Where(x => Convert.ToInt32(x.Date) >= Convert.ToInt32(this.dtpReportStart.Value.ToString("yyyyMMdd"))).ToList();
@@ -2804,9 +2957,18 @@ namespace StockStrategy
 			{
 				bStockResult = false;
 				bEveryThree = false;
+				bStockChips = false;
 			}
-			if (_DayOfWeek != "Sunday" && _DayOfWeek != "Saturday")
+			if (!isHoliday(DateTime.Now))
 			{
+				if (_Hour == "18" && _Minute == "30")
+				{
+					if (!bStockChips)
+					{
+						bStockChips = true;
+						btnStockChips.PerformClick();
+					}
+				}
 				if (_Hour == "19" && _Minute == "10")
 				{
 					if (!bEveryThree)
@@ -2906,12 +3068,183 @@ namespace StockStrategy
 			FormCalendar _FormCalendar = new FormCalendar();
 			_FormCalendar.ShowDialog();
 		}
+		/// <summary>
+		/// 爬奇摩股市新增股票營收相關資料
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnRenvenue_Click(object sender, EventArgs e)
+		{
+			string _Log = "";
+			bool _IsFinish = false;
+			DataAccess _DataAccess = new DataAccess();
+
+			Stopwatch sw = new Stopwatch();
+			sw.Reset();
+			sw.Start();
+			try
+			{
+				List<StockRevenue> _ListStockRevenue = new List<StockRevenue>();
+				int _StartIndex = this.txtStartIndex.Text != "" ? Convert.ToInt32(this.txtStartIndex.Text) : 1;
+				int _Max = this.txtMax.Text != "" ? Convert.ToInt32(this.txtMax.Text) : 1;
+				List<StockRevenue> _ListStockRevenueOneStock = getYahooRevenueData("2250", true, _Max, _StartIndex);
+				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
+				foreach (StockGroup sg in _StockGroupList.Where(x => x.IsFinish == false).ToList())
+				{
+					List<Stock> _StockList = _DataAccess.getStockByCodeList(sg.Code, "Code");
+					_ListStockRevenue = getYahooRevenueData(sg.Code, sg.StockType, _Max, _StartIndex);
+					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已爬營收資料 \r\n";
+					logger.Info(_Log);
+
+					_DataAccess.insertStockRevenue(_ListStockRevenue);
+					_IsFinish = true;
+					if (_IsFinish)
+					{
+						StockGroup stockGroup = _StockGroupList.Where(x => x.Code == sg.Code).First();
+						stockGroup.IsFinish = true;
+						stockGroup.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+						_DataAccess.UpdateStockGroupFinish(stockGroup);
+						_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已新增營收資料 \r\n";
+						logger.Info(_Log);
+					}
+				}
+
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " btnRenvenue_Click:" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+				logger.Error(_Log);
+				this.btnErrorMsg.Text += _Log;
+			}
+			sw.Stop();
+			_Log = $"btnRenvenue_Click {sw.ElapsedMilliseconds.ToString()}毫秒";
+			logger.Info(_Log);
+			this.btnErrorMsg.Text += _Log;
+
+		}
+		/// <summary>
+		/// 爬奇摩股市取得該股票的EPS
+		/// 起始index為1
+		/// 取得該股票的EPS
+		/// 新增該股票的EPS
+		/// </summary>
+		private void insertEps()
+		{
+			Cursor.Current = Cursors.WaitCursor;
+			string _Log = "";
+			bool _IsFinish = false;
+			DataAccess _DataAccess = new DataAccess();
+
+			Stopwatch sw = new Stopwatch();
+			sw.Reset();
+			sw.Start();
+			try
+			{
+				List<StockEps> _ListStockEps = new List<StockEps>();
+				int _StartIndex = this.txtStartIndex.Text != "" ? Convert.ToInt32(this.txtStartIndex.Text) : 1;
+				int _Max = this.txtMax.Text != "" ? Convert.ToInt32(this.txtMax.Text) : 1; 
+				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
+				foreach (StockGroup sg in _StockGroupList.Where(x => x.IsFinish == false).ToList())
+				{
+					List<Stock> _StockList = _DataAccess.getStockByCodeList(sg.Code, "Code");
+					_ListStockEps = getYahooEpsData(sg.Code, sg.StockType, _Max, _StartIndex);
+					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已爬EPS資料 \r\n";
+					logger.Info(_Log);
+
+					_DataAccess.insertStockEps(_ListStockEps);
+					_IsFinish = true;
+					if (_IsFinish)
+					{
+						StockGroup stockGroup = _StockGroupList.Where(x => x.Code == sg.Code).First();
+						stockGroup.IsFinish = true;
+						stockGroup.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
+						_DataAccess.UpdateStockGroupFinish(stockGroup); 
+					}
+					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已新增EPS資料 \r\n";
+					logger.Info(_Log);
+				}
+
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " insertEps:" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+				logger.Error(_Log);
+				this.btnErrorMsg.Text += _Log;
+			}
+			sw.Stop();
+			_Log = $"insertEps {sw.ElapsedMilliseconds.ToString()}毫秒";
+			logger.Info(_Log);
+			this.btnErrorMsg.Text += _Log;
+			Cursor.Current = Cursors.Default;
+
+		}
+		/// <summary>
+		/// 預設起始index 2抓到100,無券商名稱 不新增
+		/// 取得該股票的主力籌碼
+		/// 新增該股票的主力籌碼
+		/// </summary>
+		private void insertStockChips()
+		{
+			Cursor.Current = Cursors.WaitCursor;
+			string _Log = "";
+			bool _IsFinish = false;
+			DataAccess _DataAccess = new DataAccess(); 
+			Stopwatch sw = new Stopwatch();
+			sw.Reset();
+			sw.Start();
+			try
+			{ 
+				List<StockChips> _ListStockChips = new List<StockChips>();
+				int _StartIndex = this.txtStartIndex.Text != "" ? Convert.ToInt32(this.txtStartIndex.Text) : 2;
+				int _Max = this.txtMax.Text != "" ? Convert.ToInt32(this.txtMax.Text) : 100;
+				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
+				foreach (StockGroup sg in _StockGroupList)
+				{
+					List<Stock> _StockList = _DataAccess.getStockByCodeList(sg.Code, "Code");
+					_ListStockChips = getYahooStockChipsData(sg.Code, sg.StockType, _Max, _StartIndex);
+					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已爬主力籌碼資料 \r\n";
+					logger.Info(_Log); 
+					_DataAccess.insertStockChips(_ListStockChips);
+					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已新增主力籌碼資料 \r\n";
+					logger.Info(_Log);
+				}
+
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " insertStockChips:" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+				logger.Error(_Log);
+				this.btnErrorMsg.Text += _Log;
+			}
+			sw.Stop();
+			_Log = $"insert StockChips {sw.ElapsedMilliseconds.ToString()}毫秒";
+			logger.Info(_Log);
+			this.btnErrorMsg.Text += _Log;
+			Cursor.Current = Cursors.Default;
+
+		}
+		private void btnEps_Click(object sender, EventArgs e)
+		{
+			Cursor.Current = Cursors.WaitCursor;
+			var t = new Task(insertEps);
+			t.Start();
+			Cursor.Current = Cursors.Default;
+		}
+
+		private void btnStockChips_Click(object sender, EventArgs e)
+		{ 
+			Cursor.Current = Cursors.WaitCursor;
+			var t = new Task(insertStockChips);
+			t.Start();
+			Cursor.Current = Cursors.Default;
+		}
 
 		/// <summary>
 		/// 更新股票三大法人資料
 		/// </summary>
 		private void InsertThree()
 		{
+			Cursor.Current = Cursors.WaitCursor;
 			string _Log = "";
 			string _Code = "";
 			DataAccess _DataAccess = new DataAccess();
@@ -2951,6 +3284,7 @@ namespace StockStrategy
 			_Log = $"InsertThree {sw.ElapsedMilliseconds.ToString()}毫秒";
 			logger.Info(_Log);
 			this.btnErrorMsg.Text += _Log;
+			Cursor.Current = Cursors.Default;
 		}
 		/// <summary>
 		/// 賴通知事件
@@ -3427,6 +3761,13 @@ namespace StockStrategy
 			if (HolidayList.Where(x => x.HolidayDate == yestoday.Date.ToString("MMdd")).Count() > 0 || _DayOfWeek == "Sunday" || _DayOfWeek == "Saturday")
 				return skipHoliday(yestoday.AddDays(-1));
 			else return yestoday;
+		}
+		private bool isHoliday( DateTime today)
+		{
+			string _DayOfWeek = today.DayOfWeek.ToString();
+			if (HolidayList.Where(x => x.HolidayDate == today.Date.ToString("MMdd")).Count() > 0 || _DayOfWeek == "Sunday" || _DayOfWeek == "Saturday")
+				return true;
+			else return false;
 		}
 	}
 }

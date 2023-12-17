@@ -74,11 +74,22 @@ namespace StockStrategy.Common
 		}
 		public static string GetValue(HtmlAgilityPack.HtmlDocument htmlDoc,string id)
         {
-            string _ReturnValue = "";
-			HtmlAgilityPack.HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes(id);
-			foreach (HtmlAgilityPack.HtmlNode n in nodes)
-			{ 
-				_ReturnValue = n.InnerText;
+			string _ReturnValue = "";
+			try
+            {
+               
+                HtmlAgilityPack.HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes(id);
+                if (nodes != null)
+                {
+                    foreach (HtmlAgilityPack.HtmlNode n in nodes)
+                    {
+                        _ReturnValue = n.InnerText;
+                    }
+                } 
+            }
+			catch (Exception e)
+			{
+				Console.WriteLine(e.ToString());
 			}
 			return _ReturnValue;
 		}

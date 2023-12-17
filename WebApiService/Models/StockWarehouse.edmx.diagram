@@ -22,6 +22,9 @@
         <EntityTypeShape EntityType="StockWarehouseModel.StockHighLow" Width="1.5" PointX="12.375" PointY="4.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockGroupTrend" Width="1.5" PointX="8.375" PointY="12.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockEventNotify" Width="1.5" PointX="10.375" PointY="13.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockRevenue" Width="1.5" PointX="12.375" PointY="13.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockChips" Width="1.5" PointX="14.375" PointY="4.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockEps" Width="1.5" PointX="14.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

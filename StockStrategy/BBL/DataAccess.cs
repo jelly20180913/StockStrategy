@@ -487,5 +487,32 @@ namespace StockStrategy.BBL
 			_ListStockEventNotify = JsonConvert.DeserializeObject<List<StockEventNotify>>(_ApiResult.Data.ToString());
 			return _ListStockEventNotify;
 		}
+		public string insertStockRevenue(List<StockRevenue> listStockRevenue)
+		{
+			string json = JsonConvert.SerializeObject(listStockRevenue);
+			string _Action = "StockRevenue";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public string insertStockEps(List<StockEps> listStockEps)
+		{
+			string json = JsonConvert.SerializeObject(listStockEps);
+			string _Action = "StockEps";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public string insertStockChips(List<StockChips> listStockChips)
+		{
+			string json = JsonConvert.SerializeObject(listStockChips);
+			string _Action = "StockChips";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
 	}
 }

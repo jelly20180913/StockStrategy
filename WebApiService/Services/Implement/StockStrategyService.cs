@@ -23,12 +23,16 @@ namespace WebApiService.Services.Implement
 		private IStockThreeInstitutionalService _stockThreeInstitutionalService;
 		private IStockGroupTotalCountService _stockGroupTotalCountService;
 		private IStockEventNotifyService _stockEventNotifyService;
+		private IStockRevenueService _stockRevenueService;
+		private IStockChipsService _stockChipsService;
+		private IStockEpsService _stockEpsService;
 		/// <summary>
 		/// Dependence Injection
 		/// </summary>
 
 		public StockStrategyService(IStockService stockService, IHolidayService holidayService, IStockPickingService stockPickingService,IStockResultService stockResultService,IStockHighLowService stockHighLowService
-			, IStockGroupTrendService stockGroupTrendService, IStockThreeInstitutionalService stockThreeInstitutionalService, IStockGroupTotalCountService stockGroupTotalCountService,IStockEventNotifyService stockEventNotifyService)
+			, IStockGroupTrendService stockGroupTrendService, IStockThreeInstitutionalService stockThreeInstitutionalService, IStockGroupTotalCountService stockGroupTotalCountService,IStockEventNotifyService stockEventNotifyService
+			,IStockRevenueService stockRevenueService,IStockChipsService stockChipsService,IStockEpsService stockEpsService)
 		{
 			this._stockService = stockService;
 			_holidayService = holidayService;
@@ -39,6 +43,9 @@ namespace WebApiService.Services.Implement
 			_stockThreeInstitutionalService=stockThreeInstitutionalService;
 			_stockGroupTotalCountService=stockGroupTotalCountService;
 			_stockEventNotifyService=stockEventNotifyService;
+			_stockRevenueService = stockRevenueService;
+			_stockChipsService = stockChipsService;
+			_stockEpsService = stockEpsService;
 		}
 		/// <summary>
 		/// get vote item list
@@ -167,6 +174,21 @@ namespace WebApiService.Services.Implement
 			List<StockEventNotify> _StockEventNotifyList = new List<StockEventNotify>();
 			_StockEventNotifyList = this._stockEventNotifyService.GetAll().ToList();
 			return _StockEventNotifyList;
+		}
+		public bool InsertStockRevenue(List<StockRevenue> s)
+		{
+			this._stockRevenueService.MiltiCreate(s);
+			return true;
+		}
+		public bool InsertStockEps(List<StockEps> s)
+		{
+			this._stockEpsService.MiltiCreate(s);
+			return true;
+		}
+		public bool InsertStockChips(List<StockChips> s)
+		{
+			this._stockChipsService.MiltiCreate(s);
+			return true;
 		}
 	}
 }

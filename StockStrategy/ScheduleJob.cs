@@ -104,6 +104,8 @@ namespace StockStrategy
 			GoodStockClass.Add(11, "萬張放量");
 			GoodStockClass.Add(12, "MSCI");
 			GoodStockClass.Add(13, "投信認養");
+			GoodStockClass.Add(14, "起漲3倍量");
+			GoodStockClass.Add(15, "起漲爆量");
 			ListGoodStockClass.Add("起漲放量");
 			ListGoodStockClass.Add("連續型態");
 			ListGoodStockClass.Add("連續小紅");
@@ -117,6 +119,8 @@ namespace StockStrategy
 			ListGoodStockClass.Add("萬張放量");
 			ListGoodStockClass.Add("MSCI");
 			ListGoodStockClass.Add("投信認養");
+			ListGoodStockClass.Add("起漲3倍量");
+			ListGoodStockClass.Add("起漲爆量");
 			this.cbClass.DataSource = ListGoodStockClass;
 			this.cbApprove.SelectedIndex = 0;
 			this.ContextMenuStrip = PopupMenu;
@@ -171,6 +175,8 @@ namespace StockStrategy
 				string _TopIndex = _ListStockAll.Where(x => x.Date == _YestodayDate.ToString("yyyyMMdd")).First().TAIEX;
 				string _TopIndexDJI = _ListStockAll.Where(x => x.Date == _YestodayDate.ToString("yyyyMMdd")).First().DJI;
 				string _TopIndexOIL = _ListStockAll.Where(x => x.Date == _YestodayDate.ToString("yyyyMMdd")).First().OIL_Index;
+				string _TopBond_Index = _ListStockAll.Where(x => x.Date == _YestodayDate.ToString("yyyyMMdd")).First().C10YearBond_Index;
+				string _TopBTC_Index = _ListStockAll.Where(x => x.Date == _YestodayDate.ToString("yyyyMMdd")).First().BTC_Index;
 				string _USD_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "USDX", _Id, true);
 				string _USD_IndexQuote = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "USDX", _Change, true).Replace('▼', ' ').Replace('▲', '+');
 				string _USD_IndexPercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "USDX", _Percent, true);
@@ -241,7 +247,9 @@ namespace StockStrategy
 				s.OIL_Index = _OIL_Index;
 				s.OIL_QuoteChange = _OIL_IndexQuote;
 				s.BTC_Index = _BTC_Index;
+				
 				s.BTC_QuoteChange = _BTC_IndexQuote;
+				if (s.BTC_QuoteChange != "") s.BTC_QuoteChange = Convert.ToDecimal(_BTC_Index) - Convert.ToDecimal(s.BTC_Index) > 0 ? $"-{s.BTC_QuoteChange}" : s.BTC_QuoteChange;
 				s.Gold_Index = _Gold_Index;
 				s.Gold_QuoteChange = _Gold_IndexQuote;
 				s.DAX_Index = _DAX_Index;
@@ -269,7 +277,9 @@ namespace StockStrategy
 				s.TSLA_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "TSLA", _Id, true);
 				s.TSLA_IndexQuotePercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "TSLA", _Percent, true);
 				s.C10YearBond_Index = Common.Job.GetTaiwanFutures($"{_HiStockIndex_URL}/wgbdaily.aspx?no=wgb_united-states", "//*[@id=\"result\"]/div/div/span[1]", false);
+				
 				s.C10YearBond_IndexQuotePercent = Common.Job.GetTaiwanFutures($"{_HiStockIndex_URL}/wgbdaily.aspx?no=wgb_united-states", "//*[@id=\"result\"]/div/div/span[3]", false);
+				if (s.C10YearBond_IndexQuotePercent != "") s.C10YearBond_IndexQuotePercent = Convert.ToDecimal(_TopBond_Index) - Convert.ToDecimal(s.C10YearBond_Index) > 0 ? $"-{s.C10YearBond_IndexQuotePercent}" : s.C10YearBond_IndexQuotePercent;
 				_ListStock.Add(s);
 				_DataAccess.InsertStockIndex(_ListStock);
 				stockIndex = true;
@@ -1550,7 +1560,6 @@ namespace StockStrategy
 			string _WhereDate = Convert.ToDateTime(this.dtpStockIndex.Value).ToString("yyyyMMdd");
 			string _YahooStock_URL = $"https://tw.stock.yahoo.com/quote/{code}.{_StockType}/broker-trading";
 			HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL);
-			//int _Max = add ? 20 :2;//今天若為當日則為1,昨日為2 以此類推
 			for (int i = startIndex; i <= max; i++)
 			{
 				try
@@ -1777,7 +1786,7 @@ namespace StockStrategy
 						s.Dealer = _StockJuridical.Dealer;
 						s.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
 						_DataAccess.UpdateStock(s);
-						_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} 序號:{_No} 時間:{whereDate}股票: {_Code} 已更新大法人資料 \r\n";
+						_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} 序號:{_No} 時間:{whereDate}股票: {_Code} 已更新三大法人資料 \r\n";
 						logger.Info(_Log);
 						_No++;
 					}
@@ -2969,7 +2978,7 @@ namespace StockStrategy
 						btnStockChips.PerformClick();
 					}
 				}
-				if (_Hour == "19" && _Minute == "10")
+				if (_Hour == "19" && _Minute == "30")
 				{
 					if (!bEveryThree)
 					{
@@ -2977,7 +2986,7 @@ namespace StockStrategy
 						btnEveryThree.PerformClick();
 					}
 				}
-				if (_Hour == "20" && _Minute == "10")
+				if (_Hour == "20" && _Minute == "30")
 				{
 					if (!bStockResult)
 					{
@@ -3273,6 +3282,10 @@ namespace StockStrategy
 				updateStockJuridical(_WhereDate, _ListStockJuridical, _StockList);
 				_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}   已全部更新三大法人資料 \r\n";
 				logger.Info(_Log);
+				sw.Stop();
+				_Log = $"InsertThree {sw.ElapsedMilliseconds.ToString()}毫秒";
+				logger.Info(_Log);
+				this.btnErrorMsg.Text += _Log;
 			}
 			catch (Exception ex)
 			{
@@ -3280,10 +3293,7 @@ namespace StockStrategy
 				logger.Error(_Log);
 				this.btnErrorMsg.Text += _Log;
 			}
-			sw.Stop();
-			_Log = $"InsertThree {sw.ElapsedMilliseconds.ToString()}毫秒";
-			logger.Info(_Log);
-			this.btnErrorMsg.Text += _Log;
+		
 			Cursor.Current = Cursors.Default;
 		}
 		/// <summary>
@@ -3297,10 +3307,11 @@ namespace StockStrategy
 			try
 			{
 				string _WhereDate = DateTime.Now.ToString("yyyyMMdd");
+				string _Year = DateTime.Now.ToString("yyyy");
 				DataAccess _DataAccess = new DataAccess();
 				List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
 				List<StockEventNotify> _StockEventNotifyList = _DataAccess.getStockEventNotifyList();
-				foreach (StockEventNotify s in _StockEventNotifyList)
+				foreach (StockEventNotify s in _StockEventNotifyList.Where(x=>x.IsEnable==true&&(x.Year==_Year||x.Year=="0000")).ToList())
 				{
 					int _TodayDate = Convert.ToInt32(DateTime.Now.Date.ToString("MMdd"));
 					int _Date = s.EndDate != null ? Convert.ToInt32(s.EndDate) : Convert.ToInt32(DateTime.Now.AddDays(Convert.ToDouble(s.AlertDay)).Date.ToString("MMdd"));

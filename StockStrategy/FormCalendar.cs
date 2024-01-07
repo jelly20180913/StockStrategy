@@ -82,6 +82,7 @@ namespace StockStrategy
 					int _Pt = 0, _HalfPt = 0;
 					_TextBox.Location = new System.Drawing.Point(3, 3);
 					_TextBox.Multiline = true;
+					string _Date=Convert.ToInt32(si.Date).ToString("MM/dd");
 					_TextBox.Name = $"_TextBox{si.Date}";
 					_TextBox.Size = new System.Drawing.Size(100, 45);
 					int _TotalPoint = 0;
@@ -97,6 +98,8 @@ namespace StockStrategy
 					_TextBox.Font = new Font(_TextBox.Font.FontFamily, 14, _TextBox.Font.Style); 
 					this.flowLayoutPanel1.Controls.Add(_TextBox); 
 				}
+				//因為stock index計算的漲跌都是昨天的所以需退一格
+				this.flowLayoutPanel1.Controls.RemoveAt(0);
 			}
 			catch (Exception ex)
 			{

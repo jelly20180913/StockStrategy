@@ -1,5 +1,31 @@
 [
     {
+        "Name": "起漲爆量",
+        "Gain": 3,
+        "Volumn": 10000000,
+        "Multiple": 4,
+        "PreDays": 10,
+        "LessVolumn": 500000,
+        "PreDays2": 20,
+        "MoreGain": 3,
+        "ChkLess": false,
+        "ChkNotHigherThan": true,
+        "Class": 15
+    },
+    {
+        "Name": "起漲3倍量",
+        "Gain": 3,
+        "Volumn": 1000000,
+        "Multiple": 3,
+        "PreDays": 10,
+        "LessVolumn": 800000,
+        "PreDays2": 10,
+        "MoreGain": 3,
+        "ChkLess": true,
+        "ChkNotHigherThan": true,
+        "Class": 14
+    },
+    {
         "Name": "投信認養",
         "Gain": 0,
         "Volumn": 700000,

@@ -1,6 +1,8 @@
 ﻿using DataModel.Login;
+using DocumentFormat.OpenXml.EMMA;
 using Newtonsoft.Json;
 using NLog;
+using NLog.Fluent;
 using StockStrategy.BBL;
 using StockStrategy.Common;
 using System;
@@ -80,7 +82,7 @@ namespace StockStrategy
 		/// <param name="e"></param>
 		private void ScheduleJob_Load(object sender, EventArgs e)
 		{
-			ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
+			ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
 			this.Text = "股票策略選股排程機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
 			var _Ip = Tool.GetIpAddresses();
 			if (_Ip.Length > 0)
@@ -3246,6 +3248,26 @@ namespace StockStrategy
 			var t = new Task(insertStockChips);
 			t.Start();
 			Cursor.Current = Cursors.Default;
+		}
+
+		private void dgvStockReport_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			string _Log = "";
+			try
+			{
+				List<StockGroup> _ListStockGroup = _DataAccess.getStockGroupList();
+				string _Code = dgvStockReport.CurrentRow.Cells["Code"].Value.ToString();
+				bool? _StockType = _ListStockGroup.Where(x => x.Code == _Code).First().StockType;
+				string _Type = Convert.ToBoolean(_StockType) == true ? "TW" : "TWO";
+				string _YahooStock_URL = $"https://tw.stock.yahoo.com/quote/{_Code}.{_Type}/technical-analysis";
+				System.Diagnostics.Process.Start(_YahooStock_URL);
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + ex.StackTrace + "\r\n";
+				logger.Error(_Log);
+				this.btnErrorMsg.Text += _Log;
+			}
 		}
 
 		/// <summary>

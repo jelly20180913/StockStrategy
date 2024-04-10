@@ -56,10 +56,10 @@
     <ManifestKeyFile>StockStrategy_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <Win32Resource>
@@ -67,6 +67,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Image\a9f93-tnjjv-001.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
@@ -228,6 +234,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -246,8 +253,6 @@
     <EmbeddedResource Include="Json\Setting.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <None Include="StockStrategy_1_TemporaryKey.pfx" />
-    <None Include="StockStrategy_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -257,7 +262,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 與 x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

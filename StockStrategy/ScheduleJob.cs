@@ -2125,8 +2125,10 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				//DataAccess _DataAccess = new DataAccess();
-				//this.btnLogin.PerformClick();
+				DataAccess _DataAccess = new DataAccess();
+				Stopwatch _Stopwatch= new Stopwatch();
+				_Stopwatch.Start();
+				this.btnLogin.PerformClick();
 				//DateTime _Dt = Convert.ToDateTime(this.dTPReport.Text);
 				DateTime _Dt = Convert.ToDateTime(this.dtpStockIndex.Text);
 				string _DayOfWeek = _Dt.DayOfWeek.ToString();
@@ -2141,10 +2143,11 @@ namespace StockStrategy
 				List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
 				decimal _AccumulatedGain = 0;
 				List<StockResult> _StockResultList = new List<StockResult>();
-
+				//by 當日會更快
+				List<StockResult> stockResultList = _DataAccess.getStockResultList();
 				foreach (StockPicking s in _StockPickingList.Union(_StockPickingCtnList).Union(_StockPickingBadList).OrderBy(x => x.Class))
 				{
-					List<StockResult> stockResultList = _DataAccess.getStockResultList();
+					
 					if (_StockDayAllList.Where(x => x.Code == s.Code).ToList().Count > 0)
 					{
 						DataModel.Stock.Stock _Stock = _StockDayAllList.Where(x => x.Code == s.Code).First();
@@ -2180,7 +2183,8 @@ namespace StockStrategy
 					}
 				}
 				_DataAccess.InsertStockResult(_StockResultList);
-				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " insert stock Result ok.\r\n";
+				_Stopwatch.Stop();
+				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " insert stock Result ok.\r\n 時間:"+ _Stopwatch.ElapsedMilliseconds+"ms";
 				this.btnErrorMsg.Text += _Log;
 				this.lbMessage.Text = _WhereDate + " insert stock Result ok";
 			}

@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Interop;
 using WebApiService.Models;
 using DateTime = System.DateTime;
 //using DataModel.Stock;
@@ -82,14 +83,14 @@ namespace StockStrategy
 		/// <param name="e"></param>
 		private void ScheduleJob_Load(object sender, EventArgs e)
 		{
-			ConnectionString = ConfigurationManager.AppSettings["ApiServer"];
+			ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
 			this.Text = "股票策略選股排程機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
 			var _Ip = Tool.GetIpAddresses();
 			if (_Ip.Length > 0)
 			{
 				this.toolStripStatusLabelIP.Text = _Ip[_Ip.Length - 1].ToString();
 			}
-			btnAdminLogin.PerformClick();
+			//btnAdminLogin.PerformClick();
 			// loginWebApi(); 
 			string _Date = DateTime.Now.ToString("yyyy");
 			HolidayList = _DataAccess.getHolidayList().Where(x => x.Enable == true).Where(x => x.Year == _Date || x.HolidayDate == "0000").ToList();
@@ -135,12 +136,13 @@ namespace StockStrategy
 		/// <param name="e"></param>
 		private void btnGetIndexToInsert_Click(object sender, EventArgs e)
 		{
+			stockIndex = true;
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 
-				this.btnLogin.PerformClick();
+				//this.btnLogin.PerformClick();
 				string _Id = "Price1_lbTPrice";
 				string _Change = "Price1_lbTChange";
 				string _Percent = "Price1_lbTPercent";
@@ -284,7 +286,7 @@ namespace StockStrategy
 				if (s.C10YearBond_IndexQuotePercent != "") s.C10YearBond_IndexQuotePercent = Convert.ToDecimal(_TopBond_Index) - Convert.ToDecimal(s.C10YearBond_Index) > 0 ? $"-{s.C10YearBond_IndexQuotePercent}" : s.C10YearBond_IndexQuotePercent;
 				_ListStock.Add(s);
 				_DataAccess.InsertStockIndex(_ListStock);
-				stockIndex = true;
+				
 				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " insert stock index ok.\r\n";
 				this.btnErrorMsg.Text += _Log;
 			}
@@ -324,7 +326,7 @@ namespace StockStrategy
 		/// <returns></returns>
 		private string getDJITopIndex(string yestoday)
 		{
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
 			return _ListStock.Where(x => x.Date == yestoday).First().DJI;
 		}
@@ -477,7 +479,7 @@ namespace StockStrategy
 			try
 			{
 
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				DateTime _Dt = Convert.ToDateTime(this.dtpStockIndex.Text);
 				int _Yestoday = DateTime.Now.DayOfWeek.ToString() == "Monday" ? -3 : -1;
 				DateTime _YestodayDate = skipHoliday(_Dt.AddDays(_Yestoday));
@@ -522,7 +524,7 @@ namespace StockStrategy
 		private List<Stock> setStockList()
 		{
 			string _Log = "";
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			List<StockStrategy.Model.Stock.StockDayAll> _StockDayAllList = StockStrategy.BBL.StockPrice.GetStockDayAll();
 			DateTime _Dt = Convert.ToDateTime(this.dtpStockIndex.Text);
 			int _Tuesday = DateTime.Now.DayOfWeek.ToString() == "Tuesday" ? -4 : -2;
@@ -590,7 +592,7 @@ namespace StockStrategy
 		private List<DataModel.Stock.Stock> getGoodStockList()
 		{
 			string _Log = "";
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			DateTime _Dt = Convert.ToDateTime(this.dtpGoodDate.Text);
 			string _Code = "";
 			string _WhereDate = _Dt.ToString("yyyyMMdd");
@@ -655,7 +657,7 @@ namespace StockStrategy
 		private List<DataModel.Stock.Stock> getGoodStockList(StockStrategy.Model.GoodStock goodStock)
 		{
 			string _Log = "";
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			DateTime _Dt = Convert.ToDateTime(this.dtpGoodDate.Text);
 			string _Code = "";
 			string _WhereDate = _Dt.ToString("yyyyMMdd");
@@ -755,7 +757,7 @@ namespace StockStrategy
 			double _Ma5 = 0, _Ma10 = 0, _Ma20 = 0;
 			string _Code = "";
 			string _Log = "";
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			DateTime _Dt = Convert.ToDateTime(this.dtpBadDate.Text);
 			string _WhereDate = _Dt.ToString("yyyyMMdd");
 			string _DayOfWeek = _Dt.DayOfWeek.ToString();
@@ -864,7 +866,7 @@ namespace StockStrategy
 			sw.Start();
 			string _Code = "";
 			string _Log = "";
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			DateTime _Dt = Convert.ToDateTime(this.dtpCtuDate.Text);
 			string _WhereDate = _Dt.ToString("yyyyMMdd");
 			string _DayOfWeek = _Dt.DayOfWeek.ToString();
@@ -945,7 +947,7 @@ namespace StockStrategy
 			int _N = 0;
 			string _Code = "";
 			string _Log = "";
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			//DateTime _Dt = Convert.ToDateTime(this.dtpCtuDate.Text);
 			string _WhereDate = dtCtuDate.ToString("yyyyMMdd");
 			string _DayOfWeek = dtCtuDate.DayOfWeek.ToString();
@@ -1039,7 +1041,7 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				List<Stock> _StockList = setStockLackOffList();
 				_DataAccess.insertStock(_StockList);
 
@@ -1061,7 +1063,7 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				string _Juridica = "MII_1_4";
 				string _TX_URL = ConfigurationManager.AppSettings["TX_URL"];
 				StockIndex s = new StockIndex();
@@ -1090,7 +1092,7 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				StockIndex s = new StockIndex();
 				List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
 				s = _ListStock.OrderByDescending(x => x.Date).First();
@@ -1224,7 +1226,7 @@ namespace StockStrategy
 		private void btnUpdateStockGain_Click(object sender, EventArgs e)
 		{
 			string _Log = "";
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
 			sw.Start();
@@ -1287,7 +1289,7 @@ namespace StockStrategy
 		/// <param name="e"></param>
 		private void btnResetLinePoint_Click(object sender, EventArgs e)
 		{
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
 			string _Log = "";
 			foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.Enable == true).ToList())
@@ -1336,7 +1338,7 @@ namespace StockStrategy
 		{
 			string _Log = "", _Code = "";
 			List<Stock> _StockLackOffList = new List<Stock>();
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
 			sw.Start();
@@ -1603,7 +1605,7 @@ namespace StockStrategy
 		/// <returns></returns>
 		private List<Stock> setStockByDateList()
 		{
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			DateTime _Dt = Convert.ToDateTime(this.dtpStockIndex.Text);
 			System.Globalization.TaiwanCalendar tc = new System.Globalization.TaiwanCalendar();
 			string CHDate = tc.GetYear(_Dt).ToString() + "/" + tc.GetMonth(_Dt).ToString().PadLeft(2, '0') + "/" + tc.GetDayOfMonth(_Dt).ToString().PadLeft(2, '0');
@@ -1695,7 +1697,7 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				List<Stock> _StockList = setStockByDateList();
 				_DataAccess.insertStock(_StockList);
 			}
@@ -1741,7 +1743,7 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				List<Stock> _StockList = _DataAccess.getStockYestodayList(whereDate);
 				List<StockStrategy.Model.Stock.StockJuridical> _ListStockJuridical = StockPrice.GetJuridical(whereDate);
 				foreach (Stock s in _StockList)
@@ -1832,11 +1834,21 @@ namespace StockStrategy
 					_Stock = _Stock + s.Code + ":" + s.Name + ";";
 				}
 				List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
+				string _Token = "";
 				foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.NotifyClass == className && x.Enable == true).ToList())
 				{
+					_Token = s.Token;
 					string _Msg = "日期:" + dateTime + ":" + "\r\n" + name + _Stock;
 					CallLineNotifyApi(s.Token, _Msg);
 				}
+				//if (name != "連續型態" && name != "爆量出貨")
+				//{
+				//	foreach (DataModel.Stock.Stock s in stockList)
+				//	{
+				//		string _KStock = $"K{s.Code}";
+				//		CallLineNotifyApi(_Token, _KStock);
+				//	}
+				//}
 				this.btnErrorMsg.Text += "Line  " + className + " Stock List OK" + "\r\n";
 			}
 			catch (Exception ex)
@@ -1865,7 +1877,7 @@ namespace StockStrategy
 		/// <param name="e"></param>
 		private void button1_Click(object sender, EventArgs e)
 		{
-			this.btnLogin.PerformClick();
+			//this.btnLogin.PerformClick();
 			var test = _DataAccess.getHolidayList();
 		}
 
@@ -1981,8 +1993,8 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
-				this.btnLogin.PerformClick();
+				//DataAccess _DataAccess = new DataAccess();
+				//this.btnLogin.PerformClick();
 				List<StockPicking> _StockPickingList = new List<StockPicking>();
 				StockPicking stockPicking = new StockPicking();
 				stockPicking.Class = 0;
@@ -2256,8 +2268,8 @@ namespace StockStrategy
 			string Code = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
-				this.btnLogin.PerformClick();
+				//DataAccess _DataAccess = new DataAccess();
+				//this.btnLogin.PerformClick();
 				DateTime _Dt = Convert.ToDateTime(this.dTPReport.Text);
 				string _DayOfWeek = _Dt.DayOfWeek.ToString();
 				string _WhereDate = _Dt.ToString("yyyyMMdd");
@@ -2386,8 +2398,8 @@ namespace StockStrategy
 			string Code = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
-				this.btnLogin.PerformClick();
+				//DataAccess _DataAccess = new DataAccess();
+				//this.btnLogin.PerformClick();
 				string _DayOfWeek = dtEnd.DayOfWeek.ToString();
 				string _WhereDate = dtEnd.ToString("yyyyMMdd");
 				int _Yestoday = _DayOfWeek == "Monday" ? -3 : -1;
@@ -2484,13 +2496,13 @@ namespace StockStrategy
 		private List<DataModel.Stock.StockReport> getStockReport()
 		{
 
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			string _Log = "";
 			int _Num = 1;
 			List<DataModel.Stock.StockReport> _StockReportList = new List<DataModel.Stock.StockReport>();
 			try
 			{
-				this.btnLogin.PerformClick();
+				//this.btnLogin.PerformClick();
 				DateTime _Dt = Convert.ToDateTime(this.dTPReport.Text);
 				string _DayOfWeek = _Dt.DayOfWeek.ToString();
 				string _WhereDate = _Dt.ToString("yyyyMMdd");
@@ -2612,7 +2624,7 @@ namespace StockStrategy
 		/// </summary>
 		private void updateStockPicking()
 		{
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			string _Log = "";
 			try
 			{
@@ -2715,7 +2727,7 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				List<StockGroupTrend> _StockGroupTrendList = setStockGroupTrendList();
 				_DataAccess.insertStockGroupTrend(_StockGroupTrendList);
 
@@ -2733,7 +2745,7 @@ namespace StockStrategy
 			try
 			{
 				string _WhereDate = Convert.ToDateTime(this.dtpStockIndex.Value).ToString("yyyyMMdd");
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				List<StockGroupTotalCount> _StockGroupTotalCountList = _DataAccess.getStockGroupTotalCountList();
 				List<StockGroupTrend> _StockGroupTrend = _DataAccess.getStockGroupTrendList().Where(x => x.Date == _WhereDate).ToList();
 				List<DataModel.Stock.StockGroupTrend> _ListStockGroupTrend = _StockGroupTrend.Join(_StockGroupTotalCountList,
@@ -2832,7 +2844,7 @@ namespace StockStrategy
 			openFileDialog1 = new OpenFileDialog();
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
 				Common.XSLXHelper _XSLXHelper = new Common.XSLXHelper();
 				DataTable dt = _XSLXHelper.Import(txtFileMSCI.Text, "Data");
@@ -3026,7 +3038,7 @@ namespace StockStrategy
 		{
 			string _Log = "";
 			bool _IsFinish = false;
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
@@ -3092,7 +3104,7 @@ namespace StockStrategy
 		{
 			string _Log = "";
 			bool _IsFinish = false;
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
@@ -3148,7 +3160,7 @@ namespace StockStrategy
 			Cursor.Current = Cursors.WaitCursor;
 			string _Log = "";
 			bool _IsFinish = false;
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
@@ -3203,7 +3215,7 @@ namespace StockStrategy
 			Cursor.Current = Cursors.WaitCursor;
 			string _Log = "";
 			bool _IsFinish = false;
-			DataAccess _DataAccess = new DataAccess(); 
+			//DataAccess _DataAccess = new DataAccess(); 
 			Stopwatch sw = new Stopwatch();
 			sw.Reset();
 			sw.Start();
@@ -3282,7 +3294,7 @@ namespace StockStrategy
 			Cursor.Current = Cursors.WaitCursor;
 			string _Log = "";
 			string _Code = "";
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			string _WhereDate = Convert.ToDateTime(this.dtpStockIndex.Value).ToString("yyyyMMdd");
 			List<Stock> _StockList = _DataAccess.getStockYestodayList(_WhereDate);
 			Stopwatch sw = new Stopwatch();
@@ -3334,7 +3346,7 @@ namespace StockStrategy
 			{
 				string _WhereDate = DateTime.Now.ToString("yyyyMMdd");
 				string _Year = DateTime.Now.ToString("yyyy");
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
 				List<StockEventNotify> _StockEventNotifyList = _DataAccess.getStockEventNotifyList();
 				foreach (StockEventNotify s in _StockEventNotifyList.Where(x=>x.IsEnable==true&&(x.Year==_Year||x.Year=="0000")).ToList())
@@ -3386,7 +3398,7 @@ namespace StockStrategy
 				int _Yestoday = DateTime.Now.DayOfWeek.ToString() == "Monday" ? -3 : -1;
 				DateTime _YestodayDate = skipHoliday(_Dt.AddDays(_Yestoday));
 				_WhereDate = _YestodayDate.ToString("yyyyMMdd");
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
 				List<DataModel.Stock.StockThreeInstitutional> _ListStockThreeInstitutional = new List<DataModel.Stock.StockThreeInstitutional>();
 				int _Rank = 1;
@@ -3441,7 +3453,7 @@ namespace StockStrategy
 		{
 			string _Log = "", _GroupName = "";
 			List<StockGroupTrend> _StockGroupTrendList = new List<StockGroupTrend>();
-			DataAccess _DataAccess = new DataAccess();
+			//DataAccess _DataAccess = new DataAccess();
 			int _No = 0;
 			List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
 			List<StockGroupTotalCount> _StockGroupTotalCountList = _DataAccess.getStockGroupTotalCountList();
@@ -3689,7 +3701,7 @@ namespace StockStrategy
 			openFileDialog1 = new OpenFileDialog();
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
+				//DataAccess _DataAccess = new DataAccess();
 				Common.XSLXHelper _XSLXHelper = new Common.XSLXHelper();
 				DataTable dt = _XSLXHelper.Import(txtFile.Text, "Data");
 				List<StockGroup> _StockGroupList = new List<StockGroup>();
@@ -3726,8 +3738,8 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				DataAccess _DataAccess = new DataAccess();
-				this.btnLogin.PerformClick();
+				//DataAccess _DataAccess = new DataAccess();
+				//this.btnLogin.PerformClick();
 				List<StockStrategy.Model.Stock.GetRealtimeStockPrice> _PriceList = new List<StockStrategy.Model.Stock.GetRealtimeStockPrice>();
 				StockStrategy.Model.Stock.GetRealtimePriceIn _RealtimePriceIn = new StockStrategy.Model.Stock.GetRealtimePriceIn();
 				_RealtimePriceIn.Sample1_Symbol = "t00";

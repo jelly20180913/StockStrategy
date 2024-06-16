@@ -91,5 +91,7 @@ namespace WebApiService.Models
         public string TSLA_IndexQuotePercent { get; set; }
         public string C10YearBond_Index { get; set; }
         public string C10YearBond_IndexQuotePercent { get; set; }
+        public string TX_Low { get; set; }
+        public string MTX_Low { get; set; }
     }
 }

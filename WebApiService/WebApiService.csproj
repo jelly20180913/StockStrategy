@@ -211,6 +211,9 @@
     <Compile Include="Models\Holiday.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Item.cs">
+      <DependentUpon>StockWarehouse.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Login.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
@@ -247,6 +250,9 @@
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockIndex.cs">
+      <DependentUpon>StockWarehouse.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockIndexForcast.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StockInventory.cs">

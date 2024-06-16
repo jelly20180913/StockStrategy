@@ -25,6 +25,8 @@
         <EntityTypeShape EntityType="StockWarehouseModel.StockRevenue" Width="1.5" PointX="12.375" PointY="13.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockChips" Width="1.5" PointX="14.375" PointY="4.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockEps" Width="1.5" PointX="14.375" PointY="8.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockIndexForcast" Width="1.5" PointX="14.375" PointY="12.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.Item" Width="1.5" PointX="15.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

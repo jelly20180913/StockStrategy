@@ -178,6 +178,12 @@
     <Compile Include="FormThreeInstitutional.Designer.cs">
       <DependentUpon>FormThreeInstitutional.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormUpdateStockIndex.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUpdateStockIndex.Designer.cs">
+      <DependentUpon>FormUpdateStockIndex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\ContinueStock.cs" />
     <Compile Include="Model\Stock.cs" />
     <Compile Include="Model\GoodStock.cs" />
@@ -203,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormThreeInstitutional.resx">
       <DependentUpon>FormThreeInstitutional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUpdateStockIndex.resx">
+      <DependentUpon>FormUpdateStockIndex.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

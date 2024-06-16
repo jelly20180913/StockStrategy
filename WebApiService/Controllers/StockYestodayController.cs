@@ -19,8 +19,9 @@ namespace WebApiService.Controllers
         public List<Stock> Get(string date)
         {
             IEnumerable<Stock> _StockList;
-            _StockList = this._StockService.GetAll().Where(x => x.Date== date).ToList();
-            return _StockList.ToList();
+			//_StockList = this._StockService.GetAll().Where(x => x.Date== date).ToList();
+			_StockList = this._StockService.GetByStockDate(date);
+			return _StockList.ToList();
         }
     }
 }

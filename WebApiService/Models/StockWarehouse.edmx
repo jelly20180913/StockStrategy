@@ -16,6 +16,17 @@
           <Property Name="Enable" Type="bit" />
           <Property Name="Year" Type="nchar" MaxLength="4" />
         </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'StockWarehouse.dbo.Item' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+          <Property Name="ClassId" Type="nvarchar" MaxLength="20" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="Id" />
@@ -247,6 +258,21 @@
           <Property Name="TSLA_IndexQuotePercent" Type="varchar" MaxLength="10" />
           <Property Name="10YearBond_Index" Type="varchar" MaxLength="10" />
           <Property Name="10YearBond_IndexQuotePercent" Type="varchar" MaxLength="10" />
+          <Property Name="TX_Low" Type="varchar" MaxLength="10" />
+          <Property Name="MTX_Low" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="StockIndexForcast">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RamdomForest" Type="int" />
+          <Property Name="SVM" Type="int" />
+          <Property Name="XGBoost" Type="int" />
+          <Property Name="LightGBM" Type="int" />
+          <Property Name="KNN" Type="int" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
+          <Property Name="Result" Type="int" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -377,6 +403,7 @@
           <EntitySet Name="StockGroupTrend" EntityType="Self.StockGroupTrend" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockHighLow" EntityType="Self.StockHighLow" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockIndex" EntityType="Self.StockIndex" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockIndexForcast" EntityType="Self.StockIndexForcast" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInventory" EntityType="Self.StockInventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInventoryLog" EntityType="Self.StockInventoryLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockLineNotify" EntityType="Self.StockLineNotify" Schema="dbo" store:Type="Tables" />
@@ -391,6 +418,14 @@
     [Holiday].[Enable] AS [Enable], 
     [Holiday].[Year] AS [Year]
     FROM [dbo].[Holiday] AS [Holiday]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Item" EntityType="Self.Item" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Item].[Id] AS [Id], 
+    [Item].[Name] AS [Name], 
+    [Item].[ClassId] AS [ClassId], 
+    [Item].[ItemName] AS [ItemName]
+    FROM [dbo].[Item] AS [Item]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -522,6 +557,8 @@
           <Property Name="TSLA_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="C10YearBond_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="C10YearBond_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TX_Low" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MTX_Low" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -564,6 +601,8 @@
           <EntitySet Name="StockRevenue" EntityType="StockWarehouseModel.StockRevenue" />
           <EntitySet Name="StockChips" EntityType="StockWarehouseModel.StockChips" />
           <EntitySet Name="StockEps" EntityType="StockWarehouseModel.StockEps" />
+          <EntitySet Name="StockIndexForcast" EntityType="StockWarehouseModel.StockIndexForcast" />
+          <EntitySet Name="Item" EntityType="StockWarehouseModel.Item" />
         </EntityContainer>
         <EntityType Name="StockLineNotify">
           <Key>
@@ -776,6 +815,28 @@
           <Property Name="YoY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="AvgQ" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="StockIndexForcast">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RamdomForest" Type="Int32" />
+          <Property Name="SVM" Type="Int32" />
+          <Property Name="XGBoost" Type="Int32" />
+          <Property Name="LightGBM" Type="Int32" />
+          <Property Name="KNN" Type="Int32" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Result" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ClassId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ItemName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -832,6 +893,8 @@
           <EntitySetMapping Name="StockIndex">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockIndex">
               <MappingFragment StoreEntitySet="StockIndex">
+                <ScalarProperty Name="MTX_Low" ColumnName="MTX_Low" />
+                <ScalarProperty Name="TX_Low" ColumnName="TX_Low" />
                 <ScalarProperty Name="C10YearBond_IndexQuotePercent" ColumnName="10YearBond_IndexQuotePercent" />
                 <ScalarProperty Name="C10YearBond_Index" ColumnName="10YearBond_Index" />
                 <ScalarProperty Name="TSLA_IndexQuotePercent" ColumnName="TSLA_IndexQuotePercent" />
@@ -1155,6 +1218,30 @@
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="YearQ" ColumnName="YearQ" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockIndexForcast">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockIndexForcast">
+              <MappingFragment StoreEntitySet="StockIndexForcast">
+                <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="KNN" ColumnName="KNN" />
+                <ScalarProperty Name="LightGBM" ColumnName="LightGBM" />
+                <ScalarProperty Name="XGBoost" ColumnName="XGBoost" />
+                <ScalarProperty Name="SVM" ColumnName="SVM" />
+                <ScalarProperty Name="RamdomForest" ColumnName="RamdomForest" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="StockWarehouseModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

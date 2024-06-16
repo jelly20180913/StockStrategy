@@ -151,6 +151,11 @@ namespace WebApiService.Services.Implement.Tables
 			DbSet<Stock> _StockDbSet = this._repository.GetDbSet(); 
 			return _StockDbSet.Where(x=>x.Code==parameter);
 		}
+		public IEnumerable<Stock> GetByStockDate(string parameter)
+		{
+			DbSet<Stock> _StockDbSet = this._repository.GetDbSet();
+			return _StockDbSet.Where(x => x.Date == parameter);
+		}
 		/// <summary>
 		/// 撈一個月的資料
 		/// </summary>

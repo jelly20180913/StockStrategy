@@ -2291,7 +2291,8 @@ namespace StockStrategy
 				string _BetweenDate = string.Format("{0}~{1}", this.dtpReportStart.Value.ToString("yyyyMMdd"), this.dTPReport.Value.ToString("yyyyMMdd"));
 				//	List<DataModel.Stock.Stock> _StockBetweenDateList = _DataAccess.getStockBySqlList(_BetweenDate, "BetweenDate");
 				decimal _AccumulatedGain = 0;
-				List<StockResult> _StockResultList = _DataAccess.getStockResultList();
+				//撈取9秒 先取消
+				//List<StockResult> _StockResultList = _DataAccess.getStockResultList();
 				//List<DataModel.Stock.StockReport> _StockReportList = new List<DataModel.Stock.StockReport>();
 				SortableBindingList<DataModel.Stock.StockReport> _StockReportList = new SortableBindingList<DataModel.Stock.StockReport>();
 				if (chkApproved.Checked) _StockPickingList = _StockPickingList.Where(x => x.Approve == true).ToList();
@@ -2323,7 +2324,8 @@ namespace StockStrategy
 					string _ClosingPrice = s.StartPrice;
 					if (_StockList.Where(x => x.Date == _WhereDate).ToList().Count > 0)
 						_ClosingPrice = _StockList.Where(x => x.Date == _WhereDate).First().ClosingPrice;
-					_StockReport.ClosingPrice = _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).ToList().Count > 0 ? _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).First().ClosingPrice : _ClosingPrice;
+					//_StockReport.ClosingPrice = _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).ToList().Count > 0 ? _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).First().ClosingPrice : _ClosingPrice;
+					_StockReport.ClosingPrice = _ClosingPrice;
 					//若有停用日則報表日收盤價為停用日收盤價
 					if (s.SuspendDate != "" && s.SuspendDate != null) _StockReport.ClosingPrice = _StockList.Where(x => x.Date == s.SuspendDate).First().ClosingPrice;
 					decimal _StartPrice = 0m;
@@ -3286,6 +3288,12 @@ namespace StockStrategy
 			}
 		}
 
+		private void tXIndexToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormUpdateStockIndex _FormUpdateStockIndex = new FormUpdateStockIndex();
+			_FormUpdateStockIndex.ShowDialog();
+		}
+
 		/// <summary>
 		/// 更新股票三大法人資料
 		/// </summary>
@@ -3738,6 +3746,19 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
+				//玩股網回傳403 forbidden
+				//string _Wantgoo_URL = ConfigurationManager.AppSettings["Wantgoo_URL"];
+				//string _TX_Wantgoo_URL = $"{_Wantgoo_URL}wtx&";
+				//string _MTX_Wantgoo_URL = $"{_Wantgoo_URL}wtxp&";
+				//HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_TX_Wantgoo_URL);
+				//string _TX_Open = $"/html/body/div[1]/main/div/div[1]/div[2]/div[2]/ul/li[1]/span";
+				//string _TX_High = $"/html/body/div[1]/main/div/div[1]/div[2]/div[2]/ul/li[3]/span";
+				//string _TX_Low = $"/html/body/div[1]/main/div/div[1]/div[2]/div[2]/ul/li[4]/span";
+				string _Yahoo_URL = "https://tw.stock.yahoo.com/future/futures.html?fumr=futurefull";
+				HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_Yahoo_URL);
+				string _TX_Open = $"/html/body/div/table[2]/tbody/tr[2]/td[8]";
+				string _TX_High = $"/html/body/div/table[2]/tbody/tr[2]/td[8]";
+				string _TX_Low = $"/html/body/div/table[2]/tbody/tr[2]/td[8]";
 				//DataAccess _DataAccess = new DataAccess();
 				//this.btnLogin.PerformClick();
 				List<StockStrategy.Model.Stock.GetRealtimeStockPrice> _PriceList = new List<StockStrategy.Model.Stock.GetRealtimeStockPrice>();
@@ -3761,8 +3782,9 @@ namespace StockStrategy
 				//s.Id = _ListStock.OrderByDescending(x => x.Date).First().Id;
 				s.ContinueName = "";
 				s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
-				s.TX_High = "";
-				s.TX_Open = "";
+				s.TX_High = Common.Job.GetValue(_HtmlDoc, _TX_High); 
+				s.TX_Open = Common.Job.GetValue(_HtmlDoc, _TX_Open);
+				s.TX_Low = Common.Job.GetValue(_HtmlDoc, _TX_Low);
 				s.TX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', ' ').Replace('▲', '+');
 				s.TX_QuotePercent = Common.Job.GetTaiwanFutures(_MTX_URL, _Percent, true);
 				s.TX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true).Replace('口', ' ');

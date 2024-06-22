@@ -514,5 +514,14 @@ namespace StockStrategy.BBL
 			string _Return = _ApiResult.Data.ToString();
 			return _Return;
 		}
+		public List<StockIndexForcast> getStockIndexForcastList()
+		{
+			List<StockIndexForcast> _ListStockIndexForcast = new List<StockIndexForcast>();
+			string _Action = "StockIndexForcast";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockIndexForcast = JsonConvert.DeserializeObject<List<StockIndexForcast>>(_ApiResult.Data.ToString());
+			return _ListStockIndexForcast;
+		}
 	}
 }

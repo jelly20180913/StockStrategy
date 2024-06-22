@@ -166,6 +166,12 @@
     <Compile Include="FormMaintain.Designer.cs">
       <DependentUpon>FormMaintain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormRobinForcast.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRobinForcast.Designer.cs">
+      <DependentUpon>FormRobinForcast.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockGroupTrend.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMaintain.resx">
       <DependentUpon>FormMaintain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRobinForcast.resx">
+      <DependentUpon>FormRobinForcast.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockGroupTrend.resx">
       <DependentUpon>FormStockGroupTrend.cs</DependentUpon>

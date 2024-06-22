@@ -175,6 +175,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\StockIndexForcastController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\StockAllController.cs" />
     <Compile Include="Controllers\HolidayController.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implement\StockStrategyService.cs" />
     <Compile Include="Services\Implement\Tables\StockChipsService.cs" />
+    <Compile Include="Services\Implement\Tables\StockIndexForcastService.cs" />
     <Compile Include="Services\Implement\Tables\StockEpsService.cs" />
     <Compile Include="Services\Implement\Tables\StockRevenueService.cs" />
     <Compile Include="Services\Implement\Tables\LoginService.cs" />
@@ -316,6 +318,7 @@
     <Compile Include="Services\Interface\IStockStrategyService.cs" />
     <Compile Include="Services\Interface\ITokenService.cs" />
     <Compile Include="Services\Interface\Tables\IStockChipsService.cs" />
+    <Compile Include="Services\Interface\Tables\IStockIndexForcastService.cs" />
     <Compile Include="Services\Interface\Tables\IStockEpsService.cs" />
     <Compile Include="Services\Interface\Tables\IStockRevenueService.cs" />
     <Compile Include="Services\Interface\Tables\IStockBacktestLogService.cs" />

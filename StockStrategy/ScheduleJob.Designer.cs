@@ -1736,9 +1736,9 @@
 			this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelIP});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 615);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 844);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1283, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1618, 22);
 			this.statusStrip1.TabIndex = 90;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -2212,7 +2212,7 @@
             this.reportToolStripMenuItem,
             this.maintainToolStripMenuItem});
 			this.PopupMenu.Name = "PopupMenu";
-			this.PopupMenu.Size = new System.Drawing.Size(181, 92);
+			this.PopupMenu.Size = new System.Drawing.Size(125, 70);
 			// 
 			// strateToolStripMenuItem
 			// 
@@ -2391,7 +2391,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1283, 637);
+			this.ClientSize = new System.Drawing.Size(1618, 866);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.progressBar3);
 			this.Controls.Add(this.statusStrip1);

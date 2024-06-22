@@ -50,6 +50,7 @@
     <Compile Include="ReturnToken.cs" />
     <Compile Include="Stock\Stock.cs" />
     <Compile Include="Stock\StockGroupTrend.cs" />
+    <Compile Include="Stock\StockRobinForcast.cs" />
     <Compile Include="Stock\StockHighLow.cs" />
     <Compile Include="Stock\StockIndex.cs" />
     <Compile Include="Stock\StockReport.cs" />

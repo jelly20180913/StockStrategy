@@ -139,6 +139,6 @@ namespace StockStrategy.Common
 				}
 			}
 			return _value;
-		}
+		} 
 	}
 }

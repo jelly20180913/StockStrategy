@@ -3344,7 +3344,8 @@ namespace StockStrategy
 
 		private void robinForcastToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			FormRobinForcast _FormRobinForcast = new FormRobinForcast();
+			_FormRobinForcast.ShowDialog();
 		}
 
 		/// <summary>

@@ -143,6 +143,15 @@ namespace StockStrategy
 				//DataAccess _DataAccess = new DataAccess();
 
 				//this.btnLogin.PerformClick();
+				string _Date = this.dtpStockIndex.Value.ToString("yyyy/MM/dd");
+				//MarketCode日盤:0
+				string _YahooStock_URL = $"https://www.taifex.com.tw/cht/3/futDailyMarketReport?queryDate={_Date}&queryType=2&commodity_id=TX&MarketCode=1&commodity_idt=TX";
+				HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL);
+				string _MTX_Open = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[3]";
+				string _MTX_High = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[4]";
+				string _MTX_Low = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[5]";
+				string _MTX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]"; 
+				//string _TX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
 				string _Id = "Price1_lbTPrice";
 				string _Change = "Price1_lbTChange";
 				string _Percent = "Price1_lbTPercent";
@@ -213,8 +222,9 @@ namespace StockStrategy
 				s.DJI_QuoteChange = Common.Job.GetTaiwanFutures(_DJI_URL, _Change, true).Replace('▼', ' ').Replace('▲', '+');
 				s.DJI_QuotePercent = Common.Job.GetTaiwanFutures(_DJI_URL, _Percent, true);
 				s.MTX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
-				s.MTX_High = "";
-				s.MTX_Open = "";
+				s.MTX_High = Common.Job.GetValue(_HtmlDoc, _MTX_High);
+				s.MTX_Open = Common.Job.GetValue(_HtmlDoc, _MTX_Open);
+				s.MTX_Low = Common.Job.GetValue(_HtmlDoc, _MTX_Low);
 				s.MTX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', '-').Replace('▲', '+');
 				s.MTX_QuotePercent = Common.Job.GetTaiwanFutures(_MTX_URL, _Percent, true);
 				s.MTX_Volume = Common.Job.GetTaiwanFutures(_MTX_URL, _Volume, true).Replace('口', ' ');
@@ -3294,6 +3304,49 @@ namespace StockStrategy
 			_FormUpdateStockIndex.ShowDialog();
 		}
 
+		private void btnTX_Click(object sender, EventArgs e)
+		{
+			string _Date = this.dtpStockIndex.Value.ToString("yyyy/MM/dd"); 
+			string _Open = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[3]";
+			string _High = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[4]";
+			string _Low = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[5]";
+			string _TX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]";
+			
+			List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
+			foreach (StockIndex s in _ListStock) {
+				string myDateTimeString =$"{s.Date.Substring(0, 4)}-{s.Date.Substring(4, 2)}-{s.Date.Substring(6, 2)}";
+				DateTime _StockDate = DateTime.Parse(myDateTimeString);
+				//MarketCode日盤:0
+				string _Stock_URL = $"https://www.taifex.com.tw/cht/3/futDailyMarketReport?queryDate={_StockDate.ToString("yyyy/MM/dd")}&queryType=2&commodity_id=TX&MarketCode=0&commodity_idt=TX&marketCode=0";
+				HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_Stock_URL);
+				string _TX_Open = Common.Job.GetValue(_HtmlDoc, _Open);
+				string _TX_High = Common.Job.GetValue(_HtmlDoc, _High);
+				string _TX_Low = Common.Job.GetValue(_HtmlDoc, _Low);
+				//string _TX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
+				string _Stock_URL_MTX = $"https://www.taifex.com.tw/cht/3/futDailyMarketReport?queryDate={_StockDate.ToString("yyyy/MM/dd")}&queryType=2&commodity_id=TX&MarketCode=1&commodity_idt=TX&marketCode=1";
+				HtmlAgilityPack.HtmlDocument _HtmlDoc_MTX = Common.Job.GetHtml(_Stock_URL_MTX);
+				string _MTX_Open = Common.Job.GetValue(_HtmlDoc_MTX, _Open);
+				string _MTX_High = Common.Job.GetValue(_HtmlDoc_MTX, _High);
+				string _MTX_Low = Common.Job.GetValue(_HtmlDoc_MTX, _Low);
+				//string _MTX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
+				s.TX_High= _TX_High;
+				s.TX_Open = _TX_Open;
+				s.TX_Low = _TX_Low;
+				s.MTX_High = _MTX_High;
+				s.MTX_Open = _MTX_Open;
+				s.MTX_Low = _MTX_Low;
+				_DataAccess.UpdateStockIndex(s);
+				
+			}
+			string _Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " update stock TX ok.";
+			this.btnErrorMsg.Text += _Log;
+		}
+
+		private void robinForcastToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
 		/// <summary>
 		/// 更新股票三大法人資料
 		/// </summary>
@@ -3746,19 +3799,15 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				//玩股網回傳403 forbidden
-				//string _Wantgoo_URL = ConfigurationManager.AppSettings["Wantgoo_URL"];
-				//string _TX_Wantgoo_URL = $"{_Wantgoo_URL}wtx&";
-				//string _MTX_Wantgoo_URL = $"{_Wantgoo_URL}wtxp&";
-				//HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_TX_Wantgoo_URL);
-				//string _TX_Open = $"/html/body/div[1]/main/div/div[1]/div[2]/div[2]/ul/li[1]/span";
-				//string _TX_High = $"/html/body/div[1]/main/div/div[1]/div[2]/div[2]/ul/li[3]/span";
-				//string _TX_Low = $"/html/body/div[1]/main/div/div[1]/div[2]/div[2]/ul/li[4]/span";
-				string _Yahoo_URL = "https://tw.stock.yahoo.com/future/futures.html?fumr=futurefull";
-				HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_Yahoo_URL);
-				string _TX_Open = $"/html/body/div/table[2]/tbody/tr[2]/td[8]";
-				string _TX_High = $"/html/body/div/table[2]/tbody/tr[2]/td[8]";
-				string _TX_Low = $"/html/body/div/table[2]/tbody/tr[2]/td[8]";
+				string _Date = this.dtpStockIndex.Value.ToString("yyyy/MM/dd");
+				//MarketCode日盤:0
+				string _YahooStock_URL = $"https://www.taifex.com.tw/cht/3/futDailyMarketReport?queryDate={_Date}&queryType=2&commodity_id=TX&MarketCode=0&commodity_idt=TX";			 
+				HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL); 
+				string _TX_Open = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[3]";
+				string _TX_High = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[4]";
+				string _TX_Low = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[5]";
+				string _TX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]"; 
+				string _TX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
 				//DataAccess _DataAccess = new DataAccess();
 				//this.btnLogin.PerformClick();
 				List<StockStrategy.Model.Stock.GetRealtimeStockPrice> _PriceList = new List<StockStrategy.Model.Stock.GetRealtimeStockPrice>();

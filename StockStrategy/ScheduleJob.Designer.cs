@@ -231,6 +231,7 @@
 			this.strengthWeaknessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.calendarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.maintainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tXIndexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.label39 = new System.Windows.Forms.Label();
 			this.label40 = new System.Windows.Forms.Label();
 			this.lbLineMsgCount = new System.Windows.Forms.Label();
@@ -238,7 +239,8 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.pnTop = new System.Windows.Forms.Panel();
 			this.timerSStockResult = new System.Windows.Forms.Timer(this.components);
-			this.tXIndexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnTX = new System.Windows.Forms.Button();
+			this.robinForcastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -1353,6 +1355,7 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.btnTX);
 			this.pnAdmin.Controls.Add(this.btnErrorMsg);
 			this.pnAdmin.Controls.Add(this.gp);
 			this.pnAdmin.Controls.Add(this.btnThree);
@@ -1753,7 +1756,7 @@
 			this.gpReport.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gpReport.Location = new System.Drawing.Point(0, 0);
 			this.gpReport.Name = "gpReport";
-			this.gpReport.Size = new System.Drawing.Size(1607, 439);
+			this.gpReport.Size = new System.Drawing.Size(1607, 440);
 			this.gpReport.TabIndex = 91;
 			this.gpReport.TabStop = false;
 			this.gpReport.Text = "Report";
@@ -1764,7 +1767,7 @@
 			this.pnRight.Dock = System.Windows.Forms.DockStyle.Right;
 			this.pnRight.Location = new System.Drawing.Point(1177, 101);
 			this.pnRight.Name = "pnRight";
-			this.pnRight.Size = new System.Drawing.Size(427, 335);
+			this.pnRight.Size = new System.Drawing.Size(427, 336);
 			this.pnRight.TabIndex = 80;
 			// 
 			// dgvStatistics
@@ -1775,7 +1778,7 @@
 			this.dgvStatistics.Name = "dgvStatistics";
 			this.dgvStatistics.RowHeadersWidth = 62;
 			this.dgvStatistics.RowTemplate.Height = 24;
-			this.dgvStatistics.Size = new System.Drawing.Size(427, 335);
+			this.dgvStatistics.Size = new System.Drawing.Size(427, 336);
 			this.dgvStatistics.TabIndex = 0;
 			this.dgvStatistics.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvStatistics_DataBindingComplete);
 			// 
@@ -1785,7 +1788,7 @@
 			this.panel10.Dock = System.Windows.Forms.DockStyle.Left;
 			this.panel10.Location = new System.Drawing.Point(3, 101);
 			this.panel10.Name = "panel10";
-			this.panel10.Size = new System.Drawing.Size(1169, 335);
+			this.panel10.Size = new System.Drawing.Size(1169, 336);
 			this.panel10.TabIndex = 79;
 			// 
 			// dgvStockReport
@@ -1797,7 +1800,7 @@
 			this.dgvStockReport.Name = "dgvStockReport";
 			this.dgvStockReport.RowHeadersWidth = 62;
 			this.dgvStockReport.RowTemplate.Height = 24;
-			this.dgvStockReport.Size = new System.Drawing.Size(1169, 335);
+			this.dgvStockReport.Size = new System.Drawing.Size(1169, 336);
 			this.dgvStockReport.TabIndex = 47;
 			this.dgvStockReport.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStockReport_CellDoubleClick);
 			this.dgvStockReport.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvStockReport_DataBindingComplete);
@@ -2232,9 +2235,10 @@
             this.highLowToolStripMenuItem,
             this.threeInvestmentToolStripMenuItem,
             this.strengthWeaknessToolStripMenuItem,
-            this.calendarToolStripMenuItem});
+            this.calendarToolStripMenuItem,
+            this.robinForcastToolStripMenuItem});
 			this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
-			this.reportToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+			this.reportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.reportToolStripMenuItem.Text = "Report";
 			// 
 			// highLowToolStripMenuItem
@@ -2270,9 +2274,16 @@
 			this.maintainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tXIndexToolStripMenuItem});
 			this.maintainToolStripMenuItem.Name = "maintainToolStripMenuItem";
-			this.maintainToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.maintainToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
 			this.maintainToolStripMenuItem.Text = "Maintain";
 			this.maintainToolStripMenuItem.Click += new System.EventHandler(this.maintainToolStripMenuItem_Click);
+			// 
+			// tXIndexToolStripMenuItem
+			// 
+			this.tXIndexToolStripMenuItem.Name = "tXIndexToolStripMenuItem";
+			this.tXIndexToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+			this.tXIndexToolStripMenuItem.Text = "TX_Index";
+			this.tXIndexToolStripMenuItem.Click += new System.EventHandler(this.tXIndexToolStripMenuItem_Click);
 			// 
 			// label39
 			// 
@@ -2326,7 +2337,7 @@
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.gpReport);
 			this.splitContainer1.Size = new System.Drawing.Size(1607, 942);
-			this.splitContainer1.SplitterDistance = 499;
+			this.splitContainer1.SplitterDistance = 498;
 			this.splitContainer1.TabIndex = 44;
 			// 
 			// pnTop
@@ -2349,7 +2360,7 @@
 			this.pnTop.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnTop.Location = new System.Drawing.Point(0, 0);
 			this.pnTop.Name = "pnTop";
-			this.pnTop.Size = new System.Drawing.Size(1607, 499);
+			this.pnTop.Size = new System.Drawing.Size(1607, 498);
 			this.pnTop.TabIndex = 99;
 			// 
 			// timerSStockResult
@@ -2358,12 +2369,23 @@
 			this.timerSStockResult.Interval = 1000;
 			this.timerSStockResult.Tick += new System.EventHandler(this.timerSStockResult_Tick);
 			// 
-			// tXIndexToolStripMenuItem
+			// btnTX
 			// 
-			this.tXIndexToolStripMenuItem.Name = "tXIndexToolStripMenuItem";
-			this.tXIndexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.tXIndexToolStripMenuItem.Text = "TX_Index";
-			this.tXIndexToolStripMenuItem.Click += new System.EventHandler(this.tXIndexToolStripMenuItem_Click);
+			this.btnTX.Enabled = false;
+			this.btnTX.Location = new System.Drawing.Point(224, 167);
+			this.btnTX.Name = "btnTX";
+			this.btnTX.Size = new System.Drawing.Size(75, 23);
+			this.btnTX.TabIndex = 107;
+			this.btnTX.Text = "補期貨指數";
+			this.btnTX.UseVisualStyleBackColor = true;
+			this.btnTX.Click += new System.EventHandler(this.btnTX_Click);
+			// 
+			// robinForcastToolStripMenuItem
+			// 
+			this.robinForcastToolStripMenuItem.Name = "robinForcastToolStripMenuItem";
+			this.robinForcastToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.robinForcastToolStripMenuItem.Text = "Robin Forcast";
+			this.robinForcastToolStripMenuItem.Click += new System.EventHandler(this.robinForcastToolStripMenuItem_Click);
 			// 
 			// ScheduleJob
 			// 
@@ -2649,5 +2671,7 @@
 		private System.Windows.Forms.Button btnEps;
 		private System.Windows.Forms.Button btnStockChips;
 		private System.Windows.Forms.ToolStripMenuItem tXIndexToolStripMenuItem;
+		private System.Windows.Forms.Button btnTX;
+		private System.Windows.Forms.ToolStripMenuItem robinForcastToolStripMenuItem;
 	}
 }

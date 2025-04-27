@@ -121,5 +121,18 @@ namespace StockStrategy
             ApiResultEntity _ApiResult = JsonConvert.DeserializeObject<ApiResultEntity>(result);
             return _ApiResult;
         }
-    }
+		public static string PostTeams(string jsonData, string uri)
+		{
+			string result = "";
+			using (WebClient webClient = new WebClient())
+			{
+				// 指定 WebClient 編碼
+				webClient.Encoding = Encoding.UTF8;
+				// 指定 WebClient 的 Content-Type header
+				webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json"); 
+				result = webClient.UploadString(uri, jsonData); 
+			}
+			return result;
+		}
+	}
 }

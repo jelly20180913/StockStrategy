@@ -1,4 +1,5 @@
-﻿using DataModel.Login;
+﻿using DataModel.Common;
+using DataModel.Login;
 using DocumentFormat.OpenXml.EMMA;
 using Newtonsoft.Json;
 using NLog;
@@ -14,6 +15,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -42,10 +44,11 @@ namespace StockStrategy
 		DataAccess _DataAccess = new DataAccess();
 		private bool bGoodStockLineNotify = false, bGoodStockByJsonLineNotify = false, bStockGroupTrend = false, bStockThreeInstitutional = false, bStockEventNotify = false;
 		private bool bBadStockLineNotify;
-		private bool bStockResult = false, bEveryThree = false,bStockChips=false;
+		private bool bStockResult = false, bEveryThree = false, bStockChips = false;
 		List<Holiday> HolidayList = new List<Holiday>();
 		Dictionary<int, string> GoodStockClass = new Dictionary<int, string>() { };
 		List<string> ListGoodStockClass = new List<string>();
+		private string TeamsGroup = "";
 		public ScheduleJob()
 		{
 			InitializeComponent();
@@ -74,6 +77,7 @@ namespace StockStrategy
 			Token = CallWebApi.Login(json, _Uri);
 			string _Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " user login.\r\n";
 			this.btnErrorMsg.Text += _Log;
+
 			//Login 
 		}
 		/// <summary>
@@ -84,6 +88,7 @@ namespace StockStrategy
 		private void ScheduleJob_Load(object sender, EventArgs e)
 		{
 			ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
+			TeamsGroup = ConfigurationManager.AppSettings["TeamsGroup"];
 			this.Text = "股票策略選股排程機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
 			var _Ip = Tool.GetIpAddresses();
 			if (_Ip.Length > 0)
@@ -150,7 +155,7 @@ namespace StockStrategy
 				string _MTX_Open = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[3]";
 				string _MTX_High = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[4]";
 				string _MTX_Low = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[5]";
-				string _MTX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]"; 
+				string _MTX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]";
 				//string _TX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
 				string _Id = "Price1_lbTPrice";
 				string _Change = "Price1_lbTChange";
@@ -261,7 +266,7 @@ namespace StockStrategy
 				s.OIL_Index = _OIL_Index;
 				s.OIL_QuoteChange = _OIL_IndexQuote;
 				s.BTC_Index = _BTC_Index;
-				
+
 				s.BTC_QuoteChange = _BTC_IndexQuote;
 				if (s.BTC_QuoteChange != "") s.BTC_QuoteChange = Convert.ToDecimal(_BTC_Index) - Convert.ToDecimal(s.BTC_Index) > 0 ? $"-{s.BTC_QuoteChange}" : s.BTC_QuoteChange;
 				s.Gold_Index = _Gold_Index;
@@ -291,12 +296,12 @@ namespace StockStrategy
 				s.TSLA_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "TSLA", _Id, true);
 				s.TSLA_IndexQuotePercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "TSLA", _Percent, true);
 				s.C10YearBond_Index = Common.Job.GetTaiwanFutures($"{_HiStockIndex_URL}/wgbdaily.aspx?no=wgb_united-states", "//*[@id=\"result\"]/div/div/span[1]", false);
-				
+
 				s.C10YearBond_IndexQuotePercent = Common.Job.GetTaiwanFutures($"{_HiStockIndex_URL}/wgbdaily.aspx?no=wgb_united-states", "//*[@id=\"result\"]/div/div/span[3]", false);
-				if (s.C10YearBond_IndexQuotePercent != "") s.C10YearBond_IndexQuotePercent = Convert.ToDecimal(_TopBond_Index) - Convert.ToDecimal(s.C10YearBond_Index) > 0 ? $"-{s.C10YearBond_IndexQuotePercent}" : s.C10YearBond_IndexQuotePercent;
+				if (s.C10YearBond_IndexQuotePercent != "" && s.C10YearBond_IndexQuotePercent != "-") s.C10YearBond_IndexQuotePercent = Convert.ToDecimal(_TopBond_Index) - Convert.ToDecimal(s.C10YearBond_Index) > 0 ? $"-{s.C10YearBond_IndexQuotePercent}" : s.C10YearBond_IndexQuotePercent;
 				_ListStock.Add(s);
 				_DataAccess.InsertStockIndex(_ListStock);
-				
+
 				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " insert stock index ok.\r\n";
 				this.btnErrorMsg.Text += _Log;
 			}
@@ -1334,9 +1339,10 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				await _DataAccess.postLineMsg(lineMsg, token);
-				LineMsgCount++;
-				this.lbLineMsgCount.Text = LineMsgCount.ToString();
+				CallTeamsApi(lineMsg);
+				//await _DataAccess.postLineMsg(lineMsg, token);
+				//LineMsgCount++;
+				//this.lbLineMsgCount.Text = LineMsgCount.ToString();
 			}
 			catch (Exception ex)
 			{
@@ -1498,11 +1504,11 @@ namespace StockStrategy
 					_Date = _StockRevenue.Date;
 					int _IMonthRevenue = Common.Job.GetValue(_HtmlDoc, _MonthRevenue).ParseThousandthString();
 					_StockRevenue.Revenue = _IMonthRevenue.ToString();
-					_StockRevenue.MoM = Common.Job.GetValue(_HtmlDoc, _MoM).Replace('%',' ').Trim().ToString();
+					_StockRevenue.MoM = Common.Job.GetValue(_HtmlDoc, _MoM).Replace('%', ' ').Trim().ToString();
 					_StockRevenue.LastYearRevenue = Common.Job.GetValue(_HtmlDoc, _LastYearRevenue).ParseThousandthString().ToString();
 					_StockRevenue.YoY = Common.Job.GetValue(_HtmlDoc, _YoY).Replace('%', ' ').Trim().ToString();
 					_StockRevenue.CreateDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-					_StockRevenue.SumMonthRevenue=Common.Job.GetValue(_HtmlDoc, _SumMonthRevenue).ParseThousandthString().ToString();
+					_StockRevenue.SumMonthRevenue = Common.Job.GetValue(_HtmlDoc, _SumMonthRevenue).ParseThousandthString().ToString();
 					_StockRevenue.SumLastYearRevenue = Common.Job.GetValue(_HtmlDoc, _SumLastYearRevenue).ParseThousandthString().ToString();
 					_StockRevenue.SumYoY = Common.Job.GetValue(_HtmlDoc, _SumYoY).Replace('%', ' ').Trim().ToString();
 					_ListStockRevenue.Add(_StockRevenue);
@@ -1540,18 +1546,18 @@ namespace StockStrategy
 				{
 					string _YearQ = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[1]/div";
 					string _Eps = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[2]/span";
-					string _QoQ = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[3]/span"; 
+					string _QoQ = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[3]/span";
 					string _YoY = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[4]/span";
-					string _AvgQ = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[5]/span"; 
+					string _AvgQ = $"//*[@id=\"qsp-eps-table\"]/div/div[2]/div/div/ul/li[{i}]/div/div[5]/span";
 					StockEps _StockEps = new StockEps();
 					_StockEps.Code = code;
-					_StockEps.YearQ =  Common.Job.GetValue(_HtmlDoc, _YearQ);
-					_YearQMsg = _StockEps.YearQ; 
+					_StockEps.YearQ = Common.Job.GetValue(_HtmlDoc, _YearQ);
+					_YearQMsg = _StockEps.YearQ;
 					_StockEps.Eps = Common.Job.GetValue(_HtmlDoc, _Eps);
 					_StockEps.QoQ = Common.Job.GetValue(_HtmlDoc, _QoQ).Replace('%', ' ').Trim().ToString();
 					_StockEps.AvgQ = Common.Job.GetValue(_HtmlDoc, _AvgQ);
 					_StockEps.YoY = Common.Job.GetValue(_HtmlDoc, _YoY).Replace('%', ' ').Trim().ToString();
-					_StockEps.CreateDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss"); 
+					_StockEps.CreateDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
 					_ListStockEps.Add(_StockEps);
 				}
 				catch (Exception ex)
@@ -1566,7 +1572,7 @@ namespace StockStrategy
 
 		private List<StockChips> getYahooStockChipsData(string code, bool? stockType, int max, int startIndex)
 		{
-			string _Log = ""; 
+			string _Log = "";
 			string _YearQMsg = "";
 			string _Date = "";
 			List<StockChips> _ListStockChips = new List<StockChips>();
@@ -1580,10 +1586,10 @@ namespace StockStrategy
 				{
 					string _BrokerBuySide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[1]";
 					string _BuyQtyBuySide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[2]";
-					string _SellQtyBuySide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[3]"; 
-					string _BrokerSellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[1]"; 
-					string _BuyQtySellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[2]"; 
-					string _SellQtySellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[3]"; 
+					string _SellQtyBuySide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[3]";
+					string _BrokerSellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[1]";
+					string _BuyQtySellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[2]";
+					string _SellQtySellSide = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[3]";
 					string _OverBuy = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[1]/div[{i}]/span[4]";
 					string _OverSell = $"//*[@id=\"main-3-QuoteChipMajor-Proxy\"]/div/section/div/div[2]/div[{i}]/span[4]";
 					StockChips _StockChips = new StockChips();
@@ -1598,7 +1604,7 @@ namespace StockStrategy
 					_StockChips.OverSell = Common.Job.GetValue(_HtmlDoc, _OverSell).ParseThousandthString().ToString();
 					_StockChips.CreateDate = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
 					_StockChips.Date = _WhereDate;
-					if (_StockChips.BrokerBuySide!="" )  _ListStockChips.Add(_StockChips);
+					if (_StockChips.BrokerBuySide != "") _ListStockChips.Add(_StockChips);
 				}
 				catch (Exception ex)
 				{
@@ -1949,10 +1955,14 @@ namespace StockStrategy
 				int _Fall = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) < 0).ToList().Count;
 				int _RiseHalf = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) > 4.9).ToList().Count;
 				int _FallHalf = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) < -4.9).ToList().Count;
+				int _RedLight = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) > 9).ToList().Count;
+				int _GreenLight = _YestodayStockDayAllList.Where(x => Convert.ToDouble(x.Gain) < -9).ToList().Count;
 				_StockIndex.Ups = _Rise.ToString();
 				_StockIndex.Downs = _Fall.ToString();
 				_StockIndex.UpsHalf = _RiseHalf.ToString();
 				_StockIndex.DownsHalf = _FallHalf.ToString();
+				_StockIndex.RedLight = _RedLight.ToString();
+				_StockIndex.GreenLight = _GreenLight.ToString();
 				foreach (WebApiService.Models.StockLineNotify s in _StockLineNotifyList.Where(x => x.NotifyClass == "USA_Index" && x.Enable == true).ToList())
 				{
 					string _Msg = String.Format("\r\n日期:{0}({1})\r\n", dateTime, _StockIndex.DayOfWeek);
@@ -1979,6 +1989,7 @@ namespace StockStrategy
 					_Msg += String.Format("美國銀行:{0} 漲跌:{1}\r\n", _StockIndex.BAC_Index, _StockIndex.BAC_IndexQuotePercent);
 					_Msg += String.Format("漲跌家數:▲{0}家 ▼{1}家\r\n", _Rise, _Fall);
 					_Msg += String.Format("半根:▲{0}家 ▼{1}家\r\n", _RiseHalf, _FallHalf);
+					_Msg += String.Format("亮燈:▲{0}家 ▼{1}家\r\n", _RedLight, _GreenLight);
 					_DataAccess.UpdateStockIndex(_StockIndex);
 					_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " update stock half ok.";
 					this.btnErrorMsg.Text += _Log;
@@ -2136,7 +2147,7 @@ namespace StockStrategy
 			try
 			{
 				DataAccess _DataAccess = new DataAccess();
-				Stopwatch _Stopwatch= new Stopwatch();
+				Stopwatch _Stopwatch = new Stopwatch();
 				_Stopwatch.Start();
 				this.btnLogin.PerformClick();
 				//DateTime _Dt = Convert.ToDateTime(this.dTPReport.Text);
@@ -2157,7 +2168,7 @@ namespace StockStrategy
 				List<StockResult> stockResultList = _DataAccess.getStockResultList();
 				foreach (StockPicking s in _StockPickingList.Union(_StockPickingCtnList).Union(_StockPickingBadList).OrderBy(x => x.Class))
 				{
-					
+
 					if (_StockDayAllList.Where(x => x.Code == s.Code).ToList().Count > 0)
 					{
 						DataModel.Stock.Stock _Stock = _StockDayAllList.Where(x => x.Code == s.Code).First();
@@ -2194,7 +2205,7 @@ namespace StockStrategy
 				}
 				_DataAccess.InsertStockResult(_StockResultList);
 				_Stopwatch.Stop();
-				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " insert stock Result ok.\r\n 時間:"+ _Stopwatch.ElapsedMilliseconds+"ms";
+				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " insert stock Result ok.\r\n 時間:" + _Stopwatch.ElapsedMilliseconds + "ms";
 				this.btnErrorMsg.Text += _Log;
 				this.lbMessage.Text = _WhereDate + " insert stock Result ok";
 			}
@@ -3181,7 +3192,7 @@ namespace StockStrategy
 			{
 				List<StockEps> _ListStockEps = new List<StockEps>();
 				int _StartIndex = this.txtStartIndex.Text != "" ? Convert.ToInt32(this.txtStartIndex.Text) : 1;
-				int _Max = this.txtMax.Text != "" ? Convert.ToInt32(this.txtMax.Text) : 1; 
+				int _Max = this.txtMax.Text != "" ? Convert.ToInt32(this.txtMax.Text) : 1;
 				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
 				foreach (StockGroup sg in _StockGroupList.Where(x => x.IsFinish == false).ToList())
 				{
@@ -3197,7 +3208,7 @@ namespace StockStrategy
 						StockGroup stockGroup = _StockGroupList.Where(x => x.Code == sg.Code).First();
 						stockGroup.IsFinish = true;
 						stockGroup.UpdateTime = DateTime.Now.ToString("yyyyMMdd HH:mm:ss");
-						_DataAccess.UpdateStockGroupFinish(stockGroup); 
+						_DataAccess.UpdateStockGroupFinish(stockGroup);
 					}
 					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已新增EPS資料 \r\n";
 					logger.Info(_Log);
@@ -3232,7 +3243,7 @@ namespace StockStrategy
 			sw.Reset();
 			sw.Start();
 			try
-			{ 
+			{
 				List<StockChips> _ListStockChips = new List<StockChips>();
 				int _StartIndex = this.txtStartIndex.Text != "" ? Convert.ToInt32(this.txtStartIndex.Text) : 2;
 				int _Max = this.txtMax.Text != "" ? Convert.ToInt32(this.txtMax.Text) : 100;
@@ -3242,7 +3253,7 @@ namespace StockStrategy
 					List<Stock> _StockList = _DataAccess.getStockByCodeList(sg.Code, "Code");
 					_ListStockChips = getYahooStockChipsData(sg.Code, sg.StockType, _Max, _StartIndex);
 					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已爬主力籌碼資料 \r\n";
-					logger.Info(_Log); 
+					logger.Info(_Log);
 					_DataAccess.insertStockChips(_ListStockChips);
 					_Log = $"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} {sg.Code} 已新增主力籌碼資料 \r\n";
 					logger.Info(_Log);
@@ -3271,7 +3282,7 @@ namespace StockStrategy
 		}
 
 		private void btnStockChips_Click(object sender, EventArgs e)
-		{ 
+		{
 			Cursor.Current = Cursors.WaitCursor;
 			var t = new Task(insertStockChips);
 			t.Start();
@@ -3306,15 +3317,16 @@ namespace StockStrategy
 
 		private void btnTX_Click(object sender, EventArgs e)
 		{
-			string _Date = this.dtpStockIndex.Value.ToString("yyyy/MM/dd"); 
+			string _Date = this.dtpStockIndex.Value.ToString("yyyy/MM/dd");
 			string _Open = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[3]";
 			string _High = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[4]";
 			string _Low = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[5]";
 			string _TX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]";
-			
+
 			List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
-			foreach (StockIndex s in _ListStock) {
-				string myDateTimeString =$"{s.Date.Substring(0, 4)}-{s.Date.Substring(4, 2)}-{s.Date.Substring(6, 2)}";
+			foreach (StockIndex s in _ListStock)
+			{
+				string myDateTimeString = $"{s.Date.Substring(0, 4)}-{s.Date.Substring(4, 2)}-{s.Date.Substring(6, 2)}";
 				DateTime _StockDate = DateTime.Parse(myDateTimeString);
 				//MarketCode日盤:0
 				string _Stock_URL = $"https://www.taifex.com.tw/cht/3/futDailyMarketReport?queryDate={_StockDate.ToString("yyyy/MM/dd")}&queryType=2&commodity_id=TX&MarketCode=0&commodity_idt=TX&marketCode=0";
@@ -3329,14 +3341,14 @@ namespace StockStrategy
 				string _MTX_High = Common.Job.GetValue(_HtmlDoc_MTX, _High);
 				string _MTX_Low = Common.Job.GetValue(_HtmlDoc_MTX, _Low);
 				//string _MTX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
-				s.TX_High= _TX_High;
+				s.TX_High = _TX_High;
 				s.TX_Open = _TX_Open;
 				s.TX_Low = _TX_Low;
 				s.MTX_High = _MTX_High;
 				s.MTX_Open = _MTX_Open;
 				s.MTX_Low = _MTX_Low;
 				_DataAccess.UpdateStockIndex(s);
-				
+
 			}
 			string _Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " update stock TX ok.";
 			this.btnErrorMsg.Text += _Log;
@@ -3393,9 +3405,15 @@ namespace StockStrategy
 				logger.Error(_Log);
 				this.btnErrorMsg.Text += _Log;
 			}
-		
+
 			Cursor.Current = Cursors.Default;
 		}
+
+		private void btnTeams_Click(object sender, EventArgs e)
+		{
+			CallTeamsApi("");
+		}
+
 		/// <summary>
 		/// 賴通知事件
 		/// </summary>
@@ -3411,7 +3429,7 @@ namespace StockStrategy
 				//DataAccess _DataAccess = new DataAccess();
 				List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
 				List<StockEventNotify> _StockEventNotifyList = _DataAccess.getStockEventNotifyList();
-				foreach (StockEventNotify s in _StockEventNotifyList.Where(x=>x.IsEnable==true&&(x.Year==_Year||x.Year=="0000")).ToList())
+				foreach (StockEventNotify s in _StockEventNotifyList.Where(x => x.IsEnable == true && (x.Year == _Year || x.Year == "0000")).ToList())
 				{
 					int _TodayDate = Convert.ToInt32(DateTime.Now.Date.ToString("MMdd"));
 					int _Date = s.EndDate != null ? Convert.ToInt32(s.EndDate) : Convert.ToInt32(DateTime.Now.AddDays(Convert.ToDouble(s.AlertDay)).Date.ToString("MMdd"));
@@ -3802,12 +3820,12 @@ namespace StockStrategy
 			{
 				string _Date = this.dtpStockIndex.Value.ToString("yyyy/MM/dd");
 				//MarketCode日盤:0
-				string _YahooStock_URL = $"https://www.taifex.com.tw/cht/3/futDailyMarketReport?queryDate={_Date}&queryType=2&commodity_id=TX&MarketCode=0&commodity_idt=TX";			 
-				HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL); 
+				string _YahooStock_URL = $"https://www.taifex.com.tw/cht/3/futDailyMarketReport?queryDate={_Date}&queryType=2&commodity_id=TX&MarketCode=0&commodity_idt=TX";
+				HtmlAgilityPack.HtmlDocument _HtmlDoc = Common.Job.GetHtml(_YahooStock_URL);
 				string _TX_Open = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[3]";
 				string _TX_High = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[4]";
 				string _TX_Low = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[5]";
-				string _TX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]"; 
+				string _TX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]";
 				string _TX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
 				//DataAccess _DataAccess = new DataAccess();
 				//this.btnLogin.PerformClick();
@@ -3832,7 +3850,7 @@ namespace StockStrategy
 				//s.Id = _ListStock.OrderByDescending(x => x.Date).First().Id;
 				s.ContinueName = "";
 				s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
-				s.TX_High = Common.Job.GetValue(_HtmlDoc, _TX_High); 
+				s.TX_High = Common.Job.GetValue(_HtmlDoc, _TX_High);
 				s.TX_Open = Common.Job.GetValue(_HtmlDoc, _TX_Open);
 				s.TX_Low = Common.Job.GetValue(_HtmlDoc, _TX_Low);
 				s.TX_QuoteChange = Common.Job.GetTaiwanFutures(_MTX_URL, _Change, true).Replace('▼', ' ').Replace('▲', '+');
@@ -3883,12 +3901,49 @@ namespace StockStrategy
 				return skipHoliday(yestoday.AddDays(-1));
 			else return yestoday;
 		}
-		private bool isHoliday( DateTime today)
+		private bool isHoliday(DateTime today)
 		{
 			string _DayOfWeek = today.DayOfWeek.ToString();
 			if (HolidayList.Where(x => x.HolidayDate == today.Date.ToString("MMdd")).Count() > 0 || _DayOfWeek == "Sunday" || _DayOfWeek == "Saturday")
 				return true;
 			else return false;
+		}
+		private void CallTeamsApi(string msg)
+		{
+			string _Log = "";
+			try
+			{
+				var postData = new TeamsWebhookRequestModel
+				{
+					attachments = new List<TeamsWebhookRequestModel.AttachmentModel>()
+					{
+					  new TeamsWebhookRequestModel.AttachmentModel()
+					  {
+					  content=new TeamsWebhookRequestModel.AttachmentModel.ContentModel()
+					  {
+					  schema=TeamsGroup,
+					  type=msg,
+					  version="",
+					  body=new List<TeamsWebhookRequestModel.AttachmentModel.ContentModel.BodyModel>()
+					  {
+							new TeamsWebhookRequestModel.AttachmentModel.ContentModel.BodyModel()
+							{
+							type=""
+							}
+					  }
+					  },
+						  contentType=""
+				     }
+					}
+				};
+				var jsonData = JsonConvert.SerializeObject(postData);
+				CallWebApi.PostTeams(jsonData, "https://prod-32.japaneast.logic.azure.com:443/workflows/a488f7a7647a4ad9815efc0e71999ba4/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Rwos073fea7KpsBwcPKq4L5FoCRH35TMra26JTqJjAc");
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " CallTeamsApi:" + $"訊息:{ex.Message}|行號{ex.StackTrace}" + "\r\n";
+				logger.Error(_Log);
+			}
 		}
 	}
 }

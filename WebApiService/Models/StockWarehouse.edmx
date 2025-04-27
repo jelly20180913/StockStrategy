@@ -260,6 +260,8 @@
           <Property Name="10YearBond_IndexQuotePercent" Type="varchar" MaxLength="10" />
           <Property Name="TX_Low" Type="varchar" MaxLength="10" />
           <Property Name="MTX_Low" Type="varchar" MaxLength="10" />
+          <Property Name="RedLight" Type="varchar" MaxLength="10" />
+          <Property Name="GreenLight" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="StockIndexForcast">
           <Key>
@@ -559,6 +561,8 @@
           <Property Name="C10YearBond_IndexQuotePercent" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="TX_Low" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MTX_Low" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RedLight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GreenLight" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockInventory">
           <Key>
@@ -893,6 +897,8 @@
           <EntitySetMapping Name="StockIndex">
             <EntityTypeMapping TypeName="StockWarehouseModel.StockIndex">
               <MappingFragment StoreEntitySet="StockIndex">
+                <ScalarProperty Name="GreenLight" ColumnName="GreenLight" />
+                <ScalarProperty Name="RedLight" ColumnName="RedLight" />
                 <ScalarProperty Name="MTX_Low" ColumnName="MTX_Low" />
                 <ScalarProperty Name="TX_Low" ColumnName="TX_Low" />
                 <ScalarProperty Name="C10YearBond_IndexQuotePercent" ColumnName="10YearBond_IndexQuotePercent" />

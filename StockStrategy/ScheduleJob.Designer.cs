@@ -139,6 +139,7 @@
 			this.btnBad = new System.Windows.Forms.Button();
 			this.btnStockJurical = new System.Windows.Forms.Button();
 			this.pnAdmin = new System.Windows.Forms.Panel();
+			this.btnTX = new System.Windows.Forms.Button();
 			this.gp = new System.Windows.Forms.GroupBox();
 			this.btnStockChips = new System.Windows.Forms.Button();
 			this.btnEps = new System.Windows.Forms.Button();
@@ -230,6 +231,7 @@
 			this.threeInvestmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.strengthWeaknessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.calendarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.robinForcastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.maintainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tXIndexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.label39 = new System.Windows.Forms.Label();
@@ -239,8 +241,7 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.pnTop = new System.Windows.Forms.Panel();
 			this.timerSStockResult = new System.Windows.Forms.Timer(this.components);
-			this.btnTX = new System.Windows.Forms.Button();
-			this.robinForcastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnTeams = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -1355,6 +1356,7 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.btnTeams);
 			this.pnAdmin.Controls.Add(this.btnTX);
 			this.pnAdmin.Controls.Add(this.btnErrorMsg);
 			this.pnAdmin.Controls.Add(this.gp);
@@ -1394,6 +1396,17 @@
 			this.pnAdmin.Name = "pnAdmin";
 			this.pnAdmin.Size = new System.Drawing.Size(1277, 206);
 			this.pnAdmin.TabIndex = 42;
+			// 
+			// btnTX
+			// 
+			this.btnTX.Enabled = false;
+			this.btnTX.Location = new System.Drawing.Point(224, 167);
+			this.btnTX.Name = "btnTX";
+			this.btnTX.Size = new System.Drawing.Size(75, 23);
+			this.btnTX.TabIndex = 107;
+			this.btnTX.Text = "補期貨指數";
+			this.btnTX.UseVisualStyleBackColor = true;
+			this.btnTX.Click += new System.EventHandler(this.btnTX_Click);
 			// 
 			// gp
 			// 
@@ -2238,7 +2251,7 @@
             this.calendarToolStripMenuItem,
             this.robinForcastToolStripMenuItem});
 			this.reportToolStripMenuItem.Name = "reportToolStripMenuItem";
-			this.reportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.reportToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
 			this.reportToolStripMenuItem.Text = "Report";
 			// 
 			// highLowToolStripMenuItem
@@ -2268,6 +2281,13 @@
 			this.calendarToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
 			this.calendarToolStripMenuItem.Text = "Calendar";
 			this.calendarToolStripMenuItem.Click += new System.EventHandler(this.calendarToolStripMenuItem_Click);
+			// 
+			// robinForcastToolStripMenuItem
+			// 
+			this.robinForcastToolStripMenuItem.Name = "robinForcastToolStripMenuItem";
+			this.robinForcastToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.robinForcastToolStripMenuItem.Text = "Robin Forcast";
+			this.robinForcastToolStripMenuItem.Click += new System.EventHandler(this.robinForcastToolStripMenuItem_Click);
 			// 
 			// maintainToolStripMenuItem
 			// 
@@ -2369,23 +2389,15 @@
 			this.timerSStockResult.Interval = 1000;
 			this.timerSStockResult.Tick += new System.EventHandler(this.timerSStockResult_Tick);
 			// 
-			// btnTX
+			// btnTeams
 			// 
-			this.btnTX.Enabled = false;
-			this.btnTX.Location = new System.Drawing.Point(224, 167);
-			this.btnTX.Name = "btnTX";
-			this.btnTX.Size = new System.Drawing.Size(75, 23);
-			this.btnTX.TabIndex = 107;
-			this.btnTX.Text = "補期貨指數";
-			this.btnTX.UseVisualStyleBackColor = true;
-			this.btnTX.Click += new System.EventHandler(this.btnTX_Click);
-			// 
-			// robinForcastToolStripMenuItem
-			// 
-			this.robinForcastToolStripMenuItem.Name = "robinForcastToolStripMenuItem";
-			this.robinForcastToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-			this.robinForcastToolStripMenuItem.Text = "Robin Forcast";
-			this.robinForcastToolStripMenuItem.Click += new System.EventHandler(this.robinForcastToolStripMenuItem_Click);
+			this.btnTeams.Location = new System.Drawing.Point(766, 58);
+			this.btnTeams.Name = "btnTeams";
+			this.btnTeams.Size = new System.Drawing.Size(37, 23);
+			this.btnTeams.TabIndex = 108;
+			this.btnTeams.Text = "teams";
+			this.btnTeams.UseVisualStyleBackColor = true;
+			this.btnTeams.Click += new System.EventHandler(this.btnTeams_Click);
 			// 
 			// ScheduleJob
 			// 
@@ -2673,5 +2685,6 @@
 		private System.Windows.Forms.ToolStripMenuItem tXIndexToolStripMenuItem;
 		private System.Windows.Forms.Button btnTX;
 		private System.Windows.Forms.ToolStripMenuItem robinForcastToolStripMenuItem;
+		private System.Windows.Forms.Button btnTeams;
 	}
 }

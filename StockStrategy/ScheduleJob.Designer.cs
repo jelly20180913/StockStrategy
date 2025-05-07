@@ -139,6 +139,7 @@
 			this.btnBad = new System.Windows.Forms.Button();
 			this.btnStockJurical = new System.Windows.Forms.Button();
 			this.pnAdmin = new System.Windows.Forms.Panel();
+			this.btnTeams = new System.Windows.Forms.Button();
 			this.btnTX = new System.Windows.Forms.Button();
 			this.gp = new System.Windows.Forms.GroupBox();
 			this.btnStockChips = new System.Windows.Forms.Button();
@@ -241,7 +242,7 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.pnTop = new System.Windows.Forms.Panel();
 			this.timerSStockResult = new System.Windows.Forms.Timer(this.components);
-			this.btnTeams = new System.Windows.Forms.Button();
+			this.btnSendMail = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -1356,6 +1357,7 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.btnSendMail);
 			this.pnAdmin.Controls.Add(this.btnTeams);
 			this.pnAdmin.Controls.Add(this.btnTX);
 			this.pnAdmin.Controls.Add(this.btnErrorMsg);
@@ -1396,6 +1398,17 @@
 			this.pnAdmin.Name = "pnAdmin";
 			this.pnAdmin.Size = new System.Drawing.Size(1277, 206);
 			this.pnAdmin.TabIndex = 42;
+			// 
+			// btnTeams
+			// 
+			this.btnTeams.Enabled = false;
+			this.btnTeams.Location = new System.Drawing.Point(766, 58);
+			this.btnTeams.Name = "btnTeams";
+			this.btnTeams.Size = new System.Drawing.Size(37, 23);
+			this.btnTeams.TabIndex = 108;
+			this.btnTeams.Text = "teams";
+			this.btnTeams.UseVisualStyleBackColor = true;
+			this.btnTeams.Click += new System.EventHandler(this.btnTeams_Click);
 			// 
 			// btnTX
 			// 
@@ -2389,15 +2402,16 @@
 			this.timerSStockResult.Interval = 1000;
 			this.timerSStockResult.Tick += new System.EventHandler(this.timerSStockResult_Tick);
 			// 
-			// btnTeams
+			// btnSendMail
 			// 
-			this.btnTeams.Location = new System.Drawing.Point(766, 58);
-			this.btnTeams.Name = "btnTeams";
-			this.btnTeams.Size = new System.Drawing.Size(37, 23);
-			this.btnTeams.TabIndex = 108;
-			this.btnTeams.Text = "teams";
-			this.btnTeams.UseVisualStyleBackColor = true;
-			this.btnTeams.Click += new System.EventHandler(this.btnTeams_Click);
+			this.btnSendMail.Enabled = false;
+			this.btnSendMail.Location = new System.Drawing.Point(809, 58);
+			this.btnSendMail.Name = "btnSendMail";
+			this.btnSendMail.Size = new System.Drawing.Size(37, 23);
+			this.btnSendMail.TabIndex = 109;
+			this.btnSendMail.Text = "mail";
+			this.btnSendMail.UseVisualStyleBackColor = true;
+			this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
 			// 
 			// ScheduleJob
 			// 
@@ -2686,5 +2700,6 @@
 		private System.Windows.Forms.Button btnTX;
 		private System.Windows.Forms.ToolStripMenuItem robinForcastToolStripMenuItem;
 		private System.Windows.Forms.Button btnTeams;
+		private System.Windows.Forms.Button btnSendMail;
 	}
 }

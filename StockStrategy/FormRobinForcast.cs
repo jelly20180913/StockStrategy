@@ -29,6 +29,7 @@ namespace StockStrategy
 		private void btnGetData_Click(object sender, EventArgs e)
 		{
 			string _Log = "";
+			int i = 0;
 			try
 			{
 				DateTime _Dt = Convert.ToDateTime(this.dTPReport.Text);
@@ -38,32 +39,38 @@ namespace StockStrategy
 				List<StockIndex> _StockIndexList = _DataAccess.getStockIndexList();
 				_StockIndexForcastList = _StockIndexForcastList.Where(x => Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
 				_StockIndexForcastList = _StockIndexForcastList.Where(x => Convert.ToInt32(x.Date) >= Convert.ToInt32(this.dtpReportStart.Value.ToString("yyyyMMdd"))).ToList();
-				List<StockRobinForcast> _StockRobinForcastList = new List<StockRobinForcast>();
+				SortableBindingList<StockRobinForcast> _StockRobinForcastList = new SortableBindingList<StockRobinForcast>();
+				
 				foreach (StockIndexForcast s in _StockIndexForcastList) {
 					if (_StockIndexList.Where(x => x.Date == s.Date).Count() > 0){ 
 						if (_StockIndexList.Where(x => x.Date == s.Date).First().TX != "")
 						{
 							bool _IsRight = false;
-							decimal _Point = Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX) - Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX_Open);
-							if (_Point > 0 && s.Result > 0) {
-								_IsRight = true;
-							} 
-							else if (_Point < 0 && s.Result < 0)
+							if (_StockIndexList.Where(x => x.Date == s.Date).First().TX_Open != "")
 							{
-								_IsRight = true;
-								_Point = _Point * -1;
+								decimal _Point = Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX) - Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX_Open);
+								if (_Point > 0 && s.Result > 0)
+								{
+									_IsRight = true;
+								}
+								else if (_Point < 0 && s.Result < 0)
+								{
+									_IsRight = true;
+									_Point = _Point * -1;
+								}
+								else if (_Point > 0 && s.Result < 0)
+								{
+									_Point = _Point * -1;
+								}
+								StockRobinForcast _StockRobinForcast = new StockRobinForcast();
+								_StockRobinForcast.Date = s.Date;
+								_StockRobinForcast.IsRight = _IsRight;
+								_StockRobinForcast.Point = _Point;
+								_StockRobinForcastList.Add(_StockRobinForcast);
 							}
-							else if (_Point > 0 && s.Result < 0)
-							{ 
-								_Point = _Point * -1;
-							}
-							StockRobinForcast _StockRobinForcast = new StockRobinForcast();
-							_StockRobinForcast.Date = s.Date;
-							_StockRobinForcast.IsRight = _IsRight;
-							_StockRobinForcast.Point=_Point;
-							_StockRobinForcastList.Add(_StockRobinForcast);
 						}
-					} 
+					}
+					i++;
 				}
 				this.dgvRoginForcast.DataSource = _StockRobinForcastList;
 				this.lbForcastRight.Text = _StockRobinForcastList.Where(x => x.IsRight == true).Count().ToString();
@@ -74,7 +81,7 @@ namespace StockStrategy
 			}
 			catch (Exception ex)
 			{
-				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " btnGetData_Click:" + ex.Message + "\r\n";
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " btnGetData_Click:"+i + ex.Message + "\r\n";
 				logger.Error(_Log);
 			}
 		}

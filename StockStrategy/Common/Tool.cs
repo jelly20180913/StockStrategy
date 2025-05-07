@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq;
 using System.Diagnostics;
 using System.Globalization;
+using System.Net.Mail;
 
 namespace StockStrategy.Common
 {
@@ -139,6 +140,39 @@ namespace StockStrategy.Common
 				}
 			}
 			return _value;
-		} 
+		}
+		public static void SendMail(string recipient,string subject ,string content)
+		{
+			try
+			{
+				MailMessage MailMsg = new MailMessage(); 
+				MailMsg.From = new MailAddress("kingkids911@gmail.com", "策略選股");
+                foreach (string r in recipient.Split(';'))
+                {
+                    MailMsg.To.Add(r);
+                }
+				MailMsg.Subject = "策略選股_" + subject; 
+				//採用HTML格式
+				MailMsg.IsBodyHtml = true; 
+				//訊息內容
+				AlternateView htmlView = AlternateView.CreateAlternateViewFromString(content, null, "text/html");
+				//處理好的HTML訊息內容加入到Mail物件
+				MailMsg.AlternateViews.Add(htmlView);
+				System.Net.Mail.SmtpClient MailClient = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587);
+
+				MailClient.Credentials = new System.Net.NetworkCredential("kingkids911@gmail.com", "dhrf rbhg kudg wcao");
+
+				MailClient.EnableSsl = true;
+
+				//MailClient.Send("kingkids911@gmail.com", recipient, "策略選股_"+subject, content);
+				MailClient.Send(MailMsg);
+
+				MailClient.Dispose();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message, ex.InnerException);
+			}
+		}
 	}
 }

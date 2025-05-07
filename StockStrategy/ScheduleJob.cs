@@ -48,7 +48,7 @@ namespace StockStrategy
 		List<Holiday> HolidayList = new List<Holiday>();
 		Dictionary<int, string> GoodStockClass = new Dictionary<int, string>() { };
 		List<string> ListGoodStockClass = new List<string>();
-		private string TeamsGroup = "";
+		private string TeamsGroup = "",EmailGroup="";
 		public ScheduleJob()
 		{
 			InitializeComponent();
@@ -89,6 +89,7 @@ namespace StockStrategy
 		{
 			ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
 			TeamsGroup = ConfigurationManager.AppSettings["TeamsGroup"];
+			EmailGroup = ConfigurationManager.AppSettings["EmailGroup"];
 			this.Text = "股票策略選股排程機：V" + FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion.ToString();
 			var _Ip = Tool.GetIpAddresses();
 			if (_Ip.Length > 0)
@@ -287,8 +288,8 @@ namespace StockStrategy
 				s.MSFT_IndexQuotePercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "MSFT", _Percent, true);
 				s.GOOG_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "GOOG", _Id, true);
 				s.GOOG_IndexQuotePercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "GOOG", _Percent, true);
-				s.FB_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "FB", _Id, true);
-				s.FB_IndexQuotePercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "FB", _Percent, true);
+				s.FB_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "META", _Id, true);
+				s.FB_IndexQuotePercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "META", _Percent, true);
 				s.BAC_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "BAC", _Id, true);
 				s.BAC_IndexQuotePercent = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "BAC", _Percent, true);
 				s.MU_Index = Common.Job.GetTaiwanFutures(_HiStockIndex_URL + "MU", _Id, true);
@@ -1339,7 +1340,10 @@ namespace StockStrategy
 			string _Log = "";
 			try
 			{
-				CallTeamsApi(lineMsg);
+				Tool.SendMail(EmailGroup, token, lineMsg);
+				//Teams 
+				//CallTeamsApi(lineMsg);
+				//Line 
 				//await _DataAccess.postLineMsg(lineMsg, token);
 				//LineMsgCount++;
 				//this.lbLineMsgCount.Text = LineMsgCount.ToString();
@@ -1847,7 +1851,7 @@ namespace StockStrategy
 				string _Stock = "";
 				foreach (DataModel.Stock.Stock s in stockList)
 				{
-					_Stock = _Stock + s.Code + ":" + s.Name + ";";
+					_Stock = _Stock + s.Code + ":" + $"<a href=\"{superLink(s.Code)}\">{s.Name}</a>;";
 				}
 				List<WebApiService.Models.StockLineNotify> _StockLineNotifyList = _DataAccess.getStockLineNotifyList();
 				string _Token = "";
@@ -3308,7 +3312,25 @@ namespace StockStrategy
 				this.btnErrorMsg.Text += _Log;
 			}
 		}
+		private string superLink(string code) {
 
+			string _Log = "",_Url="";
+			try
+			{
+				List<StockGroup> _ListStockGroup = _DataAccess.getStockGroupList();
+				string _Code = code;
+				bool? _StockType = _ListStockGroup.Where(x => x.Code == _Code).First().StockType;
+				string _Type = Convert.ToBoolean(_StockType) == true ? "TW" : "TWO";
+				_Url = $"https://tw.stock.yahoo.com/quote/{_Code}.{_Type}/technical-analysis"; 
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + ex.StackTrace + "\r\n";
+				logger.Error(_Log);
+				this.btnErrorMsg.Text += _Log;
+			}
+			return _Url;
+		}
 		private void tXIndexToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FormUpdateStockIndex _FormUpdateStockIndex = new FormUpdateStockIndex();
@@ -3412,6 +3434,11 @@ namespace StockStrategy
 		private void btnTeams_Click(object sender, EventArgs e)
 		{
 			CallTeamsApi("");
+		}
+
+		private void btnSendMail_Click(object sender, EventArgs e)
+		{
+			Tool.SendMail(EmailGroup,"test","ttt");
 		}
 
 		/// <summary>

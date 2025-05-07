@@ -39,6 +39,8 @@
 			this.txtBondIndex = new System.Windows.Forms.TextBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.dtpStockIndex = new System.Windows.Forms.DateTimePicker();
+			this.label6 = new System.Windows.Forms.Label();
+			this.txtBondIndexPercent = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -100,7 +102,7 @@
 			// 
 			// btnUpdate
 			// 
-			this.btnUpdate.Location = new System.Drawing.Point(92, 209);
+			this.btnUpdate.Location = new System.Drawing.Point(90, 247);
 			this.btnUpdate.Name = "btnUpdate";
 			this.btnUpdate.Size = new System.Drawing.Size(75, 23);
 			this.btnUpdate.TabIndex = 8;
@@ -131,11 +133,29 @@
 			this.dtpStockIndex.Size = new System.Drawing.Size(126, 22);
 			this.dtpStockIndex.TabIndex = 92;
 			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(31, 211);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(14, 12);
+			this.label6.TabIndex = 94;
+			this.label6.Text = "%";
+			// 
+			// txtBondIndexPercent
+			// 
+			this.txtBondIndexPercent.Location = new System.Drawing.Point(130, 204);
+			this.txtBondIndexPercent.Name = "txtBondIndexPercent";
+			this.txtBondIndexPercent.Size = new System.Drawing.Size(100, 22);
+			this.txtBondIndexPercent.TabIndex = 93;
+			// 
 			// FormUpdateStockIndex
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(253, 259);
+			this.ClientSize = new System.Drawing.Size(253, 282);
+			this.Controls.Add(this.label6);
+			this.Controls.Add(this.txtBondIndexPercent);
 			this.Controls.Add(this.dtpStockIndex);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.txtBondIndex);
@@ -167,5 +187,7 @@
 		private System.Windows.Forms.TextBox txtBondIndex;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.DateTimePicker dtpStockIndex;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.TextBox txtBondIndexPercent;
 	}
 }

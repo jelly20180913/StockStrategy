@@ -19,11 +19,30 @@ using System.Windows.Forms;
 using DataModel;
 using Newtonsoft.Json;
 using StockStrategy.Common;
+using MailKit.Net.Pop3;
+using NLog.Fluent;
+using MimeKit;
+using MailKit.Security;
+using MailKit.Net.Imap;
+using MailKit;
+using MailKit.Search;
+
 namespace StockStrategy
 {
 	public partial class FormMain : Form
 	{
-
+		/// <summary>
+		/// 需求(優先序ABC
+		/// 1. 下單功能改成用凱基元件
+		/// 1.1. 期貨(A
+		/// 1.2. 股票(C
+		/// 2. 報價功能改成用凱基元件(B
+		/// 3. 收宏衛預測多空模型的信件後
+		/// 3.1. 做自動下單(A
+		/// 3.2. 股票策略程式:寫入指數預測資料表(A
+		/// 4. 股票策略程式:指數觸價紀錄表每30點寫入一筆,之後可做回測(A
+		/// 5. 改Local DB(A
+		/// </summary>
 		[StructLayout(LayoutKind.Sequential)]
 		public struct CopyDataStruct
 		{
@@ -94,7 +113,7 @@ new Dictionary<string, string>();
 		private string[] Oberservers = ConfigurationManager.AppSettings["Observer"].Split(';');
 		#region button method
 		/// <summary>
-		/// 傳送參數給日盛API
+		/// 傳送參數給日盛API 改凱基元件(待改
 		/// </summary>
 		/// <param name="sender">按鈕</param>
 		/// <param name="mode">庫存/觀察</param>
@@ -194,7 +213,7 @@ new Dictionary<string, string>();
 				DialogResult Result = MessageBox.Show("是否確定下單", "確認", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 				if (Result == DialogResult.OK)
 				{
-					HTSOrder(sb);
+					//HTSOrder(sb);
 					MessageBox.Show(_Parameter);
 					string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + _StockId + "共" + _Units + "張," + _PriceType + _Price + "元" + _Profit;
 					richTxtInfo.SelectionColor = foreColor;
@@ -268,7 +287,7 @@ new Dictionary<string, string>();
 
 		}
 		/// <summary>
-		/// 期貨參數
+		/// 期貨參數 改凱基元件(待改
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="mode"></param>
@@ -375,7 +394,7 @@ new Dictionary<string, string>();
 				DialogResult Result = MessageBox.Show("是否確定下單", "確認", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 				if (Result == DialogResult.OK)
 				{
-					HTSOrder(sb);
+					//HTSOrder(sb);
 					// MessageBox.Show(_Parameter);
 					string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + _Name + "共" + _Units + "口," + _PriceType + _Price + "元" + _Profit;
 					richTxtInfo.SelectionColor = foreColor;
@@ -396,7 +415,7 @@ new Dictionary<string, string>();
 			}
 		}
 		/// <summary>
-		/// 新增股票庫存
+		/// 新增股票庫存(改Local)(待改
 		/// </summary>
 		/// <param name="stockInventory"></param>
 		private void insertStockInventory(WebApiService.Models.StockInventory stockInventory)
@@ -418,7 +437,7 @@ new Dictionary<string, string>();
 			}
 		}
 		/// <summary>
-		/// 更新股票庫存
+		/// 更新股票庫存(改Local)(待改
 		/// </summary>
 		/// <param name="stockInventory"></param>
 		private void updateStockInventory(WebApiService.Models.StockInventory stockInventory)
@@ -439,6 +458,10 @@ new Dictionary<string, string>();
 				richTxtInfo.AppendText(_Msg + Environment.NewLine);
 			}
 		}
+		/// <summary>
+		/// (改Local)(待改
+		/// </summary>
+		/// <returns></returns>
 		private List<WebApiService.Models.StockInventory> getStockInventoryList()
 		{
 			List<WebApiService.Models.StockInventory> _StockInventoryList = new List<WebApiService.Models.StockInventory>();
@@ -455,6 +478,11 @@ new Dictionary<string, string>();
 			}
 			return _StockInventoryList;
 		}
+		/// <summary>
+		/// (改Local)(待改
+		/// </summary>
+		/// <param name="code"></param>
+		/// <returns></returns>
 		private WebApiService.Models.StockInventory getStockInventory(string code)
 		{
 			string _Msg = "";
@@ -919,7 +947,7 @@ new Dictionary<string, string>();
 		/// <summary>
 		/// 動態產生觀察名單
 		/// 庫存容器:
-		/// 1. 計算出MA5/MA10/MA20/MA60均價
+		/// 1. 計算出MA5/MA10/MA20/MA60均價(改Local該功能無法使用因為是取sql server)(待改
 		/// 2. 背景色:粉紅色
 		/// 3. 顯示股票成本
 		/// 4. 新建倉預設關閉均線停損策略
@@ -2194,7 +2222,7 @@ new Dictionary<string, string>();
 			sendParameter(sender, true, "B", "S", "券買", Color.DeepPink);
 		}
 		/// <summary>
-		/// 一鍵將所有庫存出清,用於黑天鵝降臨崩盤的時候
+		/// 一鍵將所有庫存出清,用於黑天鵝降臨崩盤的時候 待改凱基元件 (待改
 		/// 執行前須先填入密碼
 		/// 現買狀態的股票會全部掛跌停出清
 		/// 
@@ -2424,6 +2452,11 @@ new Dictionary<string, string>();
 			_BtnDeal.BackColor = SystemColors.Control;
 
 		}
+		/// <summary>
+		/// 可改接凱基報價元件(待改
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnGetPrice_Click(object sender, EventArgs e)
 		{
 			string _Log = "";
@@ -2470,6 +2503,9 @@ new Dictionary<string, string>();
 				logger.Error(_Log);
 			}
 		}
+		/// <summary>
+		/// 可改接凱基報價(待改
+		/// </summary>
 		private void getFuturePrice()
 		{
 			string _Log = "";
@@ -2756,7 +2792,7 @@ new Dictionary<string, string>();
 			return _Persent;
 		}
 		/// <summary>
-		/// 防守條件單
+		/// 防守條件單(改凱基元件下單(待改
 		/// </summary>
 		/// <param name="stockId">股票代號</param>
 		/// <param name="stopLostPrice">防守價位</param>
@@ -2811,7 +2847,7 @@ new Dictionary<string, string>();
 			_StockId = stockId;
 			string _Parameter = "Market=S,Account=" + txtStockAccount.Text + ",Symbol=" + _StockId + ",BuySell=" + _BuySell + ",Units=" + _Units + ",OrderType=" + _OrderType + ",Price=" + _Price + ",CashMarginShort=" + _CashMarginShort + _OverSell + _MarketLimit;
 			StringBuilder sb = new StringBuilder(_Parameter);
-			HTSOrder(sb);
+			//HTSOrder(sb);
 			MessageBox.Show(_Parameter);
 			string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + "現賣" + _StockId + "共" + _Units + "張," + _PriceType + _Price + "元," + ma + _Profit;
 			richTxtInfo.SelectionColor = Color.Green;
@@ -2820,7 +2856,7 @@ new Dictionary<string, string>();
 			richTxtInfo.ScrollToCaret();
 		}
 		/// <summary>
-		/// 
+		/// 改凱基元件下單(待改
 		/// </summary>
 		/// <param name="buySell">B/S</param>
 		/// <param name="futureId"></param>
@@ -2884,7 +2920,7 @@ new Dictionary<string, string>();
 
 				if ((_Price != "" && _FutureOrderType == "L") || _FutureOrderType == "M")
 				{
-					HTSOrder(sb);
+					//HTSOrder(sb);
 					// MessageBox.Show(_Parameter);
 					string _Msg = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " 你" + status + _Name + "共" + ladderPiece + "口," + _PriceType + _Price + "元" + _Profit + ",停損條件:" + ma + ",價格:" + stopLostPrice;
 					richTxtInfo.SelectionColor = status == "現買" ? Color.Red : Color.Green;
@@ -3650,7 +3686,7 @@ new Dictionary<string, string>();
 			sendFuturesParameter(sender, true, "S", "現賣", Color.Green);
 		}
 		/// <summary>
-		/// 取得台指
+		/// 取得台指 可改凱基元件(待改
 		/// </summary>
 		/// <returns></returns>
 		private string getTaiwanFutures()
@@ -3693,6 +3729,7 @@ new Dictionary<string, string>();
 		}
 		/// <summary>
 		/// 取得最新台指價格
+		/// 改Local (待改
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -4074,7 +4111,44 @@ new Dictionary<string, string>();
 
 		}
 		/// <summary>
-		/// 取得期貨當前庫存-改資料庫 
+		/// 收信功能測試
+		/// 待改功能
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnReceive_Click(object sender, EventArgs e)
+		{
+			string _Log = "";
+			try
+			{
+				string email = "kingkids911@gmail.com";
+				string ps = "dhrf rbhg kudg wcao";
+				using (var client = new ImapClient())
+				{
+					client.Connect("imap.gmail.com", 993, SecureSocketOptions.SslOnConnect);
+					client.Authenticate(email, ps); 
+					var inbox = client.Inbox;
+					inbox.Open(FolderAccess.ReadOnly); 
+					var today = DateTime.Today;
+					var results = inbox.Search(SearchQuery.SubjectContains("策略選股").And(SearchQuery.DeliveredOn(today))); 
+					foreach (var uniqueId in results)
+					{
+						var message = inbox.GetMessage(uniqueId);
+						string[] sub = message.Subject.Split('$');
+						Console.WriteLine($"郵件標題: {message.Subject}");
+					} 
+					client.Disconnect(true);
+				} 
+			}
+			catch (Exception ex)
+			{
+				_Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " btnReceive:" + "\r\n" + ex.Message;
+				logger.Error(_Log);
+			}
+		}
+
+		/// <summary>
+		/// 取得期貨當前庫存-改Local(待改 
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

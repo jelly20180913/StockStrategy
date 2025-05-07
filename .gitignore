@@ -1,0 +1,13 @@
+﻿################################################################################
+# 這個 .gitignore 檔案由 Microsoft(R) Visual Studio 自動建立。
+################################################################################
+
+/DataModel/obj/Debug
+/DataModel/obj/Release
+/.vs
+/packages
+/DataModel/bin
+/StockStrategy/bin
+/StockStrategy/import/006203.xlsx
+/StockStrategy/obj
+/WebApiService

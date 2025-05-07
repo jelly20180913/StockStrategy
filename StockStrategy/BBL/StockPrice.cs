@@ -71,8 +71,11 @@ namespace StockStrategy.BBL
                     }
                     else
                     {
-                        string[] arrPrice = jsonPrice.msgArray[i].b.Split('_');
-                        _Price.Price = arrPrice.Length>0? Math.Round(Convert.ToDecimal(arrPrice[0]), 2).ToString():"0";
+                        if (jsonPrice.msgArray[i].b != null)
+                        {
+                            string[] arrPrice = jsonPrice.msgArray[i].b.Split('_');
+                            _Price.Price = arrPrice.Length > 0 ? Math.Round(Convert.ToDecimal(arrPrice[0]), 2).ToString() : "0";
+                        }
                     }
                     _Price.StockName = jsonPrice.msgArray[i].n;
                     _Price.HighPrice = jsonPrice.msgArray[i].h;

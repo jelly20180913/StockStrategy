@@ -23,5 +23,9 @@ namespace WebApiService.Controllers
         { ;
             return this._StockIndexForcastService.GetAll().ToList(); 
 		}
-    }
+		public string Post( StockIndexForcast  s)
+		{
+			return this._StockIndexForcastService.Create(s);
+		}
+	}
 }

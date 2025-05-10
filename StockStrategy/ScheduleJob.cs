@@ -1,6 +1,10 @@
 ﻿using DataModel.Common;
 using DataModel.Login;
 using DocumentFormat.OpenXml.EMMA;
+using MailKit.Net.Imap;
+using MailKit.Search;
+using MailKit.Security;
+using MailKit;
 using Newtonsoft.Json;
 using NLog;
 using NLog.Fluent;
@@ -394,6 +398,7 @@ namespace StockStrategy
 						bStockAll = true;
 						btnGetStockPrice.PerformClick();
 						btnClear.PerformClick();
+						btnReceive.PerformClick();
 						//btnStockJurical.PerformClick();
 
 					}
@@ -413,10 +418,12 @@ namespace StockStrategy
 				}
 				if (_Hour == "8" && _Minute == "45")
 				{
+					
 					if (!bBadStockLineNotify)
 					{
 						bBadStockLineNotify = true;
 						btnLineBad.PerformClick();
+						timerMTX.Enabled = true;
 					}
 				}
 				if (_Hour == "7" && _Minute == "35" && !stockIndex)
@@ -429,7 +436,10 @@ namespace StockStrategy
 				if (_Hour == "13" && _Minute == "45")
 				{
 					if (!bTAIEX)
+					{
+						timerMTX.Enabled = false;
 						btnUpdateStockIndex.PerformClick();
+					}
 				}
 				if (_Hour == "13" && _Minute == "55")
 				{
@@ -3434,6 +3444,81 @@ namespace StockStrategy
 		private void btnTeams_Click(object sender, EventArgs e)
 		{
 			CallTeamsApi("");
+		}
+
+		private void btnReceive_Click(object sender, EventArgs e)
+		{
+			string _Log = "";
+			try
+			{
+				string email = "kingkids911@gmail.com";
+				string ps = "dhrf rbhg kudg wcao";
+				using (var client = new ImapClient())
+				{
+					client.Connect("imap.gmail.com", 993, SecureSocketOptions.SslOnConnect);
+					client.Authenticate(email, ps);
+					var inbox = client.Inbox;
+					inbox.Open(FolderAccess.ReadOnly);
+					var today = DateTime.Today;
+					var results = inbox.Search(SearchQuery.SubjectContains("策略選股").And(SearchQuery.DeliveredOn(today)));
+					foreach (var uniqueId in results)
+					{
+						var message = inbox.GetMessage(uniqueId);
+						string[] sub = message.Subject.Split('$');
+						StockIndexForcast stockIndexForcast = new StockIndexForcast();
+						stockIndexForcast.Date = DateTime.Now.ToString("yyyyMMdd");
+						stockIndexForcast.RamdomForest =Convert.ToInt32( sub[1]);
+						stockIndexForcast.SVM = Convert.ToInt32(sub[2]);
+						stockIndexForcast.XGBoost = Convert.ToInt32(sub[3]);
+						stockIndexForcast.LightGBM = Convert.ToInt32(sub[4]);
+						stockIndexForcast.KNN = Convert.ToInt32(sub[5]);
+						stockIndexForcast.Result = Convert.ToInt32(sub[6]);
+						_DataAccess.insertStockIndexForcast(stockIndexForcast);
+						_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + "Robin預測指數資料寫入成功" + "\r\n"; 
+						this.btnErrorMsg.Text += _Log;
+						//Console.WriteLine($"郵件標題: {message.Subject}");
+					}
+					client.Disconnect(true);
+				}
+			}
+			catch (Exception ex)
+			{
+				_Log = "\r\n" + DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " btnReceive:" + "\r\n" + ex.Message;
+				logger.Error(_Log);
+			}
+		}
+		/// <summary>
+		/// 取得台指指數
+		/// 1. 每5點才紀錄資料(X
+		/// 2. 不重複紀錄(X
+		/// 3. 每5秒再爬資料
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnMTX_Click(object sender, EventArgs e)
+		{
+			string _Log = ""; 
+			try
+			{
+				string _Id = "Price1_lbTPrice"; 
+				string _FuturePrice = Common.Job.GetTaiwanFutures("https://histock.tw/index-tw/FIMTX", _Id, true);
+				StockIndexStopLossLog stockIndexStopLossLog = new StockIndexStopLossLog();
+				stockIndexStopLossLog.Date = DateTime.Now.ToString("yyyyMMdd");
+				stockIndexStopLossLog.UpdateTime = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
+				stockIndexStopLossLog.MTX_Index = _FuturePrice;
+				_DataAccess.insertStockIndexStopLossLog(stockIndexStopLossLog);
+			}
+			catch (Exception ex)
+			{
+				_Log = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss") + " timerGetFuture:" + "\r\n" + ex.Message;
+				logger.Error(_Log);
+				this.btnErrorMsg.Text += _Log;
+			}
+		}
+
+		private void timerMTX_Tick(object sender, EventArgs e)
+		{
+			btnMTX.PerformClick();
 		}
 
 		private void btnSendMail_Click(object sender, EventArgs e)

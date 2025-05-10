@@ -175,6 +175,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\StockIndexStopLossLogController.cs" />
     <Compile Include="Controllers\StockIndexForcastController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\StockAllController.cs" />
@@ -256,6 +257,9 @@
     <Compile Include="Models\StockIndexForcast.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StockIndexStopLossLog.cs">
+      <DependentUpon>StockWarehouse.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StockInventory.cs">
       <DependentUpon>StockWarehouse.tt</DependentUpon>
     </Compile>
@@ -294,6 +298,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Implement\StockStrategyService.cs" />
+    <Compile Include="Services\Implement\Tables\StockIndexStopLossLogService.cs" />
     <Compile Include="Services\Implement\Tables\StockChipsService.cs" />
     <Compile Include="Services\Implement\Tables\StockIndexForcastService.cs" />
     <Compile Include="Services\Implement\Tables\StockEpsService.cs" />
@@ -317,6 +322,7 @@
     <Compile Include="Services\Implement\TokenService.cs" />
     <Compile Include="Services\Interface\IStockStrategyService.cs" />
     <Compile Include="Services\Interface\ITokenService.cs" />
+    <Compile Include="Services\Interface\Tables\IStockIndexStopLossLogService.cs" />
     <Compile Include="Services\Interface\Tables\IStockChipsService.cs" />
     <Compile Include="Services\Interface\Tables\IStockIndexForcastService.cs" />
     <Compile Include="Services\Interface\Tables\IStockEpsService.cs" />

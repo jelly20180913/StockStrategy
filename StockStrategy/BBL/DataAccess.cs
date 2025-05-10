@@ -523,5 +523,23 @@ namespace StockStrategy.BBL
 			_ListStockIndexForcast = JsonConvert.DeserializeObject<List<StockIndexForcast>>(_ApiResult.Data.ToString());
 			return _ListStockIndexForcast;
 		}
+		public string insertStockIndexForcast(StockIndexForcast stockIndexForcast)
+		{
+			string json = JsonConvert.SerializeObject(stockIndexForcast);
+			string _Action = "StockIndexForcast";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
+		public string insertStockIndexStopLossLog(StockIndexStopLossLog stockIndexStopLossLog)
+		{
+			string json = JsonConvert.SerializeObject(stockIndexStopLossLog);
+			string _Action = "StockIndexStopLossLog";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Post(json, _Uri);
+			string _Return = _ApiResult.Data.ToString();
+			return _Return;
+		}
 	}
 }

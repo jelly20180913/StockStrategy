@@ -276,6 +276,15 @@
           <Property Name="Date" Type="varchar" MaxLength="10" />
           <Property Name="Result" Type="int" />
         </EntityType>
+        <EntityType Name="StockIndexStopLossLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="varchar" MaxLength="10" />
+          <Property Name="MTX_Index" Type="varchar" MaxLength="10" />
+          <Property Name="UpdateTime" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="StockInventory">
           <Key>
             <PropertyRef Name="Id" />
@@ -392,6 +401,18 @@
           <Property Name="Rank" Type="int" />
           <Property Name="BuySellOver" Type="bit" />
         </EntityType>
+        <Association Name="FK_Stock_Stock">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="Stock1" Type="Self.Stock" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stock1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="StockWarehouseModelStoreContainer">
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
@@ -406,6 +427,7 @@
           <EntitySet Name="StockHighLow" EntityType="Self.StockHighLow" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockIndex" EntityType="Self.StockIndex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockIndexForcast" EntityType="Self.StockIndexForcast" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockIndexStopLossLog" EntityType="Self.StockIndexStopLossLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInventory" EntityType="Self.StockInventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInventoryLog" EntityType="Self.StockInventoryLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockLineNotify" EntityType="Self.StockLineNotify" Schema="dbo" store:Type="Tables" />
@@ -429,6 +451,10 @@
     [Item].[ItemName] AS [ItemName]
     FROM [dbo].[Item] AS [Item]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Stock_Stock" Association="Self.FK_Stock_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="Stock1" EntitySet="Stock" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -607,6 +633,11 @@
           <EntitySet Name="StockEps" EntityType="StockWarehouseModel.StockEps" />
           <EntitySet Name="StockIndexForcast" EntityType="StockWarehouseModel.StockIndexForcast" />
           <EntitySet Name="Item" EntityType="StockWarehouseModel.Item" />
+          <EntitySet Name="StockIndexStopLossLog" EntityType="StockWarehouseModel.StockIndexStopLossLog" />
+          <AssociationSet Name="FK_Stock_Stock" Association="StockWarehouseModel.FK_Stock_Stock">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="Stock1" EntitySet="Stock" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="StockLineNotify">
           <Key>
@@ -841,6 +872,27 @@
           <Property Name="ClassId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="ItemName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="StockIndexStopLossLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MTX_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Stock_Stock">
+          <End Type="StockWarehouseModel.Stock" Role="Stock" Multiplicity="1" />
+          <End Type="StockWarehouseModel.Stock" Role="Stock1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Stock1">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1248,6 +1300,16 @@
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
                 <ScalarProperty Name="ClassId" ColumnName="ClassId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockIndexStopLossLog">
+            <EntityTypeMapping TypeName="StockWarehouseModel.StockIndexStopLossLog">
+              <MappingFragment StoreEntitySet="StockIndexStopLossLog">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="MTX_Index" ColumnName="MTX_Index" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

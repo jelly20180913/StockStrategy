@@ -243,6 +243,9 @@
 			this.pnTop = new System.Windows.Forms.Panel();
 			this.timerSStockResult = new System.Windows.Forms.Timer(this.components);
 			this.btnSendMail = new System.Windows.Forms.Button();
+			this.btnReceive = new System.Windows.Forms.Button();
+			this.btnMTX = new System.Windows.Forms.Button();
+			this.timerMTX = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -1357,6 +1360,8 @@
 			// 
 			// pnAdmin
 			// 
+			this.pnAdmin.Controls.Add(this.btnMTX);
+			this.pnAdmin.Controls.Add(this.btnReceive);
 			this.pnAdmin.Controls.Add(this.btnSendMail);
 			this.pnAdmin.Controls.Add(this.btnTeams);
 			this.pnAdmin.Controls.Add(this.btnTX);
@@ -2413,6 +2418,32 @@
 			this.btnSendMail.UseVisualStyleBackColor = true;
 			this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
 			// 
+			// btnReceive
+			// 
+			this.btnReceive.Location = new System.Drawing.Point(852, 57);
+			this.btnReceive.Name = "btnReceive";
+			this.btnReceive.Size = new System.Drawing.Size(75, 23);
+			this.btnReceive.TabIndex = 110;
+			this.btnReceive.Text = "receive";
+			this.btnReceive.UseVisualStyleBackColor = true;
+			this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
+			// 
+			// btnMTX
+			// 
+			this.btnMTX.Location = new System.Drawing.Point(930, 57);
+			this.btnMTX.Name = "btnMTX";
+			this.btnMTX.Size = new System.Drawing.Size(75, 23);
+			this.btnMTX.TabIndex = 111;
+			this.btnMTX.Text = "MTX";
+			this.btnMTX.UseVisualStyleBackColor = true;
+			this.btnMTX.Click += new System.EventHandler(this.btnMTX_Click);
+			// 
+			// timerMTX
+			// 
+			this.timerMTX.Enabled = true;
+			this.timerMTX.Interval = 5000;
+			this.timerMTX.Tick += new System.EventHandler(this.timerMTX_Tick);
+			// 
 			// ScheduleJob
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -2701,5 +2732,8 @@
 		private System.Windows.Forms.ToolStripMenuItem robinForcastToolStripMenuItem;
 		private System.Windows.Forms.Button btnTeams;
 		private System.Windows.Forms.Button btnSendMail;
+		private System.Windows.Forms.Button btnReceive;
+		private System.Windows.Forms.Button btnMTX;
+		private System.Windows.Forms.Timer timerMTX;
 	}
 }

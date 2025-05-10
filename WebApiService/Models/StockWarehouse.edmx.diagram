@@ -27,6 +27,8 @@
         <EntityTypeShape EntityType="StockWarehouseModel.StockEps" Width="1.5" PointX="14.375" PointY="8.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockIndexForcast" Width="1.5" PointX="14.375" PointY="12.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.Item" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StockWarehouseModel.StockIndexStopLossLog" Width="1.5" PointX="0.75" PointY="15.75" />
+        <AssociationConnector Association="StockWarehouseModel.FK_Stock_Stock" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

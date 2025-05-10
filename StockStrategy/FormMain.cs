@@ -39,8 +39,8 @@ namespace StockStrategy
 		/// 2. 報價功能改成用凱基元件(B
 		/// 3. 收宏衛預測多空模型的信件後
 		/// 3.1. 做自動下單(A
-		/// 3.2. 股票策略程式:寫入指數預測資料表(A
-		/// 4. 股票策略程式:指數觸價紀錄表每30點寫入一筆,之後可做回測(A
+		/// 3.2. 股票策略程式:寫入指數預測資料表(A-ok
+		/// 4. 股票策略程式:指數紀錄表每5秒寫入一筆,之後可做回測(A-ok
 		/// 5. 改Local DB(A
 		/// </summary>
 		[StructLayout(LayoutKind.Sequential)]
@@ -4135,6 +4135,7 @@ new Dictionary<string, string>();
 					{
 						var message = inbox.GetMessage(uniqueId);
 						string[] sub = message.Subject.Split('$');
+
 						Console.WriteLine($"郵件標題: {message.Subject}");
 					} 
 					client.Disconnect(true);

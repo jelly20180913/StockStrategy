@@ -29,5 +29,7 @@ namespace DataModel.Stock
 		public bool NewRecord { get; set; }
 		[Description("產業類別")]
 		public string Class { get; set; }
+		[Description("更新時間")]
+		public string UpdateTime { get; set; }
 	}
 }

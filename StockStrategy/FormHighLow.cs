@@ -5,10 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebApiService.Models;
+using static ClosedXML.Excel.XLPredefinedFormat;
+using DateTime = System.DateTime;
 
 namespace StockStrategy
 {
@@ -137,6 +140,13 @@ namespace StockStrategy
 				DataAccess _DataAccess = new DataAccess();
 				List<StockGroup> _StockGroupList = _DataAccess.getStockGroupList();
 				List<StockHighLow> _StockHighLow=_DataAccess.getStockHighLowList();
+				string dateString = this.dTPReport.Value.ToString("yyyyMMdd HH:mm:ss");
+				DateTime dtStart = DateTime.ParseExact(dateString, "yyyyMMdd HH:mm:ss", CultureInfo.InvariantCulture); 
+				string dateStringEnd = this.dtpReportStart.Value.ToString("yyyyMMdd HH:mm:ss");
+				DateTime dtEnd = DateTime.ParseExact(dateStringEnd, "yyyyMMdd HH:mm:ss", CultureInfo.InvariantCulture); 
+				_StockHighLow = _StockHighLow.Where(x => DateTime.ParseExact(x.UpdateTime, "yyyyMMdd HH:mm:ss", CultureInfo.InvariantCulture) < dtStart).ToList();
+				_StockHighLow = _StockHighLow.Where(x => DateTime.ParseExact(x.UpdateTime, "yyyyMMdd HH:mm:ss", CultureInfo.InvariantCulture) >= dtEnd).ToList();
+
 				List<DataModel.Stock.StockHighLow> _ListStockHighLow = _StockHighLow.Join(_StockGroupList,
 					c => c.Code, s => s.Code, (c, s) => (
 					 new DataModel.Stock.StockHighLow
@@ -150,7 +160,9 @@ namespace StockStrategy
 						 LowestDate = c.LowestPriceDate,
 						 HighLowRate = Convert.ToDecimal(c.HighLowRatio),
 						 NewRecord = Convert.ToBoolean(c.NewRecord),
+						 UpdateTime=c.UpdateTime,
 						 Class = s.Class
+
 
 					 })).ToList();
 					

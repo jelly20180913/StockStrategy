@@ -35,6 +35,10 @@
 			this.lbPercent = new System.Windows.Forms.Label();
 			this.btnGetData = new System.Windows.Forms.Button();
 			this.btnExport = new System.Windows.Forms.Button();
+			this.label32 = new System.Windows.Forms.Label();
+			this.dTPReport = new System.Windows.Forms.DateTimePicker();
+			this.label33 = new System.Windows.Forms.Label();
+			this.dtpReportStart = new System.Windows.Forms.DateTimePicker();
 			((System.ComponentModel.ISupportInitialize)(this.dgvHighLow)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -59,7 +63,7 @@
 			// 
 			// progressBar1
 			// 
-			this.progressBar1.Location = new System.Drawing.Point(412, 10);
+			this.progressBar1.Location = new System.Drawing.Point(190, 11);
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(332, 23);
 			this.progressBar1.Step = 1;
@@ -85,7 +89,7 @@
 			// 
 			// btnGetData
 			// 
-			this.btnGetData.Location = new System.Drawing.Point(99, 12);
+			this.btnGetData.Location = new System.Drawing.Point(788, 11);
 			this.btnGetData.Name = "btnGetData";
 			this.btnGetData.Size = new System.Drawing.Size(75, 23);
 			this.btnGetData.TabIndex = 24;
@@ -95,7 +99,7 @@
 			// 
 			// btnExport
 			// 
-			this.btnExport.Location = new System.Drawing.Point(184, 12);
+			this.btnExport.Location = new System.Drawing.Point(99, 11);
 			this.btnExport.Name = "btnExport";
 			this.btnExport.Size = new System.Drawing.Size(75, 23);
 			this.btnExport.TabIndex = 25;
@@ -103,11 +107,48 @@
 			this.btnExport.UseVisualStyleBackColor = true;
 			this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
 			// 
+			// label32
+			// 
+			this.label32.AutoSize = true;
+			this.label32.Location = new System.Drawing.Point(530, 16);
+			this.label32.Name = "label32";
+			this.label32.Size = new System.Drawing.Size(17, 12);
+			this.label32.TabIndex = 79;
+			this.label32.Text = "起";
+			// 
+			// dTPReport
+			// 
+			this.dTPReport.Location = new System.Drawing.Point(674, 12);
+			this.dTPReport.Name = "dTPReport";
+			this.dTPReport.Size = new System.Drawing.Size(107, 22);
+			this.dTPReport.TabIndex = 77;
+			// 
+			// label33
+			// 
+			this.label33.AutoSize = true;
+			this.label33.Location = new System.Drawing.Point(653, 16);
+			this.label33.Name = "label33";
+			this.label33.Size = new System.Drawing.Size(17, 12);
+			this.label33.TabIndex = 80;
+			this.label33.Text = "迄";
+			// 
+			// dtpReportStart
+			// 
+			this.dtpReportStart.Location = new System.Drawing.Point(547, 11);
+			this.dtpReportStart.Name = "dtpReportStart";
+			this.dtpReportStart.Size = new System.Drawing.Size(102, 22);
+			this.dtpReportStart.TabIndex = 78;
+			this.dtpReportStart.Value = new System.DateTime(2025, 5, 1, 0, 0, 0, 0);
+			// 
 			// FormHighLow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1183, 796);
+			this.Controls.Add(this.label32);
+			this.Controls.Add(this.dTPReport);
+			this.Controls.Add(this.label33);
+			this.Controls.Add(this.dtpReportStart);
 			this.Controls.Add(this.btnExport);
 			this.Controls.Add(this.btnGetData);
 			this.Controls.Add(this.lbPercent);
@@ -133,5 +174,9 @@
 		private System.Windows.Forms.Label lbPercent;
 		private System.Windows.Forms.Button btnGetData;
 		private System.Windows.Forms.Button btnExport;
+		private System.Windows.Forms.Label label32;
+		private System.Windows.Forms.DateTimePicker dTPReport;
+		private System.Windows.Forms.Label label33;
+		private System.Windows.Forms.DateTimePicker dtpReportStart;
 	}
 }

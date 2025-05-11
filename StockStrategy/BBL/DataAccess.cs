@@ -541,5 +541,14 @@ namespace StockStrategy.BBL
 			string _Return = _ApiResult.Data.ToString();
 			return _Return;
 		}
+		public List<StockIndexStopLossLog> getStockIndexStopLossLogList()
+		{
+			List<StockIndexStopLossLog> _ListStockIndexStopLossLog = new List<StockIndexStopLossLog>();
+			string _Action = "StockIndexStopLossLog";
+			string _Uri = ConnectionString + _Action;
+			ApiResultEntity _ApiResult = CallWebApi.Get(_Uri, Token);
+			_ListStockIndexStopLossLog = JsonConvert.DeserializeObject<List<StockIndexStopLossLog>>(_ApiResult.Data.ToString());
+			return _ListStockIndexStopLossLog;
+		}
 	}
 }

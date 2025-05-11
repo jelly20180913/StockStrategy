@@ -41,14 +41,20 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.lbProfit = new System.Windows.Forms.Label();
 			this.lbForcastRate = new System.Windows.Forms.Label();
+			this.chkStopLoss = new System.Windows.Forms.CheckBox();
+			this.nUDPoint = new System.Windows.Forms.NumericUpDown();
+			this.dgvStopLossResult = new System.Windows.Forms.DataGridView();
+			this.btnStopLoss = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dgvRoginForcast)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nUDPoint)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvStopLossResult)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// btnGetData
 			// 
 			this.btnGetData.Location = new System.Drawing.Point(264, 8);
 			this.btnGetData.Name = "btnGetData";
-			this.btnGetData.Size = new System.Drawing.Size(75, 23);
+			this.btnGetData.Size = new System.Drawing.Size(56, 23);
 			this.btnGetData.TabIndex = 26;
 			this.btnGetData.Text = "Get Data";
 			this.btnGetData.UseVisualStyleBackColor = true;
@@ -56,11 +62,12 @@
 			// 
 			// dgvRoginForcast
 			// 
+			this.dgvRoginForcast.AllowUserToAddRows = false;
 			this.dgvRoginForcast.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dgvRoginForcast.Location = new System.Drawing.Point(6, 47);
 			this.dgvRoginForcast.Name = "dgvRoginForcast";
 			this.dgvRoginForcast.RowTemplate.Height = 24;
-			this.dgvRoginForcast.Size = new System.Drawing.Size(642, 743);
+			this.dgvRoginForcast.Size = new System.Drawing.Size(866, 743);
 			this.dgvRoginForcast.TabIndex = 25;
 			// 
 			// label32
@@ -99,7 +106,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(356, 13);
+			this.label1.Location = new System.Drawing.Point(525, 13);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(20, 12);
 			this.label1.TabIndex = 77;
@@ -108,7 +115,7 @@
 			// lbForcastRight
 			// 
 			this.lbForcastRight.AutoSize = true;
-			this.lbForcastRight.Location = new System.Drawing.Point(382, 13);
+			this.lbForcastRight.Location = new System.Drawing.Point(551, 13);
 			this.lbForcastRight.Name = "lbForcastRight";
 			this.lbForcastRight.Size = new System.Drawing.Size(17, 12);
 			this.lbForcastRight.TabIndex = 78;
@@ -117,7 +124,7 @@
 			// lbForcastWrong
 			// 
 			this.lbForcastWrong.AutoSize = true;
-			this.lbForcastWrong.Location = new System.Drawing.Point(452, 13);
+			this.lbForcastWrong.Location = new System.Drawing.Point(621, 13);
 			this.lbForcastWrong.Name = "lbForcastWrong";
 			this.lbForcastWrong.Size = new System.Drawing.Size(17, 12);
 			this.lbForcastWrong.TabIndex = 80;
@@ -126,7 +133,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(418, 13);
+			this.label3.Location = new System.Drawing.Point(587, 13);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(32, 12);
 			this.label3.TabIndex = 79;
@@ -135,7 +142,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(492, 13);
+			this.label2.Location = new System.Drawing.Point(661, 13);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(44, 12);
 			this.label2.TabIndex = 81;
@@ -144,7 +151,7 @@
 			// lbProfit
 			// 
 			this.lbProfit.AutoSize = true;
-			this.lbProfit.Location = new System.Drawing.Point(542, 14);
+			this.lbProfit.Location = new System.Drawing.Point(711, 13);
 			this.lbProfit.Name = "lbProfit";
 			this.lbProfit.Size = new System.Drawing.Size(44, 12);
 			this.lbProfit.TabIndex = 82;
@@ -153,17 +160,58 @@
 			// lbForcastRate
 			// 
 			this.lbForcastRate.AutoSize = true;
-			this.lbForcastRate.Location = new System.Drawing.Point(604, 15);
+			this.lbForcastRate.Location = new System.Drawing.Point(773, 14);
 			this.lbForcastRate.Name = "lbForcastRate";
 			this.lbForcastRate.Size = new System.Drawing.Size(44, 12);
 			this.lbForcastRate.TabIndex = 83;
 			this.lbForcastRate.Text = "準確率:";
 			// 
+			// chkStopLoss
+			// 
+			this.chkStopLoss.AutoSize = true;
+			this.chkStopLoss.Location = new System.Drawing.Point(326, 12);
+			this.chkStopLoss.Name = "chkStopLoss";
+			this.chkStopLoss.Size = new System.Drawing.Size(66, 16);
+			this.chkStopLoss.TabIndex = 84;
+			this.chkStopLoss.Text = "StopLoss";
+			this.chkStopLoss.UseVisualStyleBackColor = true;
+			// 
+			// nUDPoint
+			// 
+			this.nUDPoint.Location = new System.Drawing.Point(399, 9);
+			this.nUDPoint.Name = "nUDPoint";
+			this.nUDPoint.Size = new System.Drawing.Size(39, 22);
+			this.nUDPoint.TabIndex = 85;
+			// 
+			// dgvStopLossResult
+			// 
+			this.dgvStopLossResult.AllowUserToAddRows = false;
+			this.dgvStopLossResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dgvStopLossResult.Location = new System.Drawing.Point(878, 47);
+			this.dgvStopLossResult.Name = "dgvStopLossResult";
+			this.dgvStopLossResult.RowTemplate.Height = 24;
+			this.dgvStopLossResult.Size = new System.Drawing.Size(544, 743);
+			this.dgvStopLossResult.TabIndex = 86;
+			// 
+			// btnStopLoss
+			// 
+			this.btnStopLoss.Location = new System.Drawing.Point(878, 9);
+			this.btnStopLoss.Name = "btnStopLoss";
+			this.btnStopLoss.Size = new System.Drawing.Size(56, 23);
+			this.btnStopLoss.TabIndex = 87;
+			this.btnStopLoss.Text = "StopLoss";
+			this.btnStopLoss.UseVisualStyleBackColor = true;
+			this.btnStopLoss.Click += new System.EventHandler(this.btnStopLoss_Click);
+			// 
 			// FormRobinForcast
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(653, 798);
+			this.ClientSize = new System.Drawing.Size(1434, 798);
+			this.Controls.Add(this.btnStopLoss);
+			this.Controls.Add(this.dgvStopLossResult);
+			this.Controls.Add(this.nUDPoint);
+			this.Controls.Add(this.chkStopLoss);
 			this.Controls.Add(this.lbForcastRate);
 			this.Controls.Add(this.lbProfit);
 			this.Controls.Add(this.label2);
@@ -180,6 +228,8 @@
 			this.Name = "FormRobinForcast";
 			this.Text = "FormRobinForcast";
 			((System.ComponentModel.ISupportInitialize)(this.dgvRoginForcast)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nUDPoint)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dgvStopLossResult)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -200,5 +250,9 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label lbProfit;
 		private System.Windows.Forms.Label lbForcastRate;
+		private System.Windows.Forms.CheckBox chkStopLoss;
+		private System.Windows.Forms.NumericUpDown nUDPoint;
+		private System.Windows.Forms.DataGridView dgvStopLossResult;
+		private System.Windows.Forms.Button btnStopLoss;
 	}
 }

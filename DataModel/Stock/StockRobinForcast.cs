@@ -14,6 +14,16 @@ namespace DataModel.Stock
 		[Description("準")]
 		public bool IsRight { get; set; }
 		[Description("幾點")] 
-		public decimal Point { get; set; } 
+		public decimal Point { get; set; }
+		[Description("預測結果")]
+		public bool IsBull { get; set; }
+		[Description("開盤價")]
+		public string TX_Open { get; set; }
+		[Description("最低價")]
+		public string TX_Low { get; set; }
+		[Description("最高價")]
+		public string TX_High { get; set; }
+		[Description("收盤價")]
+		public string TX { get; set; }
 	}
 }

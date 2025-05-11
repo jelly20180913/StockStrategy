@@ -58,6 +58,7 @@
     <Compile Include="Stock\StockHighLow.cs" />
     <Compile Include="Stock\StockIndex.cs" />
     <Compile Include="Stock\StockReport.cs" />
+    <Compile Include="Stock\StockRobinForcastStopLoss.cs" />
     <Compile Include="Stock\StockStatistics.cs" />
     <Compile Include="Stock\StockThreeInstitutional.cs" />
   </ItemGroup>

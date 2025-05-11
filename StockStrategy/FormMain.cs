@@ -4121,25 +4121,8 @@ new Dictionary<string, string>();
 			string _Log = "";
 			try
 			{
-				string email = "kingkids911@gmail.com";
-				string ps = "dhrf rbhg kudg wcao";
-				using (var client = new ImapClient())
-				{
-					client.Connect("imap.gmail.com", 993, SecureSocketOptions.SslOnConnect);
-					client.Authenticate(email, ps); 
-					var inbox = client.Inbox;
-					inbox.Open(FolderAccess.ReadOnly); 
-					var today = DateTime.Today;
-					var results = inbox.Search(SearchQuery.SubjectContains("策略選股").And(SearchQuery.DeliveredOn(today))); 
-					foreach (var uniqueId in results)
-					{
-						var message = inbox.GetMessage(uniqueId);
-						string[] sub = message.Subject.Split('$');
-
-						Console.WriteLine($"郵件標題: {message.Subject}");
-					} 
-					client.Disconnect(true);
-				} 
+				string message = Tool.ReceiveRobinForcast();
+				string[] sub = message.Split('$');
 			}
 			catch (Exception ex)
 			{

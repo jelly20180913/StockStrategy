@@ -7,6 +7,13 @@ using System.Linq;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net.Mail;
+using MailKit.Net.Imap;
+using MailKit.Search;
+using MailKit.Security;
+using MailKit;
+using NLog;
+using StockStrategy.BBL;
+using WebApiService.Models;
 
 namespace StockStrategy.Common
 {
@@ -173,6 +180,36 @@ namespace StockStrategy.Common
 			{
 				throw new Exception(ex.Message, ex.InnerException);
 			}
+		}
+        public static string ReceiveRobinForcast() {
+			string _Log = "";
+            string _Subject = "";
+			try
+			{
+				string email = ConfigurationManager.AppSettings["EmailSender"];
+				string ps = ConfigurationManager.AppSettings["EmailPwd"];
+				string mailServer = ConfigurationManager.AppSettings["MailServer"];
+				using (var client = new ImapClient())
+				{
+					client.Connect(mailServer, 993, SecureSocketOptions.SslOnConnect);
+					client.Authenticate(email, ps);
+					var inbox = client.Inbox;
+					inbox.Open(FolderAccess.ReadOnly);
+					var today = DateTime.Today;
+					var results = inbox.Search(SearchQuery.SubjectContains("策略選股").And(SearchQuery.DeliveredOn(today)));
+					foreach (var uniqueId in results)
+					{
+						var message = inbox.GetMessage(uniqueId);
+                        _Subject = message.Subject; 
+					}
+					client.Disconnect(true);
+                }
+            }
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message, ex.InnerException);
+			}
+            return _Subject;
 		}
 	}
 }

@@ -2440,7 +2440,6 @@
 			// 
 			// timerMTX
 			// 
-			this.timerMTX.Enabled = true;
 			this.timerMTX.Interval = 5000;
 			this.timerMTX.Tick += new System.EventHandler(this.timerMTX_Tick);
 			// 

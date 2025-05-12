@@ -179,6 +179,11 @@
 			// nUDPoint
 			// 
 			this.nUDPoint.Location = new System.Drawing.Point(399, 9);
+			this.nUDPoint.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
 			this.nUDPoint.Name = "nUDPoint";
 			this.nUDPoint.Size = new System.Drawing.Size(39, 22);
 			this.nUDPoint.TabIndex = 85;

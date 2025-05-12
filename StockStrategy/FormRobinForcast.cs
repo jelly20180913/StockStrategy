@@ -91,12 +91,19 @@ namespace StockStrategy
 										if (stockIndexStopLossLog.Where(x => x.Date == s.Date).Any(y => Convert.ToDecimal(y.MTX_Index) <= _MTX_StopLoss))
 										{
 											_IsRight = false;
-											_Point = nUDPoint.Value * -1;
+											_Point = stopLossPoint * -1;
 										}
 										else
 										{
-											if(_Point>0)
-											_IsRight = true;
+											if (Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX_Low) <= _MTX_StopLoss)
+											{
+												_IsRight = false;
+												_Point = stopLossPoint * -1;
+											}
+											else
+											{
+												_IsRight = true;
+											}
 										}
 									}
 									else
@@ -105,13 +112,14 @@ namespace StockStrategy
 										if (stockIndexStopLossLog.Where(x => x.Date == s.Date).Any(y => Convert.ToDecimal(y.MTX_Index) >= _MTX_StopLoss))
 										{
 											_IsRight = false;
-											_Point = nUDPoint.Value * -1;
+											_Point = stopLossPoint * -1;
 										}
 										else
-										{ 
-											if (_Point > 0)
-											{ 
-												_IsRight = false; 
+										{
+											if (Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX_High) >= _MTX_StopLoss)
+											{
+												_IsRight = false;
+												_Point = stopLossPoint * -1;
 											}
 											else
 											{

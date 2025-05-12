@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using WebApiService.Models;
 using DateTime = System.DateTime;
+using Org.BouncyCastle.Pqc.Crypto.Lms;
 //using DataModel.Stock;
 //using DocumentFormat.OpenXml.Drawing.Charts;
 //using DataModel.Stock;
@@ -438,23 +439,24 @@ namespace StockStrategy
 					if (!bTAIEX)
 					{
 						timerMTX.Enabled = false;
-						btnUpdateStockIndex.PerformClick();
+						//btnUpdateStockIndex.PerformClick();
 					}
 				}
 				if (_Hour == "13" && _Minute == "55")
 				{
 					bUpdateStockLineNotify = false;
 					if (!bStockAllLackOff)
-					{
+					{ 
 						bStockAllLackOff = true;
-						btnInsertStockLackOff.PerformClick();
+						btnInsertStockLackOff.PerformClick(); 
 					}
 
 				}
 				if (_Hour == "14" && _Minute == "55")
 				{
 					if (!bUpdateStockLineNotify)
-					{
+					{  
+						btnUpdateStockIndex.PerformClick();
 						bUpdateStockLineNotify = true;
 						btnResetLinePoint.PerformClick();
 					}
@@ -3489,7 +3491,7 @@ namespace StockStrategy
 				string _FuturePrice = Common.Job.GetTaiwanFutures("https://histock.tw/index-tw/FIMTX", _Id, true);
 				StockIndexStopLossLog stockIndexStopLossLog = new StockIndexStopLossLog();
 				stockIndexStopLossLog.Date = DateTime.Now.ToString("yyyyMMdd");
-				stockIndexStopLossLog.UpdateTime = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
+				stockIndexStopLossLog.UpdateTime = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 				stockIndexStopLossLog.MTX_Index = _FuturePrice;
 				_DataAccess.insertStockIndexStopLossLog(stockIndexStopLossLog);
 			}
@@ -3943,10 +3945,12 @@ namespace StockStrategy
 				string _TPEx_URL = ConfigurationManager.AppSettings["TPEx_URL"];
 				StockIndex s = new StockIndex();
 				List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
-				s = _ListStock.OrderByDescending(x => x.Date).First();
+				//s = _ListStock.OrderByDescending(x => x.Date).First();
+				s = _ListStock.Where(x => x.Date== this.dtpStockIndex.Value.ToString("yyyyMMdd")).First();
 				//s.Id = _ListStock.OrderByDescending(x => x.Date).First().Id;
 				s.ContinueName = "";
-				s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
+				//s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
+				s.TX = Common.Job.GetValue(_HtmlDoc, _TX);
 				s.TX_High = Common.Job.GetValue(_HtmlDoc, _TX_High);
 				s.TX_Open = Common.Job.GetValue(_HtmlDoc, _TX_Open);
 				s.TX_Low = Common.Job.GetValue(_HtmlDoc, _TX_Low);

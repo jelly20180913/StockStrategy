@@ -16,8 +16,8 @@ namespace DataModel.Stock
 		[Description("不準")]
 		public string IsFail { get; set; }
 		[Description("幾點")]
-		public string Point { get; set; }
+		public decimal Point { get; set; }
 		[Description("準確率")]
-		public string ForcastRate { get; set; }
+		public double ForcastRate { get; set; }
 	}
 }

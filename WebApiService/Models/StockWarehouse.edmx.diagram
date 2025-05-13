@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="fbd73ad737d34421947069d461037e3a" Name="Diagram1">
         <EntityTypeShape EntityType="StockWarehouseModel.Login" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="StockWarehouseModel.Stock" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockGroup" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockIndex" Width="2.625" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockInventory" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
@@ -28,7 +27,7 @@
         <EntityTypeShape EntityType="StockWarehouseModel.StockIndexForcast" Width="1.5" PointX="14.375" PointY="12.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.Item" Width="1.5" PointX="15.375" PointY="0.75" />
         <EntityTypeShape EntityType="StockWarehouseModel.StockIndexStopLossLog" Width="1.5" PointX="0.75" PointY="15.75" />
-        <AssociationConnector Association="StockWarehouseModel.FK_Stock_Stock" />
+        <EntityTypeShape EntityType="StockWarehouseModel.Stock" Width="1.5" PointX="16.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

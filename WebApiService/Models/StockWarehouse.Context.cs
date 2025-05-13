@@ -26,7 +26,6 @@ namespace WebApiService.Models
         }
     
         public virtual DbSet<Login> Login { get; set; }
-        public virtual DbSet<Stock> Stock { get; set; }
         public virtual DbSet<StockGroup> StockGroup { get; set; }
         public virtual DbSet<StockIndex> StockIndex { get; set; }
         public virtual DbSet<StockInventory> StockInventory { get; set; }
@@ -48,5 +47,6 @@ namespace WebApiService.Models
         public virtual DbSet<StockIndexForcast> StockIndexForcast { get; set; }
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<StockIndexStopLossLog> StockIndexStopLossLog { get; set; }
+        public virtual DbSet<Stock> Stock { get; set; }
     }
 }

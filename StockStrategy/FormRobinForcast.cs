@@ -40,7 +40,7 @@ namespace StockStrategy
 				List<StockIndexStopLossLog> _StockIndexStopLossLog = new List<StockIndexStopLossLog>();
 				if (chkStopLoss.Checked)
 					_StockIndexStopLossLog = _DataAccess.getStockIndexStopLossLogList();
-				SortableBindingList<StockRobinForcast> _StockRobinForcastList=processRobinForcast(_StockIndexStopLossLog, nUDPoint.Value,chkStopLoss.Checked);
+				SortableBindingList<StockRobinForcast> _StockRobinForcastList = processRobinForcast(_StockIndexStopLossLog, nUDPoint.Value, chkStopLoss.Checked);
 				this.dgvRoginForcast.DataSource = _StockRobinForcastList;
 				this.dgvRoginForcast.Refresh();
 				this.lbForcastRight.Text = _StockRobinForcastList.Where(x => x.IsRight == true).Count().ToString();
@@ -56,8 +56,8 @@ namespace StockStrategy
 			}
 		}
 
-		private SortableBindingList<StockRobinForcast> processRobinForcast(List<StockIndexStopLossLog> stockIndexStopLossLog,decimal stopLossPoint,bool isStopLoss)
-		{ 
+		private SortableBindingList<StockRobinForcast> processRobinForcast(List<StockIndexStopLossLog> stockIndexStopLossLog, decimal stopLossPoint, bool isStopLoss)
+		{
 			SortableBindingList<StockRobinForcast> _StockRobinForcastList = new SortableBindingList<StockRobinForcast>();
 			string _Log = "";
 			int i = 0;
@@ -67,10 +67,10 @@ namespace StockStrategy
 				string _DayOfWeek = _Dt.DayOfWeek.ToString();
 				string _WhereDate = _Dt.ToString("yyyyMMdd");
 				List<StockIndexForcast> _StockIndexForcastList = _DataAccess.getStockIndexForcastList();
-				List<StockIndex> _StockIndexList = _DataAccess.getStockIndexList(); 
+				List<StockIndex> _StockIndexList = _DataAccess.getStockIndexList();
 				_StockIndexForcastList = _StockIndexForcastList.Where(x => Convert.ToInt32(x.Date) < Convert.ToInt32(_WhereDate)).ToList();
 				_StockIndexForcastList = _StockIndexForcastList.Where(x => Convert.ToInt32(x.Date) >= Convert.ToInt32(this.dtpReportStart.Value.ToString("yyyyMMdd"))).ToList();
-				 
+
 				foreach (StockIndexForcast s in _StockIndexForcastList)
 				{
 					if (_StockIndexList.Where(x => x.Date == s.Date).Count() > 0)
@@ -80,12 +80,15 @@ namespace StockStrategy
 							bool _IsRight = false;
 							if (_StockIndexList.Where(x => x.Date == s.Date).First().TX_Open != "")
 							{
+								int? _Result = s.Result;
+								if (raBull.Checked) _Result = 1;
+								if (raBear.Checked) _Result = -1;
 								decimal _MTX_Open = Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX_Open);
 								decimal _Point = Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX) - Convert.ToDecimal(_StockIndexList.Where(x => x.Date == s.Date).First().TX_Open);
 								if (isStopLoss)
 								{
 									decimal _MTX_StopLoss = 0;
-									if (s.Result > 0)
+									if (_Result > 0)
 									{
 										_MTX_StopLoss = _MTX_Open - stopLossPoint;
 										if (stockIndexStopLossLog.Where(x => x.Date == s.Date).Any(y => Convert.ToDecimal(y.MTX_Index) <= _MTX_StopLoss))
@@ -102,7 +105,7 @@ namespace StockStrategy
 											}
 											else
 											{
-												_IsRight = true;
+												_IsRight = _Point > 0 ? true : false;
 											}
 										}
 									}
@@ -123,24 +126,32 @@ namespace StockStrategy
 											}
 											else
 											{
-												_IsRight = true;
-												_Point = _Point * -1;
+												if (_Point < 0)
+												{
+													_IsRight = true;
+													_Point = _Point * -1;
+												}
+												else
+												{
+													_IsRight = false;
+													_Point = _Point * -1;
+												}
 											}
 										}
 									}
 								}
 								else
 								{
-									if (_Point > 0 && s.Result > 0)
+									if (_Point > 0 && _Result > 0)
 									{
 										_IsRight = true;
 									}
-									else if (_Point < 0 && s.Result < 0)
+									else if (_Point < 0 && _Result < 0)
 									{
 										_IsRight = true;
 										_Point = _Point * -1;
 									}
-									else if (_Point > 0 && s.Result < 0)
+									else if (_Point > 0 && _Result < 0)
 									{
 										_Point = _Point * -1;
 									}
@@ -162,7 +173,7 @@ namespace StockStrategy
 						}
 					}
 					i++;
-				} 
+				}
 			}
 			catch (Exception ex)
 			{
@@ -179,33 +190,37 @@ namespace StockStrategy
 
 		private void btnStopLoss_Click(object sender, EventArgs e)
 		{
-			string _Log = ""; 
+			string _Log = "";
 			try
 			{
-				List<StockIndexStopLossLog> _StockIndexStopLossLog = new List<StockIndexStopLossLog>(); 
-					_StockIndexStopLossLog = _DataAccess.getStockIndexStopLossLogList();
+				List<StockIndexStopLossLog> _StockIndexStopLossLog = new List<StockIndexStopLossLog>();
+				_StockIndexStopLossLog = _DataAccess.getStockIndexStopLossLogList();
 				SortableBindingList<StockRobinForcast> _StockRobinForcastList = new SortableBindingList<StockRobinForcast>();
 				SortableBindingList<StockRobinForcastStopLoss> _StockRobinForcastStopLossList = new SortableBindingList<StockRobinForcastStopLoss>();
-				for (int i = 0; i <= 200; i = i + 10)
+				for (int i = 0; i <= 400; i = i + 10)
 				{
-					_StockRobinForcastList = processRobinForcast(_StockIndexStopLossLog,i, true);
+					_StockRobinForcastList = processRobinForcast(_StockIndexStopLossLog, i, true);
 					StockRobinForcastStopLoss stockRobinForcastStopLoss = new StockRobinForcastStopLoss();
 					stockRobinForcastStopLoss.StopLossPoint = i.ToString();
-					stockRobinForcastStopLoss.IsRight=_StockRobinForcastList.Where(x => x.IsRight == true).Count().ToString();
+					stockRobinForcastStopLoss.IsRight = _StockRobinForcastList.Where(x => x.IsRight == true).Count().ToString();
 					stockRobinForcastStopLoss.IsFail = _StockRobinForcastList.Where(x => x.IsRight == false).Count().ToString();
-					stockRobinForcastStopLoss.Point= _StockRobinForcastList.Sum(x => x.Point).ToString();
+					stockRobinForcastStopLoss.Point = _StockRobinForcastList.Sum(x => x.Point);
 					int _Total = _StockRobinForcastList.Where(x => x.IsRight == true).Count() + _StockRobinForcastList.Where(x => x.IsRight == false).Count();
-					stockRobinForcastStopLoss.ForcastRate= Convert.ToString(Math.Round(Convert.ToDouble(_StockRobinForcastList.Where(x => x.IsRight == true).Count()) / _Total, 2));
+					stockRobinForcastStopLoss.ForcastRate = Math.Round(Convert.ToDouble(_StockRobinForcastList.Where(x => x.IsRight == true).Count()) / _Total, 2);
 					_StockRobinForcastStopLossList.Add(stockRobinForcastStopLoss);
 				}
 				this.dgvStopLossResult.DataSource = _StockRobinForcastStopLossList;
-				this.dgvStopLossResult.Refresh();  
+				this.dgvStopLossResult.Refresh();
 			}
 			catch (Exception ex)
 			{
 				_Log = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss") + " btnStopLoss_Click:" + ex.Message + "\r\n";
 				logger.Error(_Log);
 			}
+		}
+
+		private void FormRobinForcast_Load(object sender, EventArgs e)
+		{
 		}
 	}
 }

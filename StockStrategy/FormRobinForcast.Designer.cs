@@ -45,6 +45,8 @@
 			this.nUDPoint = new System.Windows.Forms.NumericUpDown();
 			this.dgvStopLossResult = new System.Windows.Forms.DataGridView();
 			this.btnStopLoss = new System.Windows.Forms.Button();
+			this.raBull = new System.Windows.Forms.RadioButton();
+			this.raBear = new System.Windows.Forms.RadioButton();
 			((System.ComponentModel.ISupportInitialize)(this.dgvRoginForcast)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nUDPoint)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgvStopLossResult)).BeginInit();
@@ -64,10 +66,10 @@
 			// 
 			this.dgvRoginForcast.AllowUserToAddRows = false;
 			this.dgvRoginForcast.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgvRoginForcast.Location = new System.Drawing.Point(6, 47);
+			this.dgvRoginForcast.Location = new System.Drawing.Point(6, 64);
 			this.dgvRoginForcast.Name = "dgvRoginForcast";
 			this.dgvRoginForcast.RowTemplate.Height = 24;
-			this.dgvRoginForcast.Size = new System.Drawing.Size(866, 743);
+			this.dgvRoginForcast.Size = new System.Drawing.Size(866, 726);
 			this.dgvRoginForcast.TabIndex = 25;
 			// 
 			// label32
@@ -85,6 +87,7 @@
 			this.dTPReport.Name = "dTPReport";
 			this.dTPReport.Size = new System.Drawing.Size(107, 22);
 			this.dTPReport.TabIndex = 73;
+			this.dTPReport.Value = new System.DateTime(2024, 12, 31, 0, 0, 0, 0);
 			// 
 			// label33
 			// 
@@ -101,7 +104,7 @@
 			this.dtpReportStart.Name = "dtpReportStart";
 			this.dtpReportStart.Size = new System.Drawing.Size(102, 22);
 			this.dtpReportStart.TabIndex = 74;
-			this.dtpReportStart.Value = new System.DateTime(2024, 6, 1, 0, 0, 0, 0);
+			this.dtpReportStart.Value = new System.DateTime(2024, 1, 1, 0, 0, 0, 0);
 			// 
 			// label1
 			// 
@@ -192,10 +195,10 @@
 			// 
 			this.dgvStopLossResult.AllowUserToAddRows = false;
 			this.dgvStopLossResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgvStopLossResult.Location = new System.Drawing.Point(878, 47);
+			this.dgvStopLossResult.Location = new System.Drawing.Point(878, 64);
 			this.dgvStopLossResult.Name = "dgvStopLossResult";
 			this.dgvStopLossResult.RowTemplate.Height = 24;
-			this.dgvStopLossResult.Size = new System.Drawing.Size(544, 743);
+			this.dgvStopLossResult.Size = new System.Drawing.Size(544, 726);
 			this.dgvStopLossResult.TabIndex = 86;
 			// 
 			// btnStopLoss
@@ -208,11 +211,35 @@
 			this.btnStopLoss.UseVisualStyleBackColor = true;
 			this.btnStopLoss.Click += new System.EventHandler(this.btnStopLoss_Click);
 			// 
+			// raBull
+			// 
+			this.raBull.AutoSize = true;
+			this.raBull.Location = new System.Drawing.Point(12, 38);
+			this.raBull.Name = "raBull";
+			this.raBull.Size = new System.Drawing.Size(59, 16);
+			this.raBull.TabIndex = 88;
+			this.raBull.TabStop = true;
+			this.raBull.Text = "無腦多";
+			this.raBull.UseVisualStyleBackColor = true;
+			// 
+			// raBear
+			// 
+			this.raBear.AutoSize = true;
+			this.raBear.Location = new System.Drawing.Point(77, 38);
+			this.raBear.Name = "raBear";
+			this.raBear.Size = new System.Drawing.Size(59, 16);
+			this.raBear.TabIndex = 89;
+			this.raBear.TabStop = true;
+			this.raBear.Text = "無腦空";
+			this.raBear.UseVisualStyleBackColor = true;
+			// 
 			// FormRobinForcast
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1434, 798);
+			this.Controls.Add(this.raBear);
+			this.Controls.Add(this.raBull);
 			this.Controls.Add(this.btnStopLoss);
 			this.Controls.Add(this.dgvStopLossResult);
 			this.Controls.Add(this.nUDPoint);
@@ -232,6 +259,7 @@
 			this.Controls.Add(this.dgvRoginForcast);
 			this.Name = "FormRobinForcast";
 			this.Text = "FormRobinForcast";
+			this.Load += new System.EventHandler(this.FormRobinForcast_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dgvRoginForcast)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nUDPoint)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgvStopLossResult)).EndInit();
@@ -259,5 +287,7 @@
 		private System.Windows.Forms.NumericUpDown nUDPoint;
 		private System.Windows.Forms.DataGridView dgvStopLossResult;
 		private System.Windows.Forms.Button btnStopLoss;
+		private System.Windows.Forms.RadioButton raBull;
+		private System.Windows.Forms.RadioButton raBear;
 	}
 }

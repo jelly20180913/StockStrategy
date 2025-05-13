@@ -53,7 +53,7 @@ namespace StockStrategy
 		List<Holiday> HolidayList = new List<Holiday>();
 		Dictionary<int, string> GoodStockClass = new Dictionary<int, string>() { };
 		List<string> ListGoodStockClass = new List<string>();
-		private string TeamsGroup = "",EmailGroup="";
+		private string TeamsGroup = "", EmailGroup = "";
 		public ScheduleJob()
 		{
 			InitializeComponent();
@@ -419,7 +419,7 @@ namespace StockStrategy
 				}
 				if (_Hour == "8" && _Minute == "45")
 				{
-					
+
 					if (!bBadStockLineNotify)
 					{
 						bBadStockLineNotify = true;
@@ -446,16 +446,16 @@ namespace StockStrategy
 				{
 					bUpdateStockLineNotify = false;
 					if (!bStockAllLackOff)
-					{ 
+					{
 						bStockAllLackOff = true;
-						btnInsertStockLackOff.PerformClick(); 
+						btnInsertStockLackOff.PerformClick();
 					}
 
 				}
 				if (_Hour == "14" && _Minute == "55")
 				{
 					if (!bUpdateStockLineNotify)
-					{  
+					{
 						btnUpdateStockIndex.PerformClick();
 						bUpdateStockLineNotify = true;
 						btnResetLinePoint.PerformClick();
@@ -3324,16 +3324,17 @@ namespace StockStrategy
 				this.btnErrorMsg.Text += _Log;
 			}
 		}
-		private string superLink(string code) {
+		private string superLink(string code)
+		{
 
-			string _Log = "",_Url="";
+			string _Log = "", _Url = "";
 			try
 			{
 				List<StockGroup> _ListStockGroup = _DataAccess.getStockGroupList();
 				string _Code = code;
 				bool? _StockType = _ListStockGroup.Where(x => x.Code == _Code).First().StockType;
 				string _Type = Convert.ToBoolean(_StockType) == true ? "TW" : "TWO";
-				_Url = $"https://tw.stock.yahoo.com/quote/{_Code}.{_Type}/technical-analysis"; 
+				_Url = $"https://tw.stock.yahoo.com/quote/{_Code}.{_Type}/technical-analysis";
 			}
 			catch (Exception ex)
 			{
@@ -3348,7 +3349,12 @@ namespace StockStrategy
 			FormUpdateStockIndex _FormUpdateStockIndex = new FormUpdateStockIndex();
 			_FormUpdateStockIndex.ShowDialog();
 		}
-
+		/// <summary>
+		/// 待確認收盤價為何要註解
+		/// 這按紐可以補齊所有台指最高價最低價和開盤價
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnTX_Click(object sender, EventArgs e)
 		{
 			string _Date = this.dtpStockIndex.Value.ToString("yyyy/MM/dd");
@@ -3358,6 +3364,7 @@ namespace StockStrategy
 			string _TX = $"//*[@id=\"printhere\"]/div/table/tbody/tr[1]/td[6]";
 
 			List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
+			_ListStock = _ListStock.Where(x => Convert.ToInt32(x.Date) >= Convert.ToInt32(this.dtpStockIndex.Value.ToString("yyyyMMdd"))).ToList();
 			foreach (StockIndex s in _ListStock)
 			{
 				string myDateTimeString = $"{s.Date.Substring(0, 4)}-{s.Date.Substring(4, 2)}-{s.Date.Substring(6, 2)}";
@@ -3368,20 +3375,23 @@ namespace StockStrategy
 				string _TX_Open = Common.Job.GetValue(_HtmlDoc, _Open);
 				string _TX_High = Common.Job.GetValue(_HtmlDoc, _High);
 				string _TX_Low = Common.Job.GetValue(_HtmlDoc, _Low);
-				//string _TX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
+				string _TX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
 				string _Stock_URL_MTX = $"https://www.taifex.com.tw/cht/3/futDailyMarketReport?queryDate={_StockDate.ToString("yyyy/MM/dd")}&queryType=2&commodity_id=TX&MarketCode=1&commodity_idt=TX&marketCode=1";
 				HtmlAgilityPack.HtmlDocument _HtmlDoc_MTX = Common.Job.GetHtml(_Stock_URL_MTX);
 				string _MTX_Open = Common.Job.GetValue(_HtmlDoc_MTX, _Open);
 				string _MTX_High = Common.Job.GetValue(_HtmlDoc_MTX, _High);
 				string _MTX_Low = Common.Job.GetValue(_HtmlDoc_MTX, _Low);
-				//string _MTX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
+				string _MTX_Index = Common.Job.GetValue(_HtmlDoc, _TX);
 				s.TX_High = _TX_High;
 				s.TX_Open = _TX_Open;
 				s.TX_Low = _TX_Low;
+				s.TX = _TX_Index;
 				s.MTX_High = _MTX_High;
 				s.MTX_Open = _MTX_Open;
 				s.MTX_Low = _MTX_Low;
-				_DataAccess.UpdateStockIndex(s);
+				s.MTX = _MTX_Index;
+				if (_TX_Index != "")
+					_DataAccess.UpdateStockIndex(s);
 
 			}
 			string _Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " update stock TX ok.";
@@ -3484,10 +3494,10 @@ namespace StockStrategy
 		/// <param name="e"></param>
 		private void btnMTX_Click(object sender, EventArgs e)
 		{
-			string _Log = ""; 
+			string _Log = "";
 			try
 			{
-				string _Id = "Price1_lbTPrice"; 
+				string _Id = "Price1_lbTPrice";
 				string _FuturePrice = Common.Job.GetTaiwanFutures("https://histock.tw/index-tw/FIMTX", _Id, true);
 				StockIndexStopLossLog stockIndexStopLossLog = new StockIndexStopLossLog();
 				stockIndexStopLossLog.Date = DateTime.Now.ToString("yyyyMMdd");
@@ -3510,7 +3520,7 @@ namespace StockStrategy
 
 		private void btnSendMail_Click(object sender, EventArgs e)
 		{
-			Tool.SendMail(EmailGroup,"test","ttt");
+			Tool.SendMail(EmailGroup, "test", "ttt");
 		}
 
 		/// <summary>
@@ -3946,7 +3956,7 @@ namespace StockStrategy
 				StockIndex s = new StockIndex();
 				List<StockIndex> _ListStock = _DataAccess.getStockIndexList();
 				//s = _ListStock.OrderByDescending(x => x.Date).First();
-				s = _ListStock.Where(x => x.Date== this.dtpStockIndex.Value.ToString("yyyyMMdd")).First();
+				s = _ListStock.Where(x => x.Date == this.dtpStockIndex.Value.ToString("yyyyMMdd")).First();
 				//s.Id = _ListStock.OrderByDescending(x => x.Date).First().Id;
 				s.ContinueName = "";
 				//s.TX = Common.Job.GetTaiwanFutures(_MTX_URL, _Id, true);
@@ -4034,7 +4044,7 @@ namespace StockStrategy
 					  }
 					  },
 						  contentType=""
-				     }
+					 }
 					}
 				};
 				var jsonData = JsonConvert.SerializeObject(postData);

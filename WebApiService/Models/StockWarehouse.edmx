@@ -401,18 +401,6 @@
           <Property Name="Rank" Type="int" />
           <Property Name="BuySellOver" Type="bit" />
         </EntityType>
-        <Association Name="FK_Stock_Stock">
-          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
-          <End Role="Stock1" Type="Self.Stock" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Stock">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Stock1">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="StockWarehouseModelStoreContainer">
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
@@ -451,10 +439,6 @@
     [Item].[ItemName] AS [ItemName]
     FROM [dbo].[Item] AS [Item]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_Stock_Stock" Association="Self.FK_Stock_Stock">
-            <End Role="Stock" EntitySet="Stock" />
-            <End Role="Stock1" EntitySet="Stock" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -467,29 +451,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Account" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Stock">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TradeVolume" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="TradeValue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="OpeningPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="HighestPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="LowestPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ClosingPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Change" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TransactionValue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Gain" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Shock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ForeignInvestment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Investment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Dealer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="StockGroup">
           <Key>
@@ -612,7 +573,6 @@
         </EntityType>
         <EntityContainer Name="StockWarehouseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Login" EntityType="Self.Login" />
-          <EntitySet Name="Stock" EntityType="Self.Stock" />
           <EntitySet Name="StockGroup" EntityType="Self.StockGroup" />
           <EntitySet Name="StockIndex" EntityType="Self.StockIndex" />
           <EntitySet Name="StockInventory" EntityType="Self.StockInventory" />
@@ -634,10 +594,7 @@
           <EntitySet Name="StockIndexForcast" EntityType="StockWarehouseModel.StockIndexForcast" />
           <EntitySet Name="Item" EntityType="StockWarehouseModel.Item" />
           <EntitySet Name="StockIndexStopLossLog" EntityType="StockWarehouseModel.StockIndexStopLossLog" />
-          <AssociationSet Name="FK_Stock_Stock" Association="StockWarehouseModel.FK_Stock_Stock">
-            <End Role="Stock" EntitySet="Stock" />
-            <End Role="Stock1" EntitySet="Stock" />
-          </AssociationSet>
+          <EntitySet Name="Stock" EntityType="StockWarehouseModel.Stock" />
         </EntityContainer>
         <EntityType Name="StockLineNotify">
           <Key>
@@ -881,18 +838,29 @@
           <Property Name="MTX_Index" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
-        <Association Name="FK_Stock_Stock">
-          <End Type="StockWarehouseModel.Stock" Role="Stock" Multiplicity="1" />
-          <End Type="StockWarehouseModel.Stock" Role="Stock1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Stock">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Stock1">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TradeVolume" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TradeValue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HighestPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LowestPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ClosingPrice" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Change" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionValue" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UpdateTime" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Gain" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Shock" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ForeignInvestment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Investment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Dealer" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -905,30 +873,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Account" ColumnName="Account" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Stock">
-            <EntityTypeMapping TypeName="StockWarehouseModel.Stock">
-              <MappingFragment StoreEntitySet="Stock">
-                <ScalarProperty Name="Dealer" ColumnName="Dealer" />
-                <ScalarProperty Name="Investment" ColumnName="Investment" />
-                <ScalarProperty Name="ForeignInvestment" ColumnName="ForeignInvestment" />
-                <ScalarProperty Name="Shock" ColumnName="Shock" />
-                <ScalarProperty Name="Gain" ColumnName="Gain" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="TradeVolume" ColumnName="TradeVolume" />
-                <ScalarProperty Name="TradeValue" ColumnName="TradeValue" />
-                <ScalarProperty Name="OpeningPrice" ColumnName="OpeningPrice" />
-                <ScalarProperty Name="HighestPrice" ColumnName="HighestPrice" />
-                <ScalarProperty Name="LowestPrice" ColumnName="LowestPrice" />
-                <ScalarProperty Name="ClosingPrice" ColumnName="ClosingPrice" />
-                <ScalarProperty Name="Change" ColumnName="Change" />
-                <ScalarProperty Name="TransactionValue" ColumnName="TransactionValue" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1310,6 +1254,30 @@
                 <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
                 <ScalarProperty Name="MTX_Index" ColumnName="MTX_Index" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stock">
+            <EntityTypeMapping TypeName="StockWarehouseModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="Dealer" ColumnName="Dealer" />
+                <ScalarProperty Name="Investment" ColumnName="Investment" />
+                <ScalarProperty Name="ForeignInvestment" ColumnName="ForeignInvestment" />
+                <ScalarProperty Name="Shock" ColumnName="Shock" />
+                <ScalarProperty Name="Gain" ColumnName="Gain" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="TransactionValue" ColumnName="TransactionValue" />
+                <ScalarProperty Name="Change" ColumnName="Change" />
+                <ScalarProperty Name="ClosingPrice" ColumnName="ClosingPrice" />
+                <ScalarProperty Name="LowestPrice" ColumnName="LowestPrice" />
+                <ScalarProperty Name="HighestPrice" ColumnName="HighestPrice" />
+                <ScalarProperty Name="OpeningPrice" ColumnName="OpeningPrice" />
+                <ScalarProperty Name="TradeValue" ColumnName="TradeValue" />
+                <ScalarProperty Name="TradeVolume" ColumnName="TradeVolume" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

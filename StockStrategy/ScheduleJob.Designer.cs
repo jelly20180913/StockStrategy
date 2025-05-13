@@ -139,6 +139,9 @@
 			this.btnBad = new System.Windows.Forms.Button();
 			this.btnStockJurical = new System.Windows.Forms.Button();
 			this.pnAdmin = new System.Windows.Forms.Panel();
+			this.btnMTX = new System.Windows.Forms.Button();
+			this.btnReceive = new System.Windows.Forms.Button();
+			this.btnSendMail = new System.Windows.Forms.Button();
 			this.btnTeams = new System.Windows.Forms.Button();
 			this.btnTX = new System.Windows.Forms.Button();
 			this.gp = new System.Windows.Forms.GroupBox();
@@ -242,9 +245,6 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.pnTop = new System.Windows.Forms.Panel();
 			this.timerSStockResult = new System.Windows.Forms.Timer(this.components);
-			this.btnSendMail = new System.Windows.Forms.Button();
-			this.btnReceive = new System.Windows.Forms.Button();
-			this.btnMTX = new System.Windows.Forms.Button();
 			this.timerMTX = new System.Windows.Forms.Timer(this.components);
 			this.groupBox1.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -1404,6 +1404,37 @@
 			this.pnAdmin.Size = new System.Drawing.Size(1277, 206);
 			this.pnAdmin.TabIndex = 42;
 			// 
+			// btnMTX
+			// 
+			this.btnMTX.Location = new System.Drawing.Point(930, 57);
+			this.btnMTX.Name = "btnMTX";
+			this.btnMTX.Size = new System.Drawing.Size(75, 23);
+			this.btnMTX.TabIndex = 111;
+			this.btnMTX.Text = "MTX";
+			this.btnMTX.UseVisualStyleBackColor = true;
+			this.btnMTX.Click += new System.EventHandler(this.btnMTX_Click);
+			// 
+			// btnReceive
+			// 
+			this.btnReceive.Location = new System.Drawing.Point(852, 57);
+			this.btnReceive.Name = "btnReceive";
+			this.btnReceive.Size = new System.Drawing.Size(75, 23);
+			this.btnReceive.TabIndex = 110;
+			this.btnReceive.Text = "receive";
+			this.btnReceive.UseVisualStyleBackColor = true;
+			this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
+			// 
+			// btnSendMail
+			// 
+			this.btnSendMail.Enabled = false;
+			this.btnSendMail.Location = new System.Drawing.Point(809, 58);
+			this.btnSendMail.Name = "btnSendMail";
+			this.btnSendMail.Size = new System.Drawing.Size(37, 23);
+			this.btnSendMail.TabIndex = 109;
+			this.btnSendMail.Text = "mail";
+			this.btnSendMail.UseVisualStyleBackColor = true;
+			this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
+			// 
 			// btnTeams
 			// 
 			this.btnTeams.Enabled = false;
@@ -1417,7 +1448,6 @@
 			// 
 			// btnTX
 			// 
-			this.btnTX.Enabled = false;
 			this.btnTX.Location = new System.Drawing.Point(224, 167);
 			this.btnTX.Name = "btnTX";
 			this.btnTX.Size = new System.Drawing.Size(75, 23);
@@ -1983,7 +2013,7 @@
 			this.dtpReportStart.Name = "dtpReportStart";
 			this.dtpReportStart.Size = new System.Drawing.Size(102, 22);
 			this.dtpReportStart.TabIndex = 70;
-			this.dtpReportStart.Value = new System.DateTime(2024, 6, 1, 0, 0, 0, 0);
+			this.dtpReportStart.Value = new System.DateTime(2025, 5, 1, 0, 0, 0, 0);
 			// 
 			// lb
 			// 
@@ -2406,37 +2436,6 @@
 			this.timerSStockResult.Enabled = true;
 			this.timerSStockResult.Interval = 1000;
 			this.timerSStockResult.Tick += new System.EventHandler(this.timerSStockResult_Tick);
-			// 
-			// btnSendMail
-			// 
-			this.btnSendMail.Enabled = false;
-			this.btnSendMail.Location = new System.Drawing.Point(809, 58);
-			this.btnSendMail.Name = "btnSendMail";
-			this.btnSendMail.Size = new System.Drawing.Size(37, 23);
-			this.btnSendMail.TabIndex = 109;
-			this.btnSendMail.Text = "mail";
-			this.btnSendMail.UseVisualStyleBackColor = true;
-			this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
-			// 
-			// btnReceive
-			// 
-			this.btnReceive.Location = new System.Drawing.Point(852, 57);
-			this.btnReceive.Name = "btnReceive";
-			this.btnReceive.Size = new System.Drawing.Size(75, 23);
-			this.btnReceive.TabIndex = 110;
-			this.btnReceive.Text = "receive";
-			this.btnReceive.UseVisualStyleBackColor = true;
-			this.btnReceive.Click += new System.EventHandler(this.btnReceive_Click);
-			// 
-			// btnMTX
-			// 
-			this.btnMTX.Location = new System.Drawing.Point(930, 57);
-			this.btnMTX.Name = "btnMTX";
-			this.btnMTX.Size = new System.Drawing.Size(75, 23);
-			this.btnMTX.TabIndex = 111;
-			this.btnMTX.Text = "MTX";
-			this.btnMTX.UseVisualStyleBackColor = true;
-			this.btnMTX.Click += new System.EventHandler(this.btnMTX_Click);
 			// 
 			// timerMTX
 			// 

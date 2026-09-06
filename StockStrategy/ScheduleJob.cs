@@ -92,6 +92,7 @@ namespace StockStrategy
 		/// <param name="e"></param>
 		private void ScheduleJob_Load(object sender, EventArgs e)
 		{
+			dtpReportStart.Value = DateTime.Now;
 			ConnectionString = ConfigurationManager.AppSettings["ApiServer2"];
 			TeamsGroup = ConfigurationManager.AppSettings["TeamsGroup"];
 			EmailGroup = ConfigurationManager.AppSettings["EmailGroup"];
@@ -2305,6 +2306,7 @@ namespace StockStrategy
 			string Code = "";
 			try
 			{
+				Stopwatch stopWatch = Stopwatch.StartNew();
 				//DataAccess _DataAccess = new DataAccess();
 				//this.btnLogin.PerformClick();
 				DateTime _Dt = Convert.ToDateTime(this.dTPReport.Text);
@@ -2326,7 +2328,7 @@ namespace StockStrategy
 				List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
 				List<DataModel.Stock.Stock> _StockTodayList = _DataAccess.getStockBySqlList(_Last, "Date");
 				string _BetweenDate = string.Format("{0}~{1}", this.dtpReportStart.Value.ToString("yyyyMMdd"), this.dTPReport.Value.ToString("yyyyMMdd"));
-				//	List<DataModel.Stock.Stock> _StockBetweenDateList = _DataAccess.getStockBySqlList(_BetweenDate, "BetweenDate");
+				List<DataModel.Stock.Stock> _StockBetweenDateList = _DataAccess.getStockBySqlList(_BetweenDate, "BetweenDate");
 				decimal _AccumulatedGain = 0;
 				//撈取9秒 先取消
 				//List<StockResult> _StockResultList = _DataAccess.getStockResultList();
@@ -2338,6 +2340,7 @@ namespace StockStrategy
 				int _Increase = 0, _Decrease = 0;
 				foreach (StockPicking s in _StockPickingList.OrderBy(x => x.Date).ToList())
 				{
+					
 					Code = s.Code;
 					//改成更新open price
 					//if (_Num == 1) this.txtStartDate.Text = s.Date;
@@ -2357,14 +2360,19 @@ namespace StockStrategy
 					{
 						_WhereDate = Convert.ToString(Convert.ToDouble(s.Date) + Convert.ToDouble(txtManyDays.Text));
 					}
-					List<DataModel.Stock.Stock> _StockList = _DataAccess.getStockBySqlList(s.Code, "Code").ToList();
+					//List<DataModel.Stock.Stock> _StockList = _DataAccess.getStockBySqlList(s.Code, "Code").ToList();
 					string _ClosingPrice = s.StartPrice;
-					if (_StockList.Where(x => x.Date == _WhereDate).ToList().Count > 0)
-						_ClosingPrice = _StockList.Where(x => x.Date == _WhereDate).First().ClosingPrice;
+					if (_StockBetweenDateList.Where(x => x.Date == _WhereDate && x.Code == s.Code).ToList().Count > 0)
+					{
+						//_ClosingPrice = _StockList.Where(x => x.Date == _WhereDate).First().ClosingPrice;
+						_ClosingPrice = _StockBetweenDateList.Where(x => x.Date == _WhereDate&&x.Code==s.Code).First().ClosingPrice;
+
+					}
+
 					//_StockReport.ClosingPrice = _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).ToList().Count > 0 ? _StockResultList.Where(x => x.Date == _WhereDate && x.Code == s.Code).First().ClosingPrice : _ClosingPrice;
 					_StockReport.ClosingPrice = _ClosingPrice;
 					//若有停用日則報表日收盤價為停用日收盤價
-					if (s.SuspendDate != "" && s.SuspendDate != null) _StockReport.ClosingPrice = _StockList.Where(x => x.Date == s.SuspendDate).First().ClosingPrice;
+					if (s.SuspendDate != "" && s.SuspendDate != null) _StockReport.ClosingPrice = _StockBetweenDateList.Where(x => x.Date == s.SuspendDate).First().ClosingPrice;
 					decimal _StartPrice = 0m;
 					_StartPrice = Convert.ToDecimal(_StockReport.StartPrice);
 					if (chkOpenningPrice.Checked)
@@ -2395,6 +2403,8 @@ namespace StockStrategy
 					_StockReport.TotalGain = Math.Round(_TotalGain / Convert.ToDecimal(_StockReport.StartPrice), 2) * 100;
 					_StockReportList.Add(_StockReport);
 					_Num++;
+					
+					
 				}
 				this.lbIncrease.Text = _Increase.ToString();
 				this.lbDecrease.Text = _Decrease.ToString();
@@ -2408,7 +2418,9 @@ namespace StockStrategy
 					this.txtTotalProfit.Text = _TotalGainProfit.ToString();
 				}
 				this.dgvStockReport.DataSource = _StockReportList;
-				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " query stock report ok.\r\n";
+				stopWatch.Stop();
+				Console.WriteLine(stopWatch.ElapsedMilliseconds);
+				_Log = DateTime.Now.ToString("yyyyMMdd HH:mm:ss") + " query stock report ok.\r\n"+ stopWatch.ElapsedMilliseconds;
 				this.btnErrorMsg.Text += _Log;
 				progressBar3.Style = ProgressBarStyle.Continuous;
 			}
@@ -2454,8 +2466,8 @@ namespace StockStrategy
 				List<StockGroup> _ListStockGroup = _DataAccess.getStockGroupList();
 				List<DataModel.Stock.Stock> _StockDayAllList = _DataAccess.getStockBySqlList(_WhereDate, "Date");
 				List<DataModel.Stock.Stock> _StockTodayList = _DataAccess.getStockBySqlList(_Last, "Date");
-				//string _BetweenDate = string.Format("{0}~{1}", dtStart.ToString("yyyyMMdd"), dtEnd.ToString("yyyyMMdd"));
-				//	List<DataModel.Stock.Stock> _StockBetweenDateList = _DataAccess.getStockBySqlList(_BetweenDate, "BetweenDate");
+				string _BetweenDate = string.Format("{0}~{1}", dtStart.ToString("yyyyMMdd"), dtEnd.ToString("yyyyMMdd"));
+					List<DataModel.Stock.Stock> _StockBetweenDateList = _DataAccess.getStockBySqlList(_BetweenDate, "BetweenDate");
 				decimal _AccumulatedGain = 0;
 				List<StockResult> _StockResultList = _DataAccess.getStockResultList();
 				//List<DataModel.Stock.StockReport> _StockReportList = new List<DataModel.Stock.StockReport>();

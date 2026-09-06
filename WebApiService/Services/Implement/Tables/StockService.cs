@@ -211,45 +211,41 @@ namespace WebApiService.Services.Implement.Tables
 		/// <returns></returns>
 		public IEnumerable<DataModel.Stock.Stock> GetByBetweenDate(string dtStart,string dtEnd)
 		{
-			DbSet<Stock> _StockDbSet = this._repository.GetDbSet();
-			int _EndDate = Convert.ToInt32(dtEnd);
-			int _StartDate = Convert.ToInt32(dtStart);
+			DbSet<Stock> _StockDbSet = this._repository.GetDbSet(); 
 			//DateTime _DtStart = DateTime.ParseExact(_EndDate.ToString(), "yyyyMMdd", null, System.Globalization.DateTimeStyles.AllowWhiteSpaces).AddMonths(-1);
 			//int _StartDate = Convert.ToInt32(_DtStart.ToString("yyyyMMdd"));
 			//AsEnumerable() 不然轉型會報錯
-			var query = from c in _StockDbSet.AsEnumerable()
-						where Convert.ToInt32(c.Date) <= _EndDate && Convert.ToInt32(c.Date) > _StartDate
-						select new
-						{
-							Code = c.Code,
-							Name = c.Name,
-							TradeVolume = c.TradeVolume,
-							ClosingPrice = c.ClosingPrice,
-							Gain = c.Gain,
-							Shock = c.Shock,
-							Date = c.Date,
-							HighestPrice = c.HighestPrice,
-							OpeningPrice = c.OpeningPrice,
-							ForeignInvestment = c.ForeignInvestment,
-							Investment = c.Investment,
-							Dealer = c.Dealer
-						};
-			IEnumerable<DataModel.Stock.Stock> _StockList = from p in query.AsEnumerable()
-															select new DataModel.Stock.Stock(
-				p.Code,
-				p.Name,
-				p.TradeVolume,
-				p.HighestPrice,
-				p.ClosingPrice,
-				p.Date,
-				p.Gain,
-				p.Shock,
-				p.OpeningPrice,
-				p.ForeignInvestment,
-				p.Investment,
-				p.Dealer
-			 );
-			return _StockList;
+			var query = _StockDbSet
+		.Where(c => c.Date.CompareTo(dtEnd) <= 0 && c.Date.CompareTo(dtStart) > 0)
+		.Select(c => new
+		{
+			c.Code,
+			c.Name,
+			c.TradeVolume,
+			c.ClosingPrice,
+			c.Gain,
+			c.Shock,
+			c.Date,
+			c.HighestPrice,
+			c.OpeningPrice,
+			c.ForeignInvestment,
+			c.Investment,
+			c.Dealer
+		});
+			return query.AsEnumerable().Select(p => new DataModel.Stock.Stock(
+		p.Code,
+		p.Name,
+		p.TradeVolume,
+		p.HighestPrice,
+		p.ClosingPrice,
+		p.Date,
+		p.Gain,
+		p.Shock,
+		p.OpeningPrice,
+		p.ForeignInvestment,
+		p.Investment,
+		p.Dealer
+	)).ToList(); // 建議加上 ToList() 立即執行並鎖定結果
 		}
 	}
 }
